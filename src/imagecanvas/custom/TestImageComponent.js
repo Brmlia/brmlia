@@ -1,13 +1,16 @@
 import React from "react";
 import Image from "./TestImage.js";
 import TestImageWrapper from "./TestImageWrapper.js";
-import { Canvas } from 'react-three-fiber'
-import Slider from "./../../components/slider.js"
-import { withUniformStore } from '../../components/utils.js'
+import { Canvas } from 'react-three-fiber';
+import Slider from "./../../components/slider.js";
+import { withUniformStore } from '../../components/utils.js';
+import Annotator from "./ImageDraw.js";
+import Annotator2 from "./ImageBare.js";
+import Annotator3 from "./ImageThree.js";
 
 import * as THREE from 'three';
 //import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import {RectAreaLight, RectAreaLightHelper, RectAreaLightUniformsLib} from "three";
+//import {RectAreaLight, RectAreaLightHelper, RectAreaLightUniformsLib} from "three";
 
 
 class TestImageComponent extends React.Component {
@@ -86,6 +89,8 @@ class TestImageComponent extends React.Component {
 
   render() {
 
+
+
     // Create the scene and a camera to view it
 var catScene = new THREE.Scene();
 
@@ -147,14 +152,19 @@ document.body.appendChild( renderer.domElement );
 // Create a texture loader so we can load our image file
 var loader = new THREE.TextureLoader();
 
+
 // Load an image file into a custom material
+// var material = new THREE.MeshLambertMaterial({
+//   map: loader.load('https://s3.amazonaws.com/duhaime/blog/tsne-webgl/assets/cat.jpg')
+// });
+
 var material = new THREE.MeshLambertMaterial({
-  map: loader.load('https://s3.amazonaws.com/duhaime/blog/tsne-webgl/assets/cat.jpg')
+  map: loader.load('https://data.broadinstitute.org/bbbc/BBBC042/BBBC042_example2.png')
 });
 
 // create a plane geometry for the image with a width of 10
 // and a height that preserves the image's aspect ratio
-var geometry = new THREE.PlaneGeometry(10, 10*.75);
+var geometry = new THREE.PlaneGeometry(100, 100*.75);
 
 // combine our image geometry and material into a mesh
 var mesh = new THREE.Mesh(geometry, material);
@@ -255,7 +265,6 @@ var meshLayers = new THREE.Mesh(geometry, material);
 sceneBox.add( meshLayers );
 
 
-
 function animate() {
 requestAnimationFrame( animate );
   //renderer.render( catScene, camera );
@@ -264,9 +273,11 @@ requestAnimationFrame( animate );
   renderer.render( sceneBox, camera2 );
 }
 
+renderer.setClearColor(0xffffff, 0);
+renderer.clearDepth();
+
 
 animate();
-
 
 
 
@@ -277,6 +288,9 @@ animate();
         <TestImageWrapper />
         <Slider label="Brightness" width="40%" min="0" max="1" step="0.1" initial="0" multiplier="100" sliderValue={sliderValueBr.bind(this)} />
         <Slider label="Contrast" width="40%" min="0" max="10" step="1" initial="0" multiplier="10" sliderValue={sliderValueCt.bind(this)} />
+        <Annotator />
+        <Annotator2 />
+        <Annotator3 />
       </div>
     )
   }
