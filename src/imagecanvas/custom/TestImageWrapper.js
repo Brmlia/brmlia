@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import Image from "./TestImage.js";
 import { Canvas } from 'react-three-fiber'
-import { useSpring, a } from 'react-spring/three';
-
+import AnnotationLayer from './AnnotationLayer';
+import './TestImageWrapper.css';
 
 export function TestImageWrapper() {
-	  return (
-	  	<Canvas>
-	  	  <Image />
-	  	</Canvas>
-	  	)}
-
-	export default TestImageWrapper;
-
-
+  return (
+    <div id="canvasContainer">
+      <div id="imageLayer">
+        <Canvas>
+          <Image />
+        </Canvas>
+      </div>
+      <AnnotationLayer />
+    </div>
+  )
+}
+export default TestImageWrapper;
