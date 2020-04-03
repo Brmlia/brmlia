@@ -5,7 +5,7 @@ import { updateUniformImage } from './CanvasControl.js'
 import { fApi, uApi } from '../utils/index.js'
 
 // Loading an image is asynchronous and will return a Promise.
-export const createTextureFromTiff = (image) => {
+export const createTexture = (image) => {
   Image.load(image).then(function (image) {
     console.log('Width', image.width);
     console.log('Height', image.height);
@@ -27,7 +27,7 @@ export const createTextureFromTiff = (image) => {
 });
 }
 
-export const createTexture = (image) => {
+export const createTextureOld = (image) => {
   return new THREE.TextureLoader().load(image);
 }
 
