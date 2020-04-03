@@ -1,6 +1,8 @@
 import create from 'zustand';
 import * as THREE from 'three';
 import { Image } from 'image-js';
+import { updateUniformImage } from './CanvasControl.js'
+import { fApi, uApi } from '../utils/index.js'
 
 // Loading an image is asynchronous and will return a Promise.
 export const createTextureFromTiff = (image) => {
@@ -12,8 +14,9 @@ export const createTextureFromTiff = (image) => {
     console.log('alpha', image.alpha);
     console.log('channels', image.channels);
     console.log('bitDepth', image.bitDepth);
-    let canvas = image.getCanvas();
-    console.log('canvas', canvas);
+    console.log('multipage', image.isMultiPage)
+    //let canvas = image.getCanvas();
+    //console.log('canvas', canvas);
     //uncomment to show tiff as canvas in UI
     //let ele = document.getElementById('testDiv');
     //ele.appendChild(canvas);

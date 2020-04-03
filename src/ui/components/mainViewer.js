@@ -36,9 +36,9 @@ class mainViewer extends React.Component {
     // copy display from last enabled channel for now
     var view;
 
-    if (settingsApi.getState().channels[this.state.channel-1].selected) {
-      view = canvasApi.getState().canvas[this.state.channel-1]
-    }
+    //if (settingsApi.getState().channels[this.state.channel-1].selected) {
+      //view = canvasApi.getState().canvas[this.state.channel-1]
+    //}
 
     return (
       <div id="stage"  style={canvasStyle}>

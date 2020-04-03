@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 import { fApi, fStore } from '../utils/index.js'
+import Tiff from 'tiff.js'
 
 const img = {
   display: 'block',
@@ -57,6 +58,7 @@ function isValidFile(name) {
 
 export function ImageUpload(props) {
   const [files, setFiles] = useState([]);
+
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/png, image/tiff',
     onDrop: acceptedFiles => {
@@ -76,6 +78,8 @@ export function ImageUpload(props) {
       addFile(file, img)
     }
   });
+
+
 
   useEffect(() => () => {
     // Make sure to revoke the data uris to avoid memory leaks
