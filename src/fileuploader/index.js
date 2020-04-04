@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 import { fApi, fStore } from '../utils/index.js'
-import Tiff from 'tiff.js'
 
 const img = {
   display: 'block',

@@ -1,12 +1,10 @@
 import React from 'react';
 import { Canvas } from 'react-three-fiber';
-import Grid from '@material-ui/core/Grid';
-import Mesh from './Mesh';
-import { canvasStyle } from '../ui/style.js'
-import { createTexture, createTextureFromTiff } from './imageStore.js'
+import { createTexture } from './imageStore.js'
 import { fApi, uApi } from '../utils/index.js'
 import { updateUniformImage } from './CanvasControl.js'
 import {canvasApi} from './canvasStore.js'
+import * as THREE from 'three';
 
 class ImageCanvas extends React.Component {
 
@@ -15,7 +13,6 @@ class ImageCanvas extends React.Component {
       if (uApi.getState().name !== state.file[state.selected].name) {
           let texture = createTexture(state.file[state.selected].image);
           updateUniformImage(texture, state.file[state.selected].name, this.props.channel)
-          //this.forceUpdate();
       }
     }
   }
@@ -31,12 +28,21 @@ class ImageCanvas extends React.Component {
       this.updateForControls(state);
     })
 
-    return (
-      <div class="image-canvas-container" style={canvasStyle}>
-        <Canvas className='image-canvas' >
+    let scene = new THREE.Scene();
+		let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+		let renderer = new THREE.WebGLRenderer();
+    let canvas = <Canvas className='image-canvas' >
           {canvasApi.getState().canvas[this.props.channel-1]}
         </Canvas>
-      </div>
+    function animate() {
+	    requestAnimationFrame( animate );
+	    renderer.render( scene, camera );
+    }
+
+    scene.add(canvas);
+    animate();
+    return (
+      scene
     );
   }
 }
