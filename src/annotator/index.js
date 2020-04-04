@@ -2,6 +2,7 @@ import React from 'react';
 import {FileUpload} from "../fileuploader/index.js";
 import {fileApi} from "../fileuploader/fileStore.js";
 import {annotApi} from '../annotator/annotStore.js'
+import {exportJson} from '../annotator/exporter.js'
 import {
   Button
 } from 'reactstrap';
@@ -28,7 +29,12 @@ class Annotator extends React.Component {
     })
     return (
       <div>
-        <Button outline color="primary" className="image-upload-btn"> <FileUpload name="Import" />  </Button>
+        <div>
+          <Button outline color="primary" className="import-btn"> <FileUpload name="Import" />  </Button>
+        </div>
+        <div>
+          <Button outline color="primary" className="export-btn" onClick={exportJson} > Export  </Button>
+        </div>
       </div>
     );
   }
