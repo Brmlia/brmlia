@@ -1,5 +1,5 @@
 import React, { useRef, useMemo } from 'react';
-import { fApi, uApi } from '../utils/index.js'
+import { uApi } from '../utils/index.js'
 import {useFrame} from 'react-three-fiber'
 import '../styles.css'
 

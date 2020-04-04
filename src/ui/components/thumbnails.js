@@ -1,6 +1,6 @@
 import React from "react";
 
-import { thumbsContainer, thumb, thumbInner } from '../style.js';
+import { thumb, thumbInner } from '../style.js';
 import { fApi } from '../../utils/index.js'
 
 class Thumbnails extends React.Component {
@@ -30,6 +30,7 @@ class Thumbnails extends React.Component {
               <img
                 src={file.image}
                 style={file.style}
+                alt={file.name}
                 onClick={() => this.setSelected(idx)}
               />
             </div>

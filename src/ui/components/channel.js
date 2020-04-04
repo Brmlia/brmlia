@@ -9,10 +9,8 @@ import {
 } from 'reactstrap';
 
 import ImageCanvas from '../../imagecanvas/ImageCanvas.js'
-import { withUniformStore } from '../../utils/index.js'
 import Slider from "./slider.js"
 import { updateBrightness, updateContrast, updateWhitepoint, updateBlackpoint } from '../../imagecanvas/CanvasControl.js'
-import {canvasApi} from '../../imagecanvas/canvasStore.js'
 import {updateChannelSel, updateLastSel, settingsApi} from '../../mainSettings.js'
 
 class Channel extends React.Component {
@@ -60,7 +58,8 @@ class Channel extends React.Component {
     var sliderValueCt = this.sliderValueCt;
     var sliderValueWp = this.sliderValueWp;
     var sliderValueBp = this.sliderValueBp;
-    var canvas = <ImageCanvas className="annot-view" alt="Ch`${this.props.ch}` Histogram" height="100px" channel={this.props.ch}/>
+    var alt = "Ch" + this.props.ch + " Histogram";
+    var canvas = <ImageCanvas className="annot-view" alt={alt} height="100px" channel={this.props.ch}/>
     var sel = settingsApi.getState().channels[this.props.ch-1].selected
 
     console.log("Channel " + this.props.ch + " : " + sel);

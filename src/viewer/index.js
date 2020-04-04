@@ -5,6 +5,16 @@ import Slider from "../ui/components/slider.js"
 import {withFileStore} from "../utils/index.js";
 import "../styles.css"
 
+// var prevPct = 0;
+// var zoomPct = 100;
+// var image = {
+//   src: "",
+//   name: "",
+//   style: {},
+//   x: 0,
+//   y: 0
+// };
+// var selected = 0;
 
 class Viewer extends Component {
 
@@ -103,7 +113,7 @@ class Viewer extends Component {
   }
 
   render() {
-    const sub = this.props.api.subscribe(state =>  {
+    this.props.api.subscribe(state =>  {
       this.update(state);
     })
 
@@ -128,7 +138,7 @@ class Viewer extends Component {
       scale
     } = this.state.zpp;
     var sliderValue = this.sliderValue;
-    if (this.state.zoomPct == "0.01") {
+    if (this.state.zoomPct === 0.01) {
       this.state.zoomPct = scale;
     }
 

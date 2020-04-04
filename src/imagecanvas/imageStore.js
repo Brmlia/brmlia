@@ -2,7 +2,6 @@ import create from 'zustand';
 import * as THREE from 'three';
 //import Tiff from 'tiff.js';
 import UTIF from 'utif';
-import UPNG from 'utif';
 
 export const createTexture = (image) => {
   return new THREE.TextureLoader().load(image);
@@ -42,7 +41,7 @@ export const createTextureFromTiff = (image) => {
     // https://threejs.org/docs/index.html#api/en/textures/DataTexture
     // TODO: Get the actual height and width of the image for tiff spec
 
-    let dataView = new DataView(canv, 0, 28);
+    // let dataView = new DataView(canv, 0, 28);
     let width = 512; //dataView.getInt32(16);
     let height = 512; //dataView.getInt32(20);
     let texture = new THREE.DataTexture( canv, width, height, THREE.RGBFormat );

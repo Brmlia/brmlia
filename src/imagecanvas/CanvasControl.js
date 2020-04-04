@@ -1,5 +1,4 @@
-import React from 'react';
-import { fApi, uApi } from '../utils/index.js'
+import { uApi } from '../utils/index.js'
 
 function isValidChannel (channel) {
   return (uApi.getState() && (uApi.getState().channels.length > 0) && (channel >= 1) && uApi.getState().channels[channel-1] && uApi.getState().channels[channel-1].uniforms.contrast && uApi.getState().channels[channel-1].uniforms.brightness )

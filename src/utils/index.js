@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 
-import { useFileStore, fileApi } from "../fileuploader/fileStore.js"
-import { useUniformStore, uniApi } from "../imagecanvas/imageStore.js"
+import { fileApi } from "../fileuploader/fileStore.js"
+import { uniApi } from "../imagecanvas/imageStore.js"
 
 export const fApi = fileApi;
 export const uApi = uniApi;

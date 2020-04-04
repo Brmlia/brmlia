@@ -8,14 +8,12 @@ import {
   CardBody,
 } from 'reactstrap';
 import {canvasApi} from '../../imagecanvas/canvasStore.js'
-import { Canvas } from 'react-three-fiber';
 import { settingsApi } from '../../mainSettings.js';
 
 class mainViewer extends React.Component {
 
   state = {
-    view: <Viewer imageWidth={mainImg.width}/>,
-    channel: 1
+    view: <Viewer imageWidth={mainImg.width}/>
   }
 
   altView() {
@@ -80,7 +78,6 @@ class mainViewer extends React.Component {
 
   render() {
     settingsApi.subscribe(state => {
-      this.state.channel = state.lastSelected;
       this.forceUpdate();
     })
     return (

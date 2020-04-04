@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
-import { fApi, fStore } from '../utils/index.js'
+import { fApi } from '../utils/index.js'
 
 const img = {
   display: 'block',
@@ -75,6 +75,7 @@ export function ImageUpload(props) {
     else if (isValidFile(file.name)) {
       addFile(file, img)
     }
+    return null;
   });
 
   useEffect(() => () => {

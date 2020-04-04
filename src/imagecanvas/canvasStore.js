@@ -2,7 +2,6 @@ import React from "react";
 import create from 'zustand';
 import Mesh from './Mesh.js'
 import { Canvas } from 'react-three-fiber';
-import { canvasStyle1, canvasStyle2, canvasStyle3 } from '../ui/style.js'
 
 export const meshState = {
   mesh:

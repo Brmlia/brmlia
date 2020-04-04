@@ -1,7 +1,4 @@
 import React from 'react';
-import { Canvas } from 'react-three-fiber';
-import Grid from '@material-ui/core/Grid';
-import Mesh from './Mesh';
 import { createTexture, createTextureFromTiff } from './imageStore.js'
 import { fApi, uApi } from '../utils/index.js'
 import { updateUniformImage } from './CanvasControl.js'
