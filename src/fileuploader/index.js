@@ -156,6 +156,7 @@ export function FileUpload(props) {
     else if (isValidFile(file.name)) {
       addFile(file)
     }
+    return null
   });
 
   useEffect(() => () => {
