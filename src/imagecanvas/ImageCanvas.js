@@ -4,7 +4,7 @@ import { createTexture } from './imageStore.js'
 import { fApi, uApi } from '../utils/index.js'
 import { updateUniformImage } from './CanvasControl.js'
 import {canvasApi} from './canvasStore.js'
-import { animate } from './ImageScene.js'
+import { animate, addMeshToScene } from './ImageScene.js'
 
 class ImageCanvas extends React.Component {
 
@@ -22,6 +22,12 @@ class ImageCanvas extends React.Component {
 
 
   render() {
+    let canvas = <Canvas className='image-canvas' >
+        {canvasApi.getState().canvas[this.props.channel-1]}
+      </Canvas>
+    // line below does not work. result =  THREE.Object3D.add: object not an instance of THREE.Object3D
+    // I suspect it's because the adding of the Mesh to the scene is happening at the wrong time?
+    // canvas = addMeshToScene(canvas);
     animate();
     fApi.subscribe(state =>  {
       this.updateForFile(state);
@@ -29,10 +35,9 @@ class ImageCanvas extends React.Component {
     uApi.subscribe(state =>  {
       this.updateForControls(state);
     })
+
     return (
-      <Canvas className='image-canvas' >
-        {canvasApi.getState().canvas[this.props.channel-1]}
-      </Canvas>
+      canvas
     );
   }
 }

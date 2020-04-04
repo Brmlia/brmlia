@@ -5,8 +5,11 @@ export const camera = new PerspectiveCamera( 75, window.innerWidth/window.innerH
 export const renderer =  new WebGLRenderer({ antialias:true });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
-// scene.add(someMeshFromThree);
 
+export const addMeshToScene = (canvas) => {
+  scene.add(canvas);
+  return canvas;
+}
 export const animate = () => {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);

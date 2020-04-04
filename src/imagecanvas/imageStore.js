@@ -27,10 +27,6 @@ export const createTexture = (image) => {
 });
 }
 
-export const createTextureOld = (image) => {
-  return new THREE.TextureLoader().load(image);
-}
-
 const initState = {
   // todo: individual uniforms for separate channels
   channels:

@@ -4,7 +4,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Slider from "../ui/components/slider.js"
 import {withFileStore} from "../utils/index.js";
 import "../styles.css"
-
+import {Canvas} from 'react-three-fiber';
 
 class Viewer extends Component {
 
@@ -97,7 +97,7 @@ class Viewer extends Component {
     this.update(this.props.api.getState());
     if (this.state.image.src !== "") {
       return (
-        <img src={this.state.image.src} alt="viewer" width={this.props.imageWidth}/>
+        <Canvas></Canvas>
       )
     }
   }
