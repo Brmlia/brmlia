@@ -12,11 +12,11 @@ cache:
     - node_modules
 
 # tried using yarn a bit -- a little faster I think, but kinda annoying
-before_script:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH="$HOME/.yarn/bin:$PATH"
+# before_script:
 
 install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$PATH"
   - yarn install --non-interactive --no-default-rc --force # --skip-integrity-check
 script:
 # - echo 'SKIP_PREFLIGHT_CHECK=true' >> .env
