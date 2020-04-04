@@ -8,7 +8,6 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 export const addMeshToScene = (canvas) => {
   scene.add(canvas);
-  return canvas;
 }
 export const animate = () => {
   requestAnimationFrame(animate);

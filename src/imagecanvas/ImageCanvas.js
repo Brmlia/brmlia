@@ -6,6 +6,7 @@ import { createTexture, createTextureFromTiff } from './imageStore.js'
 import { fApi, uApi } from '../utils/index.js'
 import { updateUniformImage } from './CanvasControl.js'
 import {canvasApi} from './canvasStore.js'
+import {ImageScene, animate, addMeshToScene} from './ImageScene.js'
 
 class ImageCanvas extends React.Component {
 
@@ -23,6 +24,9 @@ class ImageCanvas extends React.Component {
   }
 
   render() {
+    let canvas = canvasApi.getState().canvas[this.props.channel-1];
+    //addMeshToScene(canvas);
+    animate();
     fApi.subscribe(state =>  {
       this.updateForFile(state);
     })
