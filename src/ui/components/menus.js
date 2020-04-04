@@ -26,7 +26,6 @@ class Menus extends React.Component {
             File
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem> <ImageUpload name="dropdown-image-upload"/> </DropdownItem>
             <DropdownItem> Export </DropdownItem>
           </DropdownMenu>
         </UncontrolledButtonDropdown>

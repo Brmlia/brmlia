@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { UseRef, Component } from "react";
 
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Slider from "../ui/components/slider.js"
@@ -97,7 +97,7 @@ class Viewer extends Component {
     this.update(this.props.api.getState());
     if (this.state.image.src !== "") {
       return (
-        <Canvas></Canvas>
+        <Canvas image={this.state.image}></Canvas>
       )
     }
   }

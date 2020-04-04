@@ -28,6 +28,7 @@ class ImageCanvas extends React.Component {
     // line below does not work. result =  THREE.Object3D.add: object not an instance of THREE.Object3D
     // I suspect it's because the adding of the Mesh to the scene is happening at the wrong time?
     // canvas = addMeshToScene(canvas);
+
     animate();
     fApi.subscribe(state =>  {
       this.updateForFile(state);

@@ -31,7 +31,6 @@ class UI extends React.Component {
             </Col>
 
             <Col xs="6">
-            <div id="testDiv"></div>
               <MainViewer />
             </Col>
 

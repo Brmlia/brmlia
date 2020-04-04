@@ -14,17 +14,15 @@ export const createTexture = (image) => {
     console.log('alpha', image.alpha);
     console.log('channels', image.channels);
     console.log('bitDepth', image.bitDepth);
-    console.log('multipage', image.isMultiPage)
-    //let canvas = image.getCanvas();
-    //console.log('canvas', canvas);
     //uncomment to show tiff as canvas in UI
-    //let ele = document.getElementById('testDiv');
-    //ele.appendChild(canvas);
+    //const newImage = Image.createFrom(image, { width: 200, height: 200 });
+    //let ele = document.getElementById('mainView');
+    //ele.appendChild(newImage.getCanvas());
     //does not render canvas
     let texture = new THREE.CanvasTexture(image.getCanvas());
     console.log('texture', texture);
     return texture;
-});
+  });
 }
 
 const initState = {

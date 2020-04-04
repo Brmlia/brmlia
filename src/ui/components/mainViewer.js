@@ -10,6 +10,7 @@ import {
 import {canvasApi} from '../../imagecanvas/canvasStore.js'
 import { Canvas } from 'react-three-fiber';
 import { settingsApi } from '../../mainSettings.js';
+import Channel from "./channel.js"
 
 class mainViewer extends React.Component {
 
@@ -24,6 +25,7 @@ class mainViewer extends React.Component {
         <CardBody>
           <CardTitle> Image View </CardTitle>
         </CardBody>
+        <div id="mainView"></div>
         {this.state.view}
         <br>
         </br>
@@ -36,9 +38,9 @@ class mainViewer extends React.Component {
     // copy display from last enabled channel for now
     var view;
 
-    //if (settingsApi.getState().channels[this.state.channel-1].selected) {
-      //view = canvasApi.getState().canvas[this.state.channel-1]
-    //}
+    if (settingsApi.getState().channels[this.state.channel-1].selected) {
+      view = canvasApi.getState().canvas[this.state.channel-1]
+    }
 
     return (
       <div id="stage"  style={canvasStyle}>
