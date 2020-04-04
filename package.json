@@ -9,6 +9,7 @@
     "babel": "^6.23.0",
     "bootstrap": "^4.4.1",
     "concurrently": "^5.1.0",
+    "fabric": "^3.6.3",
     "image-js": "^0.21.9",
     "material-ui": "^0.20.2",
     "material-ui-slider": "^3.0.8",

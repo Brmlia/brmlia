@@ -13,6 +13,12 @@ const initState = {
     contrast: {
       value: '0.0'
     },
+    whitepoint: {
+      value: '235.0'
+    },
+    blackpoint: {
+      value: '16.0'
+    },
     image: {
       value: createTexture(require('./brom.jpeg'))
     }
@@ -24,7 +30,7 @@ const initState = {
 
 export const [useUniformStore, uniApi] = create ( set => ( {
   ...initState,
-  update: (brightness, contrast, image) => set ( state => ({
+  update: (brightness, contrast, whitepoint, blackpoint, image) => set ( state => ({
     ...state,
     uniforms: {
       ...state.uniforms,
@@ -35,6 +41,14 @@ export const [useUniformStore, uniApi] = create ( set => ( {
       contrast: {
         ...state.uniforms.contrast,
         value: contrast
+      },
+      whitepoint: {
+        ...state.uniforms.whitepoint,
+        value: whitepoint
+      },
+      blackpoint: {
+        ...state.uniforms.blackpoint,
+        value: blackpoint
       },
       image: {
         ...state.uniforms.image,

@@ -48,6 +48,19 @@ class Slider extends Component {
     this.notifyValue();
   };
 
+  displayValue() {
+    if (this.props.raw === "1") {
+      return (
+        <span> {this.state.slider.value * this.props.multiplier}</span>
+      )
+    }
+    else {
+      return (
+        <span> {this.state.slider.value * this.props.multiplier}%</span>
+      )
+    }
+  }
+
   render() {
     const slider = this.state.slider;
     const {
@@ -65,7 +78,7 @@ class Slider extends Component {
         <span>{min} </span>
         <input type="range" className="slider" value={slider.value || initial} id="customRange1" initial={initial} min={min} max={max} step={step} onChange={e=>this.handleSliderChange(e)} />
         <span> {max}</span>
-        <span> {slider.value * multiplier}%</span>
+        {this.displayValue()}
       </div>
     );
   }
