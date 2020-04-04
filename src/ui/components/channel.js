@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { card, cardBody } from '../style.js';
+import { card, cardBody, canvasThumbnail } from '../style.js';
 import {
   Button,
   UncontrolledCollapse,
@@ -75,7 +75,9 @@ class Channel extends React.Component {
        <UncontrolledCollapse toggler={`#view${this.props.ch}`}>
           <Card style={card} >
             <CardBody style={cardBody} >
-              {canvas}
+              <div style={canvasThumbnail}>
+                {canvas}
+              </div>
               "Insert Look up table here"
               <br>
               </br>

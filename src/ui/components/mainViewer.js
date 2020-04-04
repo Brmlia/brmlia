@@ -1,6 +1,6 @@
 import React from "react";
 
-import { cardStyle, card, mainImg, canvasStyle } from '../style.js';
+import { cardStyle, card, mainImg, canvasStyle1, canvasStyle2, canvasStyle3 } from '../style.js';
 import Viewer from "../../viewer/index.js";
 import {
   Card,
@@ -34,17 +34,33 @@ class mainViewer extends React.Component {
   channelViews() {
 
     // copy display from last enabled channel for now
-    var view;
+    var view1;
+    var view2;
+    var view3;
 
-    if (settingsApi.getState().channels[this.state.channel-1].selected) {
-      view = canvasApi.getState().canvas[this.state.channel-1]
+    if (settingsApi.getState().channels[0].selected) {
+      console.log("displaying 1")
+      view1 = canvasApi.getState().canvas[0]
     }
-
+    if (settingsApi.getState().channels[1].selected) {
+      console.log("displaying 2")
+      view2 = canvasApi.getState().canvas[1]
+    }
+    if (settingsApi.getState().channels[2].selected) {
+      console.log("displaying 3")
+      view3 = canvasApi.getState().canvas[2]
+    }
     return (
-      <div id="stage"  style={canvasStyle}>
-        <Canvas>
-          {view}
-        </Canvas>
+      <div id="canvasContainer">
+        <div style={canvasStyle1}>
+          {view1}
+        </div>
+        <div style={canvasStyle2}>
+          {view2}
+        </div>
+        <div style={canvasStyle3}>
+          {view3}
+        </div>
       </div>
     );
   }

@@ -14,7 +14,7 @@ export const initState = {
       },
     ],
   lastSelected: 1,
-  dev: 0
+  dev: 1
 }
 
 export const [useMainSettings, settingsApi] = create ( set => ({

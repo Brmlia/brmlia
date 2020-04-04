@@ -2,7 +2,6 @@ import React from 'react';
 import { Canvas } from 'react-three-fiber';
 import Grid from '@material-ui/core/Grid';
 import Mesh from './Mesh';
-import { canvasStyle } from '../ui/style.js'
 import { createTexture, createTextureFromTiff } from './imageStore.js'
 import { fApi, uApi } from '../utils/index.js'
 import { updateUniformImage } from './CanvasControl.js'
@@ -38,11 +37,7 @@ class ImageCanvas extends React.Component {
     })
 
     return (
-      <div class="image-canvas-container" style={canvasStyle}>
-        <Canvas className='image-canvas' >
-          {canvasApi.getState().canvas[this.props.channel-1]}
-        </Canvas>
-      </div>
+      canvasApi.getState().canvas[this.props.channel-1]
     );
   }
 }

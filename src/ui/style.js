@@ -77,10 +77,35 @@ export const axesImg = {
   width: '100%'
 }
 
-export const canvasStyle = {
+export const canvasStyle1 = {
+  position: 'absolute',
+  height: '600px',
+  width: '600px',
+  zIndex: '3',
+  marginLeft: '100px',
+  opacity: '0.5'
+}
+export const canvasStyle2 = {
+  position: 'absolute',
+  height: '600px',
+  width: '600px',
+  zIndex: '5',
+  marginLeft: '50px',
+  opacity: '0.5'
+}
+export const canvasStyle3 = {
+  position: 'absolute',
+  height: '600px',
+  width: '600px',
+  zIndex: '7',
+  opacity: '0.5'
+}
+
+export const canvasThumbnail = {
   position: 'center',
   height: '100px',
   width: '88px',
+  zIndex: '3'
 }
 
 export const thumbsContainer = {
