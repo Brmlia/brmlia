@@ -4,7 +4,7 @@ import { createTexture } from './imageStore.js'
 import { fApi, uApi } from '../utils/index.js'
 import { updateUniformImage } from './CanvasControl.js'
 import {canvasApi} from './canvasStore.js'
-import * as THREE from 'three';
+import { animate } from './ImageScene.js'
 
 class ImageCanvas extends React.Component {
 
@@ -20,29 +20,19 @@ class ImageCanvas extends React.Component {
     this.forceUpdate();
   }
 
+
   render() {
+    animate();
     fApi.subscribe(state =>  {
       this.updateForFile(state);
     })
     uApi.subscribe(state =>  {
       this.updateForControls(state);
     })
-
-    let scene = new THREE.Scene();
-		let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-		let renderer = new THREE.WebGLRenderer();
-    let canvas = <Canvas className='image-canvas' >
-          {canvasApi.getState().canvas[this.props.channel-1]}
-        </Canvas>
-    function animate() {
-	    requestAnimationFrame( animate );
-	    renderer.render( scene, camera );
-    }
-
-    scene.add(canvas);
-    animate();
     return (
-      scene
+      <Canvas className='image-canvas' >
+        {canvasApi.getState().canvas[this.props.channel-1]}
+      </Canvas>
     );
   }
 }
