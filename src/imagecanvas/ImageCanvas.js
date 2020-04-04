@@ -12,13 +12,7 @@ class ImageCanvas extends React.Component {
   updateForFile(state) {
     if (state) {
       if (uApi.getState().name !== state.file[state.selected].name) {
-
         let texture = createTexture(state.file[state.selected].image);
-        if (state.file[state.selected].type === "image/tiff") {
-          console.log('ImageCanvas::updateForFile() - tiff detected ==> converting to canvas');
-          texture = createTextureFromTiff(state.file[state.selected].image);
-        }
-
         updateUniformImage(texture, state.file[state.selected].name, this.props.channel)
         this.forceUpdate();
       }

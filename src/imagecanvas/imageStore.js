@@ -1,56 +1,25 @@
 import create from 'zustand';
 import * as THREE from 'three';
-//import Tiff from 'tiff.js';
-import UTIF from 'utif';
-import UPNG from 'utif';
+import { Image } from 'image-js';
 
 export const createTexture = (image) => {
-  return new THREE.TextureLoader().load(image);
-}
-
-export const createTextureFromTiff = (image) => {
-
-  //use async and promises to load the blob into a buffer, then decode it
-  //into an RGBA Uint8Array. Load the array into a DataTexture
-  async function fetchImageBuffer(image) {
-    // function input 'image' is already a blob,
-    // but it was not working without explicitly creating the Blob...
-    const blob = new Blob([image]);
-    const arrayBuffer = await new Response(blob).arrayBuffer();
-    return arrayBuffer;
-  }
-  fetchImageBuffer().then((blob) => {
-    const byteLength = blob.byteLength;
-    console.log(byteLength);
-    if(byteLength > 0){
-      let ifds = UTIF.decode(blob);
-      UTIF.decodeImage(blob, ifds[0])
-      let rgba = UTIF.toRGBA8(ifds[0]);  // Uint8Array with RGBA pixels
-      // console.log("decoded ifds0: " + ifds[0].width, "HEIGHT: " + ifds[0].height, ifds[0]);
-      return rgba;
-    }
-  })
-  .catch((e) =>
-    console.log(e)
-  );
-
-
-  const canv = fetchImageBuffer(image);
-  Promise.resolve(canv).then(function(canv) {
-    console.log('ImageStore::createTextureFromTiff() - Uint8Array with RGBA pixel length: ' + canv.byteLength);
-    // use DataTexture to load the RGBA Uint8Array into a texture
-    // https://threejs.org/docs/index.html#api/en/textures/DataTexture
-    // TODO: Get the actual height and width of the image for tiff spec
-
-    let dataView = new DataView(canv, 0, 28);
-    let width = 512; //dataView.getInt32(16);
-    let height = 512; //dataView.getInt32(20);
-    let texture = new THREE.DataTexture( canv, width, height, THREE.RGBFormat );
-    console.log("ImageStore::createTextureFromTiff() - createTextureFromTiff() - texture " , texture);
+  Image.load(image).then(function (image) {
+    console.log('Width', image.width);
+    console.log('Height', image.height);
+    console.log('colorModel', image.colorModel);
+    console.log('components', image.components);
+    console.log('alpha', image.alpha);
+    console.log('channels', image.channels);
+    console.log('bitDepth', image.bitDepth);
+    //uncomment to show tiff as canvas in UI
+    //const newImage = Image.createFrom(image, { width: 200, height: 200 });
+    //let ele = document.getElementById('mainView');
+    //ele.appendChild(newImage.getCanvas());
+    //does not render canvas
+    let texture = new THREE.CanvasTexture(image.getCanvas());
+    console.log('texture', texture);
     return texture;
-  }, function(canv) {
   });
-
 }
 
 const initState = {
