@@ -25,35 +25,39 @@ class FabricLayer extends React.Component {
   drawFreeStyle() {
     window.canvas = canvas;
     canvas.isMouseDown = false;
-
     canvas.isDrawingMode = true;
     canvas.freeDrawingBrush.color = "#000";
     canvas.freeDrawingBrush.width = 4;
   }
 
   drawRect(rect, label) {
+    canvas.isDrawingMode = false;
     var fRect = new fabric.Rect({
-      left: rect.left,
-      top: rect.top,
-      fill: 'yellow',
+      fill: 'rgb(0,0,0,0)',
       width: rect.width,
       height: rect.height,
       objectCaching: false,
-      transparentCorners: false,
-      cornerColor: 'blue',
-      stroke: 'lightgreen',
+      stroke: 'darkgreen',
+      strokeLineJoin: 'round',
       strokeWidth: 4,
-      cornerStyle: 'circle'
     });
+
     var text = new fabric.IText(label, {
-      fontSize: 30,
-      // originX: 'center',
-      // originY: 'center'
-    });
-    var group = new fabric.Group([fRect, text], {
+      fontFamily: 'Arial',
+      fontSize: 20,
+      fontWeight: 'bold',
+      textBackgroundColor: 'darkgreen',
+      top: fRect.getScaledHeight() - 1,
       left: 0,
-      top: 0
+      fill: 'rgb(255, 255, 255)',
+      editable: true,
     });
+
+    var group = new fabric.Group([fRect, text], {
+      left: 100,
+      top: 100
+    });
+
 
     if (canvas) {
       fRect.perPixelTargetFind = true;
