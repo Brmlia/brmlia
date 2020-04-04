@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageUpload} from "../fileuploader/index.js";
+import {FileUpload} from "../fileuploader/index.js";
 import {fileApi} from "../fileuploader/fileStore.js";
 import {annotApi} from '../annotator/annotStore.js'
 import {
@@ -16,19 +16,19 @@ class Annotator extends React.Component {
       if (this.file_size !== state.size) {
         this.file_size = state.size
 
-        console.log("files: ", state.file)
+        console.log("fileApi - files: ", state.file)
       }
     })
     annotApi.subscribe(state =>  {
       if (this.annotations !== state.annotations) {
         this.annotations = state.annotations
 
-        console.log("annotations: ", state.annotations)
+        console.log("annotApi - annotations: ", state.annotations)
       }
     })
     return (
       <div>
-        <Button outline color="primary" className="image-upload-btn"> <ImageUpload name="Import Image" />  </Button>
+        <Button outline color="primary" className="image-upload-btn"> <FileUpload name="Import" />  </Button>
       </div>
     );
   }

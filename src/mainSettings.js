@@ -40,7 +40,6 @@ export function updateChannelSel(channel) {
 }
 
 export function updateLastSel(channel) {
-  console.log("updateLastSel ", channel )
   settingsApi.setState( prevState => ({
     ...prevState,
     lastSelected: channel

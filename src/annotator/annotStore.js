@@ -6,7 +6,7 @@ export const initState = () => {
 }
 export const prodState = {
   img_name: "",
-  annotations: {}
+  annotations: []
 }
 
 export const devState = {

@@ -1,7 +1,7 @@
 import csv from "csvtojson";
-import { getJson } from "../fileuploader/index.js"
+import { saveJson } from "../fileuploader/index.js"
 
-export function convertToJson(file) {
+export function importCsv(file) {
 
   const reader = new FileReader();
 
@@ -28,7 +28,7 @@ export function convertToJson(file) {
             toJson.push(builtObject);
           }
         });
-        getJson(toJson);
+        saveJson(toJson);
       });
   };
 
@@ -36,4 +36,14 @@ export function convertToJson(file) {
   reader.onerror = () => console.log("file reading has failed");
 
   reader.readAsText(file, 'ISO-8859-1');
+}
+
+export function importJson(file) {
+  const reader = new FileReader();
+  let json;
+  reader.onload = () => {
+    json = JSON.parse(reader.result);
+    saveJson(json.annotations);
+  }
+  reader.readAsText(file);
 }

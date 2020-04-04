@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 import { fileApi } from './fileStore.js'
 import { annotApi } from '../annotator/annotStore.js'
-import { convertToJson } from '../annotator/importer.js'
+import { importCsv, importJson } from '../annotator/importer.js'
 
 const fApi = fileApi;
 
@@ -12,12 +12,9 @@ const img = {
   height: '100%'
 };
 
-var json = {};
 var idx = 0;
 
-export function getJson(result) {
-  json = result;
-
+export function saveJson(result) {
   fApi.setState( prevState => {
     const file = prevState.file.map (( f, i) => {
       if (i === idx) {
@@ -32,11 +29,14 @@ export function getJson(result) {
     return file;
   })
 
-  annotApi.setState( {
-    img_name: fApi.getState().file[idx].name,
-    annotations: result
+  addAnnotation(result);
+}
 
-  })
+export function addAnnotation(annotation) {
+  annotApi.setState( prevState => ({
+    img_name: fApi.getState().file[idx].name,
+    annotations: prevState.annotations.concat(annotation)
+  }))
 }
 
 function addFile(file) {
@@ -58,7 +58,18 @@ function addFile(file) {
       file: [...prevState.file, {
         name: file.name,
         type: file.type,
-        json: convertToJson(file)
+        json: importCsv(file)
+      }],
+      size: prevState.size + 1
+    }))
+  }
+  else if (file.type === "application/json") {
+    fApi.setState( prevState => ({
+      ...prevState,
+      file: [...prevState.file, {
+        name: file.name,
+        type: file.type,
+        json: importJson(file)
       }],
       size: prevState.size + 1
     }))
@@ -85,7 +96,18 @@ function initFile(file) {
       file: [{
         name: file.name,
         type: file.type,
-        json: convertToJson(file)
+        json: importCsv(file)
+      }],
+      size: prevState.size + 1
+    }))
+  }
+  else if (file.type === "application/json") {
+    fApi.setState( prevState => ({
+      ...prevState,
+      file: [{
+        name: file.name,
+        type: file.type,
+        json: importJson(file)
       }],
       size: prevState.size + 1
     }))
@@ -114,10 +136,10 @@ function isValidFile(name) {
 }
 
 
-export function ImageUpload(props) {
+export function FileUpload(props) {
   const [files, setFiles] = useState([]);
   const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/png, image/tiff, .csv',
+    accept: 'image/png, image/tiff, .csv, .json',
     onDrop: acceptedFiles => {
       setFiles(acceptedFiles.map(file =>
         Object.assign(file, {
