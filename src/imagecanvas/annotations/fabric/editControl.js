@@ -27,15 +27,14 @@ export function drawRect(canvas, rect, label) {
   var fRect = new fabric.Rect({
     left: rect.left,
     top: rect.top,
-    fill: 'transparent',
     width: rect.width,
     height: rect.height,
-    objectCaching: false,
-    transparentCorners: false,
-    cornerColor: 'blue',
-    stroke: 'lightgreen',
+    fill: 'transparent',
+    stroke: 'darkgreen',
+    strokeLineJoin: 'round',
     strokeWidth: 4,
-    cornerStyle: 'circle'
+    objectCaching: false,
+
   });
   var group = new fabric.Group([fRect], {
     left: 100,
@@ -45,6 +44,11 @@ export function drawRect(canvas, rect, label) {
     fontSize: 30,
     originX: 'left',
     originY: 'top',
+    fontFamily: 'Arial',
+    fontSize: 20,
+    fontWeight: 'bold',
+    fill: 'white',
+    textBackgroundColor: 'darkgreen',
     top: group.height/2+group.bottom,
     left: group.width/2+group.left
   });
