@@ -1,16 +1,16 @@
-import React from 'react';
-
 export const mainStyle = {
   overflowY: 'scroll',
-  height: '500px',
-  position: 'relative',
+  overflowX: 'scroll',
+  height: '100%',
+  width: '100%',
+  // height: '500px',
+  // width: '900px',
+  position: 'relative'
 };
 export const containerStyle = {
-  // overflowY: 'scroll',
-  flex: 1.0,
-  // height: '100px',
-  position: 'relative',
-};
+  width: '900px',
+  marginLeft: 0,
+}
 export const rowStyle = {
   flex: 1.0,
   position: 'relative',
@@ -21,15 +21,18 @@ export const cardStyle = {
 };
 
 export const buttonGroup = {
-  size: 'sm',
+  size: "sm",
   vertical: false,
-};
+  flex: 1.0,
+  padding: 15
+}
 
 export const mainView = {
   flex: 1,
   flexDirection: 'column',
   justifyContent: 'center',
-};
+  maxWidth: '20%'
+}
 
 export const innerView = {
   flex: 0.8,
@@ -38,29 +41,44 @@ export const innerView = {
 
 export const container = {
   fluid: true,
-  // fluid: "sm", "md", "lg", "xl", true, false
-};
+  maxWidth: '100%',
+}
 
 export const row = {
   noGutters: false,
   form: false,
-  xs: '2',
-  // sm: "",
-  // md: "",
-  // lg: "",
-  // xl: ""
-};
+  xs: "2"
+}
 
 export const col = {
-  xs: '2',
-  // sm: "",
-  // md: "",
-  // lg: "",
-  // xl: ""
-};
+  xs: "2"
+}
 
 export const card = {
-  tag: '',
-  inverse: false,
-  color: '',
-};
+  justify:'center',
+  alignContent: 'center',
+  alignItems: 'center',
+  textAlign: 'center',
+  width: '100%',
+  fluid: true,
+  fontSize: "12px"
+}
+
+export const cardBody = {
+  width: '85%',
+  height: '100%'
+}
+
+export const mainImg = {
+  width: '100%'
+}
+
+export const axesImg = {
+  width: '100%'
+}
+
+export const canvasStyle = {
+  position: 'center',
+  height: '100px',
+  width: '88px',
+}
