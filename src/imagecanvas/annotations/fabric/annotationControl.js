@@ -32,7 +32,6 @@ export function deleteAnnotation(index) {
 
 export function deleteCachedAnnotation(index) {
 
-  console.log("index:" ,index)
   const cachedAnnot = cachedAnnotApi.getState().cachedAnnots[index];
 
   addAnnotation(cachedAnnot.rect, cachedAnnot.label)
