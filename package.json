@@ -11,6 +11,7 @@
     "bootstrap": "^4.4.1",
     "concurrently": "^5.1.0",
     "csvtojson": "^2.0.10",
+    "fabric": "^3.6.3",
     "fs": "0.0.1-security",
     "image-js": "^0.21.9",
     "material-ui": "^0.20.2",
@@ -33,7 +34,7 @@
     "zustand": "^2.2.3"
   },
   "scripts": {
-    "start": "PORT=2000 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "predeploy": "npm run build",

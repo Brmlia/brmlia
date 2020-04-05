@@ -1,0 +1,36 @@
+#canvasContainer {
+    /* display: grid;
+    justify-content: center;
+    align-content: center; */
+    position: relative;
+    width: 750px;
+    height: 750px;
+}
+
+#imageCanvas {
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 3;    
+}
+
+#imageLayer {
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 750px;
+    width: 750px;
+    z-index: 3;
+
+}
+
+#annotationLayer {
+    opacity: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    z-index: 5;
+
+}
+

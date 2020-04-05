@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 import { fileApi } from './fileStore.js'
 import { annotApi } from '../annotator/annotStore.js'
+import { addAnnotation } from '../annotations/fabric/annotationControl.js'
 import { importCsv, importJson } from '../annotator/importer.js'
 
 const fApi = fileApi;
@@ -29,14 +30,29 @@ export function saveJson(result) {
     return file;
   })
 
-  addAnnotation(result);
+  addJsonAnnot(result);
 }
 
-export function addAnnotation(annotation) {
+function isAnnotValid(annotation) {
+  return (annotation
+    && (annotation.rect.left > 0) && (annotation.rect.left < 1000)
+    && (annotation.rect.top > 0) && (annotation.rect.top < 1000)
+    && (annotation.rect.width > 0) && (annotation.rect.width < 1000)
+    && (annotation.rect.height > 0) && (annotation.rect.height < 1000)
+    && (annotation.label.length > 0)
+  )
+}
+
+export function addJsonAnnot(annotation) {
   annotApi.setState( prevState => ({
     img_name: fApi.getState().file[idx].name,
     annotations: prevState.annotations.concat(annotation)
   }))
+  for (var i = 0;  i < annotation.length; i++) {
+    if (isAnnotValid(annotation[i])) {
+      addAnnotation(annotation[i].rect, annotation[i].label)
+    }
+  }
 }
 
 function addFile(file) {
