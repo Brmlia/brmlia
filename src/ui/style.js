@@ -79,24 +79,24 @@ export const axesImg = {
 
 export const canvasStyle1 = {
   position: 'absolute',
-  height: '600px',
-  width: '600px',
+  height: '300px',
+  width: '300px',
   zIndex: '3',
   marginLeft: '100px',
   opacity: '0.5'
 }
 export const canvasStyle2 = {
   position: 'absolute',
-  height: '600px',
-  width: '600px',
+  height: '300px',
+  width: '300px',
   zIndex: '5',
   marginLeft: '50px',
   opacity: '0.5'
 }
 export const canvasStyle3 = {
   position: 'absolute',
-  height: '600px',
-  width: '600px',
+  height: '300px',
+  width: '300px',
   zIndex: '7',
   opacity: '0.5'
 }

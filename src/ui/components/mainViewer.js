@@ -13,7 +13,7 @@ import { settingsApi } from '../../mainSettings.js';
 class mainViewer extends React.Component {
 
   state = {
-    view: <Viewer imageWidth={mainImg.width}/>
+    view: <Viewer imageWidth={mainImg.width} type="0"/>
   }
 
   altView() {

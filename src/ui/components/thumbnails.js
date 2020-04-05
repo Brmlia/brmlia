@@ -5,18 +5,17 @@ import { fApi } from '../../utils/index.js'
 
 class Thumbnails extends React.Component {
 
-  state = {
-    selected: 0
-  }
+  selected = 0;
 
   setSelected(idx) {
-    if (this.state.selected !== idx) {
+    if (this.selected !== idx) {
       fApi.setState( prevState => ({
         ...prevState,
         selected: idx
       }))
-      this.state.selected = idx;
+      this.selected = idx;
     }
+    console.log("selected: ", this.selected)
   }
 
   allThumbs = () => {
