@@ -10,20 +10,20 @@ export function drawSampleRect(canvas) {
     height: 100
   }
   const label = 'label'+(getLastAnnotIdx()+1);
-  drawRect(canvas, rect, label)
-  addAnnotation(rect, label)
+  drawRect(canvas, rect, label);
+  addAnnotation(rect, label);
 }
 
 export function drawFreeStyle(canvas) {
   window.canvas = canvas;
   canvas.isMouseDown = false;
-
   canvas.isDrawingMode = true;
   canvas.freeDrawingBrush.color = "#000";
   canvas.freeDrawingBrush.width = 4;
 }
 
 export function drawRect(canvas, rect, label) {
+  console.log(rect);
   var fRect = new fabric.Rect({
     left: rect.left,
     top: rect.top,
@@ -34,12 +34,9 @@ export function drawRect(canvas, rect, label) {
     strokeLineJoin: 'round',
     strokeWidth: 4,
     objectCaching: false,
+  });
 
-  });
-  var group = new fabric.Group([fRect], {
-    left: 100,
-    bottom: 100
-  });
+  var group = new fabric.Group([fRect]);
   var text = new fabric.IText(label, {
     fontSize: 30,
     originX: 'left',
@@ -49,8 +46,8 @@ export function drawRect(canvas, rect, label) {
     fontWeight: 'bold',
     fill: 'white',
     textBackgroundColor: 'darkgreen',
-    top: group.height/2+group.bottom,
-    left: group.width/2+group.left
+    top: group.top + group.height - fRect.strokeWidth,
+    left: group.left,
   });
 
   if (canvas) {
