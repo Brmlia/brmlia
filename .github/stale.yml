@@ -1,0 +1,2 @@
+# Give branches two weeks of inactivity given our timeline
+daysUntilStale: 14
