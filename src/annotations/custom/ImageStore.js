@@ -5,6 +5,10 @@ export const createTexture = (image) => {
   return new THREE.TextureLoader().load(image);
 }
 
+export const createTextureFromTiff = (image) => {
+  return new THREE.TextureLoader().load(image);
+}
+
 const initState = {
   uniforms: {
     brightness: {
@@ -20,10 +24,10 @@ const initState = {
       value: '16.0'
     },
     image: {
-      value: createTexture(require('./brom.jpeg'))
+      value: createTexture(require('./pics/brom.jpeg'))
     }
   },
-  texture: null,
+  image: "",
   brightness: '0.0',
   name: ""
 }

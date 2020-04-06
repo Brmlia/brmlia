@@ -41,8 +41,6 @@ const vertexShader = `
 
 function Image() {
 
-  console.log(uApi.getState().uniforms.image);
-
   const material = useRef()
 
   var uniforms = useMemo(
@@ -50,9 +48,9 @@ function Image() {
       uApi.getState().uniforms,
     []
   )
-  console.log("init" , uApi.getState().uniforms);
 
   useFrame(state => {
+    material.current.uniforms.image.value = uApi.getState().uniforms.image.value;
     material.current.uniforms.brightness.value = uApi.getState().uniforms.brightness.value;
     material.current.uniforms.contrast.value = uApi.getState().uniforms.contrast.value;
     material.current.uniforms.whitepoint.value = uApi.getState().uniforms.whitepoint.value;

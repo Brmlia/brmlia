@@ -1,5 +1,6 @@
 import csv from "csvtojson";
-import { saveJson } from "../fileuploader/index.js"
+import { saveJson, updateTiff } from "../fileuploader/fileControl.js"
+import { Image } from "image-js"
 
 export function importCsv(file) {
 
@@ -46,4 +47,34 @@ export function importJson(file) {
     saveJson(json.annotations);
   }
   reader.readAsText(file);
+}
+
+export function importTiff(file) {
+  const reader = new FileReader();
+
+  if (file) {
+      reader.onload = () => {
+        var success = (file.type === "image/tiff");
+        if (success) {
+          console.debug("importer::importTiff() - Parsing TIFF image...");
+          parseTiff(file);
+        }
+
+      }
+      reader.onloadend = () => {
+      }
+      reader.onprogress = () => {
+        console.log("importer::importTiff()", "Still Parsing...")
+      }
+      reader.readAsArrayBuffer(file);
+  }
+}
+
+export function parseTiff(file) {
+  var image = file.preview
+  Image.load(image).then(function (image) {
+    updateTiff(image)
+  }).catch( function (e) {
+    console.error("ERROR Unsupported compression: ", e)
+  })
 }
