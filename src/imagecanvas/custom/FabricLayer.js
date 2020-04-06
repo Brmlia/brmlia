@@ -30,6 +30,7 @@ class FabricLayer extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.setMode = this.setMode.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
+    this.handleObjectSelect = this.handleObjectSelect.bind(this);
   }
 
   componentDidMount() {
@@ -40,11 +41,11 @@ class FabricLayer extends React.Component {
       'object:moving': this.handleDrag,
       'object:rotating': this.handleDrag,
       'object:scaling': this.handleDrag,
+      'object:selected': this.handleObjectSelect,
     });
   }
 
   setMode(newMode) {
-    console.log(newMode);
     this.setState({mode: newMode});
 
     if (newMode == modes.FREE) {
@@ -95,11 +96,8 @@ class FabricLayer extends React.Component {
         left:this.state.lastMousex, 
       };
       drawRect(canvas, rect, 'label');
+      this.setMode(modes.SELECT);
     }
-    // if there is a last mouse x and y
-      // get width and height by computing the x and y from mouse down
-      // draw rectangle
-      // add to annotations
   }
 
   handleObjectSelect(e) {
@@ -107,6 +105,11 @@ class FabricLayer extends React.Component {
       // if Delete button is selected
         // delete all objects from canvas
         // remove from annotations
+
+    // selects both bounding box and label so they move together
+    if (e.target.label) {  
+      canvas.setActiveObject(new fabric.ActiveSelection([e.target, e.target.label]));
+    }
   }
 
   handleObjectResize(e) {
