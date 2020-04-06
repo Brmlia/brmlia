@@ -1,17 +1,17 @@
 import create from 'zustand';
 
 const initState = {
-  annotations: []
-}
+  annotations: [],
+};
 
 const cachedState = {
-  cachedAnnots: []
-}
+  cachedAnnots: [],
+};
 
-export const [useAnnotStore, annotApi] = create ( set => ( {
-  ...initState
-}))
+export const [useAnnotStore, annotApi] = create(set => ({
+  ...initState,
+}));
 
-export const [useCacheStore, cachedAnnotApi] = create ( set => ( {
-  ...cachedState
-}))
+export const [useCacheStore, cachedAnnotApi] = create(set => ({
+  ...cachedState,
+}));

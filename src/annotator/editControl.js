@@ -1,16 +1,23 @@
-import { fabric } from "fabric";
-import { addAnnotation, undoAnnotation, getLastAnnotIdx, getLastCachedAnnot, getLastCachedAnnotIdx, deleteCachedAnnotation } from './annotationControl.js'
+import { fabric } from 'fabric';
+import {
+  addAnnotation,
+  undoAnnotation,
+  getLastAnnotIdx,
+  getLastCachedAnnot,
+  getLastCachedAnnotIdx,
+  deleteCachedAnnotation,
+} from './annotationControl.js';
 
 export function drawSampleRect(canvas) {
   const rect = {
     left: 100,
     top: 50,
     width: 200,
-    height: 100
-  }
-  const label = 'label'+(getLastAnnotIdx()+1);
-  drawRect(canvas, rect, label)
-  addAnnotation(rect, label)
+    height: 100,
+  };
+  const label = 'label' + (getLastAnnotIdx() + 1);
+  drawRect(canvas, rect, label);
+  addAnnotation(rect, label);
 }
 
 export function drawFreeStyle(canvas) {
@@ -18,7 +25,7 @@ export function drawFreeStyle(canvas) {
   canvas.isMouseDown = false;
 
   canvas.isDrawingMode = true;
-  canvas.freeDrawingBrush.color = "#000";
+  canvas.freeDrawingBrush.color = '#000';
   canvas.freeDrawingBrush.width = 4;
 }
 
@@ -34,18 +41,18 @@ export function drawRect(canvas, rect, label) {
     cornerColor: 'blue',
     stroke: 'lightgreen',
     strokeWidth: 4,
-    cornerStyle: 'circle'
+    cornerStyle: 'circle',
   });
   var group = new fabric.Group([fRect], {
     left: 100,
-    bottom: 100
+    bottom: 100,
   });
   var text = new fabric.IText(label, {
     fontSize: 30,
     originX: 'left',
     originY: 'top',
-    top: group.height/2+group.bottom,
-    left: group.width/2+group.left
+    top: group.height / 2 + group.bottom,
+    left: group.width / 2 + group.left,
   });
 
   if (canvas) {
@@ -74,7 +81,7 @@ export function undo(canvas) {
         canvas.remove(o);
       }
       return null;
-    })
+    });
 
     // remove from annotations
     undoAnnotation();
@@ -84,7 +91,7 @@ export function undo(canvas) {
 export function redo(canvas) {
   const idx = getLastCachedAnnotIdx();
 
-  if ( idx >= 0 ) {
+  if (idx >= 0) {
     // get last from cache
     const cachedAnnot = getLastCachedAnnot();
     // redraw on canvas
@@ -93,4 +100,3 @@ export function redo(canvas) {
     deleteCachedAnnotation(idx);
   }
 }
-

@@ -1,9 +1,8 @@
-import csv from "csvtojson";
-import { saveJson, updateTiff } from "../fileuploader/fileControl.js"
-import { Image } from "image-js"
+import csv from 'csvtojson';
+import { saveJson, updateTiff } from '../fileuploader/fileControl.js';
+import { Image } from 'image-js';
 
 export function importCsv(file) {
-
   const reader = new FileReader();
 
   reader.onload = () => {
@@ -11,7 +10,7 @@ export function importCsv(file) {
 
     csv({
       noheader: true,
-      output: "json"
+      output: 'json',
     })
       .fromString(fileAsBinaryString)
       .then(csvRows => {
@@ -33,8 +32,8 @@ export function importCsv(file) {
       });
   };
 
-  reader.onabort = () => console.log("file reading was aborted");
-  reader.onerror = () => console.log("file reading has failed");
+  reader.onabort = () => console.log('file reading was aborted');
+  reader.onerror = () => console.log('file reading has failed');
 
   reader.readAsText(file, 'ISO-8859-1');
 }
@@ -45,7 +44,7 @@ export function importJson(file) {
   reader.onload = () => {
     json = JSON.parse(reader.result);
     saveJson(json.annotations);
-  }
+  };
   reader.readAsText(file);
 }
 
@@ -53,28 +52,28 @@ export function importTiff(file) {
   const reader = new FileReader();
 
   if (file) {
-      reader.onload = () => {
-        var success = (file.type === "image/tiff");
-        if (success) {
-          console.debug("importer::importTiff() - Parsing TIFF image...");
-          parseTiff(file);
-        }
-
+    reader.onload = () => {
+      var success = file.type === 'image/tiff';
+      if (success) {
+        console.debug('importer::importTiff() - Parsing TIFF image...');
+        parseTiff(file);
       }
-      reader.onloadend = () => {
-      }
-      reader.onprogress = () => {
-        console.log("importer::importTiff()", "Still Parsing...")
-      }
-      reader.readAsArrayBuffer(file);
+    };
+    reader.onloadend = () => {};
+    reader.onprogress = () => {
+      console.log('importer::importTiff()', 'Still Parsing...');
+    };
+    reader.readAsArrayBuffer(file);
   }
 }
 
 export function parseTiff(file) {
-  var image = file.preview
-  Image.load(image).then(function (image) {
-    updateTiff(image)
-  }).catch( function (e) {
-    console.error("ERROR Unsupported compression: ", e)
-  })
+  var image = file.preview;
+  Image.load(image)
+    .then(function(image) {
+      updateTiff(image);
+    })
+    .catch(function(e) {
+      console.error('ERROR Unsupported compression: ', e);
+    });
 }
