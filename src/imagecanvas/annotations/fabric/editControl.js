@@ -2,6 +2,8 @@ import React from "react";
 import { fabric } from "fabric";
 import { addAnnotation, undoAnnotation, redoAnnotation, getLastAnnotIdx, getLastCachedAnnot, getLastCachedAnnotIdx, deleteCachedAnnotation } from './annotationControl.js'
 
+const colors = {red: '#dd9999', green: '#99dd99', purple: '#9999dd'};
+
 export function drawSampleRect(canvas) {
   const rect = {
     left: 100,
@@ -10,14 +12,13 @@ export function drawSampleRect(canvas) {
     height: 100
   }
   const label = 'label'+(getLastAnnotIdx()+1);
-  drawRect(canvas, rect, label)
-  addAnnotation(rect, label)
+  drawRect(canvas, rect, label);
+  addAnnotation(rect, label);
 }
 
 export function drawFreeStyle(canvas) {
   window.canvas = canvas;
   canvas.isMouseDown = false;
-
   canvas.isDrawingMode = true;
   canvas.freeDrawingBrush.color = "#000";
   canvas.freeDrawingBrush.width = 4;
@@ -30,16 +31,15 @@ export function drawRect(canvas, rect, label) {
     width: rect.width,
     height: rect.height,
     fill: 'transparent',
-    stroke: 'darkgreen',
+    stroke: colors.green,
     strokeLineJoin: 'round',
     strokeWidth: 4,
     objectCaching: false,
+  });
 
-  });
-  var group = new fabric.Group([fRect], {
-    left: 100,
-    bottom: 100
-  });
+  var group = new fabric.Group([fRect]);
+
+  label += getLastAnnotIdx() + 1;
   var text = new fabric.IText(label, {
     fontSize: 30,
     originX: 'left',
@@ -48,9 +48,9 @@ export function drawRect(canvas, rect, label) {
     fontSize: 20,
     fontWeight: 'bold',
     fill: 'white',
-    textBackgroundColor: 'darkgreen',
-    top: group.height/2+group.bottom,
-    left: group.width/2+group.left
+    textBackgroundColor: colors.green,
+    top: group.top + group.height - fRect.strokeWidth,
+    left: group.left,
   });
 
   if (canvas) {
@@ -59,6 +59,8 @@ export function drawRect(canvas, rect, label) {
     canvas.setActiveObject(group);
     group.addWithUpdate(text);
   }
+
+  addAnnotation(fRect, label);
 }
 
 export function updateRect(rect) {
