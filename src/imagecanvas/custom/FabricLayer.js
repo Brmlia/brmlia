@@ -42,8 +42,21 @@ class FabricLayer extends React.Component {
     this.setState({mode: newMode});
   }
 
+  setNewCoordinates(options) {
+    let x = options.e.clientX;
+    let y = options.e.clientY;
+    let canvasLeft = canvas._offset.left;
+    let canvasRight = canvas._offset.left + canvas.width;
+    let canvasTop = canvas._offset.top;
+    let canvasBottom = canvas._offset.top + canvas.height;
+
+    this.setState({
+      mousex: x < canvasLeft ? canvasLeft : (x > canvasRight ? canvasRight - 15 : x),
+      mousey: y < canvasTop ? canvasTop : (y > canvasBottom ? canvasBottom - 15 : y),
+    });
+  }
+
   handleMouseDown(options) {
-    console.log(this.state);
     if (!canvas.isDrawingMode) {
         this.setState({
         lastMousex: options.e.clientX,
@@ -54,14 +67,9 @@ class FabricLayer extends React.Component {
     }
   }
 
-
   handleMouseUp(options){
-    this.setState({
-      mousex: options.e.clientX,
-      mousey: options.e.clientY
-    });
+    this.setNewCoordinates(options);
     
-    // console.log(this.state);
     if (this.state.lastMousex && this.state.lastMousey && this.state.mode === modes.RECT) {
       const rect = {
         width: this.state.mousex - this.state.lastMousex, 
@@ -71,10 +79,7 @@ class FabricLayer extends React.Component {
       };
       drawRect(canvas, rect, 'label');
       this.setState({mode: modes.SELECT});
-      // drawSampleRect(canvas);
     }
-    
-
     // if there is a last mouse x and y
       // get width and height by computing the x and y from mouse down
       // draw rectangle
@@ -104,8 +109,8 @@ class FabricLayer extends React.Component {
       <div id="annotationLayer" 
       >
         <canvas ref={this.canvasRef}
-          width={window.innerWidth}
-          height={window.innerHeight}
+          width={750}
+          height={750}
         />
         <button
           style={{ position: "absolute", zIndex: 1, top: 10, left: 10 }}

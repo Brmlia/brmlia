@@ -23,7 +23,6 @@ export function drawFreeStyle(canvas) {
 }
 
 export function drawRect(canvas, rect, label) {
-  console.log(rect);
   var fRect = new fabric.Rect({
     left: rect.left,
     top: rect.top,
