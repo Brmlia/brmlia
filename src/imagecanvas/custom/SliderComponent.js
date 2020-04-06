@@ -143,13 +143,15 @@ class SliderComponent extends React.Component {
 
   render() {
 
+
     var sliderValueBr = this.sliderValueBr;
     var sliderValueCt = this.sliderValueCt;
     var sliderValueWp = this.sliderValueWp;
     var sliderValueBp = this.sliderValueBp;
     return (
       <div>
-        <Slider label="Brightness" width="40%" min="0" max="1" step="0.1" initial="0" multiplier="100" raw="0"sliderValue={sliderValueBr.bind(this)} />
+      
+        <Slider label="Brightnessss" width="40%" min="0" max="1" step="0.1" initial="0" multiplier="100" raw="0"sliderValue={sliderValueBr.bind(this)} />
         <Slider label="Contrast" width="40%" min="0" max="10" step="1" initial="0" multiplier="10" raw="0" sliderValue={sliderValueCt.bind(this)} />
         <Slider label="Whitepoint" width="40%" min="0" max="255" step="1" initial="235" multiplier="1" raw="1" sliderValue={sliderValueWp.bind(this)} />
         <Slider label="Blackpoint" width="40%" min="0" max="255" step="1" initial="16" multiplier="1" raw="1" sliderValue={sliderValueBp.bind(this)} />
