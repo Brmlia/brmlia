@@ -4,7 +4,7 @@
 
 ### CI Builds
 
-For circleCI build-deploy process, all warnings are treated as errors (unless
+For circleCI build-deploy process (only run on commits/PRs to master), all warnings are treated as errors (unless
 the environment variable `CI=FALSE` is set, or other work-around), so expect
 that to fail for any build that has eslint warnings. To disable a warning
 explicitly, add a commented eslint directive above the location.
