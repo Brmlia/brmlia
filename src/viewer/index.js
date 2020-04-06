@@ -5,38 +5,20 @@ import '../styles.css';
 import Zpp from '../ui/components/zoom/zpp.js';
 import Zoom from '../ui/components/zoom/zoom.js';
 import { useZoomApi } from '../ui/components/zoom/zoomSettings.js';
-import { settingsApi } from '../mainSettings.js';
 
 class Viewer extends Component {
   state = {
-    image: '',
+    image: this.props.api.getState().file[this.props.api.getState().selected]
+      .image,
     zoom: 0,
   };
 
-  init() {
-    if (this.state.image === '') {
-      if (this.props.api.getState().file.length > 0) {
-        this.setState({
-          image: this.props.api.getState().file[
-            this.props.api.getState().selected
-          ].image,
-        });
-      }
-    }
-  }
-
   render() {
-    this.init();
     this.props.api.subscribe(state => {
-      if (state) {
-        const img = state.file[state.selected].image;
-        if (img) {
-          this.setState({
-            image: img,
-          });
-          this.forceUpdate();
-        }
-      }
+      this.setState({
+        image: state.file[state.selected].image,
+      });
+      this.forceUpdate();
     });
     useZoomApi.subscribe(state => {
       const zoom = state.views[this.props.type].zoomPct;
