@@ -1,4 +1,4 @@
-import { uApi } from '../../components/utils.js'
+import { uApi } from '../utils/index.js'
 import { createTexture, createTextureFromTiff } from './ImageStore.js'
 
 function isValidChannel (channel) {
@@ -77,7 +77,7 @@ function updateUniformBlackpoint(value, channel) {
   })
 }
 
-export function updateImage(file) {
+export function updateImage(file, channel) {
 
   let name = file.name;
   let blob = file.image;
@@ -91,45 +91,24 @@ export function updateImage(file) {
       texture = createTexture(blob);
     }
   }
+  const prevStateCh = uApi.getState().channels[channel-1];
 
-  if (uApi.getState().name !== name
-    || uApi.getState().image !== blob
-    || uApi.getState().uniforms.image.value !== texture
+  if (prevStateCh.name !== name
+    || prevStateCh.imagepath !== blob
+    || prevStateCh.uniforms.image.value !== texture
     ) {
-
-    updateImageData(name, blob)
-    updateUniformImage(texture, name)
+    updateUniformImage(texture, name, blob, channel)
   }
 }
 
-export function updateUniformImage(texture, name) {
-  uApi.setState( prevState => ({
-    ...prevState,
-    uniforms: {
-      ...prevState.uniforms,
-      image: {
-        ...prevState.uniforms.image,
-        value: texture
-      },
-    }
-  }))
-}
-
-export function updateImageData(name, imagepath) {
-  uApi.setState( prevState => ({
-    ...prevState,
-    image: imagepath,
-    name: name
-  }))
-}
-
-export function updateUniformImage2(texture, name, channel) {
+export function updateUniformImage(texture, name, imagepath, channel) {
   uApi.setState( prevState => {
     const channels = prevState.channels.map((ch, j) => {
       if (j === channel-1) {
         var newChannel = ch;
 
         newChannel.name = name;
+        newChannel.imagepath = imagepath;
         newChannel.uniforms.image.value = texture
         return newChannel;
       }

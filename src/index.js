@@ -1,17 +1,23 @@
-import "./styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React from "react";
 import ReactDOM from "react-dom";
 import Annotator from "./annotator/index.js"
-import TestImageComponent from "./annotations/custom/TestImageComponent.js"
+import ImageCanvas from "./imagecanvas/ImageCanvas.js"
+import Thumbnails from "./ui/components/thumbnails.js";
+import FabricLayer from "./ui/components/FabricLayer.js";
+import './styles.css'
 
 
 function Application() {
   return (
     <>
       <Annotator />
-      <TestImageComponent />
+      <div id="canvasContainer">
+        <ImageCanvas />
+        <FabricLayer />
+      </div>
+      <Thumbnails />
     </>
   );
 }

@@ -20,3 +20,29 @@ a {
 .viewer-wrapper {
   width: 100%;
 }
+
+#canvasContainer {
+    /* display: grid;
+    justify-content: center;
+    align-content: center; */
+    position: relative;
+    width: 750px;
+    height: 750px;
+    z-index: 5;
+}
+
+#thumbsContainer {
+    position: absolute;
+    z-index: 5;
+}
+
+
+#annotationLayer {
+    opacity: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    z-index: 5;
+
+}

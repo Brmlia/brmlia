@@ -1,4 +1,4 @@
-import {annotApi} from '../annotations/fabric/annotationStore.js'
+import {annotApi} from './annotationStore.js'
 
 export function exportJson() {
   const element = document.createElement("a");

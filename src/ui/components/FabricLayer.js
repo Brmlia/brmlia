@@ -1,7 +1,7 @@
 import React from "react";
 import { fabric } from "fabric";
-import {drawSampleRect, drawFreeStyle, drawRect, undo, redo} from '../fabric/editControl.js'
-import { annotApi } from '../fabric/annotationStore.js'
+import {drawSampleRect, drawFreeStyle, drawRect, undo, redo} from '../../annotator/editControl.js'
+import { annotApi } from '../../annotator/annotationStore.js'
 
 var canvas;
 

@@ -1,5 +1,5 @@
 import React, { useRef, useMemo } from 'react';
-import { uApi } from '../../components/utils.js'
+import { uApi } from '../utils/index.js'
 import {useFrame} from 'react-three-fiber'
 
 const fragmentShader = `
@@ -39,26 +39,27 @@ const vertexShader = `
   }
 `;
 
-function Image() {
+function Mesh(props) {
 
+  const ref = useRef()
   const material = useRef()
 
   var uniforms = useMemo(
     () =>
-      uApi.getState().uniforms,
-    []
+      uApi.getState().channels[props.channel-1].uniforms,
+    [props]
   )
 
   useFrame(state => {
-    material.current.uniforms.image.value = uApi.getState().uniforms.image.value;
-    material.current.uniforms.brightness.value = uApi.getState().uniforms.brightness.value;
-    material.current.uniforms.contrast.value = uApi.getState().uniforms.contrast.value;
-    material.current.uniforms.whitepoint.value = uApi.getState().uniforms.whitepoint.value;
-    material.current.uniforms.blackpoint.value = uApi.getState().uniforms.blackpoint.value;
+    material.current.uniforms.brightness.value = uApi.getState().channels[props.channel-1].uniforms.brightness.value;
+    material.current.uniforms.contrast.value = uApi.getState().channels[props.channel-1].uniforms.contrast.value;
+    material.current.uniforms.whitepoint.value = uApi.getState().channels[props.channel-1].uniforms.whitepoint.value;
+    material.current.uniforms.blackpoint.value = uApi.getState().channels[props.channel-1].uniforms.blackpoint.value;
+    material.current.uniforms.image.value = uApi.getState().channels[props.channel-1].uniforms.image.value;
   })
 
   return (
-    <mesh scale={[1.0, 1.0, 1.0]}>
+    <mesh ref={ref} scale={[1.0, 1.0, 1.0]}>
       <planeBufferGeometry attach="geometry" args={[5.0, 5.0]} />
       <shaderMaterial
         attach="material"
@@ -71,4 +72,4 @@ function Image() {
   )
 }
 
-export default Image;
+export default Mesh;

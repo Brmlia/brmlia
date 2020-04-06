@@ -1,8 +1,8 @@
 
 import { fileApi } from './fileStore.js'
 import { annotApi } from '../annotator/annotStore.js'
-import { addAnnotation } from '../annotations/fabric/annotationControl.js'
-import { createTexture, createTextureFromTiff } from '../annotations/custom/ImageStore.js'
+import { addAnnotation } from '../annotator/annotationControl.js'
+import { createTexture, createTextureFromTiff } from '../imagecanvas/ImageStore.js'
 import { importCsv, importJson, importTiff } from '../annotator/importer.js'
 
 const img = {
