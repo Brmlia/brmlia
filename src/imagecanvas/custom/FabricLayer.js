@@ -1,7 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { fabric } from "fabric";
-import {drawSampleRect, drawFreeStyle, drawRect, undo, redo} from '../annotations/fabric/editControl.js'
+import {drawRect, undo, redo} from '../annotations/fabric/editControl.js'
+import {addAnnotation, addCachedAnnotation} from '../annotations/fabric/annotationControl.js'
 
 var canvas;
 
@@ -29,17 +29,30 @@ class FabricLayer extends React.Component {
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.setMode = this.setMode.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
   }
 
   componentDidMount() {
     canvas = new fabric.Canvas(this.canvasRef.current);
-    canvas.on('mouse:down', this.handleMouseDown);
-    canvas.on('mouse:up', this.handleMouseUp);
-    // canvas.on('selection:created', this.setMode(modes.SELECT));
+    canvas.on({
+      'mouse:down': this.handleMouseDown,
+      'mouse:up': this.handleMouseUp,
+      'object:moving': this.handleDrag,
+      'object:rotating': this.handleDrag,
+      'object:scaling': this.handleDrag,
+    });
   }
 
   setMode(newMode) {
+    console.log(newMode);
     this.setState({mode: newMode});
+
+    if (newMode == modes.FREE) {
+      canvas.isDrawingMode = true;
+    }
+    else {
+      canvas.isDrawingMode = false;
+    }
   }
 
   setNewCoordinates(options) {
@@ -54,6 +67,10 @@ class FabricLayer extends React.Component {
       mousex: x < canvasLeft ? canvasLeft : (x > canvasRight ? canvasRight - 15 : x),
       mousey: y < canvasTop ? canvasTop : (y > canvasBottom ? canvasBottom - 15 : y),
     });
+  }
+
+  handleDrag(e){
+    this.setMode(modes.SELECT);
   }
 
   handleMouseDown(options) {
@@ -78,7 +95,6 @@ class FabricLayer extends React.Component {
         left:this.state.lastMousex, 
       };
       drawRect(canvas, rect, 'label');
-      this.setState({mode: modes.SELECT});
     }
     // if there is a last mouse x and y
       // get width and height by computing the x and y from mouse down
@@ -114,13 +130,13 @@ class FabricLayer extends React.Component {
         />
         <button
           style={{ position: "absolute", zIndex: 1, top: 10, left: 10 }}
-          onClick={() => this.setState({mode: modes.FREE})}
+          onClick={(e) => this.setMode(modes.FREE, e)}
         >
           Draw Freestyle
         </button>
         <button
           style={{ position: "absolute", zIndex: 1, top: 10, left: 200}}
-          onClick={() => this.setState({mode: modes.RECT})}
+          onClick={(e) => this.setMode(modes.RECT, e)}
         >
           Draw Rect
         </button>
