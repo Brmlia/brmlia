@@ -1,19 +1,13 @@
-import React from "react";
+import React from 'react';
 
 import { cardStyle, card } from '../style.js';
-import "./../styles.css"
-import "../../utils/styles.css"
-import ChannelViewer from "./channelViewer.js"
+import './../styles.css';
+import '../../utils/styles.css';
+import ChannelViewer from './channelViewer.js';
 
-import {
-  Button,
-  Card,
-  CardTitle,
-  CardBody
-} from 'reactstrap';
+import { Button, Card, CardTitle, CardBody } from 'reactstrap';
 
 class AnnotatorViewer extends React.Component {
-
   state = {
     annotations: {
       annot1Sel: false,
@@ -23,62 +17,105 @@ class AnnotatorViewer extends React.Component {
     },
   };
 
-  updateSelection = (sel) => {
+  updateSelection = sel => {
     switch (sel) {
       case 1:
         this.setState(prevState => ({
           annotations: {
-            ...prevState.annotations, annot1Sel: !this.state.annotations.annot1Sel
-          }
+            ...prevState.annotations,
+            annot1Sel: !this.state.annotations.annot1Sel,
+          },
         }));
-      break;
+        break;
       case 2:
         this.setState(prevState => ({
           annotations: {
-            ...prevState.annotations, annot2Sel: !this.state.annotations.annot2Sel
-          }
+            ...prevState.annotations,
+            annot2Sel: !this.state.annotations.annot2Sel,
+          },
         }));
-      break;
+        break;
       case 3:
         this.setState(prevState => ({
           annotations: {
-            ...prevState.annotations, annot3Sel: !this.state.annotations.annot3Sel
-          }
+            ...prevState.annotations,
+            annot3Sel: !this.state.annotations.annot3Sel,
+          },
         }));
-      break;
+        break;
       case 4:
         this.setState(prevState => ({
           annotations: {
-            ...prevState.annotations, annot4Sel: !this.state.annotations.annot4Sel
-          }
+            ...prevState.annotations,
+            annot4Sel: !this.state.annotations.annot4Sel,
+          },
         }));
-      break;
+        break;
       default:
-      break;
+        break;
     }
-  }
+  };
 
   render() {
     return (
       <div>
         <div className="annotations-class" style={cardStyle}>
-          {console.log("Annotations: " + this.state.annotations.annot1Sel
-            + " " + this.state.annotations.annot2Sel + " " + this.state.annotations.annot3Sel + " " + this.state.annotations.annot4Sel
+          {console.log(
+            'Annotations: ' +
+              this.state.annotations.annot1Sel +
+              ' ' +
+              this.state.annotations.annot2Sel +
+              ' ' +
+              this.state.annotations.annot3Sel +
+              ' ' +
+              this.state.annotations.annot4Sel
           )}
           <Card style={card}>
             <CardBody>
               <CardTitle> Annotated Class Selection </CardTitle>
             </CardBody>
-            <Button outline color="primary" id="annot1Btn" onClick={() => {this.updateSelection(1)}} active={this.state.annotations.annot1Sel} >
+            <Button
+              outline
+              color="primary"
+              id="annot1Btn"
+              onClick={() => {
+                this.updateSelection(1);
+              }}
+              active={this.state.annotations.annot1Sel}
+            >
               Annotation Class 1
             </Button>
-            <Button outline color="primary" id="annot1Btn" onClick={() => {this.updateSelection(2)}} active={this.state.annotations.annot2Sel} >
+            <Button
+              outline
+              color="primary"
+              id="annot1Btn"
+              onClick={() => {
+                this.updateSelection(2);
+              }}
+              active={this.state.annotations.annot2Sel}
+            >
               Annotation Class 2
             </Button>
-            <Button outline color="primary" id="annot1Btn" onClick={() => {this.updateSelection(3)}} active={this.state.annotations.annot3Sel} >
+            <Button
+              outline
+              color="primary"
+              id="annot1Btn"
+              onClick={() => {
+                this.updateSelection(3);
+              }}
+              active={this.state.annotations.annot3Sel}
+            >
               Annotation Class 3
             </Button>
-            <Button outline color="primary" id="annot1Btn" onClick={() => {this.updateSelection(4)}} active={this.state.annotations.annot4Sel} >
+            <Button
+              outline
+              color="primary"
+              id="annot1Btn"
+              onClick={() => {
+                this.updateSelection(4);
+              }}
+              active={this.state.annotations.annot4Sel}
+            >
               Annotation Class 4
             </Button>
           </Card>

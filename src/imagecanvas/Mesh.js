@@ -1,7 +1,7 @@
 import React, { useRef, useMemo } from 'react';
-import { uApi } from '../utils/index.js'
-import {useFrame} from 'react-three-fiber'
-import '../styles.css'
+import { uApi } from '../utils/index.js';
+import { useFrame } from 'react-three-fiber';
+import '../styles.css';
 
 const fragmentShader = `
   uniform sampler2D image;
@@ -41,23 +41,31 @@ const vertexShader = `
 `;
 
 function Mesh(props) {
-
-  const ref = useRef()
-  const material = useRef()
+  const ref = useRef();
+  const material = useRef();
 
   var uniforms = useMemo(
-    () =>
-      uApi.getState().channels[props.channel-1].uniforms,
+    () => uApi.getState().channels[props.channel - 1].uniforms,
     [props]
-  )
+  );
 
   useFrame(state => {
-    material.current.uniforms.brightness.value = uApi.getState().channels[props.channel-1].uniforms.brightness.value;
-    material.current.uniforms.contrast.value = uApi.getState().channels[props.channel-1].uniforms.contrast.value;
-    material.current.uniforms.whitepoint.value = uApi.getState().channels[props.channel-1].uniforms.whitepoint.value;
-    material.current.uniforms.blackpoint.value = uApi.getState().channels[props.channel-1].uniforms.blackpoint.value;
-    material.current.uniforms.image.value = uApi.getState().channels[props.channel-1].uniforms.image.value;
-  })
+    material.current.uniforms.brightness.value = uApi.getState().channels[
+      props.channel - 1
+    ].uniforms.brightness.value;
+    material.current.uniforms.contrast.value = uApi.getState().channels[
+      props.channel - 1
+    ].uniforms.contrast.value;
+    material.current.uniforms.whitepoint.value = uApi.getState().channels[
+      props.channel - 1
+    ].uniforms.whitepoint.value;
+    material.current.uniforms.blackpoint.value = uApi.getState().channels[
+      props.channel - 1
+    ].uniforms.blackpoint.value;
+    material.current.uniforms.image.value = uApi.getState().channels[
+      props.channel - 1
+    ].uniforms.image.value;
+  });
 
   return (
     <mesh ref={ref} scale={[1.0, 1.0, 1.0]}>
@@ -70,7 +78,7 @@ function Mesh(props) {
         uniforms={uniforms}
       />
     </mesh>
-  )
+  );
 }
 
 export default Mesh;

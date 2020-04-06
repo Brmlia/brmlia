@@ -1,29 +1,28 @@
-import React from "react";
+import React from 'react';
 
 import { thumb, thumbInner } from '../style.js';
-import { fApi } from '../../utils/index.js'
+import { fApi } from '../../utils/index.js';
 
 class Thumbnails extends React.Component {
-
   selected = 0;
 
   setSelected(idx) {
     if (this.selected !== idx) {
-      fApi.setState( prevState => ({
+      fApi.setState(prevState => ({
         ...prevState,
-        selected: idx
-      }))
+        selected: idx,
+      }));
       this.selected = idx;
     }
-    console.log("selected: ", this.selected)
+    console.log('selected: ', this.selected);
   }
 
   allThumbs = () => {
     var elements = [];
 
     if (fApi.getState().file) {
-      fApi.getState().file.map ((file, idx) => (
-        elements.push (
+      fApi.getState().file.map((file, idx) =>
+        elements.push(
           <div style={thumb} key={file.name}>
             <div style={thumbInner}>
               <img
@@ -35,27 +34,18 @@ class Thumbnails extends React.Component {
             </div>
           </div>
         )
-      ));
+      );
     }
 
-    return (
-      <div>
-        {elements}
-      </div>
-    );
-  }
+    return <div>{elements}</div>;
+  };
 
   render() {
+    fApi.subscribe(state => {
+      this.forceUpdate();
+    });
 
-    fApi.subscribe(state =>  {
-      this.forceUpdate()
-    })
-
-    return (
-      <div>
-        {this.allThumbs()}
-      </div>
-    );
+    return <div>{this.allThumbs()}</div>;
   }
 }
 
