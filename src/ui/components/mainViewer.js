@@ -12,26 +12,22 @@ import Viewer from '../../viewer/index.js';
 import { Card, CardTitle, CardBody } from 'reactstrap';
 import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
+import FabricLayer from './FabricLayer.js';
 
 class mainViewer extends React.Component {
-  state = {
-    view: <Viewer imageWidth={mainImg.width} type="0" />,
-  };
-
   altView() {
     return (
       <Card style={card}>
         <CardBody>
           <CardTitle> Image View </CardTitle>
+          <Viewer imageWidth={mainImg.width} type="0" />
         </CardBody>
-        {this.state.view}
         <br></br>
       </Card>
     );
   }
 
   channelViews() {
-    // copy display from last enabled channel for now
     var view1;
     var view2;
     var view3;
@@ -76,6 +72,7 @@ class mainViewer extends React.Component {
     return (
       <div className="main-view" style={cardStyle}>
         {this.display()}
+        <FabricLayer />
       </div>
     );
   }

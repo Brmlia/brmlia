@@ -1,68 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { fApi } from '../utils/index.js';
+import {
+  initPng,
+  addPng,
+  initTiff,
+  addTiff,
+  initCsv,
+  addCsv,
+  initJson,
+  addJson,
+  isFirstFile,
+  isValidFile,
+} from './fileControl.js';
 
-const img = {
-  display: 'block',
-  width: 'auto',
-  height: '100%',
-};
-
-function addFile(file, img) {
-  // method 1
-  fApi.setState(prevState => ({
-    ...prevState,
-    file: [
-      ...prevState.file,
-      {
-        name: file.name,
-        image: file.preview,
-        style: img,
-        type: file.type,
-      },
-    ],
-    size: prevState.size + 1,
-  }));
+function addFile(file) {
+  if (file.type === 'image/png') {
+    addPng(file);
+  } else if (file.type === 'image/tiff') {
+    addTiff(file);
+  } else if (file.type === 'text/csv') {
+    addCsv(file);
+  } else if (file.type === 'application/json') {
+    addJson(file);
+  }
 }
 
-function initFile(file, img) {
-  fApi.setState(prevState => ({
-    ...prevState,
-    file: [
-      {
-        name: file.name,
-        image: file.preview,
-        style: img,
-        type: file.type,
-      },
-    ],
-    size: prevState.size + 1,
-  }));
+function initFile(file) {
+  if (file.type === 'image/png') {
+    initPng(file);
+  } else if (file.type === 'image/tiff') {
+    initTiff(file);
+  } else if (file.type === 'text/csv') {
+    initCsv(file);
+  } else if (file.type === 'application/json') {
+    initJson(file);
+  }
 }
 
-function isFirstFile() {
-  return !fApi.getState().file;
-}
-
-function isValidFile(name) {
-  // check if file is already uploaded
-  var validFile = false;
-
-  fApi.setState(prevState => {
-    if (prevState.file) {
-      const x = prevState.file.filter(file => file.name === name);
-      if (x.length === 0) {
-        validFile = true;
-      }
-    }
-  });
-  return validFile;
-}
-
-export function ImageUpload(props) {
+export function FileUpload(props) {
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/png, image/tiff',
+    accept: 'image/png, image/tiff, .csv, .json',
     onDrop: acceptedFiles => {
       setFiles(
         acceptedFiles.map(file =>
@@ -75,10 +53,12 @@ export function ImageUpload(props) {
   });
 
   const update = files.map(file => {
-    if (isFirstFile()) {
-      initFile(file, img);
-    } else if (isValidFile(file.name)) {
-      addFile(file, img);
+    if (isValidFile(file.name)) {
+      if (isFirstFile()) {
+        initFile(file);
+      } else {
+        addFile(file);
+      }
     }
     return null;
   });

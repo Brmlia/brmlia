@@ -14,27 +14,29 @@ class Thumbnails extends React.Component {
       }));
       this.selected = idx;
     }
-    console.log('selected: ', this.selected);
   }
 
   allThumbs = () => {
     var elements = [];
 
     if (fApi.getState().file) {
-      fApi.getState().file.map((file, idx) =>
-        elements.push(
-          <div style={thumb} key={file.name}>
-            <div style={thumbInner}>
-              <img
-                src={file.image}
-                style={file.style}
-                alt={file.name}
-                onClick={() => this.setSelected(idx)}
-              />
+      fApi.getState().file.map((file, idx) => {
+        if (file.type === 'image/png' || file.type === 'image/tiff') {
+          elements.push(
+            <div style={thumb} key={file.name}>
+              <div style={thumbInner}>
+                <img
+                  src={file.image}
+                  style={file.style}
+                  alt={file.name}
+                  onClick={() => this.setSelected(idx)}
+                />
+              </div>
             </div>
-          </div>
-        )
-      );
+          );
+        }
+        return null;
+      });
     }
 
     return <div>{elements}</div>;
@@ -45,7 +47,7 @@ class Thumbnails extends React.Component {
       this.forceUpdate();
     });
 
-    return <div>{this.allThumbs()}</div>;
+    return <div id="thumbsContainer">{this.allThumbs()}</div>;
   }
 }
 

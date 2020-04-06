@@ -1,4 +1,5 @@
 import { uApi } from '../utils/index.js';
+import { createTexture, createTextureFromTiff } from './ImageStore.js';
 
 function isValidChannel(channel) {
   return (
@@ -79,13 +80,37 @@ function updateUniformBlackpoint(value, channel) {
   });
 }
 
-export function updateUniformImage(texture, name, channel) {
+export function updateImage(file, channel) {
+  let name = file.name;
+  let blob = file.image;
+  let texture = file.texture;
+
+  if (texture === '') {
+    if (file.type === 'image/tiff') {
+      texture = createTextureFromTiff(blob);
+    } else {
+      texture = createTexture(blob);
+    }
+  }
+  const prevStateCh = uApi.getState().channels[channel - 1];
+
+  if (
+    prevStateCh.name !== name ||
+    prevStateCh.imagepath !== blob ||
+    prevStateCh.uniforms.image.value !== texture
+  ) {
+    updateUniformImage(texture, name, blob, channel);
+  }
+}
+
+export function updateUniformImage(texture, name, imagepath, channel) {
   uApi.setState(prevState => {
     const channels = prevState.channels.map((ch, j) => {
       if (j === channel - 1) {
         var newChannel = ch;
 
         newChannel.name = name;
+        newChannel.imagepath = imagepath;
         newChannel.uniforms.image.value = texture;
         return newChannel;
       } else {

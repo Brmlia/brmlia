@@ -1,29 +1,16 @@
 import React from 'react';
-import { createTexture, createTextureFromTiff } from './imageStore.js';
+import { createTexture, createTextureFromTiff } from './ImageStore.js';
 import { fApi, uApi } from '../utils/index.js';
-import { updateUniformImage } from './CanvasControl.js';
+import { updateImage } from './CanvasControl.js';
 import { canvasApi } from './canvasStore.js';
+import { canvasStyle1 } from '../style.js';
 
 class ImageCanvas extends React.Component {
   updateForFile(state) {
     if (state) {
-      if (uApi.getState().name !== state.file[state.selected].name) {
-        let texture = createTexture(state.file[state.selected].image);
-        if (state.file[state.selected].type === 'image/tiff') {
-          console.log(
-            'ImageCanvas::updateForFile() - tiff detected ==> converting to canvas'
-          );
-          texture = createTextureFromTiff(state.file[state.selected].image);
-        }
-
-        updateUniformImage(
-          texture,
-          state.file[state.selected].name,
-          this.props.channel
-        );
-        this.forceUpdate();
-      }
+      updateImage(state.file[state.selected], this.props.channel);
     }
+    this.forceUpdate();
   }
   updateForControls(state) {
     this.forceUpdate();

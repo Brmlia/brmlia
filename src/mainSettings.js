@@ -1,4 +1,7 @@
 import create from 'zustand';
+import React from 'react';
+import Viewer from './viewer/index.js';
+import { mainImg } from './style.js';
 
 export const initState = {
   channels: [
@@ -13,7 +16,7 @@ export const initState = {
     },
   ],
   lastSelected: 1,
-  dev: 1,
+  dev: 0,
 };
 
 export const [useMainSettings, settingsApi] = create(set => ({
@@ -38,7 +41,6 @@ export function updateChannelSel(channel) {
 }
 
 export function updateLastSel(channel) {
-  console.log('updateLastSel ', channel);
   settingsApi.setState(prevState => ({
     ...prevState,
     lastSelected: channel,
