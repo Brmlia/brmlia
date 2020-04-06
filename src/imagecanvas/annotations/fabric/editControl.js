@@ -30,17 +30,16 @@ export function drawRect(canvas, rect, label) {
     top: rect.top,
     width: rect.width,
     height: rect.height,
-    fill: 'transparent',
-    stroke: colors.green,
+    // if fully transparent, only stroke is selectable, hence this hack:
+    fill: 'rgb(255,255,255,.01)',
+    stroke: colors.purple,
     strokeLineJoin: 'round',
     strokeWidth: 4,
     objectCaching: false,
   });
 
-  var group = new fabric.Group([fRect]);
-
   label += getLastAnnotIdx() + 1;
-  var text = new fabric.IText(label, {
+  var text = new fabric.Textbox(label, {
     fontSize: 30,
     originX: 'left',
     originY: 'top',
@@ -48,16 +47,20 @@ export function drawRect(canvas, rect, label) {
     fontSize: 20,
     fontWeight: 'bold',
     fill: 'white',
-    textBackgroundColor: colors.green,
-    top: group.top + group.height - fRect.strokeWidth,
-    left: group.left,
+    textBackgroundColor: colors.purple,
+    top: fRect.top + fRect.strokeWidth - 1,
+    left: fRect.left + fRect.strokeWidth - 1,
+    editable: true,
   });
+
+  fRect.label = text;
 
   if (canvas) {
     fRect.perPixelTargetFind = true;
-    canvas.add(group);
-    canvas.setActiveObject(group);
-    group.addWithUpdate(text);
+    canvas.add(fRect);
+    canvas.add(text);
+    let selection = new fabric.ActiveSelection([fRect, text]);
+    canvas.setActiveObject(selection);
   }
 
   addAnnotation(fRect, label);

@@ -30,6 +30,16 @@ class FabricLayer extends React.Component {
     this.handleDrag = this.handleDrag.bind(this);
   }
 
+  componentDidMount() {
+    canvas = new fabric.Canvas(this.canvasRef.current);
+    canvas.on({
+      'mouse:down': this.handleMouseDown,
+      'mouse:up': this.handleMouseUp,
+      'object:moving': this.handleDrag,
+      'object:rotating': this.handleDrag,
+      'object:scaling': this.handleDrag,
+    });
+  }
 
   setMode(newMode) {
     console.log(newMode);
