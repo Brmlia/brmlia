@@ -1,8 +1,6 @@
 import React from "react";
 import { fabric } from "fabric";
-
-import {drawSampleRect, drawFreeStyle, drawRect, undo, redo} from '../annotations/fabric/editControl.js'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {drawRect, undo, redo} from '../annotations/fabric/editControl.js'
 import {addAnnotation, addCachedAnnotation} from '../annotations/fabric/annotationControl.js'
 
 var canvas;
@@ -120,7 +118,9 @@ class FabricLayer extends React.Component {
     // if an object is selected
       // updateLabel (label)
   }
-    render() {
+
+  
+  render() {
     return (
       <div id="annotationLayer" 
       >
@@ -128,30 +128,30 @@ class FabricLayer extends React.Component {
           width={750}
           height={750}
         />
-
-        
-        <button type="button" class="btn btn-primary btn-lg"
-        style={{ position: "absolute", zIndex: 1, top: 10, left: 10}}
-        onClick={() => drawFreeStyle(canvas)}>
-        Draw Freestyle</button>
-
-        <button type="button" class="btn btn-primary btn-lg"
-        style={{ position: "absolute", zIndex: 1, top: 10, left: 200}}
-        onClick={() => drawSampleRect(canvas)}>
-        Draw Rect</button>
-
-        <button type="button" class="btn btn-primary btn-lg"
-        style={{ position: "absolute", zIndex: 1, top: 10, left: 350}}
-        onClick={() => undo(canvas)}>
-        Undo</button>
-
-        <button type="button" class="btn btn-primary btn-lg"
-        style={{ position: "absolute", zIndex: 1, top: 10, left: 450}}
-        onClick={() => redo(canvas)}>
-        Redo</button>
-
-  
-
+        <button
+          style={{ position: "absolute", zIndex: 1, top: 10, left: 10 }}
+          onClick={(e) => this.setMode(modes.FREE, e)}
+        >
+          Draw Freestyle
+        </button>
+        <button
+          style={{ position: "absolute", zIndex: 1, top: 10, left: 200}}
+          onClick={(e) => this.setMode(modes.RECT, e)}
+        >
+          Draw Rect
+        </button>
+        <button
+          style={{ position: "absolute", zIndex: 1, top: 10, left: 400}}
+          onClick={() => undo(canvas)}
+        >
+          Undo
+        </button>
+        <button
+          style={{ position: "absolute", zIndex: 1, top: 10, left: 600}}
+          onClick={() => redo(canvas)}
+        >
+          Redo
+        </button>
       </div>
     );
   }
