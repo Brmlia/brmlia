@@ -5,6 +5,7 @@ import AxesViewer from "./components/axesViewer.js";
 import AnnotatorViewer from "./components/annotatorViewer.js";
 import Thumbnails from "./components/thumbnails.js";
 import Menus from "./components/menus.js";
+import Annotator from "./../annotator/index.js";
 
 import {
   Container,
@@ -40,6 +41,7 @@ class UI extends React.Component {
             </Col>
           </Row>
         </Container>
+        <Annotator />
       </div>
     );
   }

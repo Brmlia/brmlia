@@ -15,14 +15,16 @@ class Thumbnails extends React.Component {
       }))
       this.selected = idx;
     }
-    console.log("selected: ", this.selected)
   }
 
   allThumbs = () => {
     var elements = [];
 
     if (fApi.getState().file) {
-      fApi.getState().file.map ((file, idx) => (
+      fApi.getState().file.map ((file, idx) => {
+        if (file.type === "image/png"
+          || file.type === "image/tiff"
+        ){
         elements.push (
           <div style={thumb} key={file.name}>
             <div style={thumbInner}>
@@ -35,7 +37,9 @@ class Thumbnails extends React.Component {
             </div>
           </div>
         )
-      ));
+        }
+        return null;
+      });
     }
 
     return (
@@ -52,7 +56,7 @@ class Thumbnails extends React.Component {
     })
 
     return (
-      <div>
+      <div id="thumbsContainer">
         {this.allThumbs()}
       </div>
     );

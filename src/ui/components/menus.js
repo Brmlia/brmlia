@@ -13,7 +13,8 @@ import {
   Input,
 } from 'reactstrap';
 
-import {ImageUpload} from "../../fileuploader/index.js";
+import {FileUpload} from "../../fileuploader/index.js";
+import {exportJson} from '../../annotator/exporter.js'
 
 class Menus extends React.Component {
 
@@ -26,8 +27,9 @@ class Menus extends React.Component {
             File
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem> <ImageUpload name="dropdown-image-upload"/> </DropdownItem>
-            <DropdownItem> Export </DropdownItem>
+            <DropdownItem>
+              <Button outline color="primary" className="export-btn" onClick={exportJson}> Export Annotations </Button>
+            </DropdownItem>
           </DropdownMenu>
         </UncontrolledButtonDropdown>
 
@@ -81,7 +83,8 @@ class Menus extends React.Component {
         </UncontrolledButtonDropdown>
 
 
-        <Button outline color="primary" className="image-upload-btn"> <ImageUpload name="Import Image" />  </Button>
+        <Button outline color="primary" className="import-btn"> <FileUpload name="Import File" />  </Button>
+
       </ButtonGroup>
     );
   }
