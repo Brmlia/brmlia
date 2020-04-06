@@ -3,6 +3,7 @@ import { mainStyle, rowStyle, container } from './style.js';
 import MainViewer from "./components/mainViewer.js";
 import AxesViewer from "./components/axesViewer.js";
 import AnnotatorViewer from "./components/annotatorViewer.js";
+import Thumbnails from "./components/thumbnails.js";
 import Menus from "./components/menus.js";
 
 import {
@@ -35,6 +36,7 @@ class UI extends React.Component {
 
             <Col xs="3">
               <AnnotatorViewer />
+              <Thumbnails />
             </Col>
           </Row>
         </Container>

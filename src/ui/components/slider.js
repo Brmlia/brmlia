@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./../styles.css";
+import { useZoomApi } from "./zoom/zoomSettings.js";
 
 class Slider extends Component {
 
@@ -35,8 +36,23 @@ class Slider extends Component {
 
   notifyValue() {
     var sliderValue = this.props.sliderValue;
-    sliderValue(this.state.slider.value, this.state.updated, this.state.sync);
+    const type = this.props.type;
+    sliderValue(this.state.slider.value, type);
   }
+
+  displayValue() {
+    if (this.props.raw === "1") {
+      return (
+        <span> {Math.round(this.state.slider.value * this.props.multiplier)}</span>
+      )
+    }
+    else {
+      return (
+        <span> {Math.round(this.state.slider.value * this.props.multiplier)}%</span>
+      )
+    }
+  }
+
 
   handleSliderChange = (e) => {
     e.persist();
@@ -50,6 +66,15 @@ class Slider extends Component {
   };
 
   render() {
+
+    useZoomApi.subscribe(state =>  {
+      if ((this.props.type >= 0) && (this.props.type < state.views.length)) {
+        let slider = this.state.slider;
+        slider.value = state.views[this.props.type].zoomPct;
+        this.setState({slider: slider});
+      }
+    })
+
     const slider = this.state.slider;
     const {
       label,
@@ -57,7 +82,6 @@ class Slider extends Component {
       max,
       initial,
       step,
-      multiplier
     } = this.props;
 
     return (
@@ -66,7 +90,7 @@ class Slider extends Component {
         <span>{min} </span>
         <input type="range" className="slider" value={slider.value || initial} id="customRange1" initial={initial} min={min} max={max} step={step} onChange={e=>this.handleSliderChange(e)} />
         <span> {max}</span>
-        <span> {slider.value * multiplier}%</span>
+        <span> {this.displayValue()}</span>
       </div>
     );
   }

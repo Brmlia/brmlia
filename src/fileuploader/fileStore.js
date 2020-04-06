@@ -1,6 +1,17 @@
 import create from 'zustand';
+import { settingsApi } from '../mainSettings.js';
 
-export const initState = {
+export const initState = () => {
+  return settingsApi.getState().dev ? devState : prodState;
+}
+
+export const prodState = {
+  file: [],
+  size: 0,
+  selected: 0
+}
+
+export const devState = {
   file:
     [
       {
@@ -19,5 +30,5 @@ export const initState = {
 }
 
 export const [useFileStore, fileApi] = create ( set => ({
-  ...initState,
+  ...initState(),
 }))
