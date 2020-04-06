@@ -24,6 +24,7 @@ chrome-user-data
 .eslintcache
 .projectile
 .tern-*
+README.org
 
 # dev env. vars
 .env.development

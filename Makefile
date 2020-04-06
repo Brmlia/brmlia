@@ -21,6 +21,9 @@ CI_JOB        ?= build
 all: help ## No default targets -- just print this message
 	@
 
+README.md: README.org
+	pandoc -s $^ -o $@
+
 #~~~~~~~~ Npm Registy ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .PHONY: npm-token
