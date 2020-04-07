@@ -1,15 +1,25 @@
 {
-  "main.css": "/brmlia/static/css/main.341077fe.chunk.css",
-  "main.js": "/brmlia/static/js/main.30a39722.chunk.js",
-  "main.js.map": "/brmlia/static/js/main.30a39722.chunk.js.map",
-  "runtime~main.js": "/brmlia/static/js/runtime~main.091645ed.js",
-  "runtime~main.js.map": "/brmlia/static/js/runtime~main.091645ed.js.map",
-  "static/css/2.564fddba.chunk.css": "/brmlia/static/css/2.564fddba.chunk.css",
-  "static/js/2.8a1c6ee6.chunk.js": "/brmlia/static/js/2.8a1c6ee6.chunk.js",
-  "static/js/2.8a1c6ee6.chunk.js.map": "/brmlia/static/js/2.8a1c6ee6.chunk.js.map",
-  "index.html": "/brmlia/index.html",
-  "precache-manifest.ec31641f3ba60206698801cbc156a0e8.js": "/brmlia/precache-manifest.ec31641f3ba60206698801cbc156a0e8.js",
-  "service-worker.js": "/brmlia/service-worker.js",
-  "static/css/2.564fddba.chunk.css.map": "/brmlia/static/css/2.564fddba.chunk.css.map",
-  "static/css/main.341077fe.chunk.css.map": "/brmlia/static/css/main.341077fe.chunk.css.map"
+  "files": {
+    "main.css": "/brmlia/static/css/main.ece211ee.chunk.css",
+    "main.js": "/brmlia/static/js/main.ba8c5a99.chunk.js",
+    "main.js.map": "/brmlia/static/js/main.ba8c5a99.chunk.js.map",
+    "runtime-main.js": "/brmlia/static/js/runtime-main.ebe7bc53.js",
+    "runtime-main.js.map": "/brmlia/static/js/runtime-main.ebe7bc53.js.map",
+    "static/css/2.0161871a.chunk.css": "/brmlia/static/css/2.0161871a.chunk.css",
+    "static/js/2.d1f87fba.chunk.js": "/brmlia/static/js/2.d1f87fba.chunk.js",
+    "static/js/2.d1f87fba.chunk.js.map": "/brmlia/static/js/2.d1f87fba.chunk.js.map",
+    "index.html": "/brmlia/index.html",
+    "precache-manifest.108e50b7aee899d7821f775de7c18713.js": "/brmlia/precache-manifest.108e50b7aee899d7821f775de7c18713.js",
+    "service-worker.js": "/brmlia/service-worker.js",
+    "static/css/2.0161871a.chunk.css.map": "/brmlia/static/css/2.0161871a.chunk.css.map",
+    "static/css/main.ece211ee.chunk.css.map": "/brmlia/static/css/main.ece211ee.chunk.css.map",
+    "static/js/2.d1f87fba.chunk.js.LICENSE.txt": "/brmlia/static/js/2.d1f87fba.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ebe7bc53.js",
+    "static/css/2.0161871a.chunk.css",
+    "static/js/2.d1f87fba.chunk.js",
+    "static/css/main.ece211ee.chunk.css",
+    "static/js/main.ba8c5a99.chunk.js"
+  ]
 }
