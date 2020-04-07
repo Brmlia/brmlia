@@ -8,13 +8,19 @@ import {
   DropdownItem,
   ButtonGroup,
   Button,
-  InputGroup,
-  InputGroupAddon,
-  Input,
 } from 'reactstrap';
 
 import { FileUpload } from '../../fileuploader/index.js';
 import { exportJson } from '../../annotator/exporter.js';
+
+import {
+  modes,
+  setMode,
+} from '../../fabric/fabricControl.js'
+import {
+  undo,
+  redo,
+} from '../../annotator/editControl.js'
 
 class Menus extends React.Component {
   render() {
@@ -48,65 +54,22 @@ class Menus extends React.Component {
             Draw
           </DropdownToggle>
           <DropdownMenu>
-            <UncontrolledButtonDropdown>
-              <DropdownToggle caret color="none">
-                Rectangle
-              </DropdownToggle>
-              <DropdownMenu>
-                <InputGroup>
-                  <Input placeholder="username" />
-                  <InputGroupAddon addonType="append">
-                    <Button>Add a new annotation class (Rect)</Button>
-                  </InputGroupAddon>
-                </InputGroup>
-                <Button outline color="primary">
-                  {' '}
-                  Annotation Class 1{' '}
-                </Button>
-                <Button outline color="primary">
-                  {' '}
-                  Annotation Class 2{' '}
-                </Button>
-                <Button outline color="primary">
-                  {' '}
-                  Annotation Class 3{' '}
-                </Button>
-                <Button outline color="primary">
-                  {' '}
-                  Annotation Class 4{' '}
-                </Button>
-              </DropdownMenu>
-            </UncontrolledButtonDropdown>
-
-            <UncontrolledButtonDropdown>
-              <DropdownToggle caret color="none">
-                Freehand
-              </DropdownToggle>
-              <DropdownMenu>
-                <InputGroup>
-                  <Input placeholder="username" />
-                  <InputGroupAddon addonType="append">
-                    <Button>Add a new annotation class(Free)</Button>
-                  </InputGroupAddon>
-                </InputGroup>
-                <Button outline color="primary">
-                  {' '}
-                  Annotation Class 1{' '}
-                </Button>
-                <Button outline color="primary">
-                  {' '}
-                  Annotation Class 2{' '}
-                </Button>
-                <Button outline color="primary">
-                  {' '}
-                  Annotation Class 3{' '}
-                </Button>
-                <Button outline color="primary">
-                  {' '}
-                  Annotation Class 4{' '}
-                </Button>
-              </DropdownMenu>
-            </UncontrolledButtonDropdown>
+            <Button
+              outline
+              color="primary"
+              className="draw-rectangle-btn"
+              onClick={(e) => setMode(modes.RECT)}
+            >
+              Rectangle
+            </Button>
+            <Button
+              outline
+              color="primary"
+              className="draw-rectangle-btn"
+              onClick={(e) => setMode(modes.FREE)}
+            >
+              Freehand
+            </Button>
           </DropdownMenu>
         </UncontrolledButtonDropdown>
 
@@ -115,8 +78,22 @@ class Menus extends React.Component {
             Edit
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem disabled> 1 </DropdownItem>
-            <DropdownItem> 2 </DropdownItem>
+            <Button
+              outline
+              color="primary"
+              className="draw-rectangle-btn"
+              onClick={(e) => undo()}
+            >
+              Undo
+            </Button>
+            <Button
+              outline
+              color="primary"
+              className="draw-rectangle-btn"
+              onClick={(e) => redo()}
+            >
+              Redo
+            </Button>
           </DropdownMenu>
         </UncontrolledButtonDropdown>
 

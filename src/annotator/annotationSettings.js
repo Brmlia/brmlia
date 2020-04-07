@@ -53,11 +53,11 @@ export function setDisplay(value) {
   }))
 }
 
-export function getCoords() {
+export function getMenuCoords() {
   return AnnotationMenuApi.getState().menu.coords
 }
 
-export function setCoords(x, y) {
+export function setMenuCoords(x, y) {
   AnnotationMenuApi.setState( prevState => ({
     ...prevState,
     menu: {

@@ -1,7 +1,4 @@
 import create from 'zustand';
-import React from 'react';
-import Viewer from './viewer/index.js';
-import { mainImg } from './style.js';
 
 export const initState = {
   channels: [

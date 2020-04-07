@@ -1,9 +1,6 @@
 import React from 'react';
-import { FileUpload } from '../fileuploader/index.js';
 import { fileApi } from '../fileuploader/fileStore.js';
-import { annotApi } from '../annotator/annotStore.js';
-import { exportJson } from '../annotator/exporter.js';
-import { Button } from 'reactstrap';
+import { annotApi } from '../annotator/annotStore.js'
 
 class Annotator extends React.Component {
   file_size = 0;
@@ -24,16 +21,6 @@ class Annotator extends React.Component {
         console.log('annotApi - annotations: ', state.annotations);
       }
     });
-    // return (
-    //   <div>
-    //     <div>
-    //       <Button outline color="primary" className="import-btn"> <FileUpload name="Import" />  </Button>
-    //     </div>
-    //     <div>
-    //       <Button outline color="primary" className="export-btn" onClick={exportJson} > Export  </Button>
-    //     </div>
-    //   </div>
-    // );
     return <div id="annotator-div"></div>;
   }
 }

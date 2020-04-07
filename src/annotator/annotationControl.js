@@ -32,7 +32,7 @@ export function addCachedAnnotation(rect, label, classLabel) {
 export function deleteAnnotation(index) {
   const annotation = annotApi.getState().annotations[index];
 
-  addCachedAnnotation(annotation.rect, annotation.label);
+  addCachedAnnotation(annotation.rect, annotation.label, annotation.class);
   annotApi.setState(prevState => {
     return prevState.annotations.splice(index, 1);
   });
@@ -66,7 +66,6 @@ export function getLastCachedAnnotIdx() {
 }
 
 export function updateAnnotationLabel(oldLabel, label) {
-
   annotApi.setState( prevState => {
     const annotations = prevState.annotations.map((annot, j) => {
       if (annot.label === oldLabel) {
@@ -82,4 +81,31 @@ export function updateAnnotationLabel(oldLabel, label) {
       annotations
     }
   })
+}
+
+export function updateAnnotClassLabel(oldLabel, label) {
+  annotApi.setState( prevState => {
+    const annotations = prevState.annotations.map((annot, j) => {
+      if (annot.class === oldLabel) {
+        var newAnnot = annot;
+        newAnnot.class = label
+        return newAnnot;
+      }
+      else {
+        return annot
+      }
+    })
+    return {
+      annotations
+    }
+  })
+}
+
+export function getAnnotationClasses() {
+  var classes = []
+  const annotations = annotApi.getState().annotations
+  for (var i = 0; i < annotations.length; i++) {
+    classes.push(annotations[i].class)
+  }
+  return classes
 }

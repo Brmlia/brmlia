@@ -6,6 +6,7 @@ import AnnotatorViewer from './components/annotatorViewer.js';
 import Thumbnails from './components/thumbnails.js';
 import Menus from './components/menus.js';
 import Annotator from './../annotator/index.js';
+import ChannelViewer from './components/channelViewer.js';
 
 import { Container, Row, Col } from 'reactstrap';
 
@@ -30,6 +31,7 @@ class UI extends React.Component {
 
             <Col xs="3">
               <AnnotatorViewer />
+              <ChannelViewer />
               <Thumbnails />
             </Col>
           </Row>

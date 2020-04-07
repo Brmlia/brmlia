@@ -3,126 +3,152 @@ import React from 'react';
 import { cardStyle, card } from '../style.js';
 import './../styles.css';
 import '../../utils/styles.css';
-import ChannelViewer from './channelViewer.js';
+import { updateClasses, getClasses, toggleClassEnable, annotClassApi } from '../../annotator/annotationClass.js'
 
 import { Button, Card, CardTitle, CardBody } from 'reactstrap';
+import { annotApi } from '../../annotator/annotationStore.js';
+import { filterClasses } from '../../annotator/editControl.js'
 
 class AnnotatorViewer extends React.Component {
-  state = {
-    annotations: {
-      annot1Sel: false,
-      annot2Sel: false,
-      annot3Sel: false,
-      annot4Sel: false,
-    },
-  };
+  constructor(props) {
+    super(props);
 
-  updateSelection = sel => {
-    switch (sel) {
-      case 1:
-        this.setState(prevState => ({
-          annotations: {
-            ...prevState.annotations,
-            annot1Sel: !this.state.annotations.annot1Sel,
-          },
-        }));
-        break;
-      case 2:
-        this.setState(prevState => ({
-          annotations: {
-            ...prevState.annotations,
-            annot2Sel: !this.state.annotations.annot2Sel,
-          },
-        }));
-        break;
-      case 3:
-        this.setState(prevState => ({
-          annotations: {
-            ...prevState.annotations,
-            annot3Sel: !this.state.annotations.annot3Sel,
-          },
-        }));
-        break;
-      case 4:
-        this.setState(prevState => ({
-          annotations: {
-            ...prevState.annotations,
-            annot4Sel: !this.state.annotations.annot4Sel,
-          },
-        }));
-        break;
-      default:
-        break;
+    this.state = {
+      classes: [],
+      annotClasses: [],
+      enables: []
     }
-  };
+  }
 
-  render() {
+  futureClass = []
+  futureAnnotClass = []
+
+  componentDidUpdate(prevState) {
+    for (var i = 0; i < prevState.classes; i++) {
+      const cls = prevState.classes[i]
+      if (cls
+        && (this.state.classes[i] !== cls.name)
+        && (this.state.enables[i] !== cls.enabled)
+      ) {
+        return true
+      }
+    }
+    for (i = 0; i < prevState.annotClasses; i++) {
+      const annotCls = prevState.annotClasses[i]
+      if (annotCls
+        && (this.state.annotClasses[i] !== annotCls)
+      ) {
+        return true
+      }
+    }
+    return false
+  }
+
+  filter(sel, enabled) {
+    const classes = getClasses();
+    toggleClassEnable(sel);
+    filterClasses(classes[sel]);
+  }
+
+  updateAnnotClasses(annots) {
+    for (var i = 0; i < annots.length; i++){
+      const cls = annots[i]
+      if (!this.state.annotClasses.includes(cls.class) && !this.futureAnnotClass.includes(cls.class)) {
+        this.futureAnnotClass.push(cls.class)
+        this.setState(prevState => ({
+          ...prevState,
+          annotClasses: [
+            ...prevState.annotClasses,
+            cls.class
+          ],
+        }));
+      }
+    }
+  }
+
+  updateClasses(classes) {
+    for (var i = 0; i < classes.length; i++){
+      const idx = i;
+      const cls = classes[idx]
+      if (!this.state.classes.includes(cls.name) && !this.futureClass.includes(cls.name)) {
+        this.futureClass.push(cls.name)
+        this.setState(prevState => ({
+          ...prevState,
+          classes: [
+            ...prevState.classes,
+            cls.name,
+          ]
+        }));
+      }
+
+      this.setState( prevState => {
+        const enables = prevState.enables.map((en, j) => {
+          if (j === idx) {
+            return cls.enabled
+          }
+          else {
+            return en
+          }
+        })
+        return {
+          enables
+        }
+      })
+    }
+  }
+
+  display () {
+    const classes = getClasses();
+    var divs = []
+    for (var i = 0; i < classes.length; i++) {
+      const sel = i
+      const enabled = classes[sel].enabled
+      divs.push (
+        <Button
+          outline
+          color="primary"
+          id="annot1Btn"
+          onClick={() => {
+            this.filter(sel, !enabled);
+          }}
+          active={enabled}
+        >
+          {classes[sel].name}
+        </Button>
+      )
+    }
     return (
       <div>
         <div className="annotations-class" style={cardStyle}>
-          {console.log(
-            'Annotations: ' +
-              this.state.annotations.annot1Sel +
-              ' ' +
-              this.state.annotations.annot2Sel +
-              ' ' +
-              this.state.annotations.annot3Sel +
-              ' ' +
-              this.state.annotations.annot4Sel
-          )}
+
           <Card style={card}>
             <CardBody>
               <CardTitle> Annotated Class Selection </CardTitle>
             </CardBody>
-            <Button
-              outline
-              color="primary"
-              id="annot1Btn"
-              onClick={() => {
-                this.updateSelection(1);
-              }}
-              active={this.state.annotations.annot1Sel}
-            >
-              Annotation Class 1
-            </Button>
-            <Button
-              outline
-              color="primary"
-              id="annot1Btn"
-              onClick={() => {
-                this.updateSelection(2);
-              }}
-              active={this.state.annotations.annot2Sel}
-            >
-              Annotation Class 2
-            </Button>
-            <Button
-              outline
-              color="primary"
-              id="annot1Btn"
-              onClick={() => {
-                this.updateSelection(3);
-              }}
-              active={this.state.annotations.annot3Sel}
-            >
-              Annotation Class 3
-            </Button>
-            <Button
-              outline
-              color="primary"
-              id="annot1Btn"
-              onClick={() => {
-                this.updateSelection(4);
-              }}
-              active={this.state.annotations.annot4Sel}
-            >
-              Annotation Class 4
-            </Button>
+            {divs}
           </Card>
         </div>
 
         <br></br>
-        <ChannelViewer />
+      </div>
+    )
+  };
+
+  render() {
+    annotApi.subscribe(state => {
+      if (state) {
+        updateClasses()
+        this.updateAnnotClasses(state.annotations)
+      }
+    })
+    annotClassApi.subscribe(state => {
+      if (state) {
+        this.updateClasses(state.classes);
+      }
+    })
+    return (
+      <div>
+        {this.display()}
       </div>
     );
   }

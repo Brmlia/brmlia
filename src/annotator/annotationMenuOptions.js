@@ -13,13 +13,16 @@ export function editClassOption() {
 export function editAnnotationLabel(label) {
 
   const obj = getSelectedObjects()
-  updateLabel(obj, label)
-  updateSelect(0);
+  if (obj && (obj._objects.length > 0)) {
+    updateLabel(obj, label)
+    updateSelect(0);
+  }
 }
 
 export function editAnnotationClass(className) {
-
   const obj = getSelectedObjects()
-  updateClassLabel(obj, className)
-  updateSelect(0);
+  if (obj && (obj._objects.length > 0)) {
+    updateClassLabel(obj, className)
+    updateSelect(0);
+  }
 }

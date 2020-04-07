@@ -5,7 +5,6 @@ import '../styles.css';
 import Zpp from '../ui/components/zoom/zpp.js';
 import Zoom from '../ui/components/zoom/zoom.js';
 import { useZoomApi } from '../ui/components/zoom/zoomSettings.js';
-import { settingsApi } from '../mainSettings.js';
 
 class Viewer extends Component {
   state = {
