@@ -96,9 +96,9 @@ class FabricMenu extends React.Component {
       )
     }
 
-    if (this.state.select === 1 ) {
+    if (this.state.select === 1 || this.state.select === 2) {
       return (
-        <FabricSubMenu style={this.state.style}/>
+        <FabricSubMenu style={this.state.style} select={this.state.select}/>
       )
     }
     return (

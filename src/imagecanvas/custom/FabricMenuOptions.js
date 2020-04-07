@@ -1,6 +1,5 @@
 import {setDisplay, getSelectedObjects, updateSelect} from "./FabricMenuSettings.js"
-import {updateAnnonationClassLabel} from "../annotations/fabric/annotationControl.js"
-import {updateLabel} from '../annotations/fabric/editControl.js'
+import {updateLabel, updateClassLabel} from '../annotations/fabric/editControl.js'
 
 export function editAnnotationOption(label, classLabel) {
   setDisplay(false);
@@ -15,12 +14,12 @@ export function editAnnotationLabel(label) {
 
   const obj = getSelectedObjects()
   updateLabel(obj, label)
+  updateSelect(0);
 }
 
-export function updateAnnotationClass(className) {
+export function editAnnotationClass(className) {
 
   const obj = getSelectedObjects()
-  if (obj.length > 0) {
-    updateAnnonationClassLabel(obj[1].text, className)
-  }
+  updateClassLabel(obj, className)
+  updateSelect(0);
 }

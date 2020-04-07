@@ -1,11 +1,12 @@
 import React from "react";
-import {editAnnotationLabel} from './FabricMenuOptions.js'
+import {editAnnotationLabel, editAnnotationClass} from './FabricMenuOptions.js'
 
 class FabricSubMenu extends React.Component {
  constructor(props) {
    super(props);
     this.handleChange = this.handleChange.bind(this);
     this.changeLabel = this.changeLabel.bind(this);
+    this.changeClassLabel = this.changeClassLabel.bind(this);
 
     this.state = {
       text: {
@@ -30,7 +31,6 @@ class FabricSubMenu extends React.Component {
          'left':'0px'
         },
       },
-      on: true,
     };
   }
 
@@ -81,14 +81,14 @@ class FabricSubMenu extends React.Component {
 
   changeLabel(event) {
     editAnnotationLabel(this.state.label.text)
-    this.setState( prevState => ({
-      ...prevState,
-      on: false
-    }))
+  }
+
+  changeClassLabel(event) {
+    editAnnotationClass(this.state.label.text)
   }
 
   display() {
-    if (this.state.on) {
+    if (this.props.select === 1) {
       return (
         <div >
           <div style={this.state.label.style}> <p> Label: </p> </div>
@@ -99,6 +99,20 @@ class FabricSubMenu extends React.Component {
             onChange={this.handleChange}
           />
           <button style={this.state.button.style} onClick={this.changeLabel}> Change Label </button>
+        </div>
+      );
+    }
+    else if (this.props.select === 2) {
+      return (
+        <div >
+          <div style={this.state.label.style}> <p> Class Name: </p> </div>
+          <input
+            type="text"
+            value={this.state.label.text}
+            style={this.state.text.style}
+            onChange={this.handleChange}
+          />
+          <button style={this.state.button.style} onClick={this.changeClassLabel}> Change Class Name </button>
         </div>
       );
     }

@@ -1,12 +1,12 @@
-import React from "react";
 import { annotApi, cachedAnnotApi } from './annotationStore.js'
 
-export function addAnnotation(rect, label) {
+export function addAnnotation(rect, label, classLabel) {
   annotApi.setState( prevState => ({
     ...prevState,
     annotations: [...prevState.annotations, {
       rect: rect,
-      label: label
+      label: label,
+      class: classLabel
     }]
   }))
 }
@@ -30,17 +30,13 @@ export function updateAnnotationLabel(oldLabel, label) {
   })
 }
 
-export function updateAnnonationClassLabel(oldClassLabel, classLabel) {
-  console.log("updateClassLabel", oldClassLabel, classLabel)
-
-}
-
-export function addCachedAnnotation(rect, label) {
+export function addCachedAnnotation(rect, label, classLabel) {
   cachedAnnotApi.setState( prevState => ({
     ...prevState,
     cachedAnnots: [...prevState.cachedAnnots, {
       rect: rect,
-      label: label
+      label: label,
+      class: classLabel
     }]
   }))
 }

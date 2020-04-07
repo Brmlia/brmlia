@@ -1,5 +1,4 @@
 import React from "react";
-import TestImageWrapper from "./TestImageWrapper.js";
 import Slider from "./../../components/slider.js";
 import { withUniformStore } from '../../components/utils.js';
 

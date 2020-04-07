@@ -1,6 +1,6 @@
 import React from "react";
 import { fabric } from "fabric";
-import {drawRect, undo, redo} from '../annotations/fabric/editControl.js'
+import {drawRect, undo, redo, filterAnnotations, showAll} from '../annotations/fabric/editControl.js'
 import FabricMenu from './FabricMenu.js'
 import {setCanvas, isDisplayOn, setDisplay, setCoords, setSelectedObjects} from "./FabricMenuSettings.js"
 import { annotApi } from '../annotations/fabric/annotationStore.js'
@@ -31,6 +31,8 @@ class FabricLayer extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleMouseDoubleClick = this.handleMouseDoubleClick.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
+    this.selectClass1 = this.selectClass1.bind(this);
+    this.showAll = this.showAllClasses.bind(this);
 
     this.fabricMenu = <FabricMenu />;
   }
@@ -120,7 +122,7 @@ class FabricLayer extends React.Component {
         top: this.state.lastMousey,
         left:this.state.lastMousex,
       };
-      drawRect(canvas, rect, 'label');
+      drawRect(canvas, rect, 'label', 'class1');
       this.setMode(modes.SELECT);
     }
   }
@@ -177,6 +179,14 @@ class FabricLayer extends React.Component {
       )
     }
   }
+  selectClass1() {
+    filterAnnotations("class1")
+    this.forceUpdate();
+  }
+  showAllClasses() {
+    showAll()
+    this.forceUpdate();
+  }
 
   render() {
     annotApi.subscribe(state => {
@@ -213,6 +223,18 @@ class FabricLayer extends React.Component {
           onClick={() => redo(canvas)}
         >
           Redo
+        </button>
+        <button
+          style={{ position: "absolute", zIndex: 1, top: 50, left: 10}}
+          onClick={() => this.selectClass1()}
+        >
+          Show Class 1 Only
+        </button>
+        <button
+          style={{ position: "absolute", zIndex: 1, top: 80, left: 10}}
+          onClick={() => this.showAllClasses()}
+        >
+          Show All
         </button>
         {this.displayMenu()}
       </div>
