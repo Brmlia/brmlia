@@ -1,6 +1,7 @@
 import { annotApi, cachedAnnotApi } from './annotationStore.js';
 
-export function addAnnotation(rect, label) {
+export function addAnnotation(rect, label, classLabel) {
+  const default_class = 'class1'
   annotApi.setState(prevState => ({
     ...prevState,
     annotations: [
@@ -8,12 +9,13 @@ export function addAnnotation(rect, label) {
       {
         rect: rect,
         label: label,
+        class: classLabel || default_class
       },
     ],
   }));
 }
 
-export function addCachedAnnotation(rect, label) {
+export function addCachedAnnotation(rect, label, classLabel) {
   cachedAnnotApi.setState(prevState => ({
     ...prevState,
     cachedAnnots: [
@@ -21,6 +23,7 @@ export function addCachedAnnotation(rect, label) {
       {
         rect: rect,
         label: label,
+        class: classLabel
       },
     ],
   }));
@@ -60,4 +63,23 @@ export function getLastCachedAnnot() {
 
 export function getLastCachedAnnotIdx() {
   return cachedAnnotApi.getState().cachedAnnots.length - 1;
+}
+
+export function updateAnnotationLabel(oldLabel, label) {
+
+  annotApi.setState( prevState => {
+    const annotations = prevState.annotations.map((annot, j) => {
+      if (annot.label === oldLabel) {
+        var newAnnot = annot;
+        newAnnot.label = label
+        return newAnnot;
+      }
+      else {
+        return annot
+      }
+    })
+    return {
+      annotations
+    }
+  })
 }
