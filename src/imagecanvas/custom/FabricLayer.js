@@ -1,7 +1,9 @@
 import React from "react";
 import { fabric } from "fabric";
 import {drawRect, undo, redo} from '../annotations/fabric/editControl.js'
-import {addAnnotation, addCachedAnnotation} from '../annotations/fabric/annotationControl.js'
+import FabricMenu from './FabricMenu.js'
+import {setCanvas, isDisplayOn, setDisplay, setCoords, setSelectedObjects} from "./FabricMenuSettings.js"
+import { annotApi } from '../annotations/fabric/annotationStore.js'
 
 var canvas;
 
@@ -10,7 +12,6 @@ const modes = {
     FREE: 'free draw',
     SELECT: 'select'
 }
-
 
 class FabricLayer extends React.Component {
   constructor(props) {
@@ -23,36 +24,57 @@ class FabricLayer extends React.Component {
       mousey: 0,
       canvasx: 0,
       canvasy: 0,
-      mode: modes.RECT
+      mode: modes.RECT,
     };
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
-    this.setMode = this.setMode.bind(this);
+    this.handleMouseDoubleClick = this.handleMouseDoubleClick.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
+
+    this.fabricMenu = <FabricMenu />;
   }
 
   componentDidMount() {
-    canvas = new fabric.Canvas(this.canvasRef.current);
+    canvas = new fabric.Canvas(this.canvasRef.current, {
+      fireRightClick: true
+    });
     canvas.on({
       'mouse:down': this.handleMouseDown,
       'mouse:up': this.handleMouseUp,
+      'mouse:dblclick': this.handleMouseDoubleClick,
       'object:moving': this.handleDrag,
       'object:rotating': this.handleDrag,
       'object:scaling': this.handleDrag,
     });
+    setCanvas(canvas);
   }
 
   setMode(newMode) {
-    console.log(newMode);
-    this.setState({mode: newMode});
+    this.setState( prevState => ({
+      ...prevState,
+      mode: newMode
+    }));
 
-    if (newMode == modes.FREE) {
+    if (newMode === modes.FREE) {
       canvas.isDrawingMode = true;
     }
     else {
       canvas.isDrawingMode = false;
     }
+
+    if (newMode === modes.SELECT) {
+      this.handleObjectSelect(null)
+    }
+  }
+
+  setOrigin(mouseEvt) {
+    this.setState({
+      lastMousex: mouseEvt.clientX,
+      lastMousey: mouseEvt.clientY,
+      mousex: mouseEvt.clientX,
+      mousey: mouseEvt.clientY,
+    });
   }
 
   setNewCoordinates(options) {
@@ -73,36 +95,64 @@ class FabricLayer extends React.Component {
     this.setMode(modes.SELECT);
   }
 
-  handleMouseDown(options) {
+  handleLeftMouseDown(options) {
+    this.setMode(modes.RECT);
     if (!canvas.isDrawingMode) {
-        this.setState({
-        lastMousex: options.e.clientX,
-        lastMousey: options.e.clientY,
-        mousex: options.e.clientX,
-        mousey: options.e.clientY,
-      });
+      this.setOrigin(options.e)
+    }
+  }
+
+  handleRightMouseDown(options) {
+    this.setOrigin(options.e)
+    if (!isDisplayOn()) {
+      setDisplay(true);
+    }
+    setCoords(this.state.mousex, this.state.mousey)
+  }
+
+  handleLeftMouseUp(options) {
+    this.setNewCoordinates(options);
+
+    if (this.state.lastMousex && this.state.lastMousey && this.state.mode === modes.RECT) {
+      const rect = {
+        width: this.state.mousex - this.state.lastMousex,
+        height: this.state.mousey - this.state.lastMousey,
+        top: this.state.lastMousey,
+        left:this.state.lastMousex,
+      };
+      drawRect(canvas, rect, 'label');
+      this.setMode(modes.SELECT);
+    }
+  }
+
+  handleRightMouseUp(options) {
+  }
+
+  handleMouseDown(options) {
+    if (options.button === 3) {
+      this.handleRightMouseDown(options)
+    }
+    else {
+      this.handleLeftMouseDown(options)
     }
   }
 
   handleMouseUp(options){
-    this.setNewCoordinates(options);
-    
-    if (this.state.lastMousex && this.state.lastMousey && this.state.mode === modes.RECT) {
-      const rect = {
-        width: this.state.mousex - this.state.lastMousex, 
-        height: this.state.mousey - this.state.lastMousey, 
-        top: this.state.lastMousey, 
-        left:this.state.lastMousex, 
-      };
-      drawRect(canvas, rect, 'label');
-    }
     // if there is a last mouse x and y
       // get width and height by computing the x and y from mouse down
       // draw rectangle
       // add to annotations
+    if (options.button === 3) {
+      this.handleRightMouseUp(options)
+    }
+    else {
+      this.handleLeftMouseUp(options)
+    }
   }
 
   handleObjectSelect(e) {
+    // setSelectedObjects(canvas.getActiveObjects()[0]._objects)
+    setSelectedObjects(canvas.getActiveObjects()[0])
     // if more than one object is selected
       // if Delete button is selected
         // delete all objects from canvas
@@ -117,12 +167,24 @@ class FabricLayer extends React.Component {
   handleMouseDoubleClick(e) {
     // if an object is selected
       // updateLabel (label)
+    this.setMode(modes.SELECT)
   }
 
-  
+  displayMenu() {
+    if (canvas && (canvas.getActiveObjects().length > 0)) {
+      return(
+        this.fabricMenu
+      )
+    }
+  }
+
   render() {
+    annotApi.subscribe(state => {
+      this.forceUpdate();
+    })
+
     return (
-      <div id="annotationLayer" 
+      <div id="annotationLayer" onContextMenu={(e) => e.preventDefault()}
       >
         <canvas ref={this.canvasRef}
           width={750}
@@ -152,6 +214,7 @@ class FabricLayer extends React.Component {
         >
           Redo
         </button>
+        {this.displayMenu()}
       </div>
     );
   }

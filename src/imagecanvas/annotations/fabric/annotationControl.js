@@ -11,6 +11,30 @@ export function addAnnotation(rect, label) {
   }))
 }
 
+export function updateAnnotationLabel(oldLabel, label) {
+
+  annotApi.setState( prevState => {
+    const annotations = prevState.annotations.map((annot, j) => {
+      if (annot.label === oldLabel) {
+        var newAnnot = annot;
+        newAnnot.label = label
+        return newAnnot;
+      }
+      else {
+        return annot
+      }
+    })
+    return {
+      annotations
+    }
+  })
+}
+
+export function updateAnnonationClassLabel(oldClassLabel, classLabel) {
+  console.log("updateClassLabel", oldClassLabel, classLabel)
+
+}
+
 export function addCachedAnnotation(rect, label) {
   cachedAnnotApi.setState( prevState => ({
     ...prevState,

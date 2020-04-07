@@ -1,6 +1,6 @@
-import React from "react";
 import { fabric } from "fabric";
-import { addAnnotation, undoAnnotation, redoAnnotation, getLastAnnotIdx, getLastCachedAnnot, getLastCachedAnnotIdx, deleteCachedAnnotation } from './annotationControl.js'
+import { addAnnotation, undoAnnotation, getLastAnnotIdx, getLastCachedAnnot, getLastCachedAnnotIdx, deleteCachedAnnotation, updateAnnotationLabel } from './annotationControl.js'
+import {getCanvas } from '../../custom/FabricMenuSettings.js'
 
 const colors = {red: '#dd9999', green: '#99dd99', purple: '#9999dd'};
 
@@ -45,7 +45,6 @@ export function drawRect(canvas, rect, label) {
     originX: 'left',
     originY: 'top',
     fontFamily: 'Arial',
-    fontSize: 20,
     fontWeight: 'bold',
     fill: 'white',
     textBackgroundColor: colors.green,
@@ -67,8 +66,47 @@ export function updateRect(rect) {
   // update with new position
 }
 
-export function updateLabel(label) {
-  // update with new label
+export function updateLabel(object, label) {
+
+  var oldLabel = ""
+  if (object && label) {
+    ungroup(object)
+
+    if (object) {
+      var objs = object._objects
+      if (objs && (objs.length > 0)) {
+        for (var i = 0; objs.length; i++) {
+          if (objs[i]) {
+            if (objs[i].text) {
+              oldLabel = objs[i].text
+              objs[i].text = label
+              updateAnnotationLabel(oldLabel, label)
+              getCanvas().renderAll();            }
+          }
+          else {
+            return
+          }
+        }
+      }
+    }
+  }
+}
+
+export function ungroup(object) {
+  var canvas = getCanvas();
+  var items = object._objects;
+  if (items.length >= 2) {
+    object._restoreObjectsState();
+    canvas.remove(object)
+    for (var i = 0; i < items.length; i++) {
+      canvas.add(items[i]);
+      canvas.item(canvas.size()-1).hasControls=true;
+    }
+    canvas.renderAll();
+  }
+}
+
+export function regroup(object) {
 }
 
 export function undo(canvas) {
@@ -77,14 +115,16 @@ export function undo(canvas) {
   if (idx >= 0) {
     // remove from canvas
     canvas.getObjects().map(function(o, i) {
-      if (i == idx) {
+      if (i === idx) {
         canvas.remove(o);
       }
+      return null
     })
 
     // remove from annotations
     undoAnnotation();
   }
+  return null
 }
 
 export function redo(canvas) {
@@ -99,4 +139,3 @@ export function redo(canvas) {
     deleteCachedAnnotation(idx);
   }
 }
-
