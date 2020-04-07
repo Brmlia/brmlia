@@ -6,7 +6,7 @@ class TestImageComponent extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id = "ticomp">
         <TestImageWrapper />
         <SliderComponent />
       </div>

@@ -5,7 +5,6 @@ import { withUniformStore } from '../../components/utils.js';
 import Annotator from "./ImageDraw.js";
 import Annotator2 from "./ImageBare.js";
 import Annotator3 from "./ImageThree.js";
-
 import * as THREE from 'three';
 //import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
 //import {RectAreaLight, RectAreaLightHelper, RectAreaLightUniformsLib} from "three";

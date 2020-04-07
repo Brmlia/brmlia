@@ -1,10 +1,30 @@
-#canvasContainer {
+#canvasContainer, #ticomp{
     /* display: grid;
     justify-content: center;
     align-content: center; */
+    display: grid;
+    margin: 0 auto;
     position: relative;
     width: 750px;
     height: 750px;
+    background: #F8F5E1;
+}
+
+#sliderDiv {
+    display: grid;
+    margin: 0 auto;
+    position: relative;
+
+
+}
+
+.canvas-container{
+    display: grid;
+    margin: 0 auto;
+    position: relative;
+    width: 750px;
+    height: 750px;
+
 }
 
 #imageCanvas {
@@ -33,4 +53,6 @@
     z-index: 5;
 
 }
+
+
 
