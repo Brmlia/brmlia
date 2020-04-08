@@ -147,9 +147,9 @@ export function setFabricCoords(x, y) {
 export function openMenu(x, y) {
   if (!isDisplayOn()) {
     setDisplay(true);
+    let canvas = fabricApi.getState().canvas;
+    setMenuCoords(x - canvas._offset.left, y - canvas._offset.top);
   }
-  let canvas = fabricApi.getState().canvas;
-  setMenuCoords(x - canvas._offset.left, y - canvas._offset.top);
 }
 
 export function addToFabric() {
