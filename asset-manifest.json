@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/brmlia/static/css/main.ece211ee.chunk.css",
-    "main.js": "/brmlia/static/js/main.ba8c5a99.chunk.js",
-    "main.js.map": "/brmlia/static/js/main.ba8c5a99.chunk.js.map",
+    "main.js": "/brmlia/static/js/main.4f90551e.chunk.js",
+    "main.js.map": "/brmlia/static/js/main.4f90551e.chunk.js.map",
     "runtime-main.js": "/brmlia/static/js/runtime-main.ebe7bc53.js",
     "runtime-main.js.map": "/brmlia/static/js/runtime-main.ebe7bc53.js.map",
     "static/css/2.0161871a.chunk.css": "/brmlia/static/css/2.0161871a.chunk.css",
-    "static/js/2.d1f87fba.chunk.js": "/brmlia/static/js/2.d1f87fba.chunk.js",
-    "static/js/2.d1f87fba.chunk.js.map": "/brmlia/static/js/2.d1f87fba.chunk.js.map",
+    "static/js/2.161543ac.chunk.js": "/brmlia/static/js/2.161543ac.chunk.js",
+    "static/js/2.161543ac.chunk.js.map": "/brmlia/static/js/2.161543ac.chunk.js.map",
     "index.html": "/brmlia/index.html",
-    "precache-manifest.108e50b7aee899d7821f775de7c18713.js": "/brmlia/precache-manifest.108e50b7aee899d7821f775de7c18713.js",
+    "precache-manifest.d357b6bc336397536235e3ca01706be4.js": "/brmlia/precache-manifest.d357b6bc336397536235e3ca01706be4.js",
     "service-worker.js": "/brmlia/service-worker.js",
     "static/css/2.0161871a.chunk.css.map": "/brmlia/static/css/2.0161871a.chunk.css.map",
     "static/css/main.ece211ee.chunk.css.map": "/brmlia/static/css/main.ece211ee.chunk.css.map",
-    "static/js/2.d1f87fba.chunk.js.LICENSE.txt": "/brmlia/static/js/2.d1f87fba.chunk.js.LICENSE.txt"
+    "static/js/2.161543ac.chunk.js.LICENSE.txt": "/brmlia/static/js/2.161543ac.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ebe7bc53.js",
     "static/css/2.0161871a.chunk.css",
-    "static/js/2.d1f87fba.chunk.js",
+    "static/js/2.161543ac.chunk.js",
     "static/css/main.ece211ee.chunk.css",
-    "static/js/main.ba8c5a99.chunk.js"
+    "static/js/main.4f90551e.chunk.js"
   ]
 }
