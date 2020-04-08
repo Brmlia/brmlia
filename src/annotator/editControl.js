@@ -209,6 +209,7 @@ export function filterAnnotations(classLabel, enabled) {
             }
             else {
               markGroupInvisible(group)
+              canvas.discardActiveObject()
             }
           }
         }
