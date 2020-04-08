@@ -77,6 +77,28 @@ const initState = {
       name: '',
       type: '',
     },
+    {
+      uniforms: {
+        brightness: {
+          value: '0.0',
+        },
+        contrast: {
+          value: '0.0',
+        },
+        whitepoint: {
+          value: '235.0',
+        },
+        blackpoint: {
+          value: '16.0',
+        },
+        image: {
+          value: '',
+        },
+      },
+      texture: null,
+      name: '',
+      type: '',
+    },
   ],
 };
 

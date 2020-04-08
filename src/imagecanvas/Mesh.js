@@ -42,7 +42,7 @@ const vertexShader = `
 function Mesh(props) {
   const ref = useRef();
   const material = useRef();
-
+  console.log("chanel: ", props.channel)
   var uniforms = useMemo(
     () => uApi.getState().channels[props.channel - 1].uniforms,
     [props]

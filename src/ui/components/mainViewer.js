@@ -4,6 +4,7 @@ import {
   cardStyle,
   card,
   mainImg,
+  mainCanvasStyle,
   canvasStyle1,
   canvasStyle2,
   canvasStyle3,
@@ -13,6 +14,7 @@ import { Card, CardTitle, CardBody } from 'reactstrap';
 import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 import FabricLayer from './FabricLayer.js';
+import ImageCanvas from './../../imagecanvas/ImageCanvas.js';
 
 class mainViewer extends React.Component {
   altView() {
@@ -21,6 +23,27 @@ class mainViewer extends React.Component {
         <CardBody>
           <CardTitle> Image View </CardTitle>
           <Viewer imageWidth={mainImg.width} type="0" />
+        </CardBody>
+        <br></br>
+      </Card>
+    );
+  }
+  canvasView() {
+    var canvas = (
+      <ImageCanvas
+        className="annot-view"
+        alt="main-canvas-view"
+        height="100px"
+        channel="4"
+      />
+    );
+    return (
+      <Card style={card}>
+        <CardBody>
+          <CardTitle> Image View </CardTitle>
+            <div id="canvasContainer">
+              <div style={mainCanvasStyle}>{canvas}</div>
+            </div>
         </CardBody>
         <br></br>
       </Card>
@@ -59,7 +82,7 @@ class mainViewer extends React.Component {
       !settingsApi.getState().channels[1].selected &&
       !settingsApi.getState().channels[2].selected
     ) {
-      return this.altView();
+      return this.canvasView();
     } else {
       return this.channelViews();
     }

@@ -4,7 +4,7 @@ import Mesh from './Mesh.js';
 import { Canvas } from 'react-three-fiber';
 
 export const meshState = {
-  mesh: [<Mesh channel="1" />, <Mesh channel="2" />, <Mesh channel="3" />],
+  mesh: [<Mesh channel="1" />, <Mesh channel="2" />, <Mesh channel="3" />, <Mesh channel="4" />],
 };
 
 export const [useMeshStore, meshApi] = create(set => ({
@@ -16,6 +16,7 @@ export const canvasState = {
     <Canvas className={'image-canvas-1'}>{meshState.mesh[0]}</Canvas>,
     <Canvas className={'image-canvas-2'}>{meshState.mesh[1]}</Canvas>,
     <Canvas className={'image-canvas-3'}>{meshState.mesh[2]}</Canvas>,
+    <Canvas className={'main-image-canvas'}>{meshState.mesh[3]}</Canvas>,
   ],
 };
 

@@ -77,6 +77,15 @@ export const axesImg = {
   width: '100%',
 };
 
+export const mainCanvasStyle = {
+  position: 'absolute',
+  height: '300px',
+  width: '500px',
+  zIndex: '3',
+  marginLeft: '100px',
+  opacity: '0.5',
+};
+
 export const canvasStyle1 = {
   position: 'absolute',
   height: '300px',
