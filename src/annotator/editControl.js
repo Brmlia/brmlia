@@ -208,6 +208,7 @@ export function filterAnnotations(classLabel, enabled) {
               markGroupVisible(group);
             } else {
               markGroupInvisible(group);
+              canvas.discardActiveObject();
             }
           }
         }
