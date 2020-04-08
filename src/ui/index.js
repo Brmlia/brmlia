@@ -21,15 +21,15 @@ class UI extends React.Component {
 
         <Container style={container}>
           <Row style={rowStyle}>
-            <Col xs="3">
+            <Col xs="2">
               <AxesViewer />
             </Col>
 
-            <Col xs="6">
+            <Col xs="8">
               <MainViewer />
             </Col>
 
-            <Col xs="3">
+            <Col xs="2">
               <AnnotatorViewer />
               <ChannelViewer />
               <Thumbnails />

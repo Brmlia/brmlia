@@ -32,7 +32,7 @@ class mainViewer extends React.Component {
     var canvas = (
       <ImageCanvas
         className="annot-view"
-        alt="main-canvas-view"
+        alt="main-canvas"
         height="100px"
         channel="4"
       />
@@ -42,7 +42,7 @@ class mainViewer extends React.Component {
         <CardBody>
           <CardTitle> Image View </CardTitle>
             <div id="canvasContainer">
-              <div style={mainCanvasStyle}>{canvas}</div>
+              <div id="main-canvas-view" style={mainCanvasStyle}>{canvas}</div>
             </div>
         </CardBody>
         <br></br>
