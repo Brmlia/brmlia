@@ -9,10 +9,10 @@ import {
   updateAnnotationLabel,
   updateAnnotClassLabel,
 } from './annotationControl.js';
-import { getCanvas } from './annotationSettings.js'
-import { getDisabledClasses } from './annotationClass.js'
+import { getCanvas } from './annotationSettings.js';
+import { getDisabledClasses } from './annotationClass.js';
 
-const colors = {red: '#dd9999', green: '#99dd99', purple: '#9999dd'};
+const colors = { red: '#dd9999', green: '#99dd99', purple: '#9999dd' };
 
 export function drawSampleRect(canvas) {
   const rect = {
@@ -22,7 +22,7 @@ export function drawSampleRect(canvas) {
     height: 100,
   };
   const label = 'label' + (getLastAnnotIdx() + 1);
-  const classLabel = "class1";
+  const classLabel = 'class1';
   drawRect(canvas, rect, label, classLabel);
   addAnnotation(rect, label);
 }
@@ -42,38 +42,39 @@ export function drawRect(canvas, rect, label, classLabel) {
     top: rect.top,
     width: rect.width,
     height: rect.height,
-    fill: 'transparent',
-    stroke: colors.green,
+    // if fully transparent, only stroke is selectable, hence this hack:
+    fill: 'rgb(255,255,255,.01)',
+    stroke: colors.purple,
     strokeLineJoin: 'round',
-    strokeWidth: 4,
+    strokeWidth: 2,
     objectCaching: false,
   });
 
   var group = new fabric.Group([fRect]);
 
-  var newLabel = (label === 'label') ? label += getLastAnnotIdx() + 1 : label
+  var newLabel = label === 'label' ? (label += getLastAnnotIdx() + 1) : label;
 
   var text = new fabric.IText(newLabel, {
-    fontSize: 30,
+    fontSize: 16,
     originX: 'left',
     originY: 'top',
     fontFamily: 'Arial',
     fontWeight: 'bold',
     fill: 'white',
-    textBackgroundColor: colors.green,
-    top: group.top + group.height - fRect.strokeWidth,
+    textBackgroundColor: colors.purple,
+    top: group.top,
     left: group.left,
   });
 
   var classText = new fabric.IText(classLabel, {
-    fontSize: 30,
+    fontSize: 16,
     originX: 'left',
     originY: 'bottom',
     fontFamily: 'Arial',
     fontWeight: 'bold',
     fill: 'white',
-    textBackgroundColor: colors.green,
-    top: group.top + group.height - fRect.strokeWidth,
+    textBackgroundColor: colors.purple,
+    top: group.top + group.height,
     left: group.left,
   });
 
@@ -83,40 +84,41 @@ export function drawRect(canvas, rect, label, classLabel) {
     canvas.setActiveObject(group);
     group.addWithUpdate(text);
     group.addWithUpdate(classText);
+    // canvas.add(fRect);
+    // canvas.add(text);
+    // canvas.add(classText);
+    // canvas.setActiveObject(new fabric.ActiveSelection([fRect, text, classText]));
   }
 
   addAnnotation(fRect, newLabel, classLabel);
 }
-
 
 export function updateRect(rect) {
   // update with new position
 }
 
 export function updateLabel(object, label) {
-
-  var oldLabel = ""
+  var oldLabel = '';
   if (object && label) {
-    ungroup(object)
+    ungroup(object);
 
     if (object) {
-      var objs = object._objects
-      if (objs && (objs.length > 0)) {
+      var objs = object._objects;
+      if (objs && objs.length > 0) {
         for (var i = 0; objs.length; i++) {
-          if ( objs[i] ) {
+          if (objs[i]) {
             if (i === 1) {
               if (objs[i].text) {
-                oldLabel = objs[i].text
-                objs[i].text = label
-                updateAnnotationLabel(oldLabel, label)
+                oldLabel = objs[i].text;
+                objs[i].text = label;
+                updateAnnotationLabel(oldLabel, label);
                 getCanvas().renderAll();
-                regroup(object)
-                return
+                regroup(object);
+                return;
               }
             }
-          }
-          else {
-            return
+          } else {
+            return;
           }
         }
       }
@@ -125,29 +127,27 @@ export function updateLabel(object, label) {
 }
 
 export function updateClassLabel(object, label) {
-
-  var oldLabel = ""
+  var oldLabel = '';
   if (object && label) {
-    ungroup(object)
+    ungroup(object);
 
     if (object) {
-      var objs = object._objects
-      if (objs && (objs.length > 0)) {
+      var objs = object._objects;
+      if (objs && objs.length > 0) {
         for (var i = 0; objs.length; i++) {
-          if ( objs[i] ) {
+          if (objs[i]) {
             if (i === 2) {
               if (objs[i].text) {
-                oldLabel = objs[i].text
-                objs[i].text = label
-                updateAnnotClassLabel(oldLabel, label)
+                oldLabel = objs[i].text;
+                objs[i].text = label;
+                updateAnnotClassLabel(oldLabel, label);
                 getCanvas().renderAll();
-                regroup(object)
-                return
+                regroup(object);
+                return;
               }
             }
-          }
-          else {
-            return
+          } else {
+            return;
           }
         }
       }
@@ -160,55 +160,54 @@ export function ungroup(object) {
   var items = object._objects;
   if (items.length >= 2) {
     object._restoreObjectsState();
-    canvas.remove(object)
+    canvas.remove(object);
     for (var i = 0; i < items.length; i++) {
       canvas.add(items[i]);
-      canvas.item(canvas.size()-1).hasControls=true;
+      canvas.item(canvas.size() - 1).hasControls = true;
     }
     canvas.renderAll();
   }
 }
 
 export function regroup(object) {
-  if (object && (object._objects.length === 3)) {
-    var objs = object._objects
+  if (object && object._objects.length === 3) {
+    var objs = object._objects;
 
-    var rect = objs[0]
-    var label = objs[1]
-    var classLabel = objs[2]
+    var rect = objs[0];
+    var label = objs[1];
+    var classLabel = objs[2];
 
-    var group = new fabric.Group([rect, label, classLabel])
-    var canvas = getCanvas()
+    var group = new fabric.Group([rect, label, classLabel]);
+    var canvas = getCanvas();
     if (canvas) {
-      canvas.add(group)
-      canvas.remove(rect)
-      canvas.remove(label)
-      canvas.remove(classLabel)
-      canvas.setActiveObject(group)
+      canvas.add(group);
+      canvas.remove(rect);
+      canvas.remove(label);
+      canvas.remove(classLabel);
+      canvas.setActiveObject(group);
     }
   }
 }
 
 export function filterClasses(cls) {
-  filterAnnotations(cls.name, cls.enabled)
+  filterAnnotations(cls.name, cls.enabled);
 }
 
 export function filterAnnotations(classLabel, enabled) {
   var canvas = getCanvas();
   var objs = canvas.getObjects();
   for (var i = 0; i < objs.length; i++) {
-    var group = objs[i]
+    var group = objs[i];
     if (group) {
-      var group_elements = group._objects
+      var group_elements = group._objects;
       if (group_elements) {
-        var class_element = group._objects[2]
+        var class_element = group._objects[2];
         if (class_element && class_element.text) {
           if (class_element.text === classLabel) {
             if (enabled) {
-              markGroupVisible(group)
-            }
-            else {
-              markGroupInvisible(group)
+              markGroupVisible(group);
+            } else {
+              markGroupInvisible(group);
             }
           }
         }
@@ -221,7 +220,7 @@ export function filterAnnotations(classLabel, enabled) {
 export function filterDisabledClasses() {
   const classes = getDisabledClasses();
   for (var i = 0; i < classes.length; i++) {
-    filterAnnotations(classes[i])
+    filterAnnotations(classes[i]);
   }
   getCanvas().renderAll();
 }
@@ -230,40 +229,40 @@ export function showAll() {
   var canvas = getCanvas();
   var objs = canvas.getObjects();
   for (var i = 0; i < objs.length; i++) {
-    var group = objs[i]
+    var group = objs[i];
     if (group) {
-      markGroupVisible(group)
+      markGroupVisible(group);
     }
   }
 }
 
 export function markGroupVisible(group) {
-  ungroup(group)
+  ungroup(group);
 
   var objs = group._objects;
   for (var i = 0; i < objs.length; i++) {
     var obj = objs[i];
-    markVisible(obj, true)
+    markVisible(obj, true);
   }
 
-  regroup(group)
+  regroup(group);
 }
 
 export function markGroupInvisible(group) {
-  ungroup(group)
+  ungroup(group);
 
   var objs = group._objects;
   for (var i = 0; i < objs.length; i++) {
     var obj = objs[i];
-    markVisible(obj, false)
+    markVisible(obj, false);
   }
 
-  regroup(group)
+  regroup(group);
 }
 
 function markVisible(obj, visible) {
-  obj.visible = visible
-  obj.dirty = true
+  obj.visible = visible;
+  obj.dirty = true;
   getCanvas().renderAll();
 }
 
@@ -277,19 +276,19 @@ export function undo() {
       if (i === idx) {
         canvas.remove(o);
       }
-      return null
-    })
+      return null;
+    });
 
     // remove from annotations
     undoAnnotation();
   }
-  return null
+  return null;
 }
 
 export function redo() {
   var canvas = getCanvas();
   const idx = getLastCachedAnnotIdx();
-  if ( idx >= 0 ) {
+  if (idx >= 0) {
     // get last from cache
     const cachedAnnot = getLastCachedAnnot();
     // redraw on canvas
