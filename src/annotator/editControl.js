@@ -32,8 +32,9 @@ export function drawFreeStyle(canvas) {
   canvas.isMouseDown = false;
 
   canvas.isDrawingMode = true;
-  canvas.freeDrawingBrush.color = '#000';
+  canvas.freeDrawingBrush.color = colors.green;
   canvas.freeDrawingBrush.width = 4;
+  console.log("freestyle: ", canvas.freeDrawingBrush.color)
 }
 
 export function drawRect(canvas, rect, label, classLabel) {

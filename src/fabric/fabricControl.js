@@ -1,6 +1,6 @@
 import create from 'zustand';
 
-import { drawRect } from '../annotator/editControl.js';
+import { drawRect, drawFreeStyle } from '../annotator/editControl.js';
 import {
   isDisplayOn,
   setDisplay,
@@ -68,7 +68,9 @@ export function startDrawing(x, y) {
   }
 }
 
-export function startDrawingFree(x, y) {}
+export function startDrawingFree(x, y) {
+  drawFreeStyle(fabricApi.getState().canvas)
+}
 
 export function finish(x, y) {
   if (fabricApi.getState().drawMode === modes.SELECT) {
