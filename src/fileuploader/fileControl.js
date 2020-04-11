@@ -87,7 +87,8 @@ export function updateTiff(image) {
   fileApi.setState( prevState => {
     const file = prevState.file.map((file, j) => {
       var newFile = file;
-      newFile.texture = createTextureFromTiff(image.toDataURL())
+      newFile.texture = createTextureFromTiff(image.src)
+      newFile.image = image
       return newFile;
     })
     return {

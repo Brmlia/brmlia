@@ -12,7 +12,6 @@
     "concurrently": "^5.1.0",
     "csvtojson": "^2.0.10",
     "fabric": "^3.6.3",
-    "fs": "0.0.1-security",
     "image-js": "^0.21.9",
     "material-ui": "^0.20.2",
     "material-ui-slider": "^3.0.8",
@@ -30,6 +29,7 @@
     "reactstrap": "^8.4.1",
     "styled-components": "^5.0.1",
     "three": "^0.114.0",
+    "tiff.js": "^1.0.0",
     "utif": "^3.1.0",
     "zustand": "^2.2.3"
   },
