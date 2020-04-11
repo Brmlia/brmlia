@@ -61,10 +61,10 @@ export function importTiff(file) {
         }
 
       }
-      reader.onloadend = () => {
+      reader.onloadend = (event) => {
         console.debug("importer::importTiff() - Parsing TIFF image...");
         // parseGrayscaleTiff(file);
-        parseTiff(reader.result);
+        parseTiff(event.target.result);
       }
       reader.onprogress = () => {
         console.log("importer::importTiff()", "Still Loading...")
@@ -84,28 +84,10 @@ export function parseGrayscaleTiff(file) {
 }
 
 export function parseTiff(buffer) {
-  var ifds = UTIF.decode(buffer);
-  UTIF.decodeImage(buffer, ifds[0]);
+  const ifds = UTIF.decode(buffer);
+  UTIF.decodeImages(buffer, ifds);
   var rgba = UTIF.toRGBA8(ifds[0]);
 
-  // width and height are ok
-  // buffer is Not OK
-  // ifds[0] is Not OK
-  // rgba is Not OK
-  // image.toDataURL() returns a black image
-  // verified with https://codebeautify.org/base64-to-image-converter
-
-  console.log("importer::parseTiff() - width: ", ifds, ifds[0].width, " height: ",  ifds[0].height, ifds[0])
-  console.log("importer::parseTiff() - rgba: ", rgba)
-
   var image = new Image(ifds[0].width, ifds[0].height)
-
-  // load the image
-  // image.src = ifds[0]
-  image.src = rgba
-
-  // set src to data url
-  image.src = image.toDataURL()
-
-  updateTiff(image)
+  updateTiff(image, rgba)
 }

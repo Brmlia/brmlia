@@ -6,6 +6,7 @@ import Annotator from "./annotator/index.js"
 import ImageCanvas from "./imagecanvas/ImageCanvas.js"
 import Thumbnails from "./ui/components/thumbnails.js";
 import FabricLayer from "./ui/components/FabricLayer.js";
+import SampleTiff from './ui/components/sampleTiff.js'
 import './styles.css'
 
 
@@ -18,6 +19,7 @@ function Application() {
         <FabricLayer />
       </div>
       <Thumbnails />
+      <SampleTiff />
     </>
   );
 }
