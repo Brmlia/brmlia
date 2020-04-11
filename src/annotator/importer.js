@@ -85,9 +85,11 @@ export function parseGrayscaleTiff(file) {
 
 export function parseTiff(buffer) {
   const ifds = UTIF.decode(buffer);
-  UTIF.decodeImages(buffer, ifds);
-  var rgba = UTIF.toRGBA8(ifds[0]);
 
-  var image = new Image(ifds[0].width, ifds[0].height)
+  const page_num = 0
+  UTIF.decodeImage(buffer, ifds[page_num]);
+  var rgba = UTIF.toRGBA8(ifds[page_num]);
+
+  var image = new Image(ifds[page_num].width, ifds[page_num].height)
   updateTiff(image, rgba)
 }
