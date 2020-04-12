@@ -12,7 +12,9 @@ class SampleTiff extends Component {
     rgba: null,
     width: 0,
     height: 0,
-    pages: []
+    pages: [],
+    loaded: 0,
+    pagenumber: 0
   }
 
   displayOriginal() {
@@ -97,6 +99,37 @@ class SampleTiff extends Component {
     );
   }
 
+  loadTiff(context, idx, pages, width, height) {
+    console.log("loading ", idx , "/", pages.length)
+    const imageData = context.createImageData(
+      width,
+      height
+    );
+
+    const page = pages[idx]
+    for (let idx = 0; idx < page.length; idx++) {
+      imageData.data[idx] = page[idx];
+    }
+    return imageData;
+  }
+
+  displayTiff(context, imageData) {
+
+    context.putImageData(imageData, 0, 0);
+  }
+
+  displayTiffGrid(context, idx, width, height, imageData) {
+    // grid of 3 x 3
+    var x = 0
+    const mod3 = (idx % 3)
+    const y = Math.floor(idx / 3) * height
+
+    if ( mod3 === 1) x = width * 1
+    else if (mod3 === 2) x = width * 2
+
+    context.putImageData(imageData, x, y);
+  }
+
   displayMultiPageTiff() {
     var pages = null
     if (this.state && this.state.pages) {
@@ -109,30 +142,20 @@ class SampleTiff extends Component {
             x={0}
             y={0}
             sceneFunc={context => {
-              if (pages && (this.state.width > 0) && (this.state.height > 0)) {
+              if (pages && (this.state.width > 0) && (this.state.height > 0) && (this.state.loaded !== this.state.pages.length-1)) {
 
+                var loaded = 0
                 for (var i = 0; i < this.state.pages.length; i++) {
-                  const imageWidth = this.state.width;
-                  const imageHeight = this.state.height;
-                  const imageData = context.createImageData(
-                    imageWidth,
-                    imageHeight
-                  );
 
-                  const page = pages[i]
-                  for (let i = 0; i < page.length; i++) {
-                    imageData.data[i] = page[i];
-                  }
-
-                  // grid of 3 x 3
-                  var x = 0
-                  const mod3 = (i % 3)
-                  const y = Math.floor(i / 3) * imageHeight
-
-                  if ( mod3 === 1) x = imageWidth * 1
-                  else if (mod3 === 2) x = imageWidth * 2
-
-                  context.putImageData(imageData, x, y);
+                 const imageData = this.loadTiff(context, i, pages, this.state.width, this.state.height);
+                 this.displayTiffGrid(context, i, this.state.width, this.state.height, imageData);
+                 loaded = i;
+                }
+                if (this.state.loaded !== loaded) {
+                  this.setState(prevState => ({
+                    ...prevState,
+                    loaded: loaded
+                  }))
                 }
               }
             }}
@@ -141,6 +164,45 @@ class SampleTiff extends Component {
       </Stage>
     );
   }
+
+  handleChangePageNumber(value) {
+    this.setState(prevState => ({
+      ...prevState,
+      pagenumber: value
+    }))
+  }
+
+  displaySelectedTiff() {
+    var pages = null
+    if (this.state && this.state.pages) {
+      pages = this.state.pages
+    }
+    return (
+      <div>
+        <label>
+          Page #:
+          <input type="text" value={this.state.pagenumber} onChange={event => this.handleChangePageNumber(event.target.value) } />
+        </label>
+        <Stage width={window.innerWidth} height={window.innerHeight}>
+          <Layer>
+            <Shape
+              x={0}
+              y={0}
+              sceneFunc={context => {
+                if (pages && (this.state.width > 0) && (this.state.height > 0)) {
+
+
+                 const imageData = this.loadTiff(context, this.state.pagenumber, pages, this.state.width, this.state.height);
+                 this.displayTiff(context, imageData);
+                }
+              }}
+            />
+          </Layer>
+        </Stage>
+      </div>
+    );
+  }
+
   render() {
     fApi.subscribe(state =>  {
       this.updateForFile(state);
@@ -148,7 +210,8 @@ class SampleTiff extends Component {
     return(
       // this.displayOriginal()
       // this.displayTiff2()
-      this.displayMultiPageTiff()
+      // this.displayMultiPageTiff()
+      this.displaySelectedTiff()
     );
   }
 }

@@ -13,13 +13,13 @@ import './styles.css'
 function Application() {
   return (
     <>
+      <SampleTiff />
       <Annotator />
       <div id="canvasContainer">
         <ImageCanvas />
         <FabricLayer />
       </div>
       <Thumbnails />
-      <SampleTiff />
     </>
   );
 }
