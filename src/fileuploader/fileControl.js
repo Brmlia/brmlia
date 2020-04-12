@@ -114,6 +114,21 @@ export function updateTiff(image, rgba) {
 
 }
 
+export function updateTiffPages(pages, image) {
+  fileApi.setState( prevState => {
+    const file = prevState.file.map((file, j) => {
+      var newFile = file;
+      newFile.pages = pages
+      newFile.image = image
+      return newFile;
+    })
+    return {
+      file
+    }
+  })
+
+}
+
 export function initCsv(file) {
   fileApi.setState( prevState => ({
     ...prevState,

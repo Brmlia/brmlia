@@ -1,5 +1,5 @@
 import csv from "csvtojson";
-import { saveJson, updateTiff } from "../fileuploader/fileControl.js"
+import { saveJson, updateTiff, updateTiffPages } from "../fileuploader/fileControl.js"
 import { Image } from "image-js"
 import UTIF  from "utif"
 
@@ -64,7 +64,8 @@ export function importTiff(file) {
       reader.onloadend = (event) => {
         console.debug("importer::importTiff() - Parsing TIFF image...");
         // parseGrayscaleTiff(file);
-        parseTiff(event.target.result);
+        // parseTiff(event.target.result);
+        parseMultiTiff(event.target.result);
       }
       reader.onprogress = () => {
         console.log("importer::importTiff()", "Still Loading...")
@@ -86,10 +87,27 @@ export function parseGrayscaleTiff(file) {
 export function parseTiff(buffer) {
   const ifds = UTIF.decode(buffer);
 
-  const page_num = 0
-  UTIF.decodeImage(buffer, ifds[page_num]);
-  var rgba = UTIF.toRGBA8(ifds[page_num]);
+  UTIF.decodeImage(buffer, ifds[0]);
+  var rgba = UTIF.toRGBA8(ifds[0]);
 
-  var image = new Image(ifds[page_num].width, ifds[page_num].height)
+  var image = new Image(ifds[0].width, ifds[0].height)
   updateTiff(image, rgba)
+}
+
+export function parseMultiTiff(buffer) {
+
+  var pages = []
+  var height = 0
+  var width = 0
+  const ifds = UTIF.decode(buffer);
+
+  for (var i = 0; i < ifds.length; i++) {
+    const idx = i
+    UTIF.decodeImage(buffer, ifds[idx]);
+    var rgba = UTIF.toRGBA8(ifds[idx]);
+    pages.push(rgba)
+  }
+
+  var image = new Image(ifds[0].width, ifds[0].height)
+  updateTiffPages(pages, image)
 }
