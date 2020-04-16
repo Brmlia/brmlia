@@ -1,0 +1,49 @@
+#canvasContainer,
+#ticomp {
+  /* display: grid;
+    justify-content: center;
+    align-content: center; */
+  display: grid;
+  margin: 0 auto;
+  position: relative;
+  width: 750px;
+  height: 750px;
+  background: #f8f5e1;
+}
+
+#sliderDiv {
+  display: grid;
+  margin: 0 auto;
+  position: relative;
+}
+
+.canvas-container {
+  display: grid;
+  margin: 0 auto;
+  position: relative;
+  width: 750px;
+  height: 750px;
+}
+
+#imageCanvas {
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 3;
+}
+
+#imageLayer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 750px;
+  width: 750px;
+  z-index: 3;
+}
+
+#annotationLayer {
+  opacity: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 5;
+}
