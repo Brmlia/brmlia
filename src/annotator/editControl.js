@@ -14,19 +14,6 @@ import { getDisabledClasses } from './annotationClass.js';
 
 const colors = { red: '#dd9999', green: '#99dd99', purple: '#9999dd' };
 
-export function drawSampleRect(canvas) {
-  const rect = {
-    left: 100,
-    top: 50,
-    width: 200,
-    height: 100,
-  };
-  const label = 'label' + (getLastAnnotIdx() + 1);
-  const classLabel = 'class1';
-  drawRect(canvas, rect, label, classLabel);
-  addAnnotation(rect, label);
-}
-
 export function drawFreeStyle(canvas) {
   window.canvas = canvas;
   canvas.isMouseDown = false;
@@ -34,7 +21,7 @@ export function drawFreeStyle(canvas) {
   canvas.isDrawingMode = true;
   canvas.freeDrawingBrush.color = colors.green;
   canvas.freeDrawingBrush.width = 4;
-  console.log("freestyle: ", canvas.freeDrawingBrush.color)
+  console.log('freestyle: ', canvas.freeDrawingBrush.color);
 }
 
 export function drawRect(canvas, rect, label, classLabel) {
@@ -85,17 +72,8 @@ export function drawRect(canvas, rect, label, classLabel) {
     canvas.setActiveObject(group);
     group.addWithUpdate(text);
     group.addWithUpdate(classText);
-    // canvas.add(fRect);
-    // canvas.add(text);
-    // canvas.add(classText);
-    // canvas.setActiveObject(new fabric.ActiveSelection([fRect, text, classText]));
+    addAnnotation(group, newLabel, classLabel);
   }
-
-  addAnnotation(fRect, newLabel, classLabel);
-}
-
-export function updateRect(rect) {
-  // update with new position
 }
 
 export function updateLabel(object, label) {
@@ -269,8 +247,8 @@ function markVisible(obj, visible) {
 }
 
 export function undo() {
-  const idx = getLastAnnotIdx();
   var canvas = getCanvas();
+  const idx = getLastAnnotIdx();
 
   if (idx >= 0) {
     // remove from canvas
@@ -290,11 +268,12 @@ export function undo() {
 export function redo() {
   var canvas = getCanvas();
   const idx = getLastCachedAnnotIdx();
+
   if (idx >= 0) {
     // get last from cache
     const cachedAnnot = getLastCachedAnnot();
     // redraw on canvas
-    drawRect(canvas, cachedAnnot.rect, cachedAnnot.label, cachedAnnot.class);
+    drawRect(canvas, cachedAnnot.group, cachedAnnot.label, cachedAnnot.class);
     // remove from cache
     deleteCachedAnnotation(idx);
   }

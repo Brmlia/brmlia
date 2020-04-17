@@ -1,54 +1,51 @@
 import { annotApi, cachedAnnotApi } from './annotationStore.js';
 
-export function addAnnotation(rect, label, classLabel) {
-  const default_class = 'class1'
+export function addAnnotation(group, label, classLabel) {
+  const default_class = 'class1';
   annotApi.setState(prevState => ({
     ...prevState,
     annotations: [
       ...prevState.annotations,
       {
-        rect: rect,
+        group: group,
         label: label,
-        class: classLabel || default_class
+        class: classLabel || default_class,
       },
     ],
   }));
 }
 
-export function addCachedAnnotation(rect, label, classLabel) {
+export function addCachedAnnotation(group, label, classLabel) {
   cachedAnnotApi.setState(prevState => ({
     ...prevState,
     cachedAnnots: [
       ...prevState.cachedAnnots,
       {
-        rect: rect,
+        group: group,
         label: label,
-        class: classLabel
+        class: classLabel,
       },
     ],
   }));
 }
 
 export function deleteAnnotation(index) {
-  const annotation = annotApi.getState().annotations[index];
-
-  addCachedAnnotation(annotation.rect, annotation.label, annotation.class);
   annotApi.setState(prevState => {
     return prevState.annotations.splice(index, 1);
   });
 }
 
 export function deleteCachedAnnotation(index) {
-  const cachedAnnot = cachedAnnotApi.getState().cachedAnnots[index];
-
-  addAnnotation(cachedAnnot.rect, cachedAnnot.label);
   cachedAnnotApi.setState(prevState => {
     return prevState.cachedAnnots.splice(index, 1);
   });
 }
 
 export function undoAnnotation() {
-  deleteAnnotation(annotApi.getState().annotations.length - 1);
+  const index = annotApi.getState().annotations.length - 1;
+  const annotation = annotApi.getState().annotations[index];
+  deleteAnnotation(index);
+  addCachedAnnotation(annotation.group, annotation.label, annotation.class);
 }
 
 export function getLastAnnotIdx() {
@@ -66,46 +63,44 @@ export function getLastCachedAnnotIdx() {
 }
 
 export function updateAnnotationLabel(oldLabel, label) {
-  annotApi.setState( prevState => {
+  annotApi.setState(prevState => {
     const annotations = prevState.annotations.map((annot, j) => {
       if (annot.label === oldLabel) {
         var newAnnot = annot;
-        newAnnot.label = label
+        newAnnot.label = label;
         return newAnnot;
+      } else {
+        return annot;
       }
-      else {
-        return annot
-      }
-    })
+    });
     return {
-      annotations
-    }
-  })
+      annotations,
+    };
+  });
 }
 
 export function updateAnnotClassLabel(oldLabel, label) {
-  annotApi.setState( prevState => {
+  annotApi.setState(prevState => {
     const annotations = prevState.annotations.map((annot, j) => {
       if (annot.class === oldLabel) {
         var newAnnot = annot;
-        newAnnot.class = label
+        newAnnot.class = label;
         return newAnnot;
+      } else {
+        return annot;
       }
-      else {
-        return annot
-      }
-    })
+    });
     return {
-      annotations
-    }
-  })
+      annotations,
+    };
+  });
 }
 
 export function getAnnotationClasses() {
-  var classes = []
-  const annotations = annotApi.getState().annotations
+  var classes = [];
+  const annotations = annotApi.getState().annotations;
   for (var i = 0; i < annotations.length; i++) {
-    classes.push(annotations[i].class)
+    classes.push(annotations[i].class);
   }
-  return classes
+  return classes;
 }

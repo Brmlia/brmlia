@@ -1,15 +1,12 @@
 import React from 'react';
 import { fabric } from 'fabric';
-import {
-  filterAnnotations,
-  showAll,
-} from '../../annotator/editControl.js';
+import { filterAnnotations, showAll } from '../../annotator/editControl.js';
 import { annotApi } from '../../annotator/annotationStore.js';
 import AnnotationMenu from '../../annotator/annotationMenu.js';
 import {
   setCanvas,
   AnnotationMenuApi,
-} from '../../annotator/annotationSettings.js'
+} from '../../annotator/annotationSettings.js';
 import {
   openMenu,
   startDrawing,
@@ -17,7 +14,10 @@ import {
   finish,
   addToFabric,
   setFabricCanvas,
-} from '../../fabric/fabricControl.js'
+  setMode,
+  fabricApi,
+  modes,
+} from '../../fabric/fabricControl.js';
 
 var canvas;
 
@@ -32,17 +32,18 @@ class FabricLayer extends React.Component {
     this.handleDrag = this.handleDrag.bind(this);
     this.selectClass1 = this.selectClass1.bind(this);
     this.showAll = this.showAllClasses.bind(this);
+    this.handleMoveAnnotation = this.handleMoveAnnotation.bind(this);
   }
 
   componentDidMount() {
     canvas = new fabric.Canvas(this.canvasRef.current, {
-      fireRightClick: true
+      fireRightClick: true,
     });
     canvas.on({
       'mouse:down': this.handleMouseDown,
       'mouse:up': this.handleMouseUp,
       'mouse:dblclick': this.handleMouseDoubleClick,
-      'object:moving': this.handleDrag,
+      'object:moving': this.handleMoveAnnotation,
       'object:rotating': this.handleDrag,
       'object:scaling': this.handleDrag,
     });
@@ -50,40 +51,43 @@ class FabricLayer extends React.Component {
     setFabricCanvas(canvas);
   }
 
-  handleDrag(e){
+  handleDrag(e) {
     startSelecting();
   }
 
+  handleMoveAnnotation(e) {
+    setMode(modes.SELECT);
+  }
+
   handleLeftMouseDown(options) {
-    startDrawing(options.e.clientX, options.e.clientY)
+    if (fabricApi.getState().drawMode === modes.RECT) {
+      startDrawing(options.e.clientX, options.e.clientY);
+    }
   }
 
   handleRightMouseDown(options) {
-    openMenu(options.e.clientX, options.e.clientY)
+    openMenu(options.e.clientX, options.e.clientY);
   }
 
   handleLeftMouseUp(options) {
-    finish(options.e.clientX, options.e.clientY)
+    finish(options.e.clientX, options.e.clientY);
   }
 
-  handleRightMouseUp(options) {
-  }
+  handleRightMouseUp(options) {}
 
   handleMouseDown(options) {
     if (options.button === 3) {
-      this.handleRightMouseDown(options)
-    }
-    else {
-      this.handleLeftMouseDown(options)
+      this.handleRightMouseDown(options);
+    } else {
+      this.handleLeftMouseDown(options);
     }
   }
 
-  handleMouseUp(options){
+  handleMouseUp(options) {
     if (options.button === 3) {
-      this.handleRightMouseUp(options)
-    }
-    else {
-      this.handleLeftMouseUp(options)
+      this.handleRightMouseUp(options);
+    } else {
+      this.handleLeftMouseUp(options);
     }
   }
 
@@ -102,46 +106,40 @@ class FabricLayer extends React.Component {
   handleMouseDoubleClick(e) {
     // if an object is selected
     // updateLabel (label)
-    startSelecting()
+    startSelecting();
   }
 
   displayMenu() {
-    if (canvas && (canvas.getActiveObjects().length > 0)) {
-      return(
-        <AnnotationMenu />
-      )
+    if (canvas && canvas.getActiveObjects().length > 0) {
+      return <AnnotationMenu />;
     }
   }
   selectClass1() {
-    filterAnnotations("class1")
+    filterAnnotations('class1');
     this.forceUpdate();
   }
   showAllClasses() {
-    showAll()
+    showAll();
     this.forceUpdate();
   }
 
   render() {
     annotApi.subscribe(state => {
       if (state) {
-        addToFabric()
+        addToFabric();
       }
-    })
+    });
     AnnotationMenuApi.subscribe(state => {
-      this.forceUpdate()
-    })
+      this.forceUpdate();
+    });
 
     return (
-      <div id="annotationLayer" onContextMenu={(e) => e.preventDefault()}
-      >
-        <canvas ref={this.canvasRef}
-          width={750}
-          height={750}
-        />
+      <div id="annotationLayer" onContextMenu={e => e.preventDefault()}>
+        <canvas ref={this.canvasRef} width={500} height={500} />
         {this.displayMenu()}
       </div>
     );
   }
 }
 
-export default FabricLayer
+export default FabricLayer;
