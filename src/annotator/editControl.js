@@ -19,8 +19,9 @@ export function drawFreeStyle(canvas) {
   canvas.isMouseDown = false;
 
   canvas.isDrawingMode = true;
-  canvas.freeDrawingBrush.color = colors.green;
-  canvas.freeDrawingBrush.width = 4;
+  canvas.freeDrawingBrush.color = 'rgb(200, 100, 200, 0.5';
+  canvas.freeDrawingBrush.opacity = 0.1;
+  canvas.freeDrawingBrush.width = 10;
   console.log('freestyle: ', canvas.freeDrawingBrush.color);
 }
 
