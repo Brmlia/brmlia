@@ -43,6 +43,7 @@ class FabricLayer extends React.Component {
   componentDidMount() {
     canvas = new fabric.Canvas(this.canvasRef.current, {
       fireRightClick: true,
+      backgroundColor: 'rgb(250,250,250,1)',
     });
     canvas.on({
       'mouse:down': this.handleMouseDown,
@@ -50,7 +51,7 @@ class FabricLayer extends React.Component {
       'mouse:dblclick': this.handleMouseDoubleClick,
       'object:moving': this.handleMoveAnnotation,
       'object:rotating': this.handleDrag,
-      // 'object:scaling': this.handleResize,
+      'object:scaling': this.handleDrag,
     });
     setCanvas(canvas);
     setFabricCanvas(canvas);

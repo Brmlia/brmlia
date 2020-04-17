@@ -98,6 +98,7 @@ class mainViewer extends React.Component {
     return (
       <div className="main-view" style={cardStyle}>
         {this.display()}
+        {/* <FabricLayer /> */}
       </div>
     );
   }
