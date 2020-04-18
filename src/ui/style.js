@@ -88,24 +88,24 @@ export const mainCanvasStyle = {
 
 export const canvasStyle1 = {
   position: 'absolute',
-  height: '300px',
-  width: '300px',
+  height: '100%',
+  width: '100%',
   zIndex: '3',
-  marginLeft: '100px',
+  // marginLeft: '100px',
   opacity: '0.5',
 };
 export const canvasStyle2 = {
   position: 'absolute',
-  height: '300px',
-  width: '300px',
+  height: '100%',
+  width: '100%',
   zIndex: '5',
-  marginLeft: '50px',
+  // marginLeft: '50px',
   opacity: '0.5',
 };
 export const canvasStyle3 = {
   position: 'absolute',
-  height: '300px',
-  width: '300px',
+  height: '100%',
+  width: '100%',
   zIndex: '7',
   opacity: '0.5',
 };
