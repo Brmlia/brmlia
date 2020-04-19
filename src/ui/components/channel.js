@@ -10,12 +10,14 @@ import {
   updateContrast,
   updateWhitepoint,
   updateBlackpoint,
+  updateColor,
 } from '../../imagecanvas/CanvasControl.js';
 import {
   updateChannelSel,
   updateLastSel,
   settingsApi,
 } from '../../mainSettings.js';
+import ColorPicker from './colorPicker.js';
 
 class Channel extends React.Component {
   updateSelection = () => {
@@ -56,11 +58,16 @@ class Channel extends React.Component {
     updateBlackpoint('0.0', this.props.ch);
   }
 
+  setColor(value) {
+    updateColor(value, this.props.ch);
+  }
+
   render() {
     var sliderValueBr = this.sliderValueBr;
     var sliderValueCt = this.sliderValueCt;
     var sliderValueWp = this.sliderValueWp;
     var sliderValueBp = this.sliderValueBp;
+
     var alt = 'Ch' + this.props.ch + ' Histogram';
     var canvas = (
       <ImageCanvas
@@ -99,7 +106,17 @@ class Channel extends React.Component {
           <Card style={card}>
             <CardBody style={cardBody}>
               <div style={canvasThumbnail}>{canvas}</div>
-              "Insert Look up table here"
+              <div>Channel Color</div>
+              <ColorPicker></ColorPicker>
+              <br></br>
+              <button
+                id="setColorBtn"
+                onClick={() => {
+                  this.setColor();
+                }}
+              >
+                Set Channel Color
+              </button>
               <br></br>
               <br></br>
               <div className="brightness-slider-container">
