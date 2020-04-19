@@ -10,6 +10,7 @@
     "bootstrap": "^4.4.1",
     "concurrently": "^5.1.0",
     "csvtojson": "^2.0.10",
+    "downloads-folder": "^1.0.2",
     "fabric": "^3.6.3",
     "fs": "0.0.1-security",
     "image-js": "^0.21.9",
