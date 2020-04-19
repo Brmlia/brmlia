@@ -6,14 +6,15 @@ import Annotator from "./annotator/index.js"
 import ImageCanvas from "./imagecanvas/ImageCanvas.js"
 import Thumbnails from "./ui/components/thumbnails.js";
 import FabricLayer from "./ui/components/FabricLayer.js";
-import SampleTiff from './ui/components/sampleTiff.js'
+import Tiff from './ui/components/Tiff.js'
 import './styles.css'
 
 
 function Application() {
+
   return (
     <>
-      <SampleTiff />
+      <Tiff />
       <Annotator />
       <div id="canvasContainer">
         <ImageCanvas />
