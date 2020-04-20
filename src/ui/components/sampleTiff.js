@@ -217,45 +217,6 @@ class SampleTiff extends Component {
     );
   }
 
-  loadFPOfTiff(context, page, width, height) {
-    const imageData = context.createImageData(
-      width,
-      height
-    );
-
-    for (let idx = 0; idx < page.length; idx++) {
-      imageData.data[idx] = page[idx];
-    }
-    return imageData;
-  }
-
-  displayTiffThumbnail() {
-    const file = this.state.files[0]
-
-    var page = null
-    if (file) {
-      page = file.page
-    }
-    return (
-      <div>
-        <Stage width={window.innerWidth} height={window.innerHeight}>
-          <Layer>
-            <Shape
-              x={0}
-              y={0}
-              sceneFunc={context => {
-                if (page && (file.width > 0) && (file.height > 0)) {
-                 const imageData = this.loadFPOfTiff(context, page, file.width, file.height);
-                 this.displayTiff(context, imageData);
-                }
-              }}
-            />
-          </Layer>
-        </Stage>
-      </div>
-    );
-  }
-
   render() {
     fApi.subscribe(state =>  {
       this.updateForFile(state);
@@ -264,8 +225,7 @@ class SampleTiff extends Component {
       // this.displayOriginal()
       // this.displayTiff2()
       // this.displayMultiPageTiff()
-      // this.displaySelectedTiff()
-      this.displayTiffThumbnail()
+      this.displaySelectedTiff()
     );
   }
 }

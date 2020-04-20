@@ -28,11 +28,11 @@ class Thumbnails extends React.Component {
       const idx = state.file.length - 1
       const file = state.file[idx]
       const newFile = {
-        rgba: state.file[idx].rgba,
-        width: state.file[idx].image.width,
-        height: state.file[idx].image.height,
-        page: state.file[idx].pages[0],
-        name: state.file[idx].name
+        rgba: file.rgba,
+        width: file.image.width,
+        height: file.image.height,
+        page: file.pages[0],
+        name: file.name
       }
 
       this.setState( prevState => ({
@@ -84,6 +84,7 @@ class Thumbnails extends React.Component {
     );
   }
 
+  // todo: shrink image size
   loadTiff(context) {
     for (var f = 0; f < this.state.files.length; f++) {
 
