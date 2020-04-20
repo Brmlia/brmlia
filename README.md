@@ -1,7 +1,7 @@
-#### BRMLIA
+## BRMLIA
 ### Tiff Support
 
-## Standard Views
+#### Standard Views
 - [x] Supports Single Page Tiff
 - [x] Supports Multi Page Tiff
 - [x] Supports X, Y, Z Views For Single Page Tiff
@@ -10,6 +10,7 @@
 - [ ] Supports Colored Tiff
 - [ ] Sliders to Select Slices
 
-## Thumbnails
+#### Thumbnails
 - [x] Supports Tiffs in Thumbnails
+- [x] Supports Single Tiny Tiff in Thumbnails
 - [ ] Supports Tiny Tiffs in Thumbnails

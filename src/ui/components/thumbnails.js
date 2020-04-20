@@ -3,11 +3,24 @@ import React from "react";
 import { thumb, thumbInner } from '../../style.js';
 import { fApi } from '../../utils/index.js'
 import { Stage, Layer, Shape } from "react-konva";
+import { fabric } from 'fabric';
 
 class Thumbnails extends React.Component {
 
-  selected = 0;
-  length = 0;
+  constructor(props) {
+    super(props);
+    this.selected = 0;
+    this.length = 0;
+    this.state = {
+      files: []
+    }
+    this.canvasRef = React.createRef();
+    this.canvas = null
+  }
+
+  componentDidMount() {
+    this.canvas = new fabric.Canvas(this.canvasRef.current);
+  }
 
   setSelected(idx) {
     if (this.selected !== idx) {
@@ -17,10 +30,6 @@ class Thumbnails extends React.Component {
       }))
       this.selected = idx;
     }
-  }
-
-  state = {
-    files: []
   }
 
   updateForFile(state) {
@@ -84,7 +93,19 @@ class Thumbnails extends React.Component {
     );
   }
 
-  // todo: shrink image size
+  shrinkTiff(context, imageData, x, y) {
+    const cw = this.canvas.width
+    const ch = this.canvas.height
+    const imgW = imageData.width
+    const imgH = imageData.height
+
+    var newC = document.createElement('canvas')
+    newC.width = imgW
+    newC.height = imgH
+    newC.getContext('2d').putImageData(imageData, 0, 0)
+    context.drawImage(newC, 0, 0, cw, ch)
+  }
+
   loadTiff(context) {
     for (var f = 0; f < this.state.files.length; f++) {
 
@@ -102,12 +123,17 @@ class Thumbnails extends React.Component {
         for (let idx = 0; idx < page.length; idx++) {
           imageData.data[idx] = page[idx];
         }
-        context.putImageData(imageData, (file.width+50)*f, 0);
+
+        // const iData = this.shrinkTiff(imageData, 0.5, context)
+        // context.putImageData(iData, (file.width+50)*f, 0);
+        const x = (file.width+50)*f
+        const y = 0
+        this.shrinkTiff(context, imageData, x, y)
       }
     }
   }
 
-  allTiffs = () => {
+  allTiffsKonva = () => {
     return (
       <div>
         <Stage width={window.innerWidth} height={window.innerWidth}>
@@ -125,17 +151,33 @@ class Thumbnails extends React.Component {
     );
   }
 
-  display() {
-    // return (
-    //   this.allThumbs()
-    //   this.allTiffs()
-    // )
+  allTiffsCanvas = () => {
+    if (this.canvas) this.loadTiff(this.canvas.getContext('2d'))
     return (
       <div>
-        {this.allThumbs()}
-        {this.allTiffs()}
+        <canvas
+          ref={this.canvasRef}
+          width="50px"
+          height="50px"
+          margin="0px"
+          id="tiff-canvas"
+        />
       </div>
+    );
+  }
+
+  display() {
+    return (
+      // this.allThumbs()
+      // this.allTiffsKonva()
+      this.allTiffsCanvas()
     )
+    // return (
+    //   <div>
+    //     {this.allThumbs()}
+    //     {this.allTiffsCanvas()}
+    //   </div>
+    // )
   }
 
   render() {
