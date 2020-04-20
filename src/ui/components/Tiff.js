@@ -25,7 +25,6 @@ class Tiff extends Component {
   }
 
   dcTiff() {
-    console.log("dcTiff")
     return (
       <DatacubeTiff />
     )

@@ -12,6 +12,7 @@ export class Volume {
     let _this = this;
 
     let pixels = _this.channel.grayImageSlice(axis, slice, /*transparency=*/false, /*copy=*/false);
+    // let pixels = _this.channel.imageSlice(axis, slice, /*copy=*/false);
     let slice32 = new Uint32Array(pixels.data.buffer); // creates a view, not an array
 
     for (let i = slice32.length - 1; i >= 0; i--) {
@@ -19,13 +20,12 @@ export class Volume {
     }
 
     ctx.putImageData(pixels, 0, 0);
-    _this.channel.cacheImgData(axis);
     return this;
   }
-  load (context, buffer, width) {
-    this.loadVolume(context, this.channel, buffer, width)
+  load (context, buffer, width, slice) {
+    this.loadVolume(context, this.channel, buffer, width, slice)
   }
-  loadVolume (context, cube, buffer, width) {
-    cube.insertImageData(buffer, width, 0, 0, 0)
+  loadVolume (context, cube, buffer, width, slice) {
+    cube.insertImageData(buffer, width, 0, 0, slice)
   }
 }

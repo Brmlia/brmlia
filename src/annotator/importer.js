@@ -57,18 +57,18 @@ export function importTiff(file) {
       reader.onload = () => {
         var success = (file.type === "image/tiff");
         if (success) {
-          console.debug("importer::importTiff() - Loading TIFF image...");
+          console.debug("importer::importTiff() - Loading TIFF image...", file.name);
         }
 
       }
       reader.onloadend = (event) => {
-        console.debug("importer::importTiff() - Parsing TIFF image...");
+        console.debug("importer::importTiff() - Parsing TIFF image...", file.name);
         // parseGrayscaleTiff(file);
         // parseTiff(event.target.result);
-        parseMultiTiff(event.target.result);
+        parseMultiTiff(file.name, event.target.result);
       }
       reader.onprogress = () => {
-        console.log("importer::importTiff()", "Still Loading...")
+        console.log("importer::importTiff()", "Still Loading...", file.name)
       }
       reader.readAsArrayBuffer(file);
   }
@@ -94,7 +94,7 @@ export function parseTiff(buffer) {
   updateTiff(image, rgba)
 }
 
-export function parseMultiTiff(buffer) {
+export function parseMultiTiff(name, buffer) {
 
   var pages = []
   var height = 0
@@ -109,5 +109,5 @@ export function parseMultiTiff(buffer) {
   }
 
   var image = new Image(ifds[0].width, ifds[0].height)
-  updateTiffPages(pages, image)
+  updateTiffPages(name, pages, image)
 }

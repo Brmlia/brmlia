@@ -79,6 +79,16 @@ export function initTiff(file) {
 }
 
 export function addTiff(file) {
+  fileApi.setState( prevState => ({
+    ...prevState,
+    file: [...prevState.file, {
+      name: file.name,
+      image: file.preview,
+      style: img,
+      type: file.type
+    }],
+    size: prevState.size + 1
+  }))
   importTiff(file);
   idx = fileApi.getState().size-1
 }
@@ -114,13 +124,18 @@ export function updateTiff(image, rgba) {
 
 }
 
-export function updateTiffPages(pages, image) {
+export function updateTiffPages(name, pages, image) {
   fileApi.setState( prevState => {
     const file = prevState.file.map((file, j) => {
-      var newFile = file;
-      newFile.pages = pages
-      newFile.image = image
-      return newFile;
+      if (file.name === name) {
+        var newFile = file;
+        newFile.pages = pages
+        newFile.image = image
+        return newFile;
+      }
+      else {
+        return file
+      }
     })
     return {
       file

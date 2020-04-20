@@ -140,6 +140,7 @@ class DataCube {
 
     return square;
   }
+
   grayImageSlice (axis, index, transparency=false, copy=true) {
 
     let square = this.slice(axis, index, /*copy=*/false);
@@ -148,8 +149,7 @@ class DataCube {
 
     let imgdata = copy
       ? this.canvas_context.createImageData(sizes[0], sizes[1])
-      // : this.cached_imgdata.getImageData(sizes[0], sizes[1]);
-      : this.cached_imgdata.getCachedImageData(axis, sizes[0], sizes[1]);
+      : this.cached_imgdata.getImageData(sizes[0], sizes[1]);
 
     let data32 = new Uint32Array(imgdata.data.buffer);
 
@@ -171,20 +171,6 @@ class DataCube {
     }
 
     return imgdata;
-  }
-
-  cacheImgData(axis) {
-    this.cached_imgdata.cacheImageData(this.canvas_context.getImageData(0, 0, 256, 256), axis);
-    // this.canvas_context.putImageData(pixels, 0, 0);
-    // this.cached_imgdata.cacheImageData(this.canvas_context.getImageData(), 2);
-    // this.canvas_context.putImageData(pixels, 0, 0);
-    // this.cached_imgdata.cacheImageData(this.canvas_context.getImageData(), 0);
-
-  }
-  renderGrayImageSlice (context, axis, index) {
-    var imgdata = this.grayImageSlice(axis, index, /*transparent=*/false, /*copy=*/false);
-    context.putImageData(imgdata, 0, 0);
-    return this;
   }
 
   // http://stackoverflow.com/questions/504030/javascript-endian-encoding
