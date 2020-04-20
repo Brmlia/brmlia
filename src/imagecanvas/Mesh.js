@@ -1,6 +1,7 @@
 import React, { useRef, useMemo } from 'react';
 import { uApi } from '../utils/index.js';
 import { useFrame } from 'react-three-fiber';
+import * as THREE from 'three';
 
 const fragmentShader = `
   uniform sampler2D image;
@@ -42,7 +43,7 @@ const vertexShader = `
 function Mesh(props) {
   const ref = useRef();
   const material = useRef();
-  console.log("chanel: ", props.channel)
+  console.log('chanel: ', props.channel);
   var uniforms = useMemo(
     () => uApi.getState().channels[props.channel - 1].uniforms,
     [props]
@@ -64,8 +65,13 @@ function Mesh(props) {
     material.current.uniforms.image.value = uApi.getState().channels[
       props.channel - 1
     ].uniforms.image.value;
+    material.current.uniforms.color.value = uApi.getState().channels[
+      props.channel - 1
+    ].uniforms.color.value;
   });
-
+  let color = new THREE.Color(
+    uApi.getState().channels[props.channel - 1].uniforms.color.value
+  );
   return (
     <mesh ref={ref} scale={[1.0, 1.0, 1.0]}>
       <planeBufferGeometry attach="geometry" args={[5.0, 5.0]} />
@@ -75,6 +81,7 @@ function Mesh(props) {
         fragmentShader={fragmentShader}
         vertexShader={vertexShader}
         uniforms={uniforms}
+        color={color}
       />
     </mesh>
   );

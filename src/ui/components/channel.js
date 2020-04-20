@@ -42,6 +42,10 @@ class Channel extends React.Component {
     updateBlackpoint(value, this.props.ch);
   }
 
+  colorValue(value) {
+    updateColor(value, this.props.ch);
+  }
+
   resetBrightness() {
     updateBrightness('0.0', this.props.ch);
   }
@@ -58,15 +62,12 @@ class Channel extends React.Component {
     updateBlackpoint('0.0', this.props.ch);
   }
 
-  setColor(value) {
-    updateColor(value, this.props.ch);
-  }
-
   render() {
     var sliderValueBr = this.sliderValueBr;
     var sliderValueCt = this.sliderValueCt;
     var sliderValueWp = this.sliderValueWp;
     var sliderValueBp = this.sliderValueBp;
+    var colorValue = this.colorValue;
 
     var alt = 'Ch' + this.props.ch + ' Histogram';
     var canvas = (
@@ -107,12 +108,15 @@ class Channel extends React.Component {
             <CardBody style={cardBody}>
               <div style={canvasThumbnail}>{canvas}</div>
               <div>Channel Color</div>
-              <ColorPicker></ColorPicker>
+              <ColorPicker
+                color={colorValue.bind(this)}
+                onClick={colorValue.bind(this)}
+              />
               <br></br>
               <button
                 id="setColorBtn"
                 onClick={() => {
-                  this.setColor();
+                  color: colorValue.bind(this);
                 }}
               >
                 Set Channel Color
