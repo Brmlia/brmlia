@@ -7,12 +7,12 @@ import DatacubeTiff from './datacubeTiff.js'
 class Tiff extends Component {
 
   sampleTiff() {
-    // return (
-    //   <SampleTiff />
-    // )
     return (
-      <div />
+      <SampleTiff />
     )
+    // return (
+    //   <div />
+    // )
   }
 
   threeTiff() {
@@ -25,12 +25,12 @@ class Tiff extends Component {
   }
 
   dcTiff() {
-    return (
-      <DatacubeTiff />
-    )
     // return (
-    //   <div />
+    //   <DatacubeTiff />
     // )
+    return (
+      <div />
+    )
   }
 
   render() {
