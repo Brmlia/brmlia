@@ -13,4 +13,4 @@
 #### Thumbnails
 - [x] Supports Tiffs in Thumbnails
 - [x] Supports Single Tiny Tiff in Thumbnails
-- [ ] Supports Tiny Tiffs in Thumbnails
+- [x] Supports Multiple Tiny Tiffs in Thumbnails

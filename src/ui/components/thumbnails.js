@@ -10,10 +10,7 @@ class Thumbnails extends React.Component {
   constructor(props) {
     super(props);
     this.selected = 0;
-    this.length = 0;
-    this.state = {
-      files: []
-    }
+    this.files = [];
     this.canvasRef = React.createRef();
     this.canvas = null
   }
@@ -33,25 +30,21 @@ class Thumbnails extends React.Component {
   }
 
   updateForFile(state) {
-    if (state && (state.file.length > 0) && (state.file.length !== this.length)) {
-      const idx = state.file.length - 1
-      const file = state.file[idx]
-      const newFile = {
-        rgba: file.rgba,
-        width: file.image.width,
-        height: file.image.height,
-        page: file.pages[0],
-        name: file.name
-      }
+    if (state && (state.file.length > 0) && (state.file.length !== this.files.length)) {
 
-      this.setState( prevState => ({
-        ...prevState,
-        files: [
-          ...prevState.files,
-          newFile
-        ]
-      }))
-      this.length = state.file.length
+      for (var i = this.files.length; i < state.file.length; i++) {
+        const idx = state.file.length - 1
+        const file = state.file[idx]
+        const newFile = {
+          rgba: file.rgba,
+          width: file.image.width,
+          height: file.image.height,
+          page: file.pages[0],
+          name: file.name
+        }
+
+        this.files.push(newFile)
+      }
       this.forceUpdate();
     }
   }
@@ -93,9 +86,9 @@ class Thumbnails extends React.Component {
     );
   }
 
-  shrinkTiff(context, imageData, x, y) {
-    const cw = this.canvas.width
-    const ch = this.canvas.height
+  shrinkTiff(context, imageData, idx) {
+    const cw = 50
+    const ch = 50
     const imgW = imageData.width
     const imgH = imageData.height
 
@@ -103,13 +96,16 @@ class Thumbnails extends React.Component {
     newC.width = imgW
     newC.height = imgH
     newC.getContext('2d').putImageData(imageData, 0, 0)
-    context.drawImage(newC, 0, 0, cw, ch)
+
+    var x = (cw+10) * idx
+    var y = 0
+    context.drawImage(newC, x, y, cw, ch)
   }
 
   loadTiff(context) {
-    for (var f = 0; f < this.state.files.length; f++) {
+    for (var f = 0; f < this.files.length; f++) {
 
-      const file = this.state.files[f]
+      const file = this.files[f]
       var page = null
       if (file ) {
         page = file.page
@@ -124,11 +120,7 @@ class Thumbnails extends React.Component {
           imageData.data[idx] = page[idx];
         }
 
-        // const iData = this.shrinkTiff(imageData, 0.5, context)
-        // context.putImageData(iData, (file.width+50)*f, 0);
-        const x = (file.width+50)*f
-        const y = 0
-        this.shrinkTiff(context, imageData, x, y)
+        this.shrinkTiff(context, imageData, f)
       }
     }
   }
@@ -157,8 +149,8 @@ class Thumbnails extends React.Component {
       <div>
         <canvas
           ref={this.canvasRef}
-          width="50px"
-          height="50px"
+          width="1000px"
+          height="1000px"
           margin="0px"
           id="tiff-canvas"
         />
