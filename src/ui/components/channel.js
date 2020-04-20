@@ -115,8 +115,10 @@ class Channel extends React.Component {
               <br></br>
               <button
                 id="setColorBtn"
-                onClick={() => {
-                  color: colorValue.bind(this);
+                onClick={(colorValue) => {
+                  console.log('value: '+ colorValue)
+                  color: colorValue;
+                  
                 }}
               >
                 Set Channel Color

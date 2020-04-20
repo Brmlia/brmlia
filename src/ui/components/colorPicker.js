@@ -3,15 +3,6 @@ import { SketchPicker } from 'react-color';
 import create from 'zustand';
 import reactCSS from 'reactcss';
 
-const initState = {
-  displayColorPicker: false,
-  color: {},
-};
-
-export const [useColorPicker, colorApi] = create(set => ({
-  ...initState,
-}));
-
 class ColorPicker extends React.Component {
   state = {
     displayColorPicker: false,
@@ -36,7 +27,10 @@ class ColorPicker extends React.Component {
   };
 
   handleChangeComplete = color => {
-    this.setState({ color: color.hex });
+    //this.setState({ color: color.hex });
+    this.setState({ color: color.rgb });
+    //this.props.onClick({ color: color.hex  });
+    this.props.onClick({ color: color.rgb  });
   };
 
   render() {

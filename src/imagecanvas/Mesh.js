@@ -28,6 +28,7 @@ const fragmentShader = `
     float white_point = blackpoint == whitepoint ? (255.0 / 0.00025) : (255.0 / (whitepoint - blackpoint));
 
     gl_FragColor.rgb = gl_FragColor.rgb * white_point - (white_point * black_point);
+
   }
 `;
 
