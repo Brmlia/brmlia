@@ -6,40 +6,34 @@ import DatacubeTiff from './datacubeTiff.js'
 
 class Tiff extends Component {
 
-  sampleTiff() {
-    return (
-      <SampleTiff />
-    )
-    // return (
-    //   <div />
-    // )
-  }
+  type = 2;
 
-  threeTiff() {
-    // return (
-    //   <ThreeTiff />
-    // )
-    return (
-      <div />
-    )
-  }
-
-  dcTiff() {
-    // return (
-    //   <DatacubeTiff />
-    // )
-    return (
-      <div />
-    )
+  display() {
+    if (this.type === 0) {
+      return (
+        <SampleTiff />
+      )
+    }
+    else if (this.type === 1) {
+      return (
+        <ThreeTiff />
+      )
+    }
+    else if (this.type === 2) {
+      return (
+        <DatacubeTiff />
+      )
+    }
+    else {
+      return (
+        <div />
+      )
+    }
   }
 
   render() {
     return (
-      <div>
-        {this.sampleTiff()}
-        {this.threeTiff()}
-        {this.dcTiff()}
-      </div>
+      this.display()
     )
   }
 }
