@@ -70,7 +70,7 @@ class FabricLayer extends React.Component {
     if (mode === modes.RECT) {
       startDrawing(options.e.clientX, options.e.clientY);
     } else if (mode === modes.FREE) {
-      drawFreeStyle(canvas);
+      drawFreeStyle(canvas, colors[this.props.channel]);
     }
   }
 
@@ -154,7 +154,7 @@ class FabricLayer extends React.Component {
           zIndex: this.props.zIndex,
         }}
       >
-        <canvas ref={this.canvasRef} width={500} height={500} />
+        <canvas ref={this.canvasRef} width={600} height={600} />
         {this.displayMenu()}
       </div>
     );

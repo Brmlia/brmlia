@@ -13,59 +13,44 @@ import { getCanvas } from './annotationSettings.js';
 import { getDisabledClasses } from './annotationClass.js';
 
 export const colors = [
-  'rgb(221, 153, 153, 0.7)',
-  'rgb(153, 221, 153, 0.7)',
-  'rgb(153, 153, 221, 0.7)',
-  'rgb(215, 215, 215, 0.7)',
+  'rgb(200, 140, 140, 0.85)', //channel 1
+  'rgb(140, 200, 140, 0.85)', //channel 2
+  'rgb(140, 140, 200, 0.85)', //channel 3
+  'rgb(215, 215, 215, 0.85)', //light grey
+  'rgb(255, 255, 255, .01)', //transparent (almost)
+  'rgb(240, 240, 240, 1)', //lighter grey
 ];
 
-export function drawFreeStyle(canvas) {
+export function drawFreeStyle(canvas, color) {
   window.canvas = canvas;
   canvas.isMouseDown = false;
 
   canvas.isDrawingMode = true;
-  canvas.freeDrawingBrush.color = colors.purple;
-  canvas.freeDrawingBrush.opacity = 0.1;
+  canvas.freeDrawingBrush.color = color;
   canvas.freeDrawingBrush.width = 10;
 }
 
 export function drawRect(canvas, rect, label, classLabel) {
+  var color = rect.color ? rect.color : rect._objects[0].stroke;
+
   var fRect = new fabric.Rect({
     left: rect.left,
     top: rect.top,
     width: rect.width,
     height: rect.height,
-    // if fully transparent, only stroke is selectable, hence this hack:
-    fill: 'rgb(255,255,255,.01)',
-    stroke: rect.color,
+    fill: colors[4],
+    stroke: color,
     strokeLineJoin: 'round',
     strokeWidth: 2,
     objectCaching: false,
   });
 
-  var group = new fabric.Group([fRect]);
+  var outerRect = fabric.util.object.clone(fRect);
+  outerRect.set({ strokeWidth: fRect.strokeWidth + 1, stroke: colors[5] });
 
-  group.on({
-    moving: function(o) {
-      const group = o.target;
-      const rect = group._objects[0];
-
-      if (group.left < 0) {
-        group.set('left', rect.strokeWidth / 2);
-        group.setCoords();
-      } else if (group.left + group.width > canvas.width) {
-        group.set('left', canvas.width - group.width - rect.strokeWidth / 2);
-        group.setCoords();
-      }
-
-      if (group.top < 0) {
-        group.set('top', rect.strokeWidth / 2);
-        group.setCoords();
-      } else if (group.top + group.height > canvas.height) {
-        group.set('top', canvas.height - group.height - rect.strokeWidth / 2);
-        group.setCoords();
-      }
-    },
+  var group = new fabric.Group([outerRect]);
+  group.on('moving', function(e) {
+    constrain(e, canvas);
   });
 
   var newLabel = label === 'label' ? (label += getLastAnnotIdx() + 1) : label;
@@ -76,10 +61,10 @@ export function drawRect(canvas, rect, label, classLabel) {
     originY: 'top',
     fontFamily: 'Arial',
     fontWeight: 'bold',
-    fill: 'white',
-    textBackgroundColor: rect.color,
-    top: group.top,
-    left: group.left,
+    fill: colors[5],
+    textBackgroundColor: color,
+    top: group.top + outerRect.strokeWidth,
+    left: group.left + outerRect.strokeWidth,
   });
 
   var classText = new fabric.IText(classLabel, {
@@ -88,10 +73,10 @@ export function drawRect(canvas, rect, label, classLabel) {
     originY: 'bottom',
     fontFamily: 'Arial',
     fontWeight: 'bold',
-    fill: 'white',
-    textBackgroundColor: rect.color,
-    top: group.top + group.height,
-    left: group.left,
+    fill: colors[5],
+    textBackgroundColor: color,
+    top: group.top + group.height - outerRect.strokeWidth,
+    left: group.left + outerRect.strokeWidth,
   });
 
   if (canvas) {
@@ -100,7 +85,29 @@ export function drawRect(canvas, rect, label, classLabel) {
     canvas.setActiveObject(group);
     group.addWithUpdate(text);
     group.addWithUpdate(classText);
+    group.addWithUpdate(fRect);
     addAnnotation(group, newLabel, classLabel);
+  }
+}
+
+function constrain(o, canvas) {
+  const group = o.target;
+  const outerRect = group._objects[3];
+
+  if (group.left < 0) {
+    group.set('left', outerRect.strokeWidth / 2);
+    group.setCoords();
+  } else if (group.left + group.width > canvas.width) {
+    group.set('left', canvas.width - group.width - outerRect.strokeWidth / 2);
+    group.setCoords();
+  }
+
+  if (group.top < 0) {
+    group.set('top', outerRect.strokeWidth / 2);
+    group.setCoords();
+  } else if (group.top + group.height > canvas.height) {
+    group.set('top', canvas.height - group.height - outerRect.strokeWidth / 2);
+    group.setCoords();
   }
 }
 

@@ -67,7 +67,7 @@ class mainViewer extends React.Component {
       console.log('displaying 1');
       view1 = canvasApi.getState().canvas[0];
       var canvasZIndex = lastSelected === '1' ? 10 : 4;
-      var opacity = lastSelected === '1' ? 1 : 0.5;
+      var opacity = lastSelected === '1' ? 1 : 0.7;
       fabricCanvas1 = (
         <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={0} />
       );
@@ -76,7 +76,7 @@ class mainViewer extends React.Component {
       console.log('displaying 2');
       view2 = canvasApi.getState().canvas[1];
       var canvasZIndex = lastSelected === '2' ? 10 : 6;
-      var opacity = lastSelected === '2' ? 1 : 0.5;
+      var opacity = lastSelected === '2' ? 1 : 0.7;
       fabricCanvas2 = (
         <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={1} />
       );
@@ -85,7 +85,7 @@ class mainViewer extends React.Component {
       console.log('displaying 3');
       view3 = canvasApi.getState().canvas[2];
       var canvasZIndex = lastSelected === '3' ? 10 : 8;
-      var opacity = lastSelected === '3' ? 1 : 0.5;
+      var opacity = lastSelected === '3' ? 1 : 0.7;
 
       fabricCanvas3 = (
         <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={2} />
@@ -128,7 +128,6 @@ class mainViewer extends React.Component {
     return (
       <div className="main-view" style={cardStyle}>
         {this.display()}
-        {/* <FabricLayer /> */}
       </div>
     );
   }
