@@ -23,7 +23,7 @@ class DatacubeTiff extends Component {
 
     // 0: multifile
     // 1: multipage
-    this.type = 0
+    this.type = 1
 
     this.cube = {
       x: 256,
@@ -38,7 +38,7 @@ class DatacubeTiff extends Component {
     }))
   }
 
-  updateForFile(state) {
+  async updateForFile(state) {
     if (state && state.file) {
       const idx = state.file.length - 1
 
@@ -48,10 +48,11 @@ class DatacubeTiff extends Component {
           this.fileLength = this.length = state.file.length
         }
         else if (this.type === 1) {
+          this.fileLength = state.file.length
           this.length = state.file[idx].pages.length
         }
 
-        // this.cube.x = this.cube.y = this.cube.z = (Math.max(256, this.length))
+        this.cube.x = this.cube.y = this.cube.z = (Math.max(256, this.length))
 
         this.volume = new Volume({
           channel: new DataCube({
@@ -61,15 +62,15 @@ class DatacubeTiff extends Component {
           }),
         });
 
-        this.loadSlices(state.file)
+        await this.loadSlices(state.file)
       }
     }
     this.forceUpdate();
   }
 
-  loadSlices(files) {
+  async loadSlices(files) {
     if (this.type === 1) {
-      this.loadSlicesFromMultipageFile(files[0])
+      await this.loadSlicesFromMultipageFile(files[0])
     }
     else {
       this.loadSlicesFromMultipleFiles(files)
@@ -90,25 +91,25 @@ class DatacubeTiff extends Component {
     }
   }
 
-  loadSlicesFromMultipageFile(file) {
-    if (file && (file.pages) && (file.pages.length > 0)) {
-      const pages = file.pages
-
-      // for (var pIdx = 0; pIdx < pages.length; pIdx++) {
-      for (var pIdx = 0; pIdx < 10; pIdx++) {
-        const page = pages[pIdx]
-
-        console.log("loading ", pIdx , "/", pages.length)
-        this.volume.load(this.state.cntxt, page, file.image.width, pIdx)
-      }
-      this.updateChannelSlice(this.state.sliceIdx, this.state.axisIdx);
+  async loadVolumes(pages, width) {
+    for (var pIdx = 0; pIdx < this.length; pIdx++) {
+      const page = pages[pIdx]
+      console.log("loading ", pIdx , "/", pages.length)
+      await this.volume.load(page, width, pIdx)
     }
   }
 
-  updateChannelSlice(slice, axis) {
+  async loadSlicesFromMultipageFile(file) {
+    if (file && (file.pages) && (file.pages.length > 0)) {
+      await this.loadVolumes(file.pages, file.image.width)
+    }
 
+    this.updateChannelSlice(this.state.sliceIdx, this.state.axisIdx);
+  }
+
+  async updateChannelSlice(slice, axis) {
     if (this.canvas.current && this.volume && this.state.axes) {
-      this.volume.renderChannelSlice(this.state.cntxt, this.state.axes[axis], slice)
+      await this.volume.renderChannelSlice(this.state.cntxt, this.state.axes[axis], slice)
       this.forceUpdate();
     }
   }

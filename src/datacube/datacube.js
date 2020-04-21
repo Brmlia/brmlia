@@ -141,15 +141,15 @@ class DataCube {
     return square;
   }
 
-  grayImageSlice (axis, index, transparency=false, copy=true) {
+  async grayImageSlice (axis, index, transparency=false, copy=true) {
 
-    let square = this.slice(axis, index, /*copy=*/false);
+    let square = await this.slice(axis, index, /*copy=*/false);
 
-    let sizes = this.faceDimensions(axis);
+    let sizes = await this.faceDimensions(axis);
 
     let imgdata = copy
-      ? this.canvas_context.createImageData(sizes[0], sizes[1])
-      : this.cached_imgdata.getImageData(sizes[0], sizes[1]);
+      ? await this.canvas_context.createImageData(sizes[0], sizes[1])
+      : await this.cached_imgdata.getImageData(sizes[0], sizes[1]);
 
     let data32 = new Uint32Array(imgdata.data.buffer);
 

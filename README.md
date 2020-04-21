@@ -9,7 +9,7 @@
 - [x] Supports X, Y, Z Views For Multi Page Tiff
 - [ ] Supports Colored Tiff
 - [x] Sliders to Select Slices
-- [ ] Supports Large Number of Pages (256+)
+- [x] Supports Large Number of Pages (256+)
 
 #### Thumbnails
 - [x] Supports Tiffs in Thumbnails
