@@ -11,8 +11,25 @@ const fragmentShader = `
 
   uniform float blackpoint;
   uniform float whitepoint;
+  uniform vec3 color;
 
   varying vec2 vUv;
+
+  vec4 getInputColor()
+  {
+    return vec4(color, 1.0); // Just a test
+  }
+
+  vec4 toGrayscale(in vec4 color)
+  {
+    float average = (color.r + color.g + color.b) / 3.0;
+    return vec4(average, average, average, 1.0);
+  }
+
+  vec4 colorize(in vec4 grayscale, in vec4 color)
+  {
+    return (grayscale * color);
+  }
 
   void main() {
     gl_FragColor = texture2D(image, vUv);
@@ -28,6 +45,23 @@ const fragmentShader = `
     float white_point = blackpoint == whitepoint ? (255.0 / 0.00025) : (255.0 / (whitepoint - blackpoint));
 
     gl_FragColor.rgb = gl_FragColor.rgb * white_point - (white_point * black_point);
+    // *******  color  *******
+    // This is the color you want to apply
+    // in the "colorize" step. Should ultimately be a uniform var.
+    vec4 c = vec4(0.6, 1.0, 1.0, 1.0);
+
+    // The input fragment color.
+    // Can come from a texture, a varying or a constant.
+    vec4 inputColor = getInputColor();
+  
+    // Convert to grayscale first:
+    vec4 grayscale = toGrayscale(inputColor);
+
+    // Then "colorize" by simply multiplying the grayscale
+    // with the desired color.
+    vec4 colorizedOutput = colorize(grayscale, c);
+
+    //gl_FragColor = colorizedOutput;
 
   }
 `;
@@ -82,7 +116,6 @@ function Mesh(props) {
         fragmentShader={fragmentShader}
         vertexShader={vertexShader}
         uniforms={uniforms}
-        color={color}
       />
     </mesh>
   );

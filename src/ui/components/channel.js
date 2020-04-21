@@ -118,7 +118,6 @@ class Channel extends React.Component {
                 onClick={(colorValue) => {
                   console.log('value: '+ colorValue)
                   color: colorValue;
-                  
                 }}
               >
                 Set Channel Color
