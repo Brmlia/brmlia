@@ -32,15 +32,18 @@ class Thumbnails extends React.Component {
   updateForFile(state) {
     if (state && (state.file.length > 0) && (state.file.length !== this.files.length)) {
 
-      for (var i = this.files.length; i < state.file.length; i++) {
-        const idx = state.file.length - 1
-        const file = state.file[idx]
+      const tiffFiles = state.file.filter(file => file.type === "image/tiff")
+      for (var i = this.files.length; i < tiffFiles.length; i++) {
+        const idx = tiffFiles.length - 1
+        const file = tiffFiles[idx]
+
         const newFile = {
           rgba: file.rgba,
           width: file.image.width,
           height: file.image.height,
           page: file.pages[0],
-          name: file.name
+          name: file.name,
+          type: file.type
         }
 
         this.files.push(newFile)
@@ -159,17 +162,17 @@ class Thumbnails extends React.Component {
   }
 
   display() {
-    return (
-      // this.allThumbs()
-      // this.allTiffsKonva()
-      this.allTiffsCanvas()
-    )
     // return (
-    //   <div>
-    //     {this.allThumbs()}
-    //     {this.allTiffsCanvas()}
-    //   </div>
+    //   // this.allThumbs()
+    //   // this.allTiffsKonva()
+    //   this.allTiffsCanvas()
     // )
+    return (
+      <div>
+        {this.allThumbs()}
+        {this.allTiffsCanvas()}
+      </div>
+    )
   }
 
   render() {
