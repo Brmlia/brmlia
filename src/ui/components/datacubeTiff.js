@@ -121,16 +121,10 @@ class DatacubeTiff extends Component {
         >
         </canvas>
         <ProgressBar />
-        <Button onClick={() => {this.nextSlice(false)}}> Next Slice </Button>
-        <Button onClick={() => {this.nextAxis(false)}}> Next Axis </Button>
 
-        <Button onClick={() => {this.nextSlice(true)}}> Prev Slice </Button>
-        <Button onClick={() => {this.nextAxis(true)}}> Prev Axis </Button>
-        <h3> axis: {this.state.axes[this.state.axisIdx]} </h3> <br/>
-        <h3> slice: {this.state.sliceIdx} </h3>
         <div className="slice-slider-container">
           <Slider
-            label="slice"
+            label=""
             width="40%"
             min="0"
             max={Math.max(this.length-1, 0)}
@@ -141,13 +135,50 @@ class DatacubeTiff extends Component {
             sliderValue={this.sliderValueSlice.bind(this)}
           />
           <button
+            id="prevSliceBtn"
+            onClick={() => {
+              this.nextSlice(true);
+            }}
+          >
+            {"<<"}
+          </button>
+          <button
             id="resetSliceBtn"
             onClick={() => {
               this.slice(0);
             }}
           >
-            Slice 0
+            Go to Slice 0
           </button>
+          <button
+            id="nextSliceBtn"
+            onClick={() => {
+              this.nextSlice(false);
+            }}
+          >
+            {">>"}
+          </button>
+          <div> Slice: {this.state.sliceIdx} </div>
+        </div>
+
+        <div className="axis-slider-container">
+          <button
+            id="prevAxisBtn"
+            onClick={() => {
+              this.nextAxis(true);
+            }}
+          >
+            {"<<"}
+          </button>
+          <button
+            id="nextAxisBtn"
+            onClick={() => {
+              this.nextAxis(false);
+            }}
+          >
+            {">>"}
+          </button>
+          <div> Axis: {this.state.axisIdx} </div>
         </div>
       </div>
     )
