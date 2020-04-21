@@ -18,11 +18,12 @@ export const modes = {
 };
 
 const initState = {
+
   layers: [
-    <FabricLayer zIndex={8} channel={0} />,
-    <FabricLayer zIndex={9} channel={1} />,
-    <FabricLayer zIndex={10} channel={2} />,
-    <FabricLayer zIndex={11} channel={3} />,
+    // <FabricLayer zIndex={8} channel={0} />,
+    // <FabricLayer zIndex={9} channel={1} />,
+    // <FabricLayer zIndex={10} channel={2} />,
+    // <FabricLayer zIndex={11} channel={3} />,
   ],
   mouse: {
     x: 0,
@@ -40,6 +41,17 @@ const initState = {
 export const [useFabric, fabricApi] = create(set => ({
   ...initState,
 }));
+
+export function initFabricLayers(zIndex, channel) {
+  const newFabricLayer = <FabricLayer zIndex={zIndex} channel={channel} />
+  fabricApi.setState(prevState => ({
+    ...prevState,
+    layers: [
+      ...prevState.layers,
+      newFabricLayer
+    ]
+  }))
+}
 
 export function setFabricCanvas(canvas) {
   fabricApi.setState(prevState => ({

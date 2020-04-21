@@ -15,7 +15,7 @@ import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 import FabricLayer from './FabricLayer.js';
 import MainTiffViewer from './mainTiffViewer.js';
-import { fabricApi } from '../../fabric/fabricControl.js';
+import { fabricApi, initFabricLayers } from '../../fabric/fabricControl.js';
 
 var fabricLayers = [
   <FabricLayer zIndex={8} channel={0} />,
@@ -25,6 +25,14 @@ var fabricLayers = [
 ];
 
 class mainViewer extends React.Component {
+
+  componentDidMount() {
+    initFabricLayers(8, 0)
+    initFabricLayers(9, 1)
+    initFabricLayers(10, 2)
+    initFabricLayers(11, 3)
+  }
+
   altView() {
     return (
       <Card style={card}>
@@ -83,8 +91,8 @@ class mainViewer extends React.Component {
     if (settingsApi.getState().channels[0].selected) {
       console.log('displaying 1');
       view1 = canvasApi.getState().canvas[0];
-      // fabricCanvas1 = fabricApi.getState().layers[0];
-      fabricCanvas1 = fabricLayers[0];
+      fabricCanvas1 = fabricApi.getState().layers[0];
+      // fabricCanvas1 = fabricLayers[0];
     }
     if (settingsApi.getState().channels[1].selected) {
       console.log('displaying 2');
