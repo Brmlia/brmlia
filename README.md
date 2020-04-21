@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/Brmlia/brmlia.svg?style=svg)](https://circleci.com/gh/Brmlia/brmlia)
+
 - [![Build Status](https://travis-ci.org/Brmlia/brmlia.svg?branch=master)](https://travis-ci.org/Brmlia/brmlia)
 - [![codecov](https://codecov.io/gh/Brmlia/brmlia/branch/master/graph/badge.svg)](https://codecov.io/gh/Brmlia/brmlia)
 
@@ -10,17 +11,23 @@ that to fail for any build that has eslint warnings. To disable a warning
 explicitly, add a commented eslint directive above the location.
 
 # BRMLIA
+
 ## DEVELOP BRANCH
+
 ### MENUS
+
 #### File
+
 - [x] Import Annotations
 - [x] Import Images
 
 #### Draw
+
 - [x] Draw Rectangular Annotations
 - [x] Draw Freehand Annotations
 
 #### Edit
+
 - [x] Undo Add Annotation
 - [x] Undo Remove Annotation
 - [x] Redo Add Annotation
@@ -31,10 +38,12 @@ explicitly, add a commented eslint directive above the location.
 - [ ] Redo Moved Annotation
 
 ### AXES
-- [ ] Basic View
-- [ ] Slice sliders
+
+- [x] Basic View
+- [x] Slice sliders
 
 ### ANNOTATIONS
+
 - [x] Add Class
 - [x] Edit Class
 - [x] Filter by Class
@@ -44,6 +53,7 @@ explicitly, add a commented eslint directive above the location.
 - [ ] Toggle Label On/Off
 
 ### CHANNELS
+
 - [x] Select Channel
 - [x] Brightness
 - [x] Contrast
@@ -56,6 +66,14 @@ explicitly, add a commented eslint directive above the location.
 - [ ] Histogram
 
 #### Main View
+
 - [x] Overlayed Channels
+- [x] Tiff
 - [ ] Pan
 - [ ] Zoom
+
+#### Thumbnails
+
+- [x] Tiff & PNG Support
+- [x] Select PNG
+- [ ] Select Tiff (Update Main, Axes, Channel Views)
