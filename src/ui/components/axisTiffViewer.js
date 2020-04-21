@@ -7,9 +7,6 @@ import ProgressBar, {
 } from  '../../datacube/datacubeControls.js'
 import DataCube from '../../datacube/datacube.js'
 import Slider from './slider.js';
-import {
-  Button
-} from 'reactstrap';
 
 class TiffViewer extends Component {
   constructor(props) {

@@ -14,7 +14,6 @@ import { Card, CardTitle, CardBody } from 'reactstrap';
 import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 import FabricLayer from './FabricLayer.js';
-import ImageCanvas from './../../imagecanvas/ImageCanvas.js';
 import MainTiffViewer from './mainTiffViewer.js';
 
 class mainViewer extends React.Component {
@@ -64,13 +63,15 @@ class mainViewer extends React.Component {
     var fabricCanvas1;
     var fabricCanvas2;
     var fabricCanvas3;
+    var canvasZIndex;
+    var opacity;
 
     var lastSelected = settingsApi.getState().lastSelected;
     if (settingsApi.getState().channels[0].selected) {
       console.log('displaying 1');
       view1 = canvasApi.getState().canvas[0];
-      var canvasZIndex = lastSelected === '1' ? 10 : 4;
-      var opacity = lastSelected === '1' ? 1 : 0.5;
+      canvasZIndex = lastSelected === '1' ? 10 : 4;
+      opacity = lastSelected === '1' ? 1 : 0.5;
       fabricCanvas1 = (
         <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={0} />
       );
@@ -78,8 +79,8 @@ class mainViewer extends React.Component {
     if (settingsApi.getState().channels[1].selected) {
       console.log('displaying 2');
       view2 = canvasApi.getState().canvas[1];
-      var canvasZIndex = lastSelected === '2' ? 10 : 6;
-      var opacity = lastSelected === '2' ? 1 : 0.5;
+      canvasZIndex = lastSelected === '2' ? 10 : 6;
+      opacity = lastSelected === '2' ? 1 : 0.5;
       fabricCanvas2 = (
         <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={1} />
       );
@@ -87,8 +88,8 @@ class mainViewer extends React.Component {
     if (settingsApi.getState().channels[2].selected) {
       console.log('displaying 3');
       view3 = canvasApi.getState().canvas[2];
-      var canvasZIndex = lastSelected === '3' ? 10 : 8;
-      var opacity = lastSelected === '3' ? 1 : 0.5;
+      canvasZIndex = lastSelected === '3' ? 10 : 8;
+      opacity = lastSelected === '3' ? 1 : 0.5;
 
       fabricCanvas3 = (
         <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={2} />

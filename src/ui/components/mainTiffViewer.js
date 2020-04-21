@@ -3,13 +3,8 @@ import { fApi } from '../../utils/index.js'
 import {Volume} from '../../datacube/volume.js'
 import ProgressBar, {
   loadSlices,
-  updateChannelSlice,
 } from  '../../datacube/datacubeControls.js'
 import DataCube from '../../datacube/datacube.js'
-import Slider from './slider.js';
-import {
-  Button
-} from 'reactstrap';
 
 class mainTiffViewer extends Component {
   constructor(props) {
