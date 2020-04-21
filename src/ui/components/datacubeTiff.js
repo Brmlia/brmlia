@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { fApi } from '../../utils/index.js'
 import {Volume} from '../../datacube/volume.js'
+import ProgressBar, {
+  loadSlices,
+  updateChannelSlice,
+} from  '../../datacube/datacubeControls.js'
 import DataCube from '../../datacube/datacube.js'
 import Slider from './slider.js';
 import {
@@ -14,7 +18,7 @@ class DatacubeTiff extends Component {
     this.canvas = React.createRef();
     this.state = {
       axes: ['x', 'y', 'z'],
-      axisIdx: 2,
+      axisIdx: 0,
       sliceIdx: 0,
       cntxt: null,
     }
@@ -62,56 +66,10 @@ class DatacubeTiff extends Component {
           }),
         });
 
-        await this.loadSlices(state.file)
+        await loadSlices(this.state.cntxt, this.volume, this.state.axes, state.file, this.type)
       }
     }
     this.forceUpdate();
-  }
-
-  async loadSlices(files) {
-    if (this.type === 1) {
-      await this.loadSlicesFromMultipageFile(files[0])
-    }
-    else {
-      this.loadSlicesFromMultipleFiles(files)
-    }
-  }
-
-  loadSlicesFromMultipleFiles(files) {
-    for (var fIdx = 0; fIdx < files.length; fIdx++) {
-      const file = files[fIdx]
-      if (file && (file.pages) && (file.pages.length > 0)) {
-        const pages = file.pages
-        for (var pIdx = 0; pIdx < pages.length; pIdx++) {
-          const page = pages[pIdx]
-          this.volume.load(this.state.cntxt, page, file.image.width, fIdx)
-        }
-        this.updateChannelSlice(this.state.sliceIdx, this.state.axisIdx);
-      }
-    }
-  }
-
-  async loadVolumes(pages, width) {
-    for (var pIdx = 0; pIdx < this.length; pIdx++) {
-      const page = pages[pIdx]
-      console.log("loading ", pIdx , "/", pages.length)
-      await this.volume.load(page, width, pIdx)
-    }
-  }
-
-  async loadSlicesFromMultipageFile(file) {
-    if (file && (file.pages) && (file.pages.length > 0)) {
-      await this.loadVolumes(file.pages, file.image.width)
-    }
-
-    this.updateChannelSlice(this.state.sliceIdx, this.state.axisIdx);
-  }
-
-  async updateChannelSlice(slice, axis) {
-    if (this.canvas.current && this.volume && this.state.axes) {
-      await this.volume.renderChannelSlice(this.state.cntxt, this.state.axes[axis], slice)
-      this.forceUpdate();
-    }
   }
 
   slice(value) {
@@ -119,7 +77,8 @@ class DatacubeTiff extends Component {
       ...prevState,
       sliceIdx: value
     }));
-    this.updateChannelSlice(value, this.state.axisIdx);
+    updateChannelSlice(this.state.cntxt, this.volume, value, this.state.axes, this.state.axisIdx);
+    this.forceUpdate()
   }
 
   nextSlice(dec) {
@@ -142,7 +101,8 @@ class DatacubeTiff extends Component {
       ...prevState,
       axisIdx: idx
     }));
-    this.updateChannelSlice(this.state.sliceIdx, idx);
+    updateChannelSlice(this.state.cntxt, this.volume, this.state.sliceIdx, this.state.axes, idx);
+    this.forceUpdate()
   }
 
   clamp(val, min, max) {
@@ -155,16 +115,17 @@ class DatacubeTiff extends Component {
     })
     return (
       <div>
-        <Button onClick={() => {this.nextSlice(false)}}> Next Slice </Button>
-        <Button onClick={() => {this.nextAxis(false)}}> Next Axis </Button>
-
-        <Button onClick={() => {this.nextSlice(true)}}> Prev Slice </Button>
-        <Button onClick={() => {this.nextAxis(true)}}> Prev Axis </Button>
         <canvas id="canvas-1" ref={this.canvas}
           width="750px"
           height="750px"
         >
         </canvas>
+        <ProgressBar />
+        <Button onClick={() => {this.nextSlice(false)}}> Next Slice </Button>
+        <Button onClick={() => {this.nextAxis(false)}}> Next Axis </Button>
+
+        <Button onClick={() => {this.nextSlice(true)}}> Prev Slice </Button>
+        <Button onClick={() => {this.nextAxis(true)}}> Prev Axis </Button>
         <h3> axis: {this.state.axes[this.state.axisIdx]} </h3> <br/>
         <h3> slice: {this.state.sliceIdx} </h3>
         <div className="slice-slider-container">
