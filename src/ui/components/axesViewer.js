@@ -4,33 +4,13 @@ import { cardStyle, card, axesImg } from '../style.js';
 import Viewer from '../../viewer/index.js';
 import { Card, CardTitle, CardBody } from 'reactstrap';
 import ImageCanvas from './../../imagecanvas/ImageCanvas.js';
+import AxisTiffViewer from './axisTiffViewer.js';
 
 class AxesViewer extends React.Component {
 
-  // view1 = <Viewer imageWidth={axesImg.width} type="1" />
-  // view2 = <Viewer imageWidth={axesImg.width} type="2" />
-  // view3 = <Viewer imageWidth={axesImg.width} type="3" />
-  view1 =
-    <ImageCanvas
-      className="axis-xy-view"
-      alt="xy-canvas-view"
-      height="100px"
-      channel="4"
-    />
-  view2 =
-    <ImageCanvas
-      className="axis-yz-view"
-      alt="yz-canvas-view"
-      height="100px"
-      channel="4"
-    />
-  view3 =
-    <ImageCanvas
-      className="axis-xz-view"
-      alt="xz-canvas-view"
-      height="100px"
-      channel="4"
-    />
+  view1 = <AxisTiffViewer axis="2"/>
+  view2 = <AxisTiffViewer axis="0"/>
+  view3 = <AxisTiffViewer axis="1"/>
 
   render() {
     return (

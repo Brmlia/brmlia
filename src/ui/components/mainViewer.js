@@ -15,6 +15,7 @@ import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 import FabricLayer from './FabricLayer.js';
 import ImageCanvas from './../../imagecanvas/ImageCanvas.js';
+import MainTiffViewer from './mainTiffViewer.js';
 
 class mainViewer extends React.Component {
   altView() {
@@ -30,10 +31,12 @@ class mainViewer extends React.Component {
   }
   canvasView() {
     var canvas = (
-      <ImageCanvas
+      <MainTiffViewer
+        axis="2"
         className="annot-view"
         alt="main-canvas"
-        height="100px"
+        width="500px"
+        height="500px"
         channel="4"
       />
     );

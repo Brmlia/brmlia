@@ -31,8 +31,8 @@ explicitly, add a commented eslint directive above the location.
 - [ ] Redo Moved Annotation
 
 ### AXES
-- [ ] Basic View
-- [ ] Slice sliders
+- [x] Basic View
+- [x] Slice sliders
 
 ### ANNOTATIONS
 - [x] Add Class
@@ -57,5 +57,11 @@ explicitly, add a commented eslint directive above the location.
 
 #### Main View
 - [x] Overlayed Channels
+- [x] Tiff
 - [ ] Pan
 - [ ] Zoom
+
+#### Thumbnails
+- [x] Tiff & PNG Support
+- [x] Select PNG
+- [ ] Select Tiff (Update Main, Axes, Channel Views)
