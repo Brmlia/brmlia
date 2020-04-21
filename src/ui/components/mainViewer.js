@@ -10,11 +10,19 @@ import {
   canvasStyle3,
 } from '../style.js';
 import Viewer from '../../viewer/index.js';
-import { Card, CardTitle, CardBody } from 'reactstrap';
+import { Card, CardTitle, CardBody, CardFooter } from 'reactstrap';
 import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 import FabricLayer from './FabricLayer.js';
 import ImageCanvas from './../../imagecanvas/ImageCanvas.js';
+import { fabricApi } from '../../fabric/fabricControl.js';
+
+var fabricLayers = [
+  <FabricLayer zIndex={8} channel={0} opacity={1} />,
+  <FabricLayer zIndex={9} channel={1} opacity={1} />,
+  <FabricLayer zIndex={10} channel={2} opacity={1} />,
+  <FabricLayer zIndex={11} channel={3} opacity={1} />,
+];
 
 class mainViewer extends React.Component {
   altView() {
@@ -37,15 +45,19 @@ class mainViewer extends React.Component {
         channel="4"
       />
     );
+
+    let width = window.innerWidth * 0.6;
+    let height = window.innerHeight * 0.6;
+
     return (
       <Card style={card}>
         <CardBody>
           <CardTitle> Image View </CardTitle>
-          <div id="canvasContainer">
+          <div id="canvasContainer" style={{ width: width, height: height }}>
             <div id="main-canvas-view" style={mainCanvasStyle}>
               {canvas}
             </div>
-            <FabricLayer zIndex={5} channel={3} />
+            {fabricLayers[3]}
           </div>
         </CardBody>
         <br></br>
@@ -62,40 +74,30 @@ class mainViewer extends React.Component {
     var fabricCanvas2;
     var fabricCanvas3;
 
+    let width = window.innerWidth * 0.6;
+    let height = window.innerHeight * 0.6;
+
     var lastSelected = settingsApi.getState().lastSelected;
     if (settingsApi.getState().channels[0].selected) {
       console.log('displaying 1');
       view1 = canvasApi.getState().canvas[0];
-      var canvasZIndex = lastSelected === '1' ? 10 : 4;
-      var opacity = lastSelected === '1' ? 1 : 0.7;
-      fabricCanvas1 = (
-        <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={0} />
-      );
+      fabricCanvas1 = fabricLayers[0];
     }
     if (settingsApi.getState().channels[1].selected) {
       console.log('displaying 2');
       view2 = canvasApi.getState().canvas[1];
-      var canvasZIndex = lastSelected === '2' ? 10 : 6;
-      var opacity = lastSelected === '2' ? 1 : 0.7;
-      fabricCanvas2 = (
-        <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={1} />
-      );
+      fabricCanvas2 = fabricLayers[1];
     }
     if (settingsApi.getState().channels[2].selected) {
       console.log('displaying 3');
       view3 = canvasApi.getState().canvas[2];
-      var canvasZIndex = lastSelected === '3' ? 10 : 8;
-      var opacity = lastSelected === '3' ? 1 : 0.7;
-
-      fabricCanvas3 = (
-        <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={2} />
-      );
+      fabricCanvas3 = fabricLayers[2];
     }
     return (
       <Card style={card}>
         <CardBody>
           <CardTitle> Image View </CardTitle>
-          <div id="canvasContainer">
+          <div id="canvasContainer" style={{ width: width, height: height }}>
             <div style={canvasStyle1}>{view1}</div>
             {fabricCanvas1}
             <div style={canvasStyle2}>{view2}</div>

@@ -142,6 +142,9 @@ class FabricLayer extends React.Component {
       this.forceUpdate();
     });
 
+    let width = window.innerWidth * 0.6;
+    let height = window.innerHeight * 0.6;
+
     return (
       <div
         className="annotationLayer"
@@ -154,7 +157,7 @@ class FabricLayer extends React.Component {
           zIndex: this.props.zIndex,
         }}
       >
-        <canvas ref={this.canvasRef} width={600} height={600} />
+        <canvas ref={this.canvasRef} width={width} height={height} />
         {this.displayMenu()}
       </div>
     );

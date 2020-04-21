@@ -91,7 +91,6 @@ export const canvasStyle1 = {
   height: '100%',
   width: '100%',
   zIndex: '3',
-  // marginLeft: '100px',
   opacity: '0.5',
 };
 export const canvasStyle2 = {
@@ -99,13 +98,40 @@ export const canvasStyle2 = {
   height: '100%',
   width: '100%',
   zIndex: '5',
-  // marginLeft: '50px',
   opacity: '0.5',
 };
 export const canvasStyle3 = {
   position: 'absolute',
   height: '100%',
   width: '100%',
+  zIndex: '7',
+  opacity: '0.5',
+};
+
+export const fabricCanvas1 = {
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+  borderWidth: 2,
+  borderStyle: 'solid',
+  zIndex: '3',
+  opacity: '0.5',
+};
+export const fabricCanvas2 = {
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+  borderWidth: 2,
+  borderStyle: 'solid',
+  zIndex: '5',
+  opacity: '0.5',
+};
+export const fabricCanvas3 = {
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+  borderWidth: 2,
+  borderStyle: 'solid',
   zIndex: '7',
   opacity: '0.5',
 };
