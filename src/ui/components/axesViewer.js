@@ -1,9 +1,7 @@
 import React from 'react';
 
-import { cardStyle, card, axesImg } from '../style.js';
-import Viewer from '../../viewer/index.js';
+import { cardStyle, card } from '../style.js';
 import { Card, CardTitle, CardBody } from 'reactstrap';
-import ImageCanvas from './../../imagecanvas/ImageCanvas.js';
 import AxisTiffViewer from './axisTiffViewer.js';
 
 class AxesViewer extends React.Component {

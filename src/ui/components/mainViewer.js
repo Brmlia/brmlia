@@ -14,7 +14,6 @@ import { Card, CardTitle, CardBody, CardFooter } from 'reactstrap';
 import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 import FabricLayer from './FabricLayer.js';
-import ImageCanvas from './../../imagecanvas/ImageCanvas.js';
 import MainTiffViewer from './mainTiffViewer.js';
 import { fabricApi } from '../../fabric/fabricControl.js';
 
@@ -76,6 +75,8 @@ class mainViewer extends React.Component {
     var fabricCanvas1;
     var fabricCanvas2;
     var fabricCanvas3;
+    var canvasZIndex;
+    var opacity;
 
     let width = window.innerWidth * 0.6;
     let height = window.innerHeight * 0.6;
