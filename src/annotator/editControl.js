@@ -16,9 +16,9 @@ export const colors = [
   'rgb(200, 140, 140, 0.85)', //channel 1
   'rgb(140, 200, 140, 0.85)', //channel 2
   'rgb(140, 140, 200, 0.85)', //channel 3
-  'rgb(215, 215, 215, 0.85)', //light grey
+  'rgb(100, 100, 100, 0.85)', //dark grey
   'rgb(255, 255, 255, .01)', //transparent (almost)
-  'rgb(240, 240, 240, 1)', //lighter grey
+  'rgb(240, 240, 240, 1)', //light grey
 ];
 
 export function drawFreeStyle(canvas, color) {
@@ -62,7 +62,7 @@ export function drawRect(canvas, rect, label, classLabel) {
   var newLabel = label === 'label' ? (label += getLastAnnotIdx() + 1) : label;
 
   var text = new fabric.IText(newLabel, {
-    fontSize: 16,
+    fontSize: 14,
     originX: 'left',
     originY: 'top',
     fontFamily: 'Arial',
@@ -74,7 +74,7 @@ export function drawRect(canvas, rect, label, classLabel) {
   });
 
   var classText = new fabric.IText(classLabel, {
-    fontSize: 16,
+    fontSize: 14,
     originX: 'left',
     originY: 'bottom',
     fontFamily: 'Arial',
@@ -82,7 +82,7 @@ export function drawRect(canvas, rect, label, classLabel) {
     fill: 'white',
     textBackgroundColor: color,
     top: group.top + group.height - outerRect.strokeWidth,
-    left: group.left + outerRect.strokeWidth,
+    left: group.left + fRect.strokeWidth,
   });
 
   if (canvas) {
