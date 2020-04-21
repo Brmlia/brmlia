@@ -14,7 +14,14 @@ module.exports = http.createServer((req, res) => {
 
         service.annotRequest(req, res);
     }
+    // GET Image Endpoint
+    else if (reqUrl.pathname == '/image' && req.method === 'GET') {
+        console.log('Request Image:' +
+            req.method + ' Endpoint: ' +
+            reqUrl.pathname);
 
+        service.imageRequest(req, res);
+    }
     // Invalid Endpoint
     else {
         console.log('Request Type:' +
