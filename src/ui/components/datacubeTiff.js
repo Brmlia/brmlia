@@ -18,7 +18,7 @@ class DatacubeTiff extends Component {
     this.canvas = React.createRef();
     this.state = {
       axes: ['x', 'y', 'z'],
-      axisIdx: 0,
+      axisIdx: 2,
       sliceIdx: 0,
       cntxt: null,
     }
@@ -66,7 +66,7 @@ class DatacubeTiff extends Component {
           }),
         });
 
-        await loadSlices(this.state.cntxt, this.volume, this.state.axes, state.file, this.type)
+        await loadSlices(this.state.cntxt, this.volume, this.state.axes, this.state.axisIdx, state.file, this.type)
       }
     }
     this.forceUpdate();
@@ -116,8 +116,8 @@ class DatacubeTiff extends Component {
     return (
       <div>
         <canvas id="canvas-1" ref={this.canvas}
-          width="750px"
-          height="750px"
+          width="100%"
+          height="100%"
         >
         </canvas>
         <ProgressBar />

@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import { Stage, Layer, Shape } from "react-konva";
-import Konva from "konva";
 import UTIF from "utif";
-import { fApi, uApi } from '../../utils/index.js'
+import { fApi } from '../../utils/index.js'
 import { updateImage } from './../../imagecanvas/CanvasControl.js'
 
 class SampleTiff extends Component {
@@ -61,10 +59,10 @@ class SampleTiff extends Component {
       const idx = state.file.length - 1
       const file = state.file[idx]
       const newFile = {
-        rgba: state.file[idx].rgba,
-        width: state.file[idx].image.width,
-        height: state.file[idx].image.height,
-        page: state.file[idx].pages[0],
+        rgba: file.rgba,
+        width: file.image.width,
+        height: file.image.height,
+        page: file.pages[0],
       }
       this.setState( prevState => ({
         ...prevState,

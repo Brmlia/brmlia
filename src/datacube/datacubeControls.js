@@ -11,12 +11,12 @@ const [useState, stateApi] = create (set => ({
   ...state
 }))
 
-export async function loadSlices(cntxt, volume, axes, files, type) {
+export async function loadSlices(cntxt, volume, axes, axis, files, type) {
   if (type === 1) {
-    await _loadSlicesFromMultipageFile(cntxt, volume, axes, files[0])
+    await _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, files[0])
   }
   else {
-    _loadSlicesFromMultipleFiles(cntxt, volume, axes, files)
+    _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files)
   }
 }
 
@@ -42,15 +42,15 @@ async function _loadVolumes(volume, pages, width) {
   }
 }
 
-async function _loadSlicesFromMultipageFile(cntxt, volume, axes, file) {
+async function _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, file) {
   if (file && (file.pages) && (file.pages.length > 0)) {
     await _loadVolumes(volume, file.pages, file.image.width)
   }
 
-  updateChannelSlice(cntxt, volume, 0, axes, 0);
+  updateChannelSlice(cntxt, volume, 0, axes, axis);
 }
 
-function _loadSlicesFromMultipleFiles(cntxt, volume, axes, files) {
+function _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files) {
   for (var fIdx = 0; fIdx < files.length; fIdx++) {
     const file = files[fIdx]
     if (file && (file.pages) && (file.pages.length > 0)) {
@@ -59,7 +59,7 @@ function _loadSlicesFromMultipleFiles(cntxt, volume, axes, files) {
         const page = pages[pIdx]
         volume.load(this.state.cntxt, page, file.image.width, fIdx)
       }
-      updateChannelSlice(cntxt, volume, 0, axes, 0);
+      updateChannelSlice(cntxt, volume, 0, axes, axis);
     }
   }
 }

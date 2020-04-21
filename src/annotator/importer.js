@@ -1,7 +1,7 @@
-import csv from "csvtojson";
-import { saveJson, updateTiff, updateTiffPages } from "../fileuploader/fileControl.js"
-import { Image } from "image-js"
-import UTIF  from "utif"
+import csv from 'csvtojson';
+import { saveJson, updateTiff, updateTiffPages } from '../fileuploader/fileControl.js'
+import { Image } from 'image-js'
+import UTIF  from 'utif'
 
 export function importCsv(file) {
 
@@ -97,8 +97,6 @@ export function parseTiff(buffer) {
 export function parseMultiTiff(name, buffer) {
 
   var pages = []
-  var height = 0
-  var width = 0
   const ifds = UTIF.decode(buffer);
 
   for (var i = 0; i < ifds.length; i++) {
