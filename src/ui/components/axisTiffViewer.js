@@ -120,7 +120,7 @@ class TiffViewer extends Component {
         <ProgressBar />
         <div className="slice-slider-container">
           <Slider
-            label="slice"
+            label=""
             width="40%"
             min="0"
             max={Math.max(this.length-1, 0)}
@@ -133,11 +133,28 @@ class TiffViewer extends Component {
           <button
             id="resetSliceBtn"
             onClick={() => {
+              this.nextSlice(true);
+            }}
+          >
+            {"<<"}
+          </button>
+          <button
+            id="resetSliceBtn"
+            onClick={() => {
               this.slice(0);
             }}
           >
-            Slice 0
+            Go to Slice 0
           </button>
+          <button
+            id="resetSliceBtn"
+            onClick={() => {
+              this.nextSlice(false);
+            }}
+          >
+            {">>"}
+          </button>
+          <div> Slice: {this.state.sliceIdx} </div>
         </div>
       </div>
     )
