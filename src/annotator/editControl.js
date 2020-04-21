@@ -46,8 +46,14 @@ export function drawRect(canvas, rect, label, classLabel) {
   });
 
   var outerRect = fabric.util.object.clone(fRect);
-  outerRect.set({ strokeWidth: fRect.strokeWidth + 1, stroke: colors[5] });
-
+  outerRect.set({
+    left: fRect.left - 1,
+    top: fRect.top - 1,
+    width: fRect.width + (fRect.strokeWidth * 2 - 1),
+    height: fRect.height + (fRect.strokeWidth * 2 - 1),
+    stroke: colors[5],
+    strokeWidth: 1,
+  });
   var group = new fabric.Group([outerRect]);
   group.on('moving', function(e) {
     constrain(e, canvas);
@@ -61,10 +67,10 @@ export function drawRect(canvas, rect, label, classLabel) {
     originY: 'top',
     fontFamily: 'Arial',
     fontWeight: 'bold',
-    fill: colors[5],
+    fill: 'white',
     textBackgroundColor: color,
-    top: group.top + outerRect.strokeWidth,
-    left: group.left + outerRect.strokeWidth,
+    top: group.top + fRect.strokeWidth,
+    left: group.left + fRect.strokeWidth,
   });
 
   var classText = new fabric.IText(classLabel, {
@@ -73,7 +79,7 @@ export function drawRect(canvas, rect, label, classLabel) {
     originY: 'bottom',
     fontFamily: 'Arial',
     fontWeight: 'bold',
-    fill: colors[5],
+    fill: 'white',
     textBackgroundColor: color,
     top: group.top + group.height - outerRect.strokeWidth,
     left: group.left + outerRect.strokeWidth,
