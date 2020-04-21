@@ -1,25 +1,15 @@
 {
-  "files": {
-    "main.css": "/brmlia/static/css/main.ece211ee.chunk.css",
-    "main.js": "/brmlia/static/js/main.c9a372ea.chunk.js",
-    "main.js.map": "/brmlia/static/js/main.c9a372ea.chunk.js.map",
-    "runtime-main.js": "/brmlia/static/js/runtime-main.ebe7bc53.js",
-    "runtime-main.js.map": "/brmlia/static/js/runtime-main.ebe7bc53.js.map",
-    "static/css/2.0161871a.chunk.css": "/brmlia/static/css/2.0161871a.chunk.css",
-    "static/js/2.161543ac.chunk.js": "/brmlia/static/js/2.161543ac.chunk.js",
-    "static/js/2.161543ac.chunk.js.map": "/brmlia/static/js/2.161543ac.chunk.js.map",
-    "index.html": "/brmlia/index.html",
-    "precache-manifest.30af497f82d0be8c11e311f7147f7809.js": "/brmlia/precache-manifest.30af497f82d0be8c11e311f7147f7809.js",
-    "service-worker.js": "/brmlia/service-worker.js",
-    "static/css/2.0161871a.chunk.css.map": "/brmlia/static/css/2.0161871a.chunk.css.map",
-    "static/css/main.ece211ee.chunk.css.map": "/brmlia/static/css/main.ece211ee.chunk.css.map",
-    "static/js/2.161543ac.chunk.js.LICENSE.txt": "/brmlia/static/js/2.161543ac.chunk.js.LICENSE.txt"
-  },
-  "entrypoints": [
-    "static/js/runtime-main.ebe7bc53.js",
-    "static/css/2.0161871a.chunk.css",
-    "static/js/2.161543ac.chunk.js",
-    "static/css/main.ece211ee.chunk.css",
-    "static/js/main.c9a372ea.chunk.js"
-  ]
+  "main.css": "/brmlia/static/css/main.1819fd6b.chunk.css",
+  "main.js": "/brmlia/static/js/main.a6e0af5f.chunk.js",
+  "main.js.map": "/brmlia/static/js/main.a6e0af5f.chunk.js.map",
+  "runtime~main.js": "/brmlia/static/js/runtime~main.091645ed.js",
+  "runtime~main.js.map": "/brmlia/static/js/runtime~main.091645ed.js.map",
+  "static/css/2.564fddba.chunk.css": "/brmlia/static/css/2.564fddba.chunk.css",
+  "static/js/2.da8d4a11.chunk.js": "/brmlia/static/js/2.da8d4a11.chunk.js",
+  "static/js/2.da8d4a11.chunk.js.map": "/brmlia/static/js/2.da8d4a11.chunk.js.map",
+  "index.html": "/brmlia/index.html",
+  "precache-manifest.1b8afd223be6121856f26154526ecb5f.js": "/brmlia/precache-manifest.1b8afd223be6121856f26154526ecb5f.js",
+  "service-worker.js": "/brmlia/service-worker.js",
+  "static/css/2.564fddba.chunk.css.map": "/brmlia/static/css/2.564fddba.chunk.css.map",
+  "static/css/main.1819fd6b.chunk.css.map": "/brmlia/static/css/main.1819fd6b.chunk.css.map"
 }
