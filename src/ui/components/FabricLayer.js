@@ -151,9 +151,6 @@ class FabricLayer extends React.Component {
         onContextMenu={e => e.preventDefault()}
         style={{
           borderColor: colors[this.props.channel],
-          borderWidth: 2,
-          borderStyle: 'solid',
-          opacity: this.props.opacity,
           zIndex: this.props.zIndex,
         }}
       >

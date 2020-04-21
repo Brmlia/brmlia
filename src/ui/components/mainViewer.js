@@ -10,7 +10,7 @@ import {
   canvasStyle3,
 } from '../style.js';
 import Viewer from '../../viewer/index.js';
-import { Card, CardTitle, CardBody, CardFooter } from 'reactstrap';
+import { Card, CardTitle, CardBody } from 'reactstrap';
 import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 import FabricLayer from './FabricLayer.js';
@@ -18,10 +18,10 @@ import MainTiffViewer from './mainTiffViewer.js';
 import { fabricApi } from '../../fabric/fabricControl.js';
 
 var fabricLayers = [
-  <FabricLayer zIndex={8} channel={0} opacity={1} />,
-  <FabricLayer zIndex={9} channel={1} opacity={1} />,
-  <FabricLayer zIndex={10} channel={2} opacity={1} />,
-  <FabricLayer zIndex={11} channel={3} opacity={1} />,
+  <FabricLayer zIndex={8} channel={0} />,
+  <FabricLayer zIndex={9} channel={1} />,
+  <FabricLayer zIndex={10} channel={2} />,
+  <FabricLayer zIndex={11} channel={3} />,
 ];
 
 class mainViewer extends React.Component {
@@ -75,8 +75,6 @@ class mainViewer extends React.Component {
     var fabricCanvas1;
     var fabricCanvas2;
     var fabricCanvas3;
-    var canvasZIndex;
-    var opacity;
 
     let width = window.innerWidth * 0.6;
     let height = window.innerHeight * 0.6;
@@ -85,6 +83,7 @@ class mainViewer extends React.Component {
     if (settingsApi.getState().channels[0].selected) {
       console.log('displaying 1');
       view1 = canvasApi.getState().canvas[0];
+      // fabricCanvas1 = fabricApi.getState().layers[0];
       fabricCanvas1 = fabricLayers[0];
     }
     if (settingsApi.getState().channels[1].selected) {

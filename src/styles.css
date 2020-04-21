@@ -34,8 +34,9 @@ a {
 }
 
 .annotationLayer {
-  opacity: 100%;
   position: absolute;
+  border-width: 2;
+  border-style: 'solid';
   top: 0px;
   left: 0px;
   width: 100%;

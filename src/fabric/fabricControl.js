@@ -1,4 +1,6 @@
 import create from 'zustand';
+import React from 'react';
+import FabricLayer from '../ui/components/FabricLayer';
 
 import { drawRect, drawFreeStyle } from '../annotator/editControl.js';
 import {
@@ -16,6 +18,12 @@ export const modes = {
 };
 
 const initState = {
+  layers: [
+    <FabricLayer zIndex={8} channel={0} />,
+    <FabricLayer zIndex={9} channel={1} />,
+    <FabricLayer zIndex={10} channel={2} />,
+    <FabricLayer zIndex={11} channel={3} />,
+  ],
   mouse: {
     x: 0,
     y: 0,
