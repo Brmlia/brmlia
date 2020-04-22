@@ -15,51 +15,64 @@ const fragmentShader = `
 
   varying vec2 vUv;
 
-  vec4 getInputColor()
-  {
-    return vec4(color, 1.0); // Just a test
+  vec4 setBrightness(in vec4 clr, in float br) {
+    clr.rgb += br;
+    return clr;
   }
 
-  vec4 toGrayscale(in vec4 color)
-  {
-    float average = (color.r + color.g + color.b) / 3.0;
-    return vec4(average, average, average, 1.0);
+  vec4 setContrast(in vec4 clr, in float ct) {
+    if (ct > 0.0) {
+      clr.rgb = (clr.rgb - 0.5) / (1.0 - ct) + 0.5;
+    } else {
+      clr.rgb = (clr.rgb - 0.5) * (1.0 + ct) + 0.5;
+    }
+    return clr;
   }
 
-  vec4 colorize(in vec4 grayscale, in vec4 color)
-  {
-    return (grayscale * color);
+  vec4 setWpBp(in vec4 clr, in float bp, in float wp) {
+    float _blackpoint = bp / 255.0;
+    float _whitepoint = bp == wp ? (255.0 / 0.00025) : (255.0 / (wp - bp));
+    clr.rgb = clr.rgb * _whitepoint - (_whitepoint * _blackpoint);
+    return clr;
   }
+
+  // vec4 getInputColor()
+  // {
+  //   return vec4(color, 1.0); // Just a test
+  // }
+
+  // vec4 toGrayscale(in vec4 color)
+  // {
+  //   float average = (color.r + color.g + color.b) / 3.0;
+  //   return vec4(average, average, average, 1.0);
+  // }
+
+  // vec4 colorize(in vec4 grayscale, in vec4 color)
+  // {
+  //   return (grayscale * color);
+  // }
 
   void main() {
-    gl_FragColor = texture2D(image, vUv);
-    gl_FragColor.rgb += brightness;
+    vec4 tColor = texture2D(image, vUv);
+    tColor = setBrightness(tColor, brightness);
+    tColor = setContrast(tColor, contrast);
+    gl_FragColor = setWpBp(tColor, blackpoint, whitepoint);
 
-    if (contrast > 0.0) {
-      gl_FragColor.rgb = (gl_FragColor.rgb - 0.5) / (1.0 - contrast) + 0.5;
-    } else {
-      gl_FragColor.rgb = (gl_FragColor.rgb - 0.5) * (1.0 + contrast) + 0.5;
-    }
-
-    float black_point = blackpoint / 255.0;
-    float white_point = blackpoint == whitepoint ? (255.0 / 0.00025) : (255.0 / (whitepoint - blackpoint));
-
-    gl_FragColor.rgb = gl_FragColor.rgb * white_point - (white_point * black_point);
     // *******  color  *******
     // This is the color you want to apply
     // in the "colorize" step. Should ultimately be a uniform var.
-    vec4 c = vec4(0.6, 1.0, 1.0, 1.0);
+    // vec4 c = vec4(0.6, 1.0, 1.0, 1.0);
 
     // The input fragment color.
     // Can come from a texture, a varying or a constant.
-    vec4 inputColor = getInputColor();
-  
+    // vec4 inputColor = getInputColor();
+
     // Convert to grayscale first:
-    vec4 grayscale = toGrayscale(inputColor);
+    // vec4 grayscale = toGrayscale(inputColor);
 
     // Then "colorize" by simply multiplying the grayscale
     // with the desired color.
-    vec4 colorizedOutput = colorize(grayscale, c);
+    // vec4 colorizedOutput = colorize(grayscale, c);
 
     //gl_FragColor = colorizedOutput;
 
