@@ -36,46 +36,49 @@ const fragmentShader = `
     return clr;
   }
 
-  // vec4 getInputColor()
-  // {
-  //   return vec4(color, 1.0); // Just a test
-  // }
+  vec4 setOpacity(in vec3 clr, in float opc) {
+    vec4 _color = vec4(clr, opc);
+    return _color;
+  }
 
-  // vec4 toGrayscale(in vec4 color)
-  // {
-  //   float average = (color.r + color.g + color.b) / 3.0;
-  //   return vec4(average, average, average, 1.0);
-  // }
+  vec4 sampleColor() {
+    // red with 50% opacity
+    return vec4(1.0, 0.0, 0.0, 0.5);
+  }
 
-  // vec4 colorize(in vec4 grayscale, in vec4 color)
-  // {
-  //   return (grayscale * color);
-  // }
+  vec4 toGrayscale(in vec4 color)
+  {
+    float average = (color.r + color.g + color.b) / 3.0;
+    return vec4(average, average, average, 1.0);
+  }
+
+  vec4 colorize(in vec4 grayscale, in vec4 color)
+  {
+    return (grayscale * color);
+  }
+
+  vec4 applyColorize(in vec4 color, in vec4 overlay) {
+    vec4 grayscale = toGrayscale(color);
+    vec4 colorizedOutput = colorize(grayscale, overlay);
+    return colorizedOutput;
+  }
+
+  vec4 applyOverlay(in vec4 color, in vec4 overlay) {
+    return (vec4(mix(color.rgb, overlay.rgb, overlay.a), color.a));
+  }
 
   void main() {
     vec4 tColor = texture2D(image, vUv);
     tColor = setBrightness(tColor, brightness);
     tColor = setContrast(tColor, contrast);
-    gl_FragColor = setWpBp(tColor, blackpoint, whitepoint);
+    tColor = setWpBp(tColor, blackpoint, whitepoint);
 
-    // *******  color  *******
-    // This is the color you want to apply
-    // in the "colorize" step. Should ultimately be a uniform var.
-    // vec4 c = vec4(0.6, 1.0, 1.0, 1.0);
+    vec4 oColor = setOpacity(color, 0.5);
+    // vec4 oColor = sampleColor();
 
-    // The input fragment color.
-    // Can come from a texture, a varying or a constant.
-    // vec4 inputColor = getInputColor();
-
-    // Convert to grayscale first:
-    // vec4 grayscale = toGrayscale(inputColor);
-
-    // Then "colorize" by simply multiplying the grayscale
-    // with the desired color.
-    // vec4 colorizedOutput = colorize(grayscale, c);
-
-    //gl_FragColor = colorizedOutput;
-
+    // tColor = applyColorize(tColor, oColor);
+    tColor = applyOverlay(tColor, oColor);
+    gl_FragColor = tColor;
   }
 `;
 
@@ -117,9 +120,9 @@ function Mesh(props) {
       props.channel - 1
     ].uniforms.color.value;
   });
-  let color = new THREE.Color(
-    uApi.getState().channels[props.channel - 1].uniforms.color.value
-  );
+  // let color = new THREE.Color(
+  //   uApi.getState().channels[props.channel - 1].uniforms.color.value
+  // );
   return (
     <mesh ref={ref} scale={[1.0, 1.0, 1.0]}>
       <planeBufferGeometry attach="geometry" args={[5.0, 5.0]} />

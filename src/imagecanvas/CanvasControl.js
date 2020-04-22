@@ -1,5 +1,6 @@
 import { uApi } from '../utils/index.js';
 import { createTexture, createTextureFromTiff } from './ImageStore.js';
+import * as THREE from 'three';
 
 function isValidChannel(channel) {
   return (
@@ -227,11 +228,13 @@ export function updateBlackpoint(value, channel) {
 }
 
 export function updateColor(value, channel) {
+  var color = new THREE.Color(value.color);
+
   if (isValidChannel(channel)) {
     if (value !== uApi.getState().channels[channel - 1].uniforms.color.value) {
       console.log(
-        'CanvasControl::updateColor() - value', value);
-      updateUniformColor(value, channel);
+        'CanvasControl::updateColor() - value', value, color);
+      updateUniformColor(color, channel);
     }
     return true;
   } else {
