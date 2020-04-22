@@ -11,6 +11,7 @@ const fragmentShader = `
 
   uniform float blackpoint;
   uniform float whitepoint;
+  uniform float opacity;
   uniform vec3 color;
 
   varying vec2 vUv;
@@ -73,8 +74,7 @@ const fragmentShader = `
     tColor = setContrast(tColor, contrast);
     tColor = setWpBp(tColor, blackpoint, whitepoint);
 
-    vec4 oColor = setOpacity(color, 0.5);
-    // vec4 oColor = sampleColor();
+    vec4 oColor = setOpacity(color, opacity);
 
     // tColor = applyColorize(tColor, oColor);
     tColor = applyOverlay(tColor, oColor);
@@ -113,6 +113,9 @@ function Mesh(props) {
     material.current.uniforms.blackpoint.value = uApi.getState().channels[
       props.channel - 1
     ].uniforms.blackpoint.value;
+    material.current.uniforms.opacity.value = uApi.getState().channels[
+      props.channel - 1
+    ].uniforms.opacity.value;
     material.current.uniforms.image.value = uApi.getState().channels[
       props.channel - 1
     ].uniforms.image.value;

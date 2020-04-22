@@ -82,6 +82,23 @@ function updateUniformBlackpoint(value, channel) {
   });
 }
 
+function updateUniformOpacity(value, channel) {
+  uApi.setState(prevState => {
+    const channels = prevState.channels.map((ch, j) => {
+      if (j === channel - 1) {
+        var newChannel = ch;
+        newChannel.uniforms.opacity.value = value;
+        return newChannel;
+      } else {
+        return ch;
+      }
+    });
+    return {
+      channels,
+    };
+  });
+}
+
 function updateUniformColor(value, channel) {
   uApi.setState(prevState => {
     const channels = prevState.channels.map((ch, j) => {
@@ -217,6 +234,27 @@ export function updateBlackpoint(value, channel) {
   } else {
     console.log(
       'CanvasControl::updateBlackpoint() - null state',
+      uApi.getState(),
+      ' channel: ',
+      channel,
+      ' value: ',
+      value
+    );
+  }
+  return false;
+}
+
+export function updateOpacity(value, channel) {
+  if (isValidChannel(channel)) {
+    if (
+      value !== uApi.getState().channels[channel - 1].uniforms.opacity.value
+    ) {
+      updateUniformOpacity(value, channel);
+    }
+    return true;
+  } else {
+    console.log(
+      'CanvasControl::updateOpacity() - null state',
       uApi.getState(),
       ' channel: ',
       channel,

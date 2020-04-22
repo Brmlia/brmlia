@@ -11,6 +11,7 @@ import {
   updateWhitepoint,
   updateBlackpoint,
   updateColor,
+  updateOpacity,
 } from '../../imagecanvas/CanvasControl.js';
 import {
   updateChannelSel,
@@ -42,6 +43,10 @@ class Channel extends React.Component {
     updateBlackpoint(value, this.props.ch);
   }
 
+  sliderValueOpc(value) {
+    updateOpacity(value, this.props.ch);
+  }
+
   colorValue(value) {
     updateColor(value, this.props.ch);
   }
@@ -62,11 +67,16 @@ class Channel extends React.Component {
     updateBlackpoint('0.0', this.props.ch);
   }
 
+  resetOpacity() {
+    updateOpacity('0.0', this.props.ch);
+  }
+
   render() {
     var sliderValueBr = this.sliderValueBr;
     var sliderValueCt = this.sliderValueCt;
     var sliderValueWp = this.sliderValueWp;
     var sliderValueBp = this.sliderValueBp;
+    var sliderValueOpc = this.sliderValueOpc;
     var colorValue = this.colorValue;
 
     var alt = 'Ch' + this.props.ch + ' Histogram';
@@ -113,15 +123,27 @@ class Channel extends React.Component {
                 onClick={colorValue.bind(this)}
               />
               <br></br>
-              <button
-                id="setColorBtn"
-                onClick={(colorValue) => {
-                  console.log('value: '+ colorValue)
-                  // color: colorValue
-                }}
-              >
-                Set Channel Color
-              </button>
+              <div className="opacity-slider-container">
+                <Slider
+                  label="Opacity"
+                  width="40%"
+                  min="0.0"
+                  max="1.0"
+                  step="0.1"
+                  initial="0"
+                  multiplier="100"
+                  raw="0"
+                  sliderValue={sliderValueOpc.bind(this)}
+                />
+                <button
+                  id="resetOpcBtn"
+                  onClick={() => {
+                    this.resetOpacity();
+                  }}
+                >
+                  Reset Channel Opacity
+                </button>
+              </div>
               <br></br>
               <br></br>
               <div className="brightness-slider-container">
