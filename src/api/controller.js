@@ -14,6 +14,14 @@ module.exports = http.createServer((req, res) => {
     service.annotRequest(req, res);
   }
 
+  if (reqUrl.pathname == '/annot' && req.method === 'POST') {
+    console.log(
+      'Request Annotations:' + req.method + ' Endpoint: ' + reqUrl.pathname
+    );
+
+    service.annotRequest(req, res);
+  }
+
   // GET Endpoint
   else if (reqUrl.pathname == '/sample' && req.method === 'GET') {
     console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);

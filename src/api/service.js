@@ -29,6 +29,27 @@ exports.invalidRequest = function(req, res) {
   res.end('Invalid Request');
 };
 
+// pass in request and response
+exports.testRequest = function(req, res) {
+  body = '';
+  // bind event(data) to object(function)
+  req.on('data', function(chunk) {
+    body += chunk;
+  });
+
+  req.on('end', function() {
+    postBody = JSON.parse(body);
+
+    var response = {
+      text: 'Post Request Value Is  ' + postBody.value,
+    };
+
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(response));
+  });
+};
+
 exports.sampleRequest = function(req, res) {
   const reqUrl = url.parse(req.url, true);
   var name = 'World';
