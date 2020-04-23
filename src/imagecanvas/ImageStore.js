@@ -25,6 +25,12 @@ const initState = {
         blackpoint: {
           value: '0.0',
         },
+        opacity: {
+          value: '0.0',
+        },
+        color: {
+          value: '',
+        },
         image: {
           value: '',
         },
@@ -47,6 +53,12 @@ const initState = {
         blackpoint: {
           value: '16.0',
         },
+        opacity: {
+          value: '0.0',
+        },
+        color: {
+          value: '',
+        },
         image: {
           value: '',
         },
@@ -69,6 +81,12 @@ const initState = {
         blackpoint: {
           value: '16.0',
         },
+        opacity: {
+          value: '0.0',
+        },
+        color: {
+          value: '',
+        },
         image: {
           value: '',
         },
@@ -90,6 +108,12 @@ const initState = {
         },
         blackpoint: {
           value: '16.0',
+        },
+        opacity: {
+          value: '0.0',
+        },
+        color: {
+          value: '',
         },
         image: {
           value: '',
@@ -104,7 +128,7 @@ const initState = {
 
 export const [useUniformStore, uniApi] = create(set => ({
   ...initState,
-  update: (brightness, contrast, whitepoint, blackpoint, image) =>
+  update: (brightness, contrast, whitepoint, blackpoint, opacity, color, image) =>
     set(state => ({
       ...state,
       uniforms: {
@@ -124,6 +148,14 @@ export const [useUniformStore, uniApi] = create(set => ({
         blackpoint: {
           ...state.uniforms.blackpoint,
           value: blackpoint,
+        },
+        opacity: {
+          ...state.uniforms.opacity,
+          value: opacity,
+        },
+        color: {
+          ...state.uniforms.color,
+          value: color,
         },
         image: {
           ...state.uniforms.image,
