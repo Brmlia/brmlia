@@ -30,14 +30,14 @@ async function _loadVolumes(volume, pages, width) {
   for (var pIdx = 0; pIdx < pages.length; pIdx++) {
     const page = pages[pIdx]
 
-    const pct = Math.round((pIdx/pages.length)*100)
+    const pct = Math.round((pIdx/(pages.length-1))*100)
     if ((pct % 10) === 0) {
       stateApi.setState({
         loaded: pct
       })
     }
 
-    console.log("loading ", pIdx , "/", pages.length)
+    console.log("loading ", pIdx , "/", pages.length-1)
     await volume.load(page, width, pIdx)
   }
 }

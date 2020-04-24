@@ -10,6 +10,7 @@
     "image-js": "^0.21.9",
     "jest": "24.9.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
+    "konva": "^5.0.2",
     "react": "^16.13.0",
     "react-color": "^2.18.0",
     "react-dom": "^16.13.0",

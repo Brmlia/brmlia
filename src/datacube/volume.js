@@ -1,11 +1,7 @@
 
 export class Volume {
   constructor (args) {
-    this.channel = args.channel; // a data cube
-    this.segmentation = args.segmentation; // a segmentation cube
-
-    this.segments = {};
-    this.requests = [];
+    this.channel = args.channel;
   }
 
   async renderChannelSlice (ctx, axis, slice) {

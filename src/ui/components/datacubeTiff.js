@@ -116,8 +116,8 @@ class DatacubeTiff extends Component {
     return (
       <div>
         <canvas id="canvas-1" ref={this.canvas}
-          width="100%"
-          height="100%"
+          width="500px"
+          height="500px"
         >
         </canvas>
         <ProgressBar />
