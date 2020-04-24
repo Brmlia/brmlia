@@ -8,3 +8,21 @@ For circleCI build-deploy process (only run on commits/PRs to master), all warni
 the environment variable `CI=FALSE` is set, or other work-around), so expect
 that to fail for any build that has eslint warnings. To disable a warning
 explicitly, add a commented eslint directive above the location.
+
+### Dependencies
+#### DEVELOP BRANCH
+##### UNUSED in ChannelColorPicker BRANCH
+* jest-environment-jsdom-sixteen
+* utif
+Unused devDependencies
+* @testing-library/jest-dom
+* @testing-library/react
+
+##### USED in ChannelColorPicker BRANCH
+* image-js: ./src/annotator/importer.js
+
+# BRMLIA
+## ChannelColorPicker BRANCH
+### Channels
+- [x] LUT
+- [x] Opacity
