@@ -12,7 +12,10 @@
     "csvtojson": "^2.0.10",
     "fabric": "^3.6.3",
     "fs": "0.0.1-security",
+    "identity-obj-proxy": "^3.0.0",
     "image-js": "^0.21.9",
+    "jest": "^25.4.0",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "material-ui": "^0.20.2",
     "material-ui-slider": "^3.0.8",
     "rc-progress": "^2.5.2",
@@ -35,16 +38,26 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "test:coverage": "npm run test -- --coverage",
     "format": "prettier --write \"**/*.+(js|json|css)\"",
     "eject": "react-scripts eject"
   },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2|jpeg)$": "identity-obj-proxy"
+    }
+  },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.1.1",
-    "@testing-library/react": "^10.0.1",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.3",
     "gh-pages": "^2.2.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
