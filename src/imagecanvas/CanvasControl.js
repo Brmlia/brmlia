@@ -1,5 +1,6 @@
 import { uApi } from '../utils/index.js';
 import { createTexture, createTextureFromTiff } from './ImageStore.js';
+import * as THREE from 'three';
 
 function isValidChannel(channel) {
   return (
@@ -8,7 +9,8 @@ function isValidChannel(channel) {
     channel >= 1 &&
     uApi.getState().channels[channel - 1] &&
     uApi.getState().channels[channel - 1].uniforms.contrast &&
-    uApi.getState().channels[channel - 1].uniforms.brightness
+    uApi.getState().channels[channel - 1].uniforms.brightness &&
+    uApi.getState().channels[channel - 1].uniforms.color
   );
 }
 
@@ -69,6 +71,41 @@ function updateUniformBlackpoint(value, channel) {
       if (j === channel - 1) {
         var newChannel = ch;
         newChannel.uniforms.blackpoint.value = value;
+        return newChannel;
+      } else {
+        return ch;
+      }
+    });
+    return {
+      channels,
+    };
+  });
+}
+
+function updateUniformOpacity(value, channel) {
+  uApi.setState(prevState => {
+    const channels = prevState.channels.map((ch, j) => {
+      if (j === channel - 1) {
+        var newChannel = ch;
+        newChannel.uniforms.opacity.value = value;
+        return newChannel;
+      } else {
+        return ch;
+      }
+    });
+    return {
+      channels,
+    };
+  });
+}
+
+function updateUniformColor(value, channel) {
+  uApi.setState(prevState => {
+    const channels = prevState.channels.map((ch, j) => {
+      if (j === channel - 1) {
+        var newChannel = ch;
+        console.log('updateColorUniform: ', value);
+        newChannel.uniforms.color.value = value;
         return newChannel;
       } else {
         return ch;
@@ -197,6 +234,49 @@ export function updateBlackpoint(value, channel) {
   } else {
     console.log(
       'CanvasControl::updateBlackpoint() - null state',
+      uApi.getState(),
+      ' channel: ',
+      channel,
+      ' value: ',
+      value
+    );
+  }
+  return false;
+}
+
+export function updateOpacity(value, channel) {
+  if (isValidChannel(channel)) {
+    if (
+      value !== uApi.getState().channels[channel - 1].uniforms.opacity.value
+    ) {
+      updateUniformOpacity(value, channel);
+    }
+    return true;
+  } else {
+    console.log(
+      'CanvasControl::updateOpacity() - null state',
+      uApi.getState(),
+      ' channel: ',
+      channel,
+      ' value: ',
+      value
+    );
+  }
+  return false;
+}
+
+export function updateColor(value, channel) {
+  var color = new THREE.Color(value.color);
+
+  if (isValidChannel(channel)) {
+    if (value !== uApi.getState().channels[channel - 1].uniforms.color.value) {
+      console.log('CanvasControl::updateColor() - value', value, color);
+      updateUniformColor(color, channel);
+    }
+    return true;
+  } else {
+    console.log(
+      'CanvasControl::updateColor() - null state',
       uApi.getState(),
       ' channel: ',
       channel,

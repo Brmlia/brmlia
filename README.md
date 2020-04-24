@@ -59,8 +59,8 @@ explicitly, add a commented eslint directive above the location.
 - [x] Contrast
 - [x] Whitepoint
 - [x] Blackpoint
-- [ ] LUT
-- [ ] Opacity
+- [x] LUT
+- [x] Opacity
 - [ ] Annotation Layers by Channels
 - [ ] Toggle Annotations by Channels
 - [ ] Histogram
@@ -77,3 +77,43 @@ explicitly, add a commented eslint directive above the location.
 - [x] Tiff & PNG Support
 - [x] Select PNG
 - [ ] Select Tiff (Update Main, Axes, Channel Views)
+
+### TESTS
+
+#### Load
+
+- [ ] Test Load of Menus
+- [ ] Test Load of Axes
+- [ ] Test Load of Channels
+- [ ] Test Load of Annotations
+- [ ] Test Load of Main View
+- [ ] Test Load of Thumbnails
+
+#### Interaction
+
+##### Uploads
+
+- [ ] Test Correct View of Main, Channels, and Axes
+
+##### Drawing
+
+- [ ] Test Rectangular Drawing
+- [ ] Test Freehand Drawing
+- [ ] Test Undo/Redo
+
+##### Axes
+
+- [ ] Test Sliders
+
+##### Channels
+
+- [ ] Test Sliders (Brightness, Contrast, Whitepoint, Blackpoint, Opacity)
+- [ ] Test LUT
+
+##### Thumbnails
+
+- [ ] Test PNG image selection (Verify Correct View of Main, Channels, and Axes)
+
+##### Export
+
+- [ ] Test Correctness of Exported Annotations
