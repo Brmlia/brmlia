@@ -49,8 +49,11 @@ explicitly, add a commented eslint directive above the location.
 - [x] Filter by Class
 - [x] Edit Label
 - [x] Auto-load upon import
-- [ ] Delete Annotation
+- [ ] Undo/Redo changes
 - [ ] Toggle Label On/Off
+- [ ] Resize box without affecting label
+- [ ] Define individual annotations in freehand mode
+- [ ] Add toolbar
 
 ### CHANNELS
 
