@@ -18,7 +18,7 @@ exports.annotRequest = function(req, res) {
 
     console.log(data);
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
+    //res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(data));
   });
 };
@@ -45,23 +45,13 @@ exports.testRequest = function(req, res) {
     };
 
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
+    //res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(response));
   });
 };
 
-exports.sampleRequest = function(req, res) {
-  const reqUrl = url.parse(req.url, true);
-  var name = 'World';
-  if (reqUrl.query.name) {
-    name = reqUrl.query.name;
-  }
-
-  var response = {
-    text: 'Hello ' + name,
-  };
-
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(response));
+exports.imageRequest = function(req, res) {
+  const fs = require('fs');
+  const homePage = fs.readFileSync('../../public/index.html');
+  res.end(homePage);
 };

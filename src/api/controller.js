@@ -23,10 +23,10 @@ module.exports = http.createServer((req, res) => {
   }
 
   // GET Endpoint
-  else if (reqUrl.pathname == '/sample' && req.method === 'GET') {
+  else if (reqUrl.pathname == '/image' && req.method === 'GET') {
     console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
 
-    service.sampleRequest(req, res);
+    service.imageRequest(req, res);
   }
 
   // Invalid Endpoint
