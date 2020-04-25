@@ -88,54 +88,54 @@ export function initTiff(file) {
 }
 
 export function addTiff(file) {
-  fileApi.setState( prevState => ({
+  fileApi.setState(prevState => ({
     ...prevState,
-    file: [...prevState.file, {
-      name: file.name,
-      image: file.preview,
-      style: img,
-      type: file.type
-    }],
-    size: prevState.size + 1
-  }))
+    file: [
+      ...prevState.file,
+      {
+        name: file.name,
+        image: file.preview,
+        style: img,
+        type: file.type,
+      },
+    ],
+    size: prevState.size + 1,
+  }));
   importTiff(file);
   idx = fileApi.getState().size - 1;
 }
 
 export function updateTiff(image, rgba) {
-  fileApi.setState( prevState => {
+  fileApi.setState(prevState => {
     const file = prevState.file.map((file, j) => {
       var newFile = file;
-      newFile.texture = createTextureFromTiff(image.src)
-      newFile.image = image
-      newFile.rgba = rgba
+      newFile.texture = createTextureFromTiff(image.src);
+      newFile.image = image;
+      newFile.rgba = rgba;
       return newFile;
-    })
+    });
     return {
-      file
-    }
-  })
-
+      file,
+    };
+  });
 }
 
 export function updateTiffPages(name, pages, image) {
-  fileApi.setState( prevState => {
+  fileApi.setState(prevState => {
     const file = prevState.file.map((file, j) => {
       if (file.name === name) {
         var newFile = file;
-        newFile.pages = pages
-        newFile.image = image
+        newFile.pages = pages;
+        newFile.image = image;
         return newFile;
+      } else {
+        return file;
       }
-      else {
-        return file
-      }
-    })
+    });
     return {
-      file
-    }
-  })
-
+      file,
+    };
+  });
 }
 
 export function initCsv(file) {
@@ -200,33 +200,6 @@ export function addJson(file) {
   idx = fileApi.getState().size - 1;
 }
 
-function isAnnotValid(annotation) {
-  return (
-    annotation &&
-    annotation.rect.left > 0 &&
-    annotation.rect.left < 1000 &&
-    annotation.rect.top > 0 &&
-    annotation.rect.top < 1000 &&
-    annotation.rect.width > 0 &&
-    annotation.rect.width < 1000 &&
-    annotation.rect.height > 0 &&
-    annotation.rect.height < 1000 &&
-    annotation.label.length > 0
-  );
-}
-
-function addJsonAnnot(annotation) {
-  annotApi.setState(prevState => ({
-    img_name: fileApi.getState().file[idx].name,
-    annotations: prevState.annotations.concat(annotation),
-  }));
-  for (var i = 0; i < annotation.length; i++) {
-    if (isAnnotValid(annotation[i])) {
-      addAnnotation(annotation[i].rect, annotation[i].label);
-    }
-  }
-}
-
 export function saveJson(result) {
   fileApi.setState(prevState => {
     const file = prevState.file.map((f, i) => {
@@ -240,6 +213,4 @@ export function saveJson(result) {
     });
     return file;
   });
-
-  addJsonAnnot(result);
 }

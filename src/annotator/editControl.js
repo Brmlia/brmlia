@@ -31,6 +31,9 @@ export function drawFreeStyle(canvas, color) {
 }
 
 export function drawRect(canvas, rect, label, classLabel) {
+  if (rect.top <= 0 || rect.left <= 0 || rect.width <= 0 || rect.height <= 0) {
+    return;
+  }
   var color = rect.color ? rect.color : rect._objects[0].stroke;
 
   var fRect = new fabric.Rect({
@@ -39,7 +42,7 @@ export function drawRect(canvas, rect, label, classLabel) {
     width: rect.width,
     height: rect.height,
     fill: colors[4],
-    stroke: color,
+    stroke: colors[0],
     strokeLineJoin: 'round',
     strokeWidth: 2,
     objectCaching: false,
@@ -68,19 +71,20 @@ export function drawRect(canvas, rect, label, classLabel) {
     fontFamily: 'Arial',
     fontWeight: 'bold',
     fill: 'white',
-    textBackgroundColor: color,
+    textBackgroundColor: colors[0],
     top: group.top + fRect.strokeWidth,
     left: group.left + fRect.strokeWidth,
   });
 
-  var classText = new fabric.IText(classLabel, {
-    fontSize: 14,
+  const default_class = 'class1';
+  var classText = new fabric.IText(classLabel || default_class, {
+    fontSize: 16,
     originX: 'left',
     originY: 'bottom',
     fontFamily: 'Arial',
     fontWeight: 'bold',
     fill: 'white',
-    textBackgroundColor: color,
+    textBackgroundColor: colors[0],
     top: group.top + group.height - outerRect.strokeWidth,
     left: group.left + fRect.strokeWidth,
   });

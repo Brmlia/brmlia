@@ -9,6 +9,7 @@ import {
   setMenuCoords,
   setSelectedObjects,
 } from '../annotator/annotationSettings.js';
+import { addAnnotation } from '../annotator/annotationControl.js';
 
 export const modes = {
   RECT: 'rectangle',
@@ -18,7 +19,6 @@ export const modes = {
 };
 
 const initState = {
-
   layers: [
     // <FabricLayer zIndex={8} channel={0} />,
     // <FabricLayer zIndex={9} channel={1} />,
@@ -43,14 +43,11 @@ export const [useFabric, fabricApi] = create(set => ({
 }));
 
 export function initFabricLayers(zIndex, channel) {
-  const newFabricLayer = <FabricLayer zIndex={zIndex} channel={channel} />
+  const newFabricLayer = <FabricLayer zIndex={zIndex} channel={channel} />;
   fabricApi.setState(prevState => ({
     ...prevState,
-    layers: [
-      ...prevState.layers,
-      newFabricLayer
-    ]
-  }))
+    layers: [...prevState.layers, newFabricLayer],
+  }));
 }
 
 export function setFabricCanvas(canvas) {
@@ -124,7 +121,15 @@ export function finishDrawingRect(x, y, color) {
         left: state.origin.x,
         color: color,
       };
-      drawRect(fabricApi.getState().canvas, rect, 'label', 'class1');
+      const label = 'label';
+      const classLabel = 'class1';
+      const fRect = drawRect(
+        fabricApi.getState().canvas,
+        rect,
+        label,
+        classLabel
+      );
+      addAnnotation(fRect, label, classLabel);
     }
 
     setSelectedObjects(fabricApi.getState().canvas.getActiveObjects()[0]);
