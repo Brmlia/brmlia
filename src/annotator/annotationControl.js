@@ -2,14 +2,14 @@ import { annotApi, cachedAnnotApi } from './annotationStore.js';
 import { getCanvas } from './annotationSettings.js'
 import { drawRect } from './editControl.js'
 
-export function addAnnotation(rect, label, classLabel) {
+export function addAnnotation(group, label, classLabel) {
   const default_class = 'class1'
   annotApi.setState(prevState => ({
     ...prevState,
     annotations: [
       ...prevState.annotations,
       {
-        rect: rect,
+        group: group,
         label: label,
         class: classLabel || default_class
       },
@@ -42,13 +42,13 @@ export function addAnnotationFromJson(json) {
   }
 }
 
-export function addCachedAnnotation(rect, label, classLabel) {
+export function addCachedAnnotation(group, label, classLabel) {
   cachedAnnotApi.setState(prevState => ({
     ...prevState,
     cachedAnnots: [
       ...prevState.cachedAnnots,
       {
-        rect: rect,
+        group: group,
         label: label,
         class: classLabel
       },
