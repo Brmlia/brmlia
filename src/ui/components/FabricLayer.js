@@ -146,15 +146,12 @@ class FabricLayer extends React.Component {
     let height = window.innerHeight * 0.6;
 
     return (
-      <div
-        className="annotationLayer"
-        onContextMenu={e => e.preventDefault()}
-        style={{
-          borderColor: colors[this.props.channel],
-          zIndex: this.props.zIndex,
-        }}
-      >
-        <canvas ref={this.canvasRef} width={width} height={height} />
+      <div className="annotationLayer" onContextMenu={e => e.preventDefault()}>
+        <canvas
+          ref={this.canvasRef}
+          width={window.innerWidth * 0.6}
+          height={window.innerHeight * 0.6}
+        />
         {this.displayMenu()}
       </div>
     );

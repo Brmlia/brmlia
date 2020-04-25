@@ -34,7 +34,6 @@ export function drawRect(canvas, rect, label, classLabel) {
   if (rect.top <= 0 || rect.left <= 0 || rect.width <= 0 || rect.height <= 0) {
     return;
   }
-  var color = rect.color ? rect.color : rect._objects[0].stroke;
 
   var fRect = new fabric.Rect({
     left: rect.left,

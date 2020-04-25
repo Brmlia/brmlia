@@ -15,24 +15,8 @@ import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 import FabricLayer from './FabricLayer.js';
 import MainTiffViewer from './mainTiffViewer.js';
-import { fabricApi, initFabricLayers } from '../../fabric/fabricControl.js';
-
-var fabricLayers = [
-  <FabricLayer zIndex={8} channel={0} />,
-  <FabricLayer zIndex={9} channel={1} />,
-  <FabricLayer zIndex={10} channel={2} />,
-  <FabricLayer zIndex={11} channel={3} />,
-];
 
 class mainViewer extends React.Component {
-
-  componentDidMount() {
-    initFabricLayers(8, 0)
-    initFabricLayers(9, 1)
-    initFabricLayers(10, 2)
-    initFabricLayers(11, 3)
-  }
-
   altView() {
     return (
       <Card style={card}>
@@ -50,28 +34,16 @@ class mainViewer extends React.Component {
         axis="2"
         className="annot-view"
         alt="main-canvas"
-        width="500px"
-        height="500px"
+        width={window.innerWidth * 0.6}
+        height={window.innerHeight * 0.6}
         channel="4"
       />
     );
 
-    let width = window.innerWidth * 0.6;
-    let height = window.innerHeight * 0.6;
-
     return (
-      <Card style={card}>
-        <CardBody>
-          <CardTitle> Image View </CardTitle>
-          <div id="canvasContainer" style={{ width: width, height: height }}>
-            <div id="main-canvas-view" style={mainCanvasStyle}>
-              {canvas}
-            </div>
-            {fabricLayers[3]}
-          </div>
-        </CardBody>
-        <br></br>
-      </Card>
+      <div id="main-canvas-view" style={mainCanvasStyle}>
+        {canvas}
+      </div>
     );
   }
 
@@ -80,45 +52,24 @@ class mainViewer extends React.Component {
     var view2;
     var view3;
 
-    var fabricCanvas1;
-    var fabricCanvas2;
-    var fabricCanvas3;
-
-    let width = window.innerWidth * 0.6;
-    let height = window.innerHeight * 0.6;
-
-    var lastSelected = settingsApi.getState().lastSelected;
     if (settingsApi.getState().channels[0].selected) {
       console.log('displaying 1');
       view1 = canvasApi.getState().canvas[0];
-      fabricCanvas1 = fabricApi.getState().layers[0];
-      // fabricCanvas1 = fabricLayers[0];
     }
     if (settingsApi.getState().channels[1].selected) {
       console.log('displaying 2');
       view2 = canvasApi.getState().canvas[1];
-      fabricCanvas2 = fabricLayers[1];
     }
     if (settingsApi.getState().channels[2].selected) {
       console.log('displaying 3');
       view3 = canvasApi.getState().canvas[2];
-      fabricCanvas3 = fabricLayers[2];
     }
     return (
-      <Card style={card}>
-        <CardBody>
-          <CardTitle> Image View </CardTitle>
-          <div id="canvasContainer" style={{ width: width, height: height }}>
-            <div style={canvasStyle1}>{view1}</div>
-            {fabricCanvas1}
-            <div style={canvasStyle2}>{view2}</div>
-            {fabricCanvas2}
-            <div style={canvasStyle3}>{view3} </div>
-            {fabricCanvas3}
-          </div>
-        </CardBody>
-        <br></br>
-      </Card>
+      <div>
+        <div style={canvasStyle1}>{view1}</div>
+        <div style={canvasStyle2}>{view2}</div>
+        <div style={canvasStyle3}>{view3} </div>
+      </div>
     );
   }
 
@@ -138,9 +89,22 @@ class mainViewer extends React.Component {
     settingsApi.subscribe(state => {
       this.forceUpdate();
     });
+
+    let width = window.innerWidth * 0.6;
+    let height = window.innerHeight * 0.6;
+
     return (
       <div className="main-view" style={cardStyle}>
-        {this.display()}
+        <Card style={card}>
+          <CardBody>
+            <CardTitle> Image View </CardTitle>
+            <div id="canvasContainer" style={{ width: width, height: height }}>
+              {this.display()}
+              <FabricLayer />
+            </div>
+          </CardBody>
+          <br></br>
+        </Card>
       </div>
     );
   }
