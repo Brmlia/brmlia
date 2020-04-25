@@ -30,6 +30,10 @@ export function drawFreeStyle(canvas) {
 }
 
 export function drawRect(canvas, rect, label, classLabel) {
+  if (rect.top <= 0 || rect.left <= 0 || rect.width <= 0 || rect.height <= 0) {
+    return;
+  }
+
   var fRect = new fabric.Rect({
     left: parseInt(rect.left),
     top: parseInt(rect.top),
@@ -37,7 +41,7 @@ export function drawRect(canvas, rect, label, classLabel) {
     height: parseInt(rect.height),
     // if fully transparent, only stroke is selectable, hence this hack:
     fill: 'rgb(255,255,255,.01)',
-    stroke: rect.color,
+    stroke: colors[0],
     strokeLineJoin: 'round',
     strokeWidth: 2,
     objectCaching: false,
@@ -77,12 +81,12 @@ export function drawRect(canvas, rect, label, classLabel) {
     fontFamily: 'Arial',
     fontWeight: 'bold',
     fill: 'white',
-    textBackgroundColor: rect.color,
+    textBackgroundColor: colors[0],
     top: group.top,
     left: group.left,
   });
 
-  const default_class = "class1"
+  const default_class = 'class1';
   var classText = new fabric.IText(classLabel || default_class, {
     fontSize: 16,
     originX: 'left',
@@ -90,7 +94,7 @@ export function drawRect(canvas, rect, label, classLabel) {
     fontFamily: 'Arial',
     fontWeight: 'bold',
     fill: 'white',
-    textBackgroundColor: rect.color,
+    textBackgroundColor: colors[0],
     top: group.top + group.height,
     left: group.left,
   });
@@ -101,7 +105,7 @@ export function drawRect(canvas, rect, label, classLabel) {
     canvas.setActiveObject(group);
     group.addWithUpdate(text);
     group.addWithUpdate(classText);
-    return fRect
+    return fRect;
   }
 }
 
