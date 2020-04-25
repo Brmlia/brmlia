@@ -12,16 +12,21 @@ import {
 import { getCanvas } from './annotationSettings.js';
 import { getDisabledClasses } from './annotationClass.js';
 
-const colors = { red: '#dd9999', green: '#99dd99', purple: '#9999dd' };
+// const colors = { red: '#dd9999', green: '#99dd99', purple: '#9999dd' };
+const colors = {
+  red: 'rgb(221, 153, 153, 0.7)',
+  green: 'rgb(153, 221, 153, 0.7)',
+  purple: 'rgb(153, 153, 221, 0.7)',
+};
 
 export function drawFreeStyle(canvas) {
   window.canvas = canvas;
   canvas.isMouseDown = false;
 
   canvas.isDrawingMode = true;
-  canvas.freeDrawingBrush.color = colors.green;
-  canvas.freeDrawingBrush.width = 4;
-  console.log('freestyle: ', canvas.freeDrawingBrush.color);
+  canvas.freeDrawingBrush.color = colors.purple;
+  canvas.freeDrawingBrush.opacity = 0.1;
+  canvas.freeDrawingBrush.width = 10;
 }
 
 export function drawRect(canvas, rect, label, classLabel) {
@@ -39,6 +44,29 @@ export function drawRect(canvas, rect, label, classLabel) {
   });
 
   var group = new fabric.Group([fRect]);
+
+  group.on({
+    moving: function(o) {
+      const group = o.target;
+      const rect = group._objects[0];
+
+      if (group.left < 0) {
+        group.set('left', rect.strokeWidth / 2);
+        group.setCoords();
+      } else if (group.left + group.width > canvas.width) {
+        group.set('left', canvas.width - group.width - rect.strokeWidth / 2);
+        group.setCoords();
+      }
+
+      if (group.top < 0) {
+        group.set('top', rect.strokeWidth / 2);
+        group.setCoords();
+      } else if (group.top + group.height > canvas.height) {
+        group.set('top', canvas.height - group.height - rect.strokeWidth / 2);
+        group.setCoords();
+      }
+    },
+  });
 
   var newLabel = label === 'label' ? (label += getLastAnnotIdx() + 1) : label;
 

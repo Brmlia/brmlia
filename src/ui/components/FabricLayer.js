@@ -1,6 +1,10 @@
 import React from 'react';
 import { fabric } from 'fabric';
-import { filterAnnotations, showAll } from '../../annotator/editControl.js';
+import {
+  filterAnnotations,
+  showAll,
+  drawFreeStyle,
+} from '../../annotator/editControl.js';
 import { annotApi } from '../../annotator/annotationStore.js';
 import AnnotationMenu from '../../annotator/annotationMenu.js';
 import {
@@ -33,11 +37,13 @@ class FabricLayer extends React.Component {
     this.selectClass1 = this.selectClass1.bind(this);
     this.showAll = this.showAllClasses.bind(this);
     this.handleMoveAnnotation = this.handleMoveAnnotation.bind(this);
+    // this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount() {
     canvas = new fabric.Canvas(this.canvasRef.current, {
       fireRightClick: true,
+      backgroundColor: 'rgb(250,250,250,1)',
     });
     canvas.on({
       'mouse:down': this.handleMouseDown,
@@ -60,8 +66,11 @@ class FabricLayer extends React.Component {
   }
 
   handleLeftMouseDown(options) {
-    if (fabricApi.getState().drawMode === modes.RECT) {
+    const mode = fabricApi.getState().drawMode;
+    if (mode === modes.RECT) {
       startDrawing(options.e.clientX, options.e.clientY);
+    } else if (mode === modes.FREE) {
+      drawFreeStyle(canvas);
     }
   }
 
