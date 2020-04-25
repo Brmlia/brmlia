@@ -4,6 +4,7 @@ import {
   filterAnnotations,
   showAll,
   drawFreeStyle,
+  colors,
 } from '../../annotator/editControl.js';
 import { annotApi } from '../../annotator/annotationStore.js';
 import AnnotationMenu from '../../annotator/annotationMenu.js';
@@ -43,7 +44,6 @@ class FabricLayer extends React.Component {
   componentDidMount() {
     canvas = new fabric.Canvas(this.canvasRef.current, {
       fireRightClick: true,
-      backgroundColor: 'rgb(250,250,250,1)',
     });
     canvas.on({
       'mouse:down': this.handleMouseDown,
@@ -79,7 +79,7 @@ class FabricLayer extends React.Component {
   }
 
   handleLeftMouseUp(options) {
-    finish(options.e.clientX, options.e.clientY);
+    finish(options.e.clientX, options.e.clientY, colors[this.props.channel]);
   }
 
   handleRightMouseUp(options) {}
@@ -143,7 +143,17 @@ class FabricLayer extends React.Component {
     });
 
     return (
-      <div id="annotationLayer" onContextMenu={e => e.preventDefault()}>
+      <div
+        className="annotationLayer"
+        onContextMenu={e => e.preventDefault()}
+        style={{
+          borderColor: colors[this.props.channel],
+          borderWidth: 2,
+          borderStyle: 'solid',
+          opacity: this.props.opacity,
+          zIndex: this.props.zIndex,
+        }}
+      >
         <canvas ref={this.canvasRef} width={500} height={500} />
         {this.displayMenu()}
       </div>

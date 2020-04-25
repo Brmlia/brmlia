@@ -72,14 +72,14 @@ export function startDrawing(x, y) {
 }
 
 export function startDrawingFree(x, y) {
-  drawFreeStyle(fabricApi.getState().canvas)
+  drawFreeStyle(fabricApi.getState().canvas);
 }
 
-export function finish(x, y) {
+export function finish(x, y, color) {
   if (fabricApi.getState().drawMode === modes.SELECT) {
     finishSelecting();
   } else if (fabricApi.getState().drawMode === modes.RECT) {
-    finishDrawingRect(x, y);
+    finishDrawingRect(x, y, color);
   }
 }
 
@@ -94,17 +94,18 @@ export function finishDrawing(x, y) {
   setFabricCoords(x, y);
 }
 
-export function finishDrawingRect(x, y) {
+export function finishDrawingRect(x, y, color) {
   setFabricCoords(x, y);
   const state = fabricApi.getState();
   if (state.origin.x && state.origin.y && x && y) {
     const width = state.mouse.x - state.origin.x;
-    if (width >= 10) {
+    if (Math.abs(width) >= 10) {
       const rect = {
         width: width,
         height: state.mouse.y - state.origin.y,
         top: state.origin.y,
         left: state.origin.x,
+        color: color,
       };
       const label = 'label'
       const classLabel = 'class1'

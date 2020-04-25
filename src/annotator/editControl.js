@@ -12,12 +12,12 @@ import {
 import { getCanvas } from './annotationSettings.js';
 import { getDisabledClasses } from './annotationClass.js';
 
-// const colors = { red: '#dd9999', green: '#99dd99', purple: '#9999dd' };
-const colors = {
-  red: 'rgb(221, 153, 153, 0.7)',
-  green: 'rgb(153, 221, 153, 0.7)',
-  purple: 'rgb(153, 153, 221, 0.7)',
-};
+export const colors = [
+  'rgb(221, 153, 153, 0.7)',
+  'rgb(153, 221, 153, 0.7)',
+  'rgb(153, 153, 221, 0.7)',
+  'rgb(215, 215, 215, 0.7)',
+];
 
 export function drawFreeStyle(canvas) {
   window.canvas = canvas;
@@ -37,7 +37,7 @@ export function drawRect(canvas, rect, label, classLabel) {
     height: parseInt(rect.height),
     // if fully transparent, only stroke is selectable, hence this hack:
     fill: 'rgb(255,255,255,.01)',
-    stroke: colors.purple,
+    stroke: rect.color,
     strokeLineJoin: 'round',
     strokeWidth: 2,
     objectCaching: false,
@@ -77,7 +77,7 @@ export function drawRect(canvas, rect, label, classLabel) {
     fontFamily: 'Arial',
     fontWeight: 'bold',
     fill: 'white',
-    textBackgroundColor: colors.purple,
+    textBackgroundColor: rect.color,
     top: group.top,
     left: group.left,
   });
@@ -90,7 +90,7 @@ export function drawRect(canvas, rect, label, classLabel) {
     fontFamily: 'Arial',
     fontWeight: 'bold',
     fill: 'white',
-    textBackgroundColor: colors.purple,
+    textBackgroundColor: rect.color,
     top: group.top + group.height,
     left: group.left,
   });

@@ -45,7 +45,7 @@ class mainViewer extends React.Component {
             <div id="main-canvas-view" style={mainCanvasStyle}>
               {canvas}
             </div>
-            <FabricLayer />
+            <FabricLayer zIndex={5} channel={3} />
           </div>
         </CardBody>
         <br></br>
@@ -58,24 +58,54 @@ class mainViewer extends React.Component {
     var view2;
     var view3;
 
+    var fabricCanvas1;
+    var fabricCanvas2;
+    var fabricCanvas3;
+
+    var lastSelected = settingsApi.getState().lastSelected;
     if (settingsApi.getState().channels[0].selected) {
       console.log('displaying 1');
       view1 = canvasApi.getState().canvas[0];
+      var canvasZIndex = lastSelected === '1' ? 10 : 4;
+      var opacity = lastSelected === '1' ? 1 : 0.5;
+      fabricCanvas1 = (
+        <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={0} />
+      );
     }
     if (settingsApi.getState().channels[1].selected) {
       console.log('displaying 2');
       view2 = canvasApi.getState().canvas[1];
+      var canvasZIndex = lastSelected === '2' ? 10 : 6;
+      var opacity = lastSelected === '2' ? 1 : 0.5;
+      fabricCanvas2 = (
+        <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={1} />
+      );
     }
     if (settingsApi.getState().channels[2].selected) {
       console.log('displaying 3');
       view3 = canvasApi.getState().canvas[2];
+      var canvasZIndex = lastSelected === '3' ? 10 : 8;
+      var opacity = lastSelected === '3' ? 1 : 0.5;
+
+      fabricCanvas3 = (
+        <FabricLayer zIndex={canvasZIndex} opacity={opacity} channel={2} />
+      );
     }
     return (
-      <div id="canvasContainer">
-        <div style={canvasStyle1}>{view1}</div>
-        <div style={canvasStyle2}>{view2}</div>
-        <div style={canvasStyle3}>{view3}</div>
-      </div>
+      <Card style={card}>
+        <CardBody>
+          <CardTitle> Image View </CardTitle>
+          <div id="canvasContainer">
+            <div style={canvasStyle1}>{view1}</div>
+            {fabricCanvas1}
+            <div style={canvasStyle2}>{view2}</div>
+            {fabricCanvas2}
+            <div style={canvasStyle3}>{view3} </div>
+            {fabricCanvas3}
+          </div>
+        </CardBody>
+        <br></br>
+      </Card>
     );
   }
 
