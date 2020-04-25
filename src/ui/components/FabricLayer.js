@@ -126,7 +126,7 @@ class FabricLayer extends React.Component {
   render() {
     annotApi.subscribe(state => {
       if (state) {
-        addToFabric();
+        addToFabric(state.annotations, canvas)
       }
     });
     AnnotationMenuApi.subscribe(state => {

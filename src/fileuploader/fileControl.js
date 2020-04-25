@@ -167,33 +167,6 @@ export function addJson(file) {
   idx = fileApi.getState().size - 1;
 }
 
-function isAnnotValid(annotation) {
-  return (
-    annotation &&
-    annotation.rect.left > 0 &&
-    annotation.rect.left < 1000 &&
-    annotation.rect.top > 0 &&
-    annotation.rect.top < 1000 &&
-    annotation.rect.width > 0 &&
-    annotation.rect.width < 1000 &&
-    annotation.rect.height > 0 &&
-    annotation.rect.height < 1000 &&
-    annotation.label.length > 0
-  );
-}
-
-function addJsonAnnot(annotation) {
-  annotApi.setState(prevState => ({
-    img_name: fileApi.getState().file[idx].name,
-    annotations: prevState.annotations.concat(annotation),
-  }));
-  for (var i = 0; i < annotation.length; i++) {
-    if (isAnnotValid(annotation[i])) {
-      addAnnotation(annotation[i].rect, annotation[i].label);
-    }
-  }
-}
-
 export function saveJson(result) {
   fileApi.setState(prevState => {
     const file = prevState.file.map((f, i) => {
@@ -207,6 +180,4 @@ export function saveJson(result) {
     });
     return file;
   });
-
-  addJsonAnnot(result);
 }

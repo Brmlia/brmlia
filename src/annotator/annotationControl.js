@@ -1,29 +1,56 @@
 import { annotApi, cachedAnnotApi } from './annotationStore.js';
+import { getCanvas } from './annotationSettings.js'
+import { drawRect } from './editControl.js'
 
-export function addAnnotation(group, label, classLabel) {
-  const default_class = 'class1';
+export function addAnnotation(rect, label, classLabel) {
+  const default_class = 'class1'
   annotApi.setState(prevState => ({
     ...prevState,
     annotations: [
       ...prevState.annotations,
       {
-        group: group,
+        rect: rect,
         label: label,
-        class: classLabel || default_class,
+        class: classLabel || default_class
       },
     ],
   }));
+  console.log("annotApi: ", annotApi.getState())
 }
 
-export function addCachedAnnotation(group, label, classLabel) {
+function _isAnnotValid(annotation) {
+  return (
+    annotation &&
+    annotation.rect.left > 0 &&
+    annotation.rect.left < 1000 &&
+    annotation.rect.top > 0 &&
+    annotation.rect.top < 1000 &&
+    annotation.rect.width > 0 &&
+    annotation.rect.width < 1000 &&
+    annotation.rect.height > 0 &&
+    annotation.rect.height < 1000 &&
+    annotation.label.length > 0
+  );
+}
+
+export function addAnnotationFromJson(json) {
+  for (var i = 0; i < json.length; i++) {
+    if (_isAnnotValid(json[i])) {
+      const rect = drawRect(getCanvas(), json[i].rect, json[i].label)
+      addAnnotation(rect, json[i].label);
+    }
+  }
+}
+
+export function addCachedAnnotation(rect, label, classLabel) {
   cachedAnnotApi.setState(prevState => ({
     ...prevState,
     cachedAnnots: [
       ...prevState.cachedAnnots,
       {
-        group: group,
+        rect: rect,
         label: label,
-        class: classLabel,
+        class: classLabel
       },
     ],
   }));

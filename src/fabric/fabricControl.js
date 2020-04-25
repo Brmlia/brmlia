@@ -7,6 +7,9 @@ import {
   setMenuCoords,
   setSelectedObjects,
 } from '../annotator/annotationSettings.js';
+import {
+  addAnnotation,
+} from '../annotator/annotationControl.js';
 
 export const modes = {
   RECT: 'rectangle',
@@ -103,7 +106,10 @@ export function finishDrawingRect(x, y) {
         top: state.origin.y,
         left: state.origin.x,
       };
-      drawRect(fabricApi.getState().canvas, rect, 'label', 'class1');
+      const label = 'label'
+      const classLabel = 'class1'
+      const fRect = drawRect(fabricApi.getState().canvas, rect, label, classLabel);
+      addAnnotation(fRect, label, classLabel)
     }
 
     setSelectedObjects(fabricApi.getState().canvas.getActiveObjects()[0]);
