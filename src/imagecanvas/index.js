@@ -1,6 +1,11 @@
-import { uApi as uniApi, fApi as fileApi } from '../utils/index.js';
+import {
+  uApi as uniApi,
+  fApi as fileApi,
+} from '../utils/index.js';
 
-import { updateImage as updIm } from './CanvasControl.js';
+import {
+  updateImage as updIm,
+} from './CanvasControl.js';
 
 import {
   createTexture as createT,

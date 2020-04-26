@@ -1,6 +1,10 @@
-import { fileApi as fApi } from './fileStore.js';
+import {
+  fileApi as fApi,
+} from './fileStore.js';
 
-import { settingsApi as sApi } from '../mainSettings.js';
+import {
+  settingsApi as sApi,
+} from '../mainSettings.js';
 
 import {
   initPng as iPng,
@@ -21,35 +25,39 @@ import {
   importCsv as impCsv,
   importJson as impJson,
   importTiff as impTiff,
-} from './importer.js';
+} from './fileImporter.js';
 
-import { annotApi as aApi } from '../annotator/annotationStore.js';
+import {
+  annotApi as aApi,
+} from '../annotator/annotationStore.js';
 
-import { addAnnotation as addAnnot } from '../annotator/annotationControl.js';
+import {
+  addAnnotation as addAnnot,
+} from '../annotator/annotationControl.js';
 
 import {
   createTexture as createT,
   createTextureFromTiff as createTFrTiff,
 } from '../imagecanvas/ImageStore.js';
 
-export const fileApi = fApi;
-export const initPng = iPng;
-export const addPng = aPng;
-export const initTiff = iTiff;
-export const addTiff = aTiff;
-export const initCsv = iCsv;
-export const addCsv = aCsv;
-export const initJson = iJson;
-export const addJson = aJson;
-export const isFirstFile = isFstFl;
-export const isValidFile = isValFl;
-export const saveJson = svJson;
-export const updateTiffPages = updTP;
-export const importCsv = impCsv;
-export const importJson = impJson;
-export const importTiff = impTiff;
-export const settingsApi = sApi;
-export const annotApi = aApi;
-export const addAnnotation = addAnnot;
-export const createTexture = createT;
-export const createTextureFromTiff = createTFrTiff;
+export const fileApi               = fApi
+export const initPng               = iPng
+export const addPng                = aPng
+export const initTiff              = iTiff
+export const addTiff               = aTiff
+export const initCsv               = iCsv
+export const addCsv                = aCsv
+export const initJson              = iJson
+export const addJson               = aJson
+export const isFirstFile           = isFstFl
+export const isValidFile           = isValFl
+export const saveJson              = svJson
+export const updateTiffPages       = updTP
+export const importCsv             = impCsv
+export const importJson            = impJson
+export const importTiff            = impTiff
+export const settingsApi           = sApi
+export const annotApi              = aApi
+export const addAnnotation         = addAnnot
+export const createTexture         = createT
+export const createTextureFromTiff = createTFrTiff

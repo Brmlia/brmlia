@@ -1,7 +1,10 @@
 import React from 'react';
 import AnnotationSubMenu from './annotationSubMenu.js';
 
-import { getItems, AnnotationMenuApi } from './index.js';
+import {
+  getItems,
+  AnnotationMenuApi
+} from './index.js'
 
 class AnnotationMenu extends React.Component {
   constructor(props) {

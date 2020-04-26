@@ -1,7 +1,11 @@
 import React from 'react';
 import { fabric } from 'fabric';
 
-import { fApi, thumb, thumbInner } from './index.js';
+import {
+  fApi,
+  thumb,
+  thumbInner
+} from './index.js';
 
 class Thumbnails extends React.Component {
   constructor(props) {

@@ -6,7 +6,9 @@ import ImageCanvas from '../../imagecanvas/ImageCanvas.js';
 import Slider from './slider.js';
 import ColorPicker from './colorPicker.js';
 
-import { settingsApi } from '../../mainSettings.js';
+import {
+  settingsApi,
+} from '../../mainSettings.js';
 
 import {
   card,

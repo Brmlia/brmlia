@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { fApi, uApi, updateImage } from './index.js';
+import {
+  fApi,
+  uApi,
+  updateImage,
+} from './index.js'
 
 import { canvasApi } from './canvasStore.js';
 

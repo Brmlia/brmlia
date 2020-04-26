@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { editAnnotationLabel, editAnnotationClass } from './index.js';
+import {
+  editAnnotationLabel,
+  editAnnotationClass,
+} from './index.js'
 
 class AnnotationSubMenu extends React.Component {
   constructor(props) {

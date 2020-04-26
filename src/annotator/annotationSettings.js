@@ -1,6 +1,9 @@
 import create from 'zustand';
 
-import { editAnnotationOption, editClassOption } from './index.js';
+import {
+  editAnnotationOption,
+  editClassOption,
+} from './index.js'
 
 export const initState = {
   menu: {

@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 
-import { uApi, createTexture, createTextureFromTiff } from './index.js';
+import {
+  uApi,
+  createTexture,
+  createTextureFromTiff
+} from './index.js'
 
 function isValidChannel(channel) {
   return (

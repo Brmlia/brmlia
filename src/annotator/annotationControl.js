@@ -1,4 +1,9 @@
-import { annotApi, cachedAnnotApi, drawRect, getCanvas } from './index.js';
+import {
+  annotApi,
+  cachedAnnotApi,
+  drawRect,
+  getCanvas,
+} from './index.js';
 
 export function addAnnotation(group, label, classLabel) {
   const default_class = 'class1';

@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { fileApi, annotApi } from './index.js';
+import {
+  fileApi,
+  annotApi,
+} from './index.js'
 
 class Annotator extends React.Component {
   file_size = 0;

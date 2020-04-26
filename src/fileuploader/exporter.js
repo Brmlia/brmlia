@@ -1,4 +1,6 @@
-import { annotApi } from './index.js';
+import {
+  annotApi,
+} from './index.js';
 
 export function exportJson() {
   const element = document.createElement('a');

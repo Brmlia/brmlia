@@ -1,6 +1,9 @@
 import csv from 'csvtojson';
 import UTIF from 'utif';
-import { saveJson, updateTiffPages } from './index.js';
+import {
+  saveJson,
+  updateTiffPages,
+} from './index.js';
 
 export function importCsv(file) {
   const reader = new FileReader();

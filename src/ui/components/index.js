@@ -1,6 +1,10 @@
-import { fileApi } from '../../fileuploader/fileStore.js';
+import {
+  fileApi,
+} from '../../fileuploader/fileStore.js';
 
-import { annotApi as aApi } from '../../annotator/annotationStore.js';
+import {
+  annotApi as aApi,
+} from '../../annotator/annotationStore.js';
 
 import {
   buttonGroup as btnGrp,
@@ -39,7 +43,9 @@ import {
   AnnotationMenuApi as aMenuApi,
 } from '../../annotator/annotationSettings.js';
 
-import { Volume as Vol } from '../../datacube/volume.js';
+import {
+  Volume as Vol,
+} from '../../datacube/volume.js';
 
 import {
   loadSlices as ldSlices,
@@ -73,54 +79,56 @@ import {
   updateLastSel as updLastSel,
 } from '../../mainSettings.js';
 
-import { exportJson as expJson } from '../../fileuploader/exporter.js';
+import {
+  exportJson as expJson,
+} from '../../fileuploader/exporter.js';
 
-export const fApi = fileApi;
-export const annotApi = aApi;
-export const buttonGroup = btnGrp;
-export const cardStyle = cdStyle;
-export const card = cd;
-export const cardBody = cdBody;
-export const canvasThumbnail = cvsThb;
-export const thumb = thbStyle;
-export const thumbInner = thbInStyle;
-export const mainImg = mImg;
-export const mainCanvasStyle = mCvsStyle;
-export const canvasStyle1 = cvsStyle1;
-export const canvasStyle2 = cvsStyle2;
-export const canvasStyle3 = cvsStyle3;
-export const updateClasses = updCls;
-export const getClasses = getCls;
-export const toggleClassEnable = toggleClsEn;
-export const annotClassApi = annotClsApi;
-export const filterClasses = filterCls;
-export const filterAnnotations = filtAnnot;
-export const showAll = shAll;
-export const drawFreeStyle = drawFr;
-export const colors = clrs;
-export const undo = undoAnnot;
-export const redo = redoAnnot;
-export const setCanvas = setCvs;
-export const AnnotationMenuApi = aMenuApi;
-export const Volume = Vol;
-export const loadSlices = ldSlices;
-export const updateChannelSlice = updSlice;
-export const updateBrightness = updBrightness;
-export const updateContrast = updContrast;
-export const updateWhitepoint = updWhitepoint;
-export const updateBlackpoint = updBlackpoint;
-export const updateColor = updColor;
-export const updateOpacity = updOpacity;
-export const openMenu = opMenu;
-export const startDrawing = strDr;
-export const startSelecting = strSel;
-export const finish = fin;
-export const addToFabric = addToFab;
-export const setFabricCanvas = setFabCvs;
-export const setMode = setMd;
-export const fabricApi = fabApi;
-export const initFabricLayers = initFabLyrs;
-export const modes = mds;
-export const updateChannelSel = updChannelSel;
-export const updateLastSel = updLastSel;
-export const exportJson = expJson;
+export const fApi               = fileApi
+export const annotApi           = aApi
+export const buttonGroup        = btnGrp
+export const cardStyle          = cdStyle
+export const card               = cd
+export const cardBody           = cdBody
+export const canvasThumbnail    = cvsThb
+export const thumb              = thbStyle
+export const thumbInner         = thbInStyle
+export const mainImg            = mImg
+export const mainCanvasStyle    = mCvsStyle
+export const canvasStyle1       = cvsStyle1
+export const canvasStyle2       = cvsStyle2
+export const canvasStyle3       = cvsStyle3
+export const updateClasses      = updCls
+export const getClasses         = getCls
+export const toggleClassEnable  = toggleClsEn
+export const annotClassApi      = annotClsApi
+export const filterClasses      = filterCls
+export const filterAnnotations  = filtAnnot
+export const showAll            = shAll
+export const drawFreeStyle      = drawFr
+export const colors             = clrs
+export const undo               = undoAnnot
+export const redo               = redoAnnot
+export const setCanvas          = setCvs
+export const AnnotationMenuApi  = aMenuApi
+export const Volume             = Vol
+export const loadSlices         = ldSlices
+export const updateChannelSlice = updSlice
+export const updateBrightness   = updBrightness
+export const updateContrast     = updContrast
+export const updateWhitepoint   = updWhitepoint
+export const updateBlackpoint   = updBlackpoint
+export const updateColor        = updColor
+export const updateOpacity      = updOpacity
+export const openMenu           = opMenu
+export const startDrawing       = strDr
+export const startSelecting     = strSel
+export const finish             = fin
+export const addToFabric        = addToFab
+export const setFabricCanvas    = setFabCvs
+export const setMode            = setMd
+export const fabricApi          = fabApi
+export const initFabricLayers   = initFabLyrs
+export const modes              = mds
+export const updateChannelSel   = updChannelSel
+export const updateLastSel      = updLastSel
+export const exportJson         = expJson
