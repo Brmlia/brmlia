@@ -142,9 +142,6 @@ class FabricLayer extends React.Component {
       this.forceUpdate();
     });
 
-    let width = window.innerWidth * 0.6;
-    let height = window.innerHeight * 0.6;
-
     return (
       <div className="annotationLayer" onContextMenu={e => e.preventDefault()}>
         <canvas

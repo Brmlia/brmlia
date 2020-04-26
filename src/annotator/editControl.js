@@ -1,11 +1,10 @@
 import { fabric } from 'fabric';
 import {
-  addAnnotation,
+  redoAnnotation,
   undoAnnotation,
   getLastAnnotIdx,
   getLastCachedAnnot,
   getLastCachedAnnotIdx,
-  deleteCachedAnnotation,
   updateAnnotationLabel,
   updateAnnotClassLabel,
 } from './annotationControl.js';
@@ -95,8 +94,9 @@ export function drawRect(canvas, rect, label, classLabel) {
     group.addWithUpdate(text);
     group.addWithUpdate(classText);
     group.addWithUpdate(fRect);
-    addAnnotation(group, newLabel, classLabel);
   }
+
+  return group;
 }
 
 function constrain(o, canvas) {
@@ -319,6 +319,8 @@ export function redo() {
     // redraw on canvas
     drawRect(canvas, cachedAnnot.group, cachedAnnot.label, cachedAnnot.class);
     // remove from cache
-    deleteCachedAnnotation(idx);
+    // redoAnnotation(idx);
+    // deleteCachedAnnotation(idx);
+    redoAnnotation(idx);
   }
 }

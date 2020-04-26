@@ -12,10 +12,13 @@ export function addAnnotation(group, label, classLabel) {
         group: group,
         label: label,
         class: classLabel || default_class,
+        top: group.top,
+        left: group.left,
+        width: group.width,
+        height: group.height,
       },
     ],
   }));
-  console.log('annotApi: ', annotApi.getState());
 }
 
 function _isAnnotValid(annotation) {
@@ -37,7 +40,7 @@ export function addAnnotationFromJson(json) {
   for (var i = 0; i < json.length; i++) {
     if (_isAnnotValid(json[i])) {
       const rect = drawRect(getCanvas(), json[i].rect, json[i].label);
-      addAnnotation(rect, json[i].label);
+      addAnnotation(rect, json[i].label, json[i].class);
     }
   }
 }
@@ -51,6 +54,10 @@ export function addCachedAnnotation(group, label, classLabel) {
         group: group,
         label: label,
         class: classLabel,
+        top: group.top,
+        left: group.left,
+        width: group.width,
+        height: group.height,
       },
     ],
   }));
@@ -68,11 +75,45 @@ export function deleteCachedAnnotation(index) {
   });
 }
 
+export function updateAnnotation(
+  group,
+  label,
+  classLabel,
+  top,
+  left,
+  width,
+  height
+) {
+  const default_class = 'class1';
+
+  annotApi.setState(prevState => ({
+    ...prevState,
+    annotations: [
+      ...prevState.annotations,
+      {
+        group: group,
+        label: label,
+        class: classLabel || default_class,
+        top: top,
+        left: left,
+        width: width,
+        height: height,
+      },
+    ],
+  }));
+}
+
 export function undoAnnotation() {
   const index = annotApi.getState().annotations.length - 1;
   const annotation = annotApi.getState().annotations[index];
   deleteAnnotation(index);
   addCachedAnnotation(annotation.group, annotation.label, annotation.class);
+}
+
+export function redoAnnotation(index) {
+  const annotation = cachedAnnotApi.getState().cachedAnnots[index];
+  deleteCachedAnnotation(index);
+  addAnnotation(annotation.group, annotation.label, annotation.class);
 }
 
 export function getLastAnnotIdx() {
