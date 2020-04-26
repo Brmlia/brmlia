@@ -193,20 +193,22 @@ export function ungroup(object) {
 }
 
 export function regroup(object) {
-  if (object && object._objects.length === 3) {
+  if (object && object._objects.length === 4) {
     var objs = object._objects;
 
-    var rect = objs[0];
+    var outline = objs[0];
     var label = objs[1];
     var classLabel = objs[2];
+    var rect = objs[3];
 
-    var group = new fabric.Group([rect, label, classLabel]);
+    var group = new fabric.Group([outline, label, classLabel, rect]);
     var canvas = getCanvas();
     if (canvas) {
       canvas.add(group);
-      canvas.remove(rect);
+      canvas.remove(outline);
       canvas.remove(label);
       canvas.remove(classLabel);
+      canvas.remove(rect);
       canvas.setActiveObject(group);
     }
   }
