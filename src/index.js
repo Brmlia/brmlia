@@ -1,29 +1,17 @@
+import './styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import React from "react";
-import ReactDOM from "react-dom";
-import Annotator from "./annotator/index.js"
-import ImageCanvas from "./imagecanvas/ImageCanvas.js"
-import Thumbnails from "./ui/components/thumbnails.js";
-import FabricLayer from "./ui/components/FabricLayer.js";
-import Tiff from './ui/components/Tiff.js'
-import './styles.css'
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import UI from './ui';
 
 function Application() {
-
   return (
     <>
-      <Tiff />
-      <Annotator />
-      <div id="canvasContainer">
-        <ImageCanvas />
-        <FabricLayer />
-      </div>
-      <Thumbnails />
+      <UI />
     </>
   );
 }
 
-const rootElement = document.getElementById("root");
+const rootElement = document.getElementById('root');
 ReactDOM.render(<Application />, rootElement);

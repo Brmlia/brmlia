@@ -10,6 +10,10 @@
 - [ ] Supports Colored Tiff
 - [x] Sliders to Select Slices
 - [x] Supports Large Number of Pages (256+)
+- [x] Supports Case 1: (60 z planes, 3 channels, 1)
+- [ ] Supports Case 2: (60 z planes, 1 channel, 3)
+- [ ] Supports Case 3: (1 z planes, 3 channels, 60)
+- [ ] Supports Case 4: (1 z planes, 1 channel, 180)
 
 #### Thumbnails
 - [x] Supports Tiffs in Thumbnails

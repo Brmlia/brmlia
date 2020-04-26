@@ -1,9 +1,11 @@
-import React from "react";
-
-import { thumb, thumbInner } from '../../style.js';
-import { fApi } from '../../utils/index.js'
-import { Stage, Layer, Shape } from "react-konva";
+import React from 'react';
 import { fabric } from 'fabric';
+
+import {
+  fApi,
+  thumb,
+  thumbInner
+} from './index.js';
 
 class Thumbnails extends React.Component {
 
@@ -21,10 +23,10 @@ class Thumbnails extends React.Component {
 
   setSelected(idx) {
     if (this.selected !== idx) {
-      fApi.setState( prevState => ({
+      fApi.setState(prevState => ({
         ...prevState,
-        selected: idx
-      }))
+        selected: idx,
+      }));
       this.selected = idx;
     }
   }
@@ -54,16 +56,16 @@ class Thumbnails extends React.Component {
 
   classicImage = (file, idx) => {
     return(
-      <div style={thumb} key={file.name}>
-        <div style={thumbInner}>
-          <img
-            src={file.image}
-            style={file.style}
-            alt={file.name}
-            onClick={() => this.setSelected(idx)}
-          />
-        </div>
-      </div>
+            <div style={thumb} key={file.name}>
+              <div style={thumbInner}>
+                <img
+                  src={file.image}
+                  style={file.style}
+                  alt={file.name}
+                  onClick={() => this.setSelected(idx)}
+                />
+              </div>
+            </div>
     )
   }
 
@@ -128,24 +130,6 @@ class Thumbnails extends React.Component {
     }
   }
 
-  allTiffsKonva = () => {
-    return (
-      <div>
-        <Stage width={window.innerWidth} height={window.innerWidth}>
-          <Layer>
-            <Shape
-              x={0}
-              y={0}
-              sceneFunc={context => {
-                this.loadTiff(context);
-              }}
-            />
-          </Layer>
-        </Stage>
-      </div>
-    );
-  }
-
   allTiffsCanvas = () => {
     if (this.canvas) this.loadTiff(this.canvas.getContext('2d'))
     return (
@@ -162,11 +146,6 @@ class Thumbnails extends React.Component {
   }
 
   display() {
-    // return (
-    //   // this.allThumbs()
-    //   // this.allTiffsKonva()
-    //   this.allTiffsCanvas()
-    // )
     return (
       <div>
         {this.allThumbs()}
@@ -177,7 +156,7 @@ class Thumbnails extends React.Component {
 
   render() {
 
-    fApi.subscribe(state =>  {
+    fApi.subscribe(state => {
       this.updateForFile(state)
       this.forceUpdate()
     })

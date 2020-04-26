@@ -1,16 +1,19 @@
 import React from 'react';
-import { fApi, uApi } from '../utils/index.js'
-import { updateImage } from './CanvasControl.js'
-import {canvasApi} from './canvasStore.js'
-import { canvasStyle1 } from '../style.js';
+
+import {
+  fApi,
+  uApi,
+  updateImage,
+} from './index.js'
+
+import {
+  canvasApi,
+} from './canvasStore.js';
 
 class ImageCanvas extends React.Component {
-
-  channel = 1
-
   updateForFile(state) {
     if (state) {
-      updateImage(state.file[state.selected], this.channel)
+      updateImage(state.file[state.selected], this.props.channel);
     }
     this.forceUpdate();
   }
@@ -19,18 +22,14 @@ class ImageCanvas extends React.Component {
   }
 
   render() {
-    fApi.subscribe(state =>  {
+    fApi.subscribe(state => {
       this.updateForFile(state);
-    })
-    uApi.subscribe(state =>  {
+    });
+    uApi.subscribe(state => {
       this.updateForControls(state);
-    })
+    });
 
-    return (
-      <div id="imageLayer" style={canvasStyle1}>
-        {canvasApi.getState().canvas[this.channel-1]}
-      </div>
-    );
+    return canvasApi.getState().canvas[this.props.channel - 1];
   }
 }
 
