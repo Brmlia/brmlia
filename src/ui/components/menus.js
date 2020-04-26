@@ -10,7 +10,7 @@ import {
   Button,
 } from 'reactstrap';
 
-import { FileUpload } from '../../fileuploader/index.js';
+import { FileUpload } from '../../fileuploader/fileUploader.js';
 import { exportJson } from '../../fileuploader/exporter.js';
 
 import {

@@ -2,14 +2,6 @@ import create from 'zustand';
 import React from 'react';
 import FabricLayer from '../ui/components/FabricLayer';
 
-// import { drawRect, drawFreeStyle } from '../annotator/editControl.js';
-// import {
-//   isDisplayOn,
-//   setDisplay,
-//   setMenuCoords,
-//   setSelectedObjects,
-// } from '../annotator/annotationSettings.js';
-
 import {
   drawRect,
   drawFreeStyle,

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   fileApi as fApi,
 } from '../fileuploader/fileStore.js';

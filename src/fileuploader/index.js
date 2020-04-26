@@ -1,83 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
 import {
-  initPng,
-  addPng,
-  initTiff,
-  addTiff,
-  initCsv,
-  addCsv,
-  initJson,
-  addJson,
-  isFirstFile,
-  isValidFile,
+  fileApi as fApi,
+} from './fileStore.js';
+
+import {
+  settingsApi as sApi,
+} from '../mainSettings.js';
+
+import {
+  initPng         as iPng,
+  addPng          as aPng,
+  initTiff        as iTiff,
+  addTiff         as aTiff,
+  initCsv         as iCsv,
+  addCsv          as aCsv,
+  initJson        as iJson,
+  addJson         as aJson,
+  isFirstFile     as isFstFl,
+  isValidFile     as isValFl,
+  saveJson        as svJson,
+  updateTiffPages as updTP,
 } from './fileControl.js';
 
-function addFile(file) {
-  if (file.type === 'image/png') {
-    addPng(file);
-  } else if (file.type === 'image/tiff') {
-    addTiff(file);
-  } else if (file.type === 'text/csv') {
-    addCsv(file);
-  } else if (file.type === 'application/json') {
-    addJson(file);
-  }
-}
+import {
+  importCsv  as impCsv,
+  importJson as impJson,
+  importTiff as impTiff,
+} from './importer.js';
 
-function initFile(file) {
-  if (file.type === 'image/png') {
-    initPng(file);
-  } else if (file.type === 'image/tiff') {
-    initTiff(file);
-  } else if (file.type === 'text/csv') {
-    initCsv(file);
-  } else if (file.type === 'application/json') {
-    initJson(file);
-  }
-}
+import {
+  annotApi as aApi,
+} from '../annotator/annotationStore.js';
 
-export function FileUpload(props) {
-  const [files, setFiles] = useState([]);
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/png, image/tiff, .csv, .json',
-    onDrop: acceptedFiles => {
-      setFiles(
-        acceptedFiles.map(file =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
-    },
-  });
+import {
+  addAnnotation as addAnnot,
+} from '../annotator/annotationControl.js';
 
-  const update = files.map(file => {
-    if (isValidFile(file.name)) {
-      if (isFirstFile()) {
-        initFile(file);
-      } else {
-        addFile(file);
-      }
-    }
-    return null;
-  });
+import {
+  createTexture as createT,
+  createTextureFromTiff as createTFrTiff,
+} from '../imagecanvas/ImageStore.js';
 
-  useEffect(
-    () => () => {
-      // Make sure to revoke the data uris to avoid memory leaks
-      files.forEach(file => URL.revokeObjectURL(file.preview));
-    },
-    [files]
-  );
-
-  return (
-    <section className="container">
-      <div {...getRootProps({ className: 'dropzone' })}>
-        <input {...getInputProps()} />
-        <p> {props.name} </p>
-        {update}
-      </div>
-    </section>
-  );
-}
+export const fileApi               = fApi
+export const initPng               = iPng
+export const addPng                = aPng
+export const initTiff              = iTiff
+export const addTiff               = aTiff
+export const initCsv               = iCsv
+export const addCsv                = aCsv
+export const initJson              = iJson
+export const addJson               = aJson
+export const isFirstFile           = isFstFl
+export const isValidFile           = isValFl
+export const saveJson              = svJson
+export const updateTiffPages       = updTP
+export const importCsv             = impCsv
+export const importJson            = impJson
+export const importTiff            = impTiff
+export const settingsApi           = sApi
+export const annotApi              = aApi
+export const addAnnotation         = addAnnot
+export const createTexture         = createT
+export const createTextureFromTiff = createTFrTiff

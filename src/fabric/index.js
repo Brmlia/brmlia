@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   drawRect           as dRect,
   drawFreeStyle      as dFreeSty,
