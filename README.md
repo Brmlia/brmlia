@@ -54,9 +54,13 @@ explicitly, add a commented eslint directive above the location.
 - [ ] Resize box without affecting label
 - [ ] Define individual annotations in freehand mode
 - [ ] Add toolbar
+- [ ] Set Default Class: Last Selected Class
+- [ ] Replace freehand with Oval
+- [ ] UI Adjustments
 
 ### CHANNELS
 
+- [x] PNG Support
 - [x] Select Channel
 - [x] Brightness
 - [x] Contrast
@@ -67,19 +71,29 @@ explicitly, add a commented eslint directive above the location.
 - [ ] Annotation Layers by Channels
 - [ ] Toggle Annotations by Channels
 - [ ] Histogram
+- [ ] Color Adjustment
+- [ ] UI Adjustments
+- [ ] Tiff Support
 
-#### Main View
+### Main View
 
+- [x] PNG Support
 - [x] Overlayed Channels
-- [x] Tiff
+- [x] Tiff Support
 - [ ] Pan
 - [ ] Zoom
 
-#### Thumbnails
+### Thumbnails
 
 - [x] Tiff & PNG Support
 - [x] Select PNG
 - [ ] Select Tiff (Update Main, Axes, Channel Views)
+
+### Tiffs
+- [x] Case 1: (60 z planes, 3 channels, 1)
+- [ ] Case 2: (60 z planes, 1 channel, 3)
+- [ ] Case 3: (1 z plane, 3 channels, 60)
+- [ ] Case 4: (1 z plane, 1 channel, 180)
 
 ### TESTS
 
