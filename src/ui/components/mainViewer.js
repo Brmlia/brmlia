@@ -1,4 +1,12 @@
 import React from 'react';
+import { Card, CardTitle, CardBody } from 'reactstrap';
+
+import Viewer from '../../viewer/index.js';
+import FabricLayer from './FabricLayer.js';
+import MainTiffViewer from './mainTiffViewer.js';
+
+import { canvasApi } from '../../imagecanvas/canvasStore.js';
+import { settingsApi } from '../../mainSettings.js';
 
 import {
   cardStyle,
@@ -8,13 +16,7 @@ import {
   canvasStyle1,
   canvasStyle2,
   canvasStyle3,
-} from '../style.js';
-import Viewer from '../../viewer/index.js';
-import { Card, CardTitle, CardBody } from 'reactstrap';
-import { canvasApi } from '../../imagecanvas/canvasStore.js';
-import { settingsApi } from '../../mainSettings.js';
-import FabricLayer from './FabricLayer.js';
-import MainTiffViewer from './mainTiffViewer.js';
+} from './index.js';
 
 class mainViewer extends React.Component {
   altView() {

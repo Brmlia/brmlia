@@ -1,99 +1,100 @@
 import create from 'zustand';
-import {editAnnotationOption, editClassOption} from './annotationMenuOptions.js'
+
+import { editAnnotationOption, editClassOption } from './index.js';
 
 export const initState = {
   menu: {
     displayon: false,
     coords: {
       x: 0,
-      y: 0
+      y: 0,
     },
     items: [
       {
-        "label": "Edit Annotation",
-        "callback": editAnnotationOption
+        label: 'Edit Annotation',
+        callback: editAnnotationOption,
       },
       {
-        "label": "Edit Class",
-        "callback": editClassOption
-      }
+        label: 'Edit Class',
+        callback: editClassOption,
+      },
     ],
     objects: [],
     select: 0,
-    canvas: null
-  }
-}
+    canvas: null,
+  },
+};
 
-export const [useAnnotationMenu, AnnotationMenuApi] = create ( set => ({
+export const [useAnnotationMenu, AnnotationMenuApi] = create(set => ({
   ...initState,
-}))
+}));
 
 export function isDisplayOn() {
-  return AnnotationMenuApi.getState().menu.displayon
+  return AnnotationMenuApi.getState().menu.displayon;
 }
 
 export function setCanvas(canvas) {
-  AnnotationMenuApi.setState( prevState => ({
+  AnnotationMenuApi.setState(prevState => ({
     ...prevState,
-    canvas: canvas
-  }))
+    canvas: canvas,
+  }));
 }
 
 export function getCanvas() {
-  return AnnotationMenuApi.getState().canvas
+  return AnnotationMenuApi.getState().canvas;
 }
 
 export function setDisplay(value) {
-  AnnotationMenuApi.setState( prevState => ({
+  AnnotationMenuApi.setState(prevState => ({
     ...prevState,
     menu: {
       ...prevState.menu,
-      displayon: value
-    }
-  }))
+      displayon: value,
+    },
+  }));
 }
 
 export function getMenuCoords() {
-  return AnnotationMenuApi.getState().menu.coords
+  return AnnotationMenuApi.getState().menu.coords;
 }
 
 export function setMenuCoords(x, y) {
-  AnnotationMenuApi.setState( prevState => ({
+  AnnotationMenuApi.setState(prevState => ({
     ...prevState,
     menu: {
       ...prevState.menu,
       coords: {
         x: x,
-        y: y
-      }
-    }
-  }))
+        y: y,
+      },
+    },
+  }));
 }
 
 export function getItems() {
-  return AnnotationMenuApi.getState().menu.items
+  return AnnotationMenuApi.getState().menu.items;
 }
 
 export function setSelectedObjects(objects) {
-  AnnotationMenuApi.setState( prevState => ({
+  AnnotationMenuApi.setState(prevState => ({
     ...prevState,
     menu: {
       ...prevState.menu,
-      objects: objects
-    }
-  }))
+      objects: objects,
+    },
+  }));
 }
 
 export function getSelectedObjects() {
-  return AnnotationMenuApi.getState().menu.objects
+  return AnnotationMenuApi.getState().menu.objects;
 }
 
 export function updateSelect(sel) {
-  AnnotationMenuApi.setState( prevState => ({
+  AnnotationMenuApi.setState(prevState => ({
     ...prevState,
     menu: {
       ...prevState.menu,
-      select: sel
-    }
-  }))
+      select: sel,
+    },
+  }));
 }

@@ -1,9 +1,9 @@
 import React from 'react';
-
-import { cardStyle, card } from '../style.js';
 import { Card, CardTitle, CardBody } from 'reactstrap';
 
 import Channel from './channel.js';
+
+import { cardStyle, card } from './index.js';
 
 class ChannelViewer extends React.Component {
   render() {

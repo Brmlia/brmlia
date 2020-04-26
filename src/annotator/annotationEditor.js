@@ -1,4 +1,5 @@
 import { fabric } from 'fabric';
+
 import {
   addAnnotation,
   undoAnnotation,
@@ -8,9 +9,9 @@ import {
   deleteCachedAnnotation,
   updateAnnotationLabel,
   updateAnnotClassLabel,
-} from './annotationControl.js';
-import { getCanvas } from './annotationSettings.js';
-import { getDisabledClasses } from './annotationClass.js';
+  getCanvas,
+  getDisabledClasses,
+} from './index.js';
 
 export const colors = [
   'rgb(200, 140, 140, 0.85)', //channel 1

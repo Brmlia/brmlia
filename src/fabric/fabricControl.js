@@ -2,14 +2,15 @@ import create from 'zustand';
 import React from 'react';
 import FabricLayer from '../ui/components/FabricLayer';
 
-import { drawRect, drawFreeStyle } from '../annotator/editControl.js';
 import {
+  drawRect,
+  drawFreeStyle,
   isDisplayOn,
   setDisplay,
   setMenuCoords,
   setSelectedObjects,
-} from '../annotator/annotationSettings.js';
-import { addAnnotation } from '../annotator/annotationControl.js';
+  addAnnotation,
+} from './index.js';
 
 export const modes = {
   RECT: 'rectangle',

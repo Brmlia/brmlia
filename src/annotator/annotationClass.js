@@ -1,98 +1,96 @@
 import create from 'zustand';
 
-import { getAnnotationClasses } from './annotationControl.js';
+import { getAnnotationClasses } from './index.js';
 
 const initState = {
   classes: [
     {
-      "name": "Annotation Class 1",
-      "enabled": false,
+      name: 'Annotation Class 1',
+      enabled: false,
     },
     {
-      "name": "Annotation Class 2",
-      "enabled": false,
+      name: 'Annotation Class 2',
+      enabled: false,
     },
     {
-      "name": "Annotation Class 3",
-      "enabled": false,
+      name: 'Annotation Class 3',
+      enabled: false,
     },
     {
-      "name": "Annotation Class 4",
-      "enabled": false,
+      name: 'Annotation Class 4',
+      enabled: false,
     },
-  ]
-}
+  ],
+};
 
 function addClass(classLabel) {
-  const default_class = 'class1'
+  const default_class = 'class1';
   annotClassApi.setState(prevState => ({
     ...prevState,
     classes: [
       ...prevState.classes,
       {
         name: classLabel || default_class,
-        enabled: false
+        enabled: false,
       },
     ],
   }));
 }
 
-export const [useAnnotClass, annotClassApi] = create ( set => ({
+export const [useAnnotClass, annotClassApi] = create(set => ({
   ...initState,
-}))
+}));
 
 export function updateClasses() {
-  const classes = getAnnotationClasses()
-  for (var i = 0; i < classes.length;  i++) {
-    const cls = classes[i]
+  const classes = getAnnotationClasses();
+  for (var i = 0; i < classes.length; i++) {
+    const cls = classes[i];
     if (!isDuplicateClass(cls)) {
-      addClass(cls)
-      enableClass(cls)
+      addClass(cls);
+      enableClass(cls);
     }
   }
 }
 
 export function enableClass(label) {
-  annotClassApi.setState( prevState => {
+  annotClassApi.setState(prevState => {
     const classes = prevState.classes.map((cls, j) => {
       if (cls.name === label) {
         var newCls = cls;
-        newCls.enabled = true
+        newCls.enabled = true;
         return newCls;
+      } else {
+        return cls;
       }
-      else {
-        return cls
-      }
-    })
+    });
     return {
-      classes
-    }
-  })
+      classes,
+    };
+  });
 }
 
 export function toggleClassEnable(num) {
-  annotClassApi.setState( prevState => {
+  annotClassApi.setState(prevState => {
     const classes = prevState.classes.map((cls, j) => {
       if (j === num) {
         var newCls = cls;
-        newCls.enabled = !cls.enabled
+        newCls.enabled = !cls.enabled;
         return newCls;
+      } else {
+        return cls;
       }
-      else {
-        return cls
-      }
-    })
+    });
     return {
-      classes
-    }
-  })
+      classes,
+    };
+  });
 }
 
 export function isDuplicateClass(name) {
-  const classes = annotClassApi.getState().classes
+  const classes = annotClassApi.getState().classes;
   if (classes) {
     const x = classes.filter(cls => cls.name === name);
-    if (x.length !== 0){
+    if (x.length !== 0) {
       return true;
     }
   }
@@ -100,19 +98,19 @@ export function isDuplicateClass(name) {
 }
 
 export function getClasses() {
-  return annotClassApi.getState().classes
+  return annotClassApi.getState().classes;
 }
 
 export function getDisabledClasses() {
-  var enabledClasses = []
-  const classes = annotClassApi.getState().classes
+  var enabledClasses = [];
+  const classes = annotClassApi.getState().classes;
   if (classes) {
     for (var i = 0; i < classes.length; i++) {
-      const cls = classes[i]
+      const cls = classes[i];
       if (!cls.enabled) {
-        enabledClasses.push(cls.name)
+        enabledClasses.push(cls.name);
       }
     }
   }
-  return enabledClasses
+  return enabledClasses;
 }

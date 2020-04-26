@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './../styles.css';
 import { useZoomApi } from './zoom/zoomSettings.js';
 
 class Slider extends Component {

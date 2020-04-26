@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { buttonGroup } from '../style.js';
 import {
   UncontrolledButtonDropdown,
   DropdownToggle,
@@ -10,17 +9,16 @@ import {
   Button,
 } from 'reactstrap';
 
-import { FileUpload } from '../../fileuploader/index.js';
-import { exportJson } from '../../annotator/exporter.js';
+import { FileUpload } from '../../fileuploader/fileUploader.js';
 
 import {
+  buttonGroup,
+  exportJson,
   modes,
   setMode,
-} from '../../fabric/fabricControl.js'
-import {
   undo,
   redo,
-} from '../../annotator/editControl.js'
+} from './index.js';
 
 class Menus extends React.Component {
   render() {
@@ -58,7 +56,7 @@ class Menus extends React.Component {
               outline
               color="primary"
               className="draw-rectangle-btn"
-              onClick={(e) => setMode(modes.RECT)}
+              onClick={e => setMode(modes.RECT)}
             >
               Rectangle
             </Button>
@@ -66,7 +64,7 @@ class Menus extends React.Component {
               outline
               color="primary"
               className="draw-rectangle-btn"
-              onClick={(e) => setMode(modes.FREE)}
+              onClick={e => setMode(modes.FREE)}
             >
               Freehand
             </Button>
@@ -82,7 +80,7 @@ class Menus extends React.Component {
               outline
               color="primary"
               className="draw-rectangle-btn"
-              onClick={(e) => undo()}
+              onClick={e => undo()}
             >
               Undo
             </Button>
@@ -90,7 +88,7 @@ class Menus extends React.Component {
               outline
               color="primary"
               className="draw-rectangle-btn"
-              onClick={(e) => redo()}
+              onClick={e => redo()}
             >
               Redo
             </Button>

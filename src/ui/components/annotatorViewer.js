@@ -1,13 +1,16 @@
 import React from 'react';
-
-import { cardStyle, card } from '../style.js';
-import './../styles.css';
-import '../../utils/styles.css';
-import { updateClasses, getClasses, toggleClassEnable, annotClassApi } from '../../annotator/annotationClass.js'
-
 import { Button, Card, CardTitle, CardBody } from 'reactstrap';
-import { annotApi } from '../../annotator/annotationStore.js';
-import { filterClasses } from '../../annotator/editControl.js'
+
+import {
+  annotApi,
+  cardStyle,
+  card,
+  updateClasses,
+  getClasses,
+  toggleClassEnable,
+  annotClassApi,
+  filterClasses,
+} from './index.js';
 
 class AnnotatorViewer extends React.Component {
   constructor(props) {
@@ -16,32 +19,31 @@ class AnnotatorViewer extends React.Component {
     this.state = {
       classes: [],
       annotClasses: [],
-      enables: []
-    }
+      enables: [],
+    };
   }
 
-  futureClass = []
-  futureAnnotClass = []
+  futureClass = [];
+  futureAnnotClass = [];
 
   componentDidUpdate(prevState) {
     for (var i = 0; i < prevState.classes; i++) {
-      const cls = prevState.classes[i]
-      if (cls
-        && (this.state.classes[i] !== cls.name)
-        && (this.state.enables[i] !== cls.enabled)
+      const cls = prevState.classes[i];
+      if (
+        cls &&
+        this.state.classes[i] !== cls.name &&
+        this.state.enables[i] !== cls.enabled
       ) {
-        return true
+        return true;
       }
     }
     for (i = 0; i < prevState.annotClasses; i++) {
-      const annotCls = prevState.annotClasses[i]
-      if (annotCls
-        && (this.state.annotClasses[i] !== annotCls)
-      ) {
-        return true
+      const annotCls = prevState.annotClasses[i];
+      if (annotCls && this.state.annotClasses[i] !== annotCls) {
+        return true;
       }
     }
-    return false
+    return false;
   }
 
   filter(sel, enabled) {
@@ -51,59 +53,58 @@ class AnnotatorViewer extends React.Component {
   }
 
   updateAnnotClasses(annots) {
-    for (var i = 0; i < annots.length; i++){
-      const cls = annots[i]
-      if (!this.state.annotClasses.includes(cls.class) && !this.futureAnnotClass.includes(cls.class)) {
-        this.futureAnnotClass.push(cls.class)
+    for (var i = 0; i < annots.length; i++) {
+      const cls = annots[i];
+      if (
+        !this.state.annotClasses.includes(cls.class) &&
+        !this.futureAnnotClass.includes(cls.class)
+      ) {
+        this.futureAnnotClass.push(cls.class);
         this.setState(prevState => ({
           ...prevState,
-          annotClasses: [
-            ...prevState.annotClasses,
-            cls.class
-          ],
+          annotClasses: [...prevState.annotClasses, cls.class],
         }));
       }
     }
   }
 
   updateClasses(classes) {
-    for (var i = 0; i < classes.length; i++){
+    for (var i = 0; i < classes.length; i++) {
       const idx = i;
-      const cls = classes[idx]
-      if (!this.state.classes.includes(cls.name) && !this.futureClass.includes(cls.name)) {
-        this.futureClass.push(cls.name)
+      const cls = classes[idx];
+      if (
+        !this.state.classes.includes(cls.name) &&
+        !this.futureClass.includes(cls.name)
+      ) {
+        this.futureClass.push(cls.name);
         this.setState(prevState => ({
           ...prevState,
-          classes: [
-            ...prevState.classes,
-            cls.name,
-          ]
+          classes: [...prevState.classes, cls.name],
         }));
       }
 
-      this.setState( prevState => {
+      this.setState(prevState => {
         const enables = prevState.enables.map((en, j) => {
           if (j === idx) {
-            return cls.enabled
+            return cls.enabled;
+          } else {
+            return en;
           }
-          else {
-            return en
-          }
-        })
+        });
         return {
-          enables
-        }
-      })
+          enables,
+        };
+      });
     }
   }
 
-  display () {
+  display() {
     const classes = getClasses();
-    var divs = []
+    var divs = [];
     for (var i = 0; i < classes.length; i++) {
-      const sel = i
-      const enabled = classes[sel].enabled
-      divs.push (
+      const sel = i;
+      const enabled = classes[sel].enabled;
+      divs.push(
         <Button
           outline
           color="primary"
@@ -115,12 +116,11 @@ class AnnotatorViewer extends React.Component {
         >
           {classes[sel].name}
         </Button>
-      )
+      );
     }
     return (
       <div>
         <div className="annotations-class" style={cardStyle}>
-
           <Card style={card}>
             <CardBody>
               <CardTitle> Annotated Class Selection </CardTitle>
@@ -131,26 +131,22 @@ class AnnotatorViewer extends React.Component {
 
         <br></br>
       </div>
-    )
-  };
+    );
+  }
 
   render() {
     annotApi.subscribe(state => {
       if (state) {
-        updateClasses()
-        this.updateAnnotClasses(state.annotations)
+        updateClasses();
+        this.updateAnnotClasses(state.annotations);
       }
-    })
+    });
     annotClassApi.subscribe(state => {
       if (state) {
         this.updateClasses(state.classes);
       }
-    })
-    return (
-      <div>
-        {this.display()}
-      </div>
-    );
+    });
+    return <div>{this.display()}</div>;
   }
 }
 

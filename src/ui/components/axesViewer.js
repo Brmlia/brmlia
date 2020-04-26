@@ -1,8 +1,9 @@
 import React from 'react';
-
-import { cardStyle, card } from '../style.js';
 import { Card, CardTitle, CardBody } from 'reactstrap';
+
 import AxisTiffViewer from './axisTiffViewer.js';
+
+import { cardStyle, card } from './index.js';
 
 class AxesViewer extends React.Component {
   view1 = (<AxisTiffViewer axis="2" />);

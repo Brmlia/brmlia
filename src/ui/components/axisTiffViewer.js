@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { fApi } from '../../utils/index.js';
-import { Volume } from '../../datacube/volume.js';
-import ProgressBar, {
-  loadSlices,
-  updateChannelSlice,
-} from '../../datacube/datacubeControls.js';
+
+import ProgressBar from '../../datacube/datacubeControls.js';
 import DataCube from '../../datacube/datacube.js';
 import Slider from './slider.js';
+
+import { fApi, Volume, loadSlices, updateChannelSlice } from './index.js';
 
 class TiffViewer extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
-import { uApi } from '../utils/index.js';
-import { createTexture, createTextureFromTiff } from './ImageStore.js';
 import * as THREE from 'three';
+
+import { uApi, createTexture, createTextureFromTiff } from './index.js';
 
 function isValidChannel(channel) {
   return (
