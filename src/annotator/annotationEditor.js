@@ -1,12 +1,11 @@
 import { fabric } from 'fabric';
 
 import {
-  addAnnotation,
+  redoAnnotation,
   undoAnnotation,
   getLastAnnotIdx,
   getLastCachedAnnot,
   getLastCachedAnnotIdx,
-  deleteCachedAnnotation,
   updateAnnotationLabel,
   updateAnnotClassLabel,
   getCanvas,
@@ -96,8 +95,9 @@ export function drawRect(canvas, rect, label, classLabel) {
     group.addWithUpdate(text);
     group.addWithUpdate(classText);
     group.addWithUpdate(fRect);
-    addAnnotation(group, newLabel, classLabel);
   }
+
+  return group;
 }
 
 function constrain(o, canvas) {
@@ -194,20 +194,22 @@ export function ungroup(object) {
 }
 
 export function regroup(object) {
-  if (object && object._objects.length === 3) {
+  if (object && object._objects.length === 4) {
     var objs = object._objects;
 
-    var rect = objs[0];
+    var outline = objs[0];
     var label = objs[1];
     var classLabel = objs[2];
+    var rect = objs[3];
 
-    var group = new fabric.Group([rect, label, classLabel]);
+    var group = new fabric.Group([outline, label, classLabel, rect]);
     var canvas = getCanvas();
     if (canvas) {
       canvas.add(group);
-      canvas.remove(rect);
+      canvas.remove(outline);
       canvas.remove(label);
       canvas.remove(classLabel);
+      canvas.remove(rect);
       canvas.setActiveObject(group);
     }
   }
@@ -320,6 +322,8 @@ export function redo() {
     // redraw on canvas
     drawRect(canvas, cachedAnnot.group, cachedAnnot.label, cachedAnnot.class);
     // remove from cache
-    deleteCachedAnnotation(idx);
+    // redoAnnotation(idx);
+    // deleteCachedAnnotation(idx);
+    redoAnnotation(idx);
   }
 }

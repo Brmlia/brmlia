@@ -46,7 +46,7 @@ class AnnotatorViewer extends React.Component {
     return false;
   }
 
-  filter(sel, enabled) {
+  filter(sel) {
     const classes = getClasses();
     toggleClassEnable(sel);
     filterClasses(classes[sel]);
@@ -110,7 +110,7 @@ class AnnotatorViewer extends React.Component {
           color="primary"
           id="annot1Btn"
           onClick={() => {
-            this.filter(sel, !enabled);
+            this.filter(sel);
           }}
           active={enabled}
         >

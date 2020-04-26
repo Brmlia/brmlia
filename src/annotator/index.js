@@ -15,6 +15,7 @@ import {
   updateAnnotationLabel as updAntLbl,
   updateAnnotClassLabel as updAntClsLbl,
   getAnnotationClasses as getAnnotCls,
+  redoAnnotation as redoAnno,
 } from './annotationControl.js';
 
 import { getDisabledClasses as getDisCls } from './annotationClass.js';
@@ -53,6 +54,7 @@ export const deleteCachedAnnotation = delCdAnt;
 export const updateAnnotationLabel = updAntLbl;
 export const updateAnnotClassLabel = updAntClsLbl;
 export const getAnnotationClasses = getAnnotCls;
+export const redoAnnotation = redoAnno;
 export const getDisabledClasses = getDisCls;
 export const getItems = getIts;
 export const AnnotationMenuApi = aMenuApi;

@@ -130,7 +130,15 @@ export function finishDrawingRect(x, y, color) {
         label,
         classLabel
       );
-      addAnnotation(fRect, label, classLabel);
+      addAnnotation(
+        fRect,
+        label,
+        classLabel,
+        fRect.top,
+        fRect.left,
+        fRect.width,
+        fRect.height
+      );
     }
 
     setSelectedObjects(fabricApi.getState().canvas.getActiveObjects()[0]);
