@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 
 import { FileUpload } from '../../fileuploader/index.js';
-import { exportJson } from '../../annotator/exporter.js';
+import { exportJson } from '../../fileuploader/exporter.js';
 
 import {
   modes,
@@ -20,7 +20,7 @@ import {
 import {
   undo,
   redo,
-} from '../../annotator/editControl.js'
+} from '../../annotator/annotationEditor.js'
 
 class Menus extends React.Component {
   render() {

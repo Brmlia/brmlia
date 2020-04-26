@@ -5,7 +5,7 @@ import {
   showAll,
   drawFreeStyle,
   colors,
-} from '../../annotator/editControl.js';
+} from '../../annotator/annotationEditor.js';
 import { annotApi } from '../../annotator/annotationStore.js';
 import AnnotationMenu from '../../annotator/annotationMenu.js';
 import {

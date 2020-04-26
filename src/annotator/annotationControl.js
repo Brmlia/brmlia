@@ -1,4 +1,7 @@
-import { annotApi, cachedAnnotApi } from './annotationStore.js';
+import {
+  annotApi,
+  cachedAnnotApi
+} from './index.js';
 
 export function addAnnotation(group, label, classLabel) {
   const default_class = 'class1';

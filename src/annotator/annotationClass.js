@@ -1,6 +1,8 @@
 import create from 'zustand';
 
-import { getAnnotationClasses } from './annotationControl.js';
+import {
+  getAnnotationClasses,
+} from './index.js';
 
 const initState = {
   classes: [

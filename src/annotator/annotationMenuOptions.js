@@ -1,7 +1,12 @@
-import {setDisplay, getSelectedObjects, updateSelect} from "./annotationSettings.js"
-import {updateLabel, updateClassLabel} from './editControl.js'
+import {
+  setDisplay,
+  getSelectedObjects,
+  updateSelect,
+  updateLabel,
+  updateClassLabel,
+} from './index.js'
 
-export function editAnnotationOption(label, classLabel) {
+export function editAnnotationOption() {
   setDisplay(false);
   updateSelect(1);
 }

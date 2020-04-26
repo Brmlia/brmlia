@@ -1,11 +1,11 @@
 import { fileApi } from './fileStore.js';
-import { annotApi } from '../annotator/annotStore.js';
+import { annotApi } from '../annotator/annotationStore.js';
 import { addAnnotation } from '../annotator/annotationControl.js';
 import {
   createTexture,
   createTextureFromTiff,
 } from '../imagecanvas/ImageStore.js';
-import { importCsv, importJson, importTiff } from '../annotator/importer.js';
+import { importCsv, importJson, importTiff } from './importer.js';
 
 const img = {
   display: 'block',

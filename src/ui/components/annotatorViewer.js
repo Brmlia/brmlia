@@ -7,7 +7,7 @@ import { updateClasses, getClasses, toggleClassEnable, annotClassApi } from '../
 
 import { Button, Card, CardTitle, CardBody } from 'reactstrap';
 import { annotApi } from '../../annotator/annotationStore.js';
-import { filterClasses } from '../../annotator/editControl.js'
+import { filterClasses } from '../../annotator/annotationEditor.js'
 
 class AnnotatorViewer extends React.Component {
   constructor(props) {

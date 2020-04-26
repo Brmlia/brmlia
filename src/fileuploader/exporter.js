@@ -1,4 +1,4 @@
-import { annotApi } from './annotationStore.js';
+import { annotApi } from '../annotator/annotationStore.js';
 
 export function exportJson() {
   const element = document.createElement('a');
