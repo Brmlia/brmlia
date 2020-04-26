@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withFileStore } from '../utils/index.js';
-import '../styles.css';
 
 import Zpp from '../ui/components/zoom/zpp.js';
 import Zoom from '../ui/components/zoom/zoom.js';

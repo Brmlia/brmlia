@@ -1,9 +1,6 @@
 import React from 'react';
 import { Button, Card, CardTitle, CardBody } from 'reactstrap';
 
-import './../styles.css';
-import '../../utils/styles.css';
-
 import {
   annotApi,
   cardStyle,
