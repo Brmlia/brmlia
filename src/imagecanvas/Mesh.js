@@ -1,6 +1,9 @@
 import React, { useRef, useMemo } from 'react';
-import { uApi } from '../utils/index.js';
 import { useFrame } from 'react-three-fiber';
+
+import {
+  uApi
+} from './index.js';
 
 const fragmentShader = `
   uniform sampler2D image;

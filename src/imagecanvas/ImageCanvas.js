@@ -1,7 +1,14 @@
 import React from 'react';
-import { fApi, uApi } from '../utils/index.js';
-import { updateImage } from './CanvasControl.js';
-import { canvasApi } from './canvasStore.js';
+
+import {
+  fApi,
+  uApi,
+  updateImage,
+} from './index.js'
+
+import {
+  canvasApi,
+} from './canvasStore.js';
 
 class ImageCanvas extends React.Component {
   updateForFile(state) {
