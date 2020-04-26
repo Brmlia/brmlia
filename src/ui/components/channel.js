@@ -1,24 +1,28 @@
 import React from 'react';
 
-import { card, cardBody, canvasThumbnail } from '../style.js';
 import { Button, UncontrolledCollapse, Card, CardBody } from 'reactstrap';
 
 import ImageCanvas from '../../imagecanvas/ImageCanvas.js';
 import Slider from './slider.js';
+import ColorPicker from './colorPicker.js';
+
 import {
+  settingsApi,
+} from '../../mainSettings.js';
+
+import {
+  card,
+  cardBody,
+  canvasThumbnail,
   updateBrightness,
   updateContrast,
   updateWhitepoint,
   updateBlackpoint,
   updateColor,
   updateOpacity,
-} from '../../imagecanvas/CanvasControl.js';
-import {
   updateChannelSel,
   updateLastSel,
-  settingsApi,
-} from '../../mainSettings.js';
-import ColorPicker from './colorPicker.js';
+} from './index.js';
 
 class Channel extends React.Component {
   updateSelection = () => {

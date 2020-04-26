@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { buttonGroup } from '../style.js';
 import {
   UncontrolledButtonDropdown,
   DropdownToggle,
@@ -11,16 +10,16 @@ import {
 } from 'reactstrap';
 
 import { FileUpload } from '../../fileuploader/fileUploader.js';
-import { exportJson } from '../../fileuploader/exporter.js';
 
 import {
+  buttonGroup,
+  exportJson,
   modes,
   setMode,
-} from '../../fabric/fabricControl.js'
-import {
   undo,
   redo,
-} from '../../annotator/annotationEditor.js'
+} from './index.js';
+
 
 class Menus extends React.Component {
   render() {

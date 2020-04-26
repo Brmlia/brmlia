@@ -1,18 +1,16 @@
 import React from 'react';
 import { fabric } from 'fabric';
+
+import AnnotationMenu from '../../annotator/annotationMenu.js';
+
 import {
   filterAnnotations,
   showAll,
   drawFreeStyle,
   colors,
-} from '../../annotator/annotationEditor.js';
-import { annotApi } from '../../annotator/annotationStore.js';
-import AnnotationMenu from '../../annotator/annotationMenu.js';
-import {
+  annotApi,
   setCanvas,
   AnnotationMenuApi,
-} from '../../annotator/annotationSettings.js';
-import {
   openMenu,
   startDrawing,
   startSelecting,
@@ -22,7 +20,7 @@ import {
   setMode,
   fabricApi,
   modes,
-} from '../../fabric/fabricControl.js';
+} from './index.js';
 
 var canvas;
 

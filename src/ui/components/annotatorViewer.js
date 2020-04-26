@@ -1,13 +1,19 @@
 import React from 'react';
+import { Button, Card, CardTitle, CardBody } from 'reactstrap';
 
-import { cardStyle, card } from '../style.js';
 import './../styles.css';
 import '../../utils/styles.css';
-import { updateClasses, getClasses, toggleClassEnable, annotClassApi } from '../../annotator/annotationClass.js'
 
-import { Button, Card, CardTitle, CardBody } from 'reactstrap';
-import { annotApi } from '../../annotator/annotationStore.js';
-import { filterClasses } from '../../annotator/annotationEditor.js'
+import {
+  annotApi,
+  cardStyle,
+  card,
+  updateClasses,
+  getClasses,
+  toggleClassEnable,
+  annotClassApi,
+  filterClasses,
+} from './index.js'
 
 class AnnotatorViewer extends React.Component {
   constructor(props) {
