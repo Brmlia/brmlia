@@ -150,8 +150,8 @@ class TiffViewer extends Component {
         <canvas
           id="canvas-1"
           ref={this.canvas}
-          width="100%"
-          height="100%"
+          // width={window.innerWidth}
+          height="280"
         ></canvas>
         <ProgressBar />
         <div className="slice-slider-container">

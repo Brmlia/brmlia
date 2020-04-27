@@ -90,5 +90,15 @@ export function parseMultiTiff(name, buffer) {
   }
 
   var image = new Image(ifds[0].width, ifds[0].height);
-  updateTiffPages(name, pages, image);
+  const tlines = String(ifds[0].t270).split(/\s+/)
+
+  var metadata = {}
+  for (var i = 0; i < tlines.length; i++) {
+    const tSpl = tlines[i].split(/\=/)
+    const key = tSpl[0]
+    const value = tSpl[1]
+    metadata[key] = value
+  }
+
+  updateTiffPages(name, pages, image, metadata);
 }

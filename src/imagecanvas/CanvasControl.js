@@ -108,7 +108,6 @@ function updateUniformColor(value, channel) {
     const channels = prevState.channels.map((ch, j) => {
       if (j === channel - 1) {
         var newChannel = ch;
-        console.log('updateColorUniform: ', value);
         newChannel.uniforms.color.value = value;
         return newChannel;
       } else {
@@ -274,7 +273,6 @@ export function updateColor(value, channel) {
 
   if (isValidChannel(channel)) {
     if (value !== uApi.getState().channels[channel - 1].uniforms.color.value) {
-      console.log('CanvasControl::updateColor() - value', value, color);
       updateUniformColor(color, channel);
     }
     return true;

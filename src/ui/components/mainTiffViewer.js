@@ -25,8 +25,6 @@ class mainTiffViewer extends Component {
     this.fileLength = 0;
     this.length = 0;
 
-    // 0: multifile
-    // 1: multipage
     // Case 1: (60 z planes, 3 channels, 1)
     // Case 2: (60 z planes, 1 channel, 3)
     // Case 3: (1 z planes, 3 channels, 60)
@@ -49,18 +47,18 @@ class mainTiffViewer extends Component {
   determineType(fileLength, pageLength, channelLength) {
     var tType = 0
 
-    if ( (fileLength === 1) && (channelLength === 3) && (pageLength >   1) ) tType = 1
-    if ( (fileLength >   1) && (channelLength === 1) && (pageLength >   1) ) tType = 2
-    if ( (fileLength >   1) && (channelLength === 3) && (pageLength === 1) ) tType = 3
-    if ( (fileLength >   1) && (channelLength === 1) && (pageLength === 1) ) tType = 4
+    if      ( (fileLength === 1) && (channelLength === 3) && (pageLength >   1) ) tType = 1
+    else if ( (fileLength === 3) && (channelLength === 1) && (pageLength >   1) ) tType = 2
+    else if ( (fileLength >   1)                          && (pageLength === 3) ) tType = 3
+    else if ( (fileLength >   1)                          && (pageLength === 1) ) tType = 4
 
     if (tType !== 0) {
       this.type = tType
-      console.log("determineType() - file, page, channel lengths: ", fileLength, pageLength, channelLength)
     }
     else {
       // invalid type
     }
+    console.log("determineType() - type, file, page, channel lengths: ", tType, fileLength, pageLength, channelLength)
   }
 
   isValidFile(file, idx) {
@@ -74,8 +72,40 @@ class mainTiffViewer extends Component {
     )
   }
 
-  getMetadata(file) {
-    console.log("getMetadata", file)
+  parseMetadata(file, metadata) {
+
+    const {
+      images,
+      channels,
+      slices,
+    } = metadata
+
+    const fileLength = file.length
+    const pageLength = file[0].pages.length
+    const channelLength = parseInt(channels || 1)
+    // Case 1: (60 z planes, 3 channels, 1)
+    //   images = 180
+    //   channels = 3
+    //   slices = 60
+    //   hyperstack = true
+    //   pages = 180
+    // Case 2: (60 z planes, 1 channel, 3)
+    //   images = 60
+    //   channels = n/a
+    //   slices = 60
+    //   hyperstack = n/a
+    //   pages = 60
+    // Case 3: (1 z planes, 3 channels, 60)
+    //   images = 3
+    //   channels = n/a
+    //   slices = 3
+    //   hyperstack = n/a
+    //   pages = 3
+    // Case 4: (1 z planes, 1 channel, 180)
+    //   pages = 1
+    //   n/a
+
+    this.determineType(fileLength, pageLength, channelLength)
   }
 
   setTiffParams(file, pages) {
@@ -108,13 +138,13 @@ class mainTiffViewer extends Component {
     );
   }
 
-  async updateForFile(state) {
+  updateForFile(state) {
     if (state && state.file) {
       const idx = Math.max((state.file.length - 1), 0);
       if (
         this.isValidFile(state.file, idx)
       ) {
-        this.getMetadata(state.file)
+        this.parseMetadata(state.file, state.file[idx].metadata)
         this.setTiffParams(state.file, state.file[idx].pages)
         this.initializeVolume(state.file, this.length)
       }

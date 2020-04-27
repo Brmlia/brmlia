@@ -120,13 +120,14 @@ export function updateTiff(image, rgba) {
 
 }
 
-export function updateTiffPages(name, pages, image) {
+export function updateTiffPages(name, pages, image, metadata) {
   fileApi.setState( prevState => {
     const file = prevState.file.map((file, j) => {
       if (file.name === name) {
         var newFile = file;
         newFile.pages = pages
         newFile.image = image
+        newFile.metadata = metadata
         return newFile;
       }
       else {

@@ -19,17 +19,14 @@ class UI extends React.Component {
 
         <Container style={container}>
           <Row style={rowStyle}>
-            <Col xs="2">
+            <Col xs="4">
               <AxesViewer />
+              <Thumbnails />
             </Col>
 
             <Col xs="8">
               <MainViewer />
-            </Col>
-
-            <Col xs="2">
               <ChannelViewer />
-              <Thumbnails />
             </Col>
           </Row>
         </Container>
