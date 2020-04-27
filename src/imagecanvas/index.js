@@ -5,6 +5,7 @@ import {
 
 import {
   updateImage as updIm,
+  updateTexture as updText,
 } from './CanvasControl.js';
 
 import {
@@ -15,5 +16,6 @@ import {
 export const uApi = uniApi
 export const fApi = fileApi
 export const updateImage = updIm
+export const updateTexture = updText
 export const createTexture = createT
 export const createTextureFromTiff = createTFrTiff

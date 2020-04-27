@@ -5,6 +5,7 @@ import AxesViewer from './components/axesViewer.js';
 import Thumbnails from './components/thumbnails.js';
 import Menus from './components/menus.js';
 import ChannelViewer from './components/channelViewer.js';
+import SampleMesh from './components/sampleMesh.js';
 
 import { Container, Row, Col } from 'reactstrap';
 
@@ -25,6 +26,7 @@ class UI extends React.Component {
             </Col>
 
             <Col xs="8">
+              <SampleMesh />
               <MainViewer />
               <ChannelViewer />
             </Col>

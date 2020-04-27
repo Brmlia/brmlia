@@ -5,8 +5,16 @@ export const createTexture = image => {
   return new THREE.TextureLoader().load(image);
 };
 
-export const createTextureFromTiff = image => {
-  return new THREE.TextureLoader().load(image);
+// export const createTextureFromTiff = imagedata => {
+export const createTextureFromTiff = canvas => {
+  console.log("createTextureFromTiff", canvas)
+  var texture = new THREE.Texture(canvas)
+  // var texture = new THREE.DataTexture(imagedata, 256, 256, THREE.RGBFormat)
+  // texture.type = THREE.UnsignedByteType;
+  texture.needsUpdate = true;
+  // return new THREE.TextureLoader().load(image);
+  // return null
+  return texture
 };
 
 const initState = {

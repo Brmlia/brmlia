@@ -2,6 +2,10 @@ import {
   fileApi,
 } from '../../fileuploader/fileStore.js';
 
+import {
+  uApi as uniApi,
+} from '../../utils/index.js';
+
 // import {
 //   annotApi as aApi,
 // } from '../../annotator/annotationStore.js';
@@ -52,15 +56,15 @@ import {
   updateChannelSlice as updSlice,
 } from '../../datacube/datacubeControls.js';
 
-// import {
+import {
 //   updateBrightness as updBrightness,
 //   updateContrast   as updContrast,
 //   updateWhitepoint as updWhitepoint,
 //   updateBlackpoint as updBlackpoint,
 //   updateColor      as updColor,
 //   updateOpacity    as updOpacity,
-// } from '../../imagecanvas/CanvasControl.js';
-
+  updateTexture as updText,
+} from '../../imagecanvas/CanvasControl.js';
 // import {
 //   openMenu         as opMenu,
 //   startDrawing     as strDr,
@@ -121,6 +125,7 @@ export const updateChannelSlice = updSlice
 // export const updateBlackpoint   = updBlackpoint
 // export const updateColor        = updColor
 // export const updateOpacity      = updOpacity
+export const updateTexture        = updText
 // export const openMenu           = opMenu
 // export const startDrawing       = strDr
 // export const startSelecting     = strSel
@@ -134,3 +139,5 @@ export const updateChannelSlice = updSlice
 export const updateChannelSel   = updChannelSel
 export const updateLastSel      = updLastSel
 // export const exportJson         = expJson
+
+export const uApi = uniApi

@@ -127,11 +127,38 @@ export function updateImage(file, channel) {
 
   if (texture === '') {
     if (file.type === 'image/tiff') {
-      texture = createTextureFromTiff(blob);
+      // texture = createTextureFromTiff(file.pages);
+      // texture = createTexture(blob);
     } else {
       texture = createTexture(blob);
     }
   }
+  const prevStateCh = uApi.getState().channels[channel - 1];
+
+  if (
+    prevStateCh.name !== name ||
+    prevStateCh.imagepath !== blob ||
+    prevStateCh.uniforms.image.value !== texture
+  ) {
+    updateUniformImage(texture, name, blob, channel);
+  }
+}
+
+export function updateTexture(file, imageData) {
+  let name = file.name;
+  let blob = file.image;
+  let texture = file.texture;
+  let channel = 1;
+  console.log("updateTexture", imageData, file)
+  //   if (file.type === 'image/tiff') {
+  //     console.log("updateImage")
+      texture = createTextureFromTiff(imageData);
+  //     // texture = createTexture(blob);
+  //   } else {
+  //     texture = createTexture(blob);
+  //   }
+  // }
+  console.log("texture: ", texture)
   const prevStateCh = uApi.getState().channels[channel - 1];
 
   if (
