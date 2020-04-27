@@ -35,7 +35,7 @@ class mainViewer extends React.Component {
     );
 
     let width = window.innerWidth * 0.6;
-    let height = window.innerHeight * 0.6;
+    let height = window.innerHeight * 1.0;
 
     return (
       <Card style={card}>

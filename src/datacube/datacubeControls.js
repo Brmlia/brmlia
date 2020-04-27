@@ -37,7 +37,7 @@ async function _loadVolumes(volume, pages, width) {
       })
     }
 
-    console.log("loading ", pIdx , "/", pages.length-1)
+    // console.log("loading ", pIdx , "/", pages.length-1)
     await volume.load(page, width, pIdx)
   }
 }
@@ -69,12 +69,26 @@ class ProgressBar extends Component {
   state = {
     loaded: 0
   }
+
+  display = () => {
+    if (this.state.loaded !== 100) {
+      return (
+        <Progress striped bar value={this.state.loaded}> {this.state.loaded}% </Progress>
+      )
+    }
+    else {
+      return (
+        <div> </div>
+      )
+    }
+  }
+
   render() {
     stateApi.subscribe(state => {
       this.state.loaded = state.loaded
     })
     return (
-      <Progress striped bar value={this.state.loaded}> {this.state.loaded}% </Progress>
+      this.display()
     )
   }
 }
