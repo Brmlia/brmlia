@@ -25,8 +25,10 @@ class TiffViewer extends Component {
     this.fileLength = 0;
     this.length = 0;
 
-    // 0: multifile
-    // 1: multipage
+    // Case 1: (60 z planes, 3 channels, 1)
+    // Case 2: (60 z planes, 1 channel, 3)
+    // Case 3: (1 z planes, 3 channels, 60)
+    // Case 4: (1 z planes, 1 channel, 180)
     this.type = 1;
 
     this.cube = {
@@ -42,41 +44,56 @@ class TiffViewer extends Component {
     }));
   }
 
+  isValidFile(file, idx) {
+
+    return (
+      (file.length > 0) &&
+      (file[idx]) &&
+      (file[idx].pages) &&
+      (file[idx].pages.length > 0) &&
+      (file.length !== this.fileLength)
+    )
+  }
+
+  async initializeVolume(file, width, height, length) {
+    this.cube.x = width
+    this.cube.y = height
+    this.cube.z = length
+
+    this.volume = new Volume({
+      channel: new DataCube({
+        bytes: 1,
+        size: this.cube,
+        context: this.state.cntxt,
+      }),
+    });
+
+    await loadSlices(
+      this.state.cntxt,
+      this.volume,
+      this.state.axes,
+      2,
+      file,
+      this.type
+    );
+  }
+
+  setSlider() {
+    if (this.props.axis === "0") this.length = this.cube.x
+    if (this.props.axis === "1") this.length = this.cube.y
+    if (this.props.axis === "2") this.length = this.cube.z
+  }
+
   async updateForFile(state) {
     if (state && state.file) {
-      const idx = state.file.length - 1;
+      const idx = Math.max((state.file.length - 1), 0);
+      const file = state.file[idx]
 
       if (
-        state.file.length > 0 &&
-        state.file[idx].pages &&
-        state.file[idx].pages.length > 0 &&
-        state.file.length !== this.fileLength
+        this.isValidFile(state.file, idx)
       ) {
-        if (this.type === 0) {
-          this.fileLength = this.length = state.file.length;
-        } else if (this.type === 1) {
-          this.fileLength = state.file.length;
-          this.length = state.file[idx].pages.length;
-        }
-
-        this.cube.x = this.cube.y = this.cube.z = Math.max(256, this.length);
-
-        this.volume = new Volume({
-          channel: new DataCube({
-            bytes: 1,
-            size: this.cube,
-            context: this.state.cntxt,
-          }),
-        });
-
-        await loadSlices(
-          this.state.cntxt,
-          this.volume,
-          this.state.axes,
-          this.state.axisIdx,
-          state.file,
-          this.type
-        );
+        this.initializeVolume(state.file, file.image.width, file.image.height, file.pages.length)
+        this.setSlider()
       }
     }
     this.forceUpdate();
@@ -167,7 +184,7 @@ class TiffViewer extends Component {
             sliderValue={this.sliderValueSlice.bind(this)}
           />
           <button
-            id="resetSliceBtn"
+            id="prevSliceBtn"
             onClick={() => {
               this.nextSlice(true);
             }}
@@ -183,7 +200,7 @@ class TiffViewer extends Component {
             Go to Slice 0
           </button>
           <button
-            id="resetSliceBtn"
+            id="nextSliceBtn"
             onClick={() => {
               this.nextSlice(false);
             }}

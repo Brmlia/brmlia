@@ -117,8 +117,10 @@ class mainTiffViewer extends Component {
     }
   }
 
-  async initializeVolume(file, length) {
-    this.cube.x = this.cube.y = this.cube.z = Math.max(256, length);
+  async initializeVolume(file, width, height, length) {
+    this.cube.x = width
+    this.cube.y = height
+    this.cube.z = length
 
     this.volume = new Volume({
       channel: new DataCube({
@@ -141,12 +143,13 @@ class mainTiffViewer extends Component {
   updateForFile(state) {
     if (state && state.file) {
       const idx = Math.max((state.file.length - 1), 0);
+      const file = state.file[idx]
       if (
         this.isValidFile(state.file, idx)
       ) {
-        this.parseMetadata(state.file, state.file[idx].metadata)
-        this.setTiffParams(state.file, state.file[idx].pages)
-        this.initializeVolume(state.file, this.length)
+        this.parseMetadata(state.file, file.metadata)
+        this.setTiffParams(state.file, file.pages)
+        this.initializeVolume(state.file, file.image.width, file.image.height, file.pages.length)
       }
     }
     this.forceUpdate();
