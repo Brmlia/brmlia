@@ -42,7 +42,7 @@ class ImageCanvas extends React.Component {
       for (let idx = 0; idx < page.length; idx++) {
         imageData.data[idx] = page[idx];
       }
-      this.cntxt.putImageData(imageData, 0, 0)
+      // this.cntxt.putImageData(imageData, 0, 0)
 
       // this.texture = createTextureFromTiff(imageData.data, imageData.width, imageData.height)
       const texture = createTextureFromTiff(imageData.data, imageData.width, imageData.height)
@@ -89,21 +89,21 @@ class ImageCanvas extends React.Component {
       this.updateForControls(state);
     });
 
-    // return canvasApi.getState().canvas[this.props.channel - 1];
-    return (
-      <div>
-        <Canvas
-          // ref={this.canvasRef}
-          width="1000px"
-          height="1000px"
-          margin="0px"
-          id="tiff-canvas"
-        >
-        <Mesh channel={this.props.channel}>
-        </Mesh>
-        </Canvas>
-      </div>
-    )
+    return canvasApi.getState().canvas[this.props.channel - 1];
+    // return (
+    //   <div>
+    //     <Canvas
+    //       // ref={this.canvasRef}
+    //       width="1000px"
+    //       height="1000px"
+    //       margin="0px"
+    //       id="tiff-canvas"
+    //     >
+    //     <Mesh channel={this.props.channel}>
+    //     </Mesh>
+    //     </Canvas>
+    //   </div>
+    // )
   }
 }
 
