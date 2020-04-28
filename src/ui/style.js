@@ -65,7 +65,7 @@ export const card = {
 };
 
 export const cardBody = {
-  width: '85%',
+  width: '95%',
   height: '100%',
 };
 

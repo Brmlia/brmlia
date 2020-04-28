@@ -64,6 +64,7 @@ class Channel extends React.Component {
         >
           Channel {`${this.props.ch}`}
         </Button>
+        &nbsp;
         <Button
           className="viewBtn"
           outline

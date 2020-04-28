@@ -5,15 +5,12 @@ export const createTexture = image => {
   return new THREE.TextureLoader().load(image);
 };
 
-// export const createTextureFromTiff = imagedata => {
-export const createTextureFromTiff = canvas => {
-  console.log("createTextureFromTiff", canvas)
-  var texture = new THREE.Texture(canvas)
-  // var texture = new THREE.DataTexture(imagedata, 256, 256, THREE.RGBFormat)
-  // texture.type = THREE.UnsignedByteType;
+export const createTextureFromTiff = (imagedata, width, height) => {
+  const data = new Uint8Array(imagedata)
+
+  var texture =  new THREE.DataTexture(data, width, height, THREE.RGBAFormat)
   texture.needsUpdate = true;
-  // return new THREE.TextureLoader().load(image);
-  // return null
+  // console.log("imageStore::createTextureFromTiff() - texture generated from imagedata with width and height: ", texture, imagedata, width, height)
   return texture
 };
 

@@ -103,7 +103,6 @@ class Canvas2 extends React.Component {
           file.width,
           file.height
         );
-
         for (let idx = 0; idx < page.length; idx++) {
           imageData.data[idx] = page[idx];
         }
@@ -139,8 +138,8 @@ class Canvas2 extends React.Component {
       <div>
         <canvas
           ref={this.canvasRef}
-          width="1000px"
-          height="1000px"
+          width="100px"
+          height="100px"
           margin="0px"
           id="tiff-canvas"
         >
@@ -151,8 +150,11 @@ class Canvas2 extends React.Component {
 
   display() {
     return (
-      this.allTiffsCanvas()
+      <div />
     )
+    // return (
+    //   this.allTiffsCanvas()
+    // )
     // return (
     //   this.allTiffscanvas()
     // )

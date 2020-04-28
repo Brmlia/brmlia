@@ -144,21 +144,18 @@ export function updateImage(file, channel) {
   }
 }
 
-export function updateTexture(file, imageData) {
+export function updateTexture(file, texture) {
   let name = file.name;
   let blob = file.image;
-  let texture = file.texture;
   let channel = 1;
-  console.log("updateTexture", imageData, file)
   //   if (file.type === 'image/tiff') {
   //     console.log("updateImage")
-      texture = createTextureFromTiff(imageData);
+      // texture = createTextureFromTiff(imageData);
   //     // texture = createTexture(blob);
   //   } else {
   //     texture = createTexture(blob);
   //   }
   // }
-  console.log("texture: ", texture)
   const prevStateCh = uApi.getState().channels[channel - 1];
 
   if (
