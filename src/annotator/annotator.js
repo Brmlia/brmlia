@@ -1,9 +1,6 @@
 import React from 'react';
 
-import {
-  fileApi,
-  annotApi,
-} from './index.js'
+import { fileApi, annotApi, addAnnotationFromJson } from './index.js';
 
 class Annotator extends React.Component {
   file_size = 0;
@@ -11,10 +8,16 @@ class Annotator extends React.Component {
 
   render() {
     fileApi.subscribe(state => {
-      if (this.file_size !== state.size) {
-        this.file_size = state.size;
+      if (state && this.file_size !== state.size) {
+        for (var i = 0; i < state.file.length; i++) {
+          const json = state.file[i].json;
+          if (json) {
+            addAnnotationFromJson(json);
+            this.file_size = state.size;
+          }
 
-        console.log('fileApi - files: ', state.file);
+          console.log('fileApi - files: ', state.file);
+        }
       }
     });
     annotApi.subscribe(state => {

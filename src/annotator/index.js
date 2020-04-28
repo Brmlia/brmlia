@@ -7,6 +7,7 @@ import {
 
 import {
   addAnnotation as addAnnot,
+  addAnnotationFromJson as addAnnotJson,
   undoAnnotation as undoAnnot,
   getLastAnnotIdx as getLstAntIdx,
   getLastCachedAnnot as getLstCdAnt,
@@ -46,6 +47,7 @@ export const fileApi = fApi;
 export const annotApi = aApi;
 export const cachedAnnotApi = caApi;
 export const addAnnotation = addAnnot;
+export const addAnnotationFromJson = addAnnotJson;
 export const undoAnnotation = undoAnnot;
 export const getLastAnnotIdx = getLstAntIdx;
 export const getLastCachedAnnot = getLstCdAnt;

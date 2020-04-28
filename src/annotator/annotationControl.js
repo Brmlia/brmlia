@@ -1,9 +1,4 @@
-import {
-  annotApi,
-  cachedAnnotApi,
-  drawRect,
-  getCanvas,
-} from './index.js';
+import { annotApi, cachedAnnotApi, drawRect, getCanvas } from './index.js';
 
 export function addAnnotation(group, label, classLabel) {
   const default_class = 'class1';
@@ -42,7 +37,12 @@ function _isAnnotValid(annotation) {
 export function addAnnotationFromJson(json) {
   for (var i = 0; i < json.length; i++) {
     if (_isAnnotValid(json[i])) {
-      const rect = drawRect(getCanvas(), json[i].rect, json[i].label);
+      const rect = drawRect(
+        getCanvas(),
+        json[i].rect,
+        json[i].label,
+        json[i].class
+      );
       addAnnotation(rect, json[i].label, json[i].class);
     }
   }
