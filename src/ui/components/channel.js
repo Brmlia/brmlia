@@ -30,6 +30,10 @@ class Channel extends React.Component {
     this.forceUpdate();
   };
 
+  sliderValueBr(value) {
+    updateBrightness(value, this.props.ch);
+  }
+
   render() {
     var sliderValueBr = this.sliderValueBr;
     var sliderValueCt = this.sliderValueCt;
@@ -77,6 +81,27 @@ class Channel extends React.Component {
           <Card style={card}>
             <CardBody style={cardBody}>
               <div style={canvasThumbnail}>{canvas}</div>
+              <div className="brightness-slider-container">
+                <Slider
+                  label="Brightness"
+                  width="40%"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  initial="0"
+                  multiplier="100"
+                  raw="0"
+                  sliderValue={sliderValueBr.bind(this)}
+                />
+                <button
+                  id="resetBrBtn"
+                  onClick={() => {
+                    this.resetBrightness();
+                  }}
+                >
+                  Reset Brightness
+                </button>
+              </div>
             </CardBody>
           </Card>
         </UncontrolledCollapse>

@@ -93,13 +93,13 @@ class ImageCanvas extends React.Component {
     return (
       <div>
         <Canvas
-          ref={this.canvasRef}
+          // ref={this.canvasRef}
           width="1000px"
           height="1000px"
           margin="0px"
           id="tiff-canvas"
         >
-        <Mesh channel="1" texture={this.texture}>
+        <Mesh channel={this.props.channel} texture={this.texture}>
         </Mesh>
         </Canvas>
       </div>

@@ -57,7 +57,7 @@ import {
 } from '../../datacube/datacubeControls.js';
 
 import {
-//   updateBrightness as updBrightness,
+  updateBrightness as updBrightness,
 //   updateContrast   as updContrast,
 //   updateWhitepoint as updWhitepoint,
 //   updateBlackpoint as updBlackpoint,
@@ -119,7 +119,7 @@ export const redo               = null
 export const Volume             = Vol
 export const loadSlices         = ldSlices
 export const updateChannelSlice = updSlice
-// export const updateBrightness   = updBrightness
+export const updateBrightness   = updBrightness
 // export const updateContrast     = updContrast
 // export const updateWhitepoint   = updWhitepoint
 // export const updateBlackpoint   = updBlackpoint
