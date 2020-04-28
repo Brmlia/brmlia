@@ -119,7 +119,7 @@ class DataCube {
 
     let i = square.length - 1;
     if (axis === 'x') {
-      for (let z = zsize - 1; z >= 0; --z) {
+      for (let z = 0; z < zsize - 1; z++) {
         for (let y = ysize - 1; y >= 0; --y) {
           square[i] = _this.cube[index + xsize * y + xysize * z];
           --i;
@@ -130,7 +130,7 @@ class DataCube {
       // possible to make this more efficient with an array memcpy
       // as 256 x are consecutive, but no memcpy in browser.
       const yoffset = xsize * index;
-      for (let z = zsize - 1; z >= 0; --z) {
+      for (let z = 0; z < zsize - 1; z++) {
         for (let x = xsize - 1; x >= 0; --x) {
           square[i] = _this.cube[x + yoffset + xysize * z];
           --i;

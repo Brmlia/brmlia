@@ -118,13 +118,13 @@ class TiffViewer extends Component {
     var slice;
     if (dec)
       slice = this.clamp(
-        this.state.sliceIdx - 1,
+        parseInt(this.state.sliceIdx) - 1,
         0,
         Math.max(0, this.length - 1)
       );
     else
       slice = this.clamp(
-        this.state.sliceIdx + 1,
+        parseInt(this.state.sliceIdx) + 1,
         0,
         Math.max(0, this.length - 1)
       );
@@ -132,7 +132,7 @@ class TiffViewer extends Component {
   }
 
   sliderValueSlice(value) {
-    this.slice(value);
+    this.slice(parseInt(value));
   }
 
   nextAxis(dec) {
@@ -156,6 +156,10 @@ class TiffViewer extends Component {
 
   clamp(val, min, max) {
     return Math.min(Math.max(val, min), max);
+  }
+
+  handleChangePageNumber(value) {
+    this.slice(parseInt(value))
   }
 
   render() {
@@ -207,6 +211,11 @@ class TiffViewer extends Component {
           >
             {'>>'}
           </button>
+          &nbsp;
+          <label>
+           Page #: &nbsp;
+           <input type="text" value={this.state.pagenumber} onChange={event => this.handleChangePageNumber(event.target.value) } />
+          </label>
           <div> Slice: {this.state.sliceIdx} </div>
         </div>
       </div>
