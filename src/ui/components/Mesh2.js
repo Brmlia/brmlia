@@ -1,5 +1,6 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from 'react-three-fiber';
+import * as THREE from 'three';
 
 import {
   uApi
@@ -101,7 +102,7 @@ function Mesh(props) {
     [props]
   );
 
-  useFrame(state => {
+  function setUniforms() {
     material.current.uniforms.brightness.value = uApi.getState().channels[
       props.channel - 1
     ].uniforms.brightness.value;
@@ -123,6 +124,28 @@ function Mesh(props) {
     material.current.uniforms.color.value = uApi.getState().channels[
       props.channel - 1
     ].uniforms.color.value;
+  }
+
+  function setDefaultUniforms() {
+    material.current.uniforms.brightness.value = "0"
+    material.current.uniforms.contrast.value = "0"
+    material.current.uniforms.whitepoint.value = "255"
+    material.current.uniforms.blackpoint.value = "0"
+    material.current.uniforms.opacity.value = "0"
+    if (props.texture) {
+      material.current.uniforms.image.value = props.texture;
+    }
+    else {
+      material.current.uniforms.image.value = uApi.getState().channels[
+        props.channel - 1
+      ].uniforms.image.value;
+    }
+    material.current.uniforms.color.value = new THREE.Color(0xff0000)
+  }
+
+  useFrame(state => {
+    // setUniforms()
+    setDefaultUniforms()
   });
 
   return (

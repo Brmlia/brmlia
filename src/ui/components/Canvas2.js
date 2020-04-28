@@ -1,6 +1,7 @@
 import React from 'react';
 import { Canvas } from 'react-three-fiber';
 import { fabric } from 'fabric';
+import * as THREE from 'three';
 
 import {
   fApi,
@@ -69,6 +70,26 @@ class Canvas2 extends React.Component {
     context.drawImage(newC, x, y, cw, ch)
   }
 
+  generateSampleData() {
+    var data = [];
+    var N = 4;
+
+    for (var i = 0; i < N*N; ++i) {
+      data.push(255);
+      data.push(0);
+      data.push(0);
+      data.push(255);
+    }
+    return data
+  }
+
+  generateTexture(imageData, width, height) {
+    const data = new Uint8Array(imageData)
+
+    this.texture =  new THREE.DataTexture(data, width, height, THREE.RGBAFormat)
+    this.texture.needsUpdate = true
+  }
+
   loadTiff(context) {
     for (var f = 0; f < this.files.length; f++) {
 
@@ -87,12 +108,32 @@ class Canvas2 extends React.Component {
           imageData.data[idx] = page[idx];
         }
 
+        this.generateTexture(imageData.data, imageData.width, imageData.height)
+        // this.generateTexture(this.generateSampleData(), 4, 4)
         this.shrinkTiff(context, imageData, f)
       }
     }
   }
 
   allTiffsCanvas = () => {
+    if (this.canvas) this.loadTiff(this.canvas.getContext('2d'))
+    return (
+      <div>
+        <Canvas
+          ref={this.canvasRef}
+          width="1000px"
+          height="1000px"
+          margin="0px"
+          id="tiff-canvas"
+        >
+        <Mesh channel="1" texture={this.texture}>
+        </Mesh>
+        </Canvas>
+      </div>
+    );
+  }
+
+  allTiffscanvas = () => {
     if (this.canvas) this.loadTiff(this.canvas.getContext('2d'))
     return (
       <div>
@@ -110,10 +151,11 @@ class Canvas2 extends React.Component {
 
   display() {
     return (
-      <div>
-        {this.allTiffsCanvas()}
-      </div>
+      this.allTiffsCanvas()
     )
+    // return (
+    //   this.allTiffscanvas()
+    // )
   }
 
   render() {
