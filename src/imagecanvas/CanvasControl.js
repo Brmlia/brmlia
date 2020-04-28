@@ -127,8 +127,7 @@ export function updateImage(file, channel) {
 
   if (texture === '') {
     if (file.type === 'image/tiff') {
-      // texture = createTextureFromTiff(file.pages);
-      // texture = createTexture(blob);
+      //
     } else {
       texture = createTexture(blob);
     }
@@ -147,14 +146,7 @@ export function updateImage(file, channel) {
 export function updateTexture(file, texture, channel) {
   let name = file.name;
   let blob = file.image;
-  //   if (file.type === 'image/tiff') {
-  //     console.log("updateImage")
-      // texture = createTextureFromTiff(imageData);
-  //     // texture = createTexture(blob);
-  //   } else {
-  //     texture = createTexture(blob);
-  //   }
-  // }
+
   const prevStateCh = uApi.getState().channels[channel - 1];
 
   if (

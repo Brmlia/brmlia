@@ -104,22 +104,6 @@ export function addTiff(file) {
   idx = fileApi.getState().size - 1;
 }
 
-// export function updateTiff(image, rgba) {
-//   fileApi.setState( prevState => {
-//     const file = prevState.file.map((file, j) => {
-//       var newFile = file;
-//       newFile.texture = createTextureFromTiff(image.src)
-//       newFile.image = image
-//       newFile.rgba = rgba
-//       return newFile;
-//     })
-//     return {
-//       file
-//     }
-//   })
-
-// }
-
 export function updateTiffPages(name, pages, image, metadata) {
   fileApi.setState( prevState => {
     const file = prevState.file.map((file, j) => {
@@ -128,7 +112,6 @@ export function updateTiffPages(name, pages, image, metadata) {
         newFile.pages = pages
         newFile.image = image
         newFile.metadata = metadata
-        // newFile.texture = createTextureFromTiff(pages[0])
         return newFile;
       }
       else {

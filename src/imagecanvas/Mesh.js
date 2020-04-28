@@ -126,26 +126,8 @@ function Mesh(props) {
     ].uniforms.color.value;
   }
 
-  function setDefaultUniforms() {
-    material.current.uniforms.brightness.value = "0"
-    material.current.uniforms.contrast.value = "0"
-    material.current.uniforms.whitepoint.value = "255"
-    material.current.uniforms.blackpoint.value = "0"
-    material.current.uniforms.opacity.value = "0"
-    if (props.texture) {
-      material.current.uniforms.image.value = props.texture;
-    }
-    else {
-      material.current.uniforms.image.value = uApi.getState().channels[
-        props.channel - 1
-      ].uniforms.image.value;
-    }
-    material.current.uniforms.color.value = new THREE.Color(0xff0000)
-  }
-
   useFrame(state => {
     setUniforms()
-    // setDefaultUniforms()
   });
 
   return (
