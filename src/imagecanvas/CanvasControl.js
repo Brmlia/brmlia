@@ -144,10 +144,9 @@ export function updateImage(file, channel) {
   }
 }
 
-export function updateTexture(file, texture) {
+export function updateTexture(file, texture, channel) {
   let name = file.name;
   let blob = file.image;
-  let channel = 1;
   //   if (file.type === 'image/tiff') {
   //     console.log("updateImage")
       // texture = createTextureFromTiff(imageData);

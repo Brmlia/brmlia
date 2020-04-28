@@ -44,9 +44,9 @@ class ImageCanvas extends React.Component {
       }
       this.cntxt.putImageData(imageData, 0, 0)
 
-      this.texture = createTextureFromTiff(imageData.data, imageData.width, imageData.height)
-      // const texture = createTextureFromTiff(imageData.data, imageData.width, imageData.height)
-      // updateTexture(file, texture)
+      // this.texture = createTextureFromTiff(imageData.data, imageData.width, imageData.height)
+      const texture = createTextureFromTiff(imageData.data, imageData.width, imageData.height)
+      updateTexture(file, texture, this.props.channel)
     }
   }
 
@@ -99,7 +99,7 @@ class ImageCanvas extends React.Component {
           margin="0px"
           id="tiff-canvas"
         >
-        <Mesh channel={this.props.channel} texture={this.texture}>
+        <Mesh channel={this.props.channel}>
         </Mesh>
         </Canvas>
       </div>

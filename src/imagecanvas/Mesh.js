@@ -118,17 +118,9 @@ function Mesh(props) {
     material.current.uniforms.opacity.value = uApi.getState().channels[
       props.channel - 1
     ].uniforms.opacity.value;
-    // material.current.uniforms.image.value = uApi.getState().channels[
-    //   props.channel - 1
-    // ].uniforms.image.value;
-    if (props.texture) {
-      material.current.uniforms.image.value = props.texture;
-    }
-    else {
-      material.current.uniforms.image.value = uApi.getState().channels[
-        props.channel - 1
-      ].uniforms.image.value;
-    }
+    material.current.uniforms.image.value = uApi.getState().channels[
+      props.channel - 1
+    ].uniforms.image.value;
     material.current.uniforms.color.value = uApi.getState().channels[
       props.channel - 1
     ].uniforms.color.value;
@@ -140,9 +132,6 @@ function Mesh(props) {
     material.current.uniforms.whitepoint.value = "255"
     material.current.uniforms.blackpoint.value = "0"
     material.current.uniforms.opacity.value = "0"
-    // material.current.uniforms.image.value = uApi.getState().channels[
-    //   props.channel - 1
-    // ].uniforms.image.value;
     if (props.texture) {
       material.current.uniforms.image.value = props.texture;
     }
