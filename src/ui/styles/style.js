@@ -62,6 +62,7 @@ export const card = {
   width: '100%',
   fluid: true,
   fontSize: '12px',
+  // height: '300px'
 };
 
 export const cardBody = {

@@ -169,7 +169,8 @@ class mainTiffViewer extends Component {
       this.volume,
       value,
       this.state.axes,
-      this.state.axisIdx
+      this.state.axisIdx,
+      false
     );
     this.forceUpdate();
   }

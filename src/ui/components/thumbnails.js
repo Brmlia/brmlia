@@ -136,8 +136,8 @@ class Thumbnails extends React.Component {
       <div>
         <canvas
           ref={this.canvasRef}
-          width="1000px"
-          height="1000px"
+          width="500px"
+          height="500px"
           margin="0px"
           id="tiff-canvas"
         />

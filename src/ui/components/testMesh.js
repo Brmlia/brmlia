@@ -127,7 +127,10 @@ function Mesh(props) {
   }
 
   function setDefaultUniforms() {
-    material.current.uniforms.brightness.value = "0"
+    // material.current.uniforms.brightness.value = "0"
+    material.current.uniforms.brightness.value = uApi.getState().channels[
+      props.channel - 1
+    ].uniforms.brightness.value;
     material.current.uniforms.contrast.value = "0"
     material.current.uniforms.whitepoint.value = "255"
     material.current.uniforms.blackpoint.value = "0"

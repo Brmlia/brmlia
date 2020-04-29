@@ -38,7 +38,14 @@ import {
   canvasStyle1      as cvsStyle1,
   canvasStyle2      as cvsStyle2,
   canvasStyle3      as cvsStyle3,
-} from '../style.js';
+} from '../styles/style.js';
+
+import {
+  channelCard        as chCard,
+  channelCardBody    as chCardBody,
+  channelCanvas      as chCanvas,
+  channelImageCanvas as chImgCanvas,
+} from '../styles/channelStyle.js';
 
 // import {
 //   updateClasses     as updCls,
@@ -125,6 +132,10 @@ export const mainCanvasStyle    = mCvsStyle
 export const canvasStyle1       = cvsStyle1
 export const canvasStyle2       = cvsStyle2
 export const canvasStyle3       = cvsStyle3
+export const channelCard        = chCard
+export const channelCardBody    = chCardBody
+export const channelCanvas      = chCanvas
+export const channelImageCanvas = chImgCanvas
 // export const updateClasses      = updCls
 // export const getClasses         = getCls
 // export const toggleClassEnable  = toggleClsEn

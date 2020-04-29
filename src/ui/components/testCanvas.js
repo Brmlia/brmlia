@@ -11,9 +11,11 @@ import {
   generateTexture,
   shrinkTiff,
   updateChannelSlice,
+  updateBrightness,
 } from './index.js'
 
 import Mesh from './testMesh.js'
+import Slider from './slider.js';
 
 class TestCanvas extends React.Component {
 
@@ -43,6 +45,8 @@ class TestCanvas extends React.Component {
         axisIdx: 0,
         sliceIdx: 23,
         cntxt: null,
+        // rgb: 0 (red), 1 (green), 2 (blue)
+        rgb: 0,
       }))
       this.fileLength = 0;
       this.length = 0;
@@ -176,7 +180,6 @@ class TestCanvas extends React.Component {
       axisIdx,
       true
     );
-    this.setImageData()
     this.forceUpdate();
   }
 
@@ -188,8 +191,16 @@ class TestCanvas extends React.Component {
     this.slice(parseInt(value))
   }
 
+  handleChangeChannel(value) {
+  }
+
+  sliderValueBr(value) {
+    updateBrightness(value, 4);
+  }
+
   display() {
     this.loadTiff()
+    var sliderValueBr = this.sliderValueBr;
     return (
       <div>
         <Canvas
@@ -198,15 +209,42 @@ class TestCanvas extends React.Component {
           margin="0px"
           id="tiff-canvas"
         >
-        <Mesh channel="1" texture={this.texture}>
+        <Mesh channel="4" texture={this.texture}>
         </Mesh>
         </Canvas>
         &nbsp;
         <label>
          Page #: &nbsp;
-         <input type="text" value={this.state.pagenumber} onChange={event => this.handleChangePageNumber(event.target.value) } />
+         <input type="text" value={this.state.sliceIdx} onChange={event => this.handleChangePageNumber(event.target.value) } />
         </label>
         <div> Slice: {this.state.sliceIdx} </div>
+        <label>
+         Red (0), Green (1), Blue (2): &nbsp;
+         <input type="text" value={this.state.rgb} onChange={event => this.handleChangeChannel(event.target.value) } />
+        </label>
+        <div> RGB: {this.state.rgb} </div>
+        <br />
+        <div className="brightness-slider-container">
+          <Slider
+            label="Brightness"
+            width="40%"
+            min="0"
+            max="1"
+            step="0.1"
+            initial="0"
+            multiplier="100"
+            raw="0"
+            sliderValue={sliderValueBr.bind(this)}
+          />
+          <button
+            id="resetBrBtn"
+            onClick={() => {
+              this.resetBrightness();
+            }}
+          >
+            Reset Brightness
+          </button>
+        </div>
       </div>
     );
   }

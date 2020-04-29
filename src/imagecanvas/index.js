@@ -20,7 +20,16 @@ import {
 
 import {
   loadSlices as ldSlices,
+  updateChannelSlice as updSlice,
 } from '../datacube/datacubeControls.js';
+
+import {
+  filesNeedUpdate  as filesNeedUpd,
+  areFilesValid    as areFilesVal,
+  initializeVolume as initVol,
+  generateTexture  as genText,
+  getImageData     as getImgDt,
+} from './canvasUtils.js';
 
 export const uApi = uniApi
 export const fApi = fileApi
@@ -30,4 +39,10 @@ export const createTexture = createT
 export const createTextureFromTiff = createTFrTiff
 export const saveVolume         = saveVol
 export const getVolume          = getVol
+export const filesNeedUpdate    = filesNeedUpd
+export const areFilesValid      = areFilesVal
+export const generateTexture    = genText
+export const getImageData       = getImgDt
+export const initializeVolume   = initVol
 export const loadSlices         = ldSlices
+export const updateChannelSlice = updSlice

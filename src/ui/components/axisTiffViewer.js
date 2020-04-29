@@ -9,6 +9,9 @@ import {
   Volume,
   loadSlices,
   updateChannelSlice,
+  saveVolume,
+  initializeVolume,
+  getVolume,
 } from './index.js';
 
 class TiffViewer extends Component {
@@ -55,28 +58,29 @@ class TiffViewer extends Component {
     )
   }
 
-  async initializeVolume(file, width, height, length) {
-    this.cube.x = width
-    this.cube.y = height
-    this.cube.z = length
+  // async initializeVolume(file, width, height, length) {
+  //   this.cube.x = width
+  //   this.cube.y = height
+  //   this.cube.z = length
 
-    this.volume = new Volume({
-      channel: new DataCube({
-        bytes: 1,
-        size: this.cube,
-        context: this.state.cntxt,
-      }),
-    });
+  //   this.volume = new Volume({
+  //     channel: new DataCube({
+  //       bytes: 1,
+  //       size: this.cube,
+  //       context: this.state.cntxt,
+  //     }),
+  //   });
 
-    await loadSlices(
-      this.state.cntxt,
-      this.volume,
-      this.state.axes,
-      2,
-      file,
-      this.type
-    );
-  }
+  //   await loadSlices(
+  //     this.state.cntxt,
+  //     this.volume,
+  //     this.state.axes,
+  //     2,
+  //     file,
+  //     this.type
+  //   );
+  //   // saveVolume(this.props.channel, this.volume)
+  // }
 
   setSlider() {
     if (this.props.axis === "0") this.length = this.cube.x
@@ -92,7 +96,10 @@ class TiffViewer extends Component {
       if (
         this.isValidFile(state.file, idx)
       ) {
-        this.initializeVolume(state.file, file.image.width, file.image.height, file.pages.length)
+        // this.initializeVolume(state.file, file.image.width, file.image.height, file.pages.length)
+        initializeVolume(0, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
+        this.volume = getVolume(0)
+        this.slice(0)
         this.setSlider()
       }
     }
@@ -109,7 +116,8 @@ class TiffViewer extends Component {
       this.volume,
       value,
       this.state.axes,
-      this.state.axisIdx
+      this.state.axisIdx,
+      false
     );
     this.forceUpdate();
   }
@@ -149,7 +157,8 @@ class TiffViewer extends Component {
       this.volume,
       this.state.sliceIdx,
       this.state.axes,
-      idx
+      idx,
+      false
     );
     this.forceUpdate();
   }

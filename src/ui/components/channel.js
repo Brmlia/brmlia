@@ -21,6 +21,10 @@ import {
   updateOpacity,
   updateChannelSel,
   updateLastSel,
+  channelCard,
+  channelCardBody,
+  channelCanvas,
+  channelImageCanvas,
 } from './index.js';
 
 class Channel extends React.Component {
@@ -29,6 +33,10 @@ class Channel extends React.Component {
     updateLastSel(this.props.ch);
     this.forceUpdate();
   };
+
+  resetBrightness() {
+    updateBrightness('0.0', this.props.ch);
+  }
 
   sliderValueBr(value) {
     updateBrightness(value, this.props.ch);
@@ -47,8 +55,9 @@ class Channel extends React.Component {
       <ImageCanvas
         className="annot-view"
         alt={alt}
-        height="100px"
+        height="200px"
         channel={this.props.ch}
+        style={channelImageCanvas}
       />
     );
     var sel = settingsApi.getState().channels[this.props.ch - 1].selected;
@@ -78,9 +87,9 @@ class Channel extends React.Component {
           View
         </Button>
         <UncontrolledCollapse toggler={`#view${this.props.ch}`}>
-          <Card style={card}>
-            <CardBody style={cardBody}>
-              <div style={canvasThumbnail}>{canvas}</div>
+          <Card style={channelCard}>
+            <CardBody style={channelCardBody}>
+              <div style={channelCanvas}>{canvas}</div>
               <div className="brightness-slider-container">
                 <Slider
                   label="Brightness"

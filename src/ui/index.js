@@ -1,5 +1,5 @@
 import React from 'react';
-import { mainStyle, rowStyle, container } from './style.js';
+import { mainStyle, rowStyle, container } from './styles/style.js';
 import MainViewer from './components/mainViewer.js';
 import AxesViewer from './components/axesViewer.js';
 import Thumbnails from './components/thumbnails.js';
