@@ -84,7 +84,7 @@ class DataCube {
     return this;
   }
 
-  slice (axis, index, copy = true) {
+  slice (axis, index, invertV, copy = true) {
     let _this = this;
 
     if (index < 0 || index >= this.size[axis]) {
@@ -100,50 +100,80 @@ class DataCube {
     let face = this.faces[axis];
     let ArrayType = this.arrayType();
 
-    if (axis === 'z') {
-      let byteoffset = index * xysize * this.bytes;
-
-      if (copy) {
-        let buf = _this.cube.buffer.slice(byteoffset, byteoffset + xysize * this.bytes);
-        return new ArrayType(buf);
-      }
-      else {
-        return new ArrayType(_this.cube.buffer, byteoffset, xysize);
-      }
-    }
-
     let square = new ArrayType(this.size[face[0]] * this.size[face[1]]);
+    let byteoffset = index * xysize * this.bytes;
 
     // Note: order of loops is important for efficient memory access
     // and correct orientation of images. Consecutive x access is most efficient.
 
     let i = square.length - 1;
-    if (axis === 'x') {
-      for (let z = 0; z < zsize - 1; z++) {
-        for (let y = ysize - 1; y >= 0; --y) {
-          square[i] = _this.cube[index + xsize * y + xysize * z];
-          --i;
+    if (invertV) {
+      if (axis === 'z') {
+        if (copy) {
+          let buf = _this.cube.buffer.slice(byteoffset, byteoffset + xysize * this.bytes);
+          return new ArrayType(buf);
+        }
+        else {
+          let i = square.length - 1;
+          const zoffset = xysize * index;
+          for (let y = 0; y < ysize - 1; y++) {
+            for (let x = xsize - 1; x >= 0; --x) {
+              square[i] = _this.cube[x + xsize * y + zoffset];
+              --i;
+            }
+          }
+        }
+      }
+      if (axis === 'x') {
+        for (let z = 0; z < zsize - 1; z++) {
+          for (let y = ysize - 1; y >= 0; --y) {
+            square[i] = _this.cube[index + xsize * y + xysize * z];
+            --i;
+          }
+        }
+      }
+      else if (axis === 'y') {
+        // possible to make this more efficient with an array memcpy
+        // as 256 x are consecutive, but no memcpy in browser.
+        const yoffset = xsize * index;
+        for (let z = 0; z < zsize - 1; z++) {
+          for (let x = xsize - 1; x >= 0; --x) {
+            square[i] = _this.cube[x + yoffset + xysize * z];
+            --i;
+          }
         }
       }
     }
-    else if (axis === 'y') {
-      // possible to make this more efficient with an array memcpy
-      // as 256 x are consecutive, but no memcpy in browser.
-      const yoffset = xsize * index;
-      for (let z = 0; z < zsize - 1; z++) {
-        for (let x = xsize - 1; x >= 0; --x) {
-          square[i] = _this.cube[x + yoffset + xysize * z];
-          --i;
+    else {
+      if (axis === 'z') {
+        return new ArrayType(_this.cube.buffer, byteoffset, xysize);
+      }
+      if (axis === 'x') {
+        for (let z = zsize - 1; z >= 0 ; --z) {
+          for (let y = ysize - 1; y >= 0; --y) {
+            square[i] = _this.cube[index + xsize * y + xysize * z];
+            --i;
+          }
+        }
+      }
+      else if (axis === 'y') {
+        // possible to make this more efficient with an array memcpy
+        // as 256 x are consecutive, but no memcpy in browser.
+        const yoffset = xsize * index;
+        for (let z = zsize - 1; z >= 0 ; --z) {
+          for (let x = xsize - 1; x >= 0; --x) {
+            square[i] = _this.cube[x + yoffset + xysize * z];
+            --i;
+          }
         }
       }
     }
-
     return square;
   }
 
-  async grayImageSlice (axis, index, transparency=false, copy=true) {
+  async grayImageSlice (axis, index, invertV, transparency=false, copy=true) {
 
-    let square = await this.slice(axis, index, /*copy=*/false);
+    let square = await this.slice(axis, index, invertV, /*copy=*/false);
 
     let sizes = await this.faceDimensions(axis);
 

@@ -10,6 +10,7 @@ import {
   initializeVolume,
   generateTexture,
   shrinkTiff,
+  updateChannelSlice,
 } from './index.js'
 
 import Mesh from './testMesh.js'
@@ -81,6 +82,7 @@ class TestCanvas extends React.Component {
         rgba: file.rgba,
         width: file.image.width,
         height: file.image.height,
+        length: file.pages.length,
         page: file.pages[0],
         name: file.name,
         type: file.type
@@ -154,19 +156,57 @@ class TestCanvas extends React.Component {
     }
   }
 
+  slice(value) {
+    const slice = this.clamp(
+      parseInt(value),
+      0,
+      Math.max(0, this.files[0].length -1)
+    )
+
+    const axisIdx = 2;
+    this.setState(prevState => ({
+      ...prevState,
+      sliceIdx: slice,
+    }));
+    updateChannelSlice(
+      this.state.cntxt,
+      this.volume,
+      slice,
+      this.state.axes,
+      axisIdx,
+      true
+    );
+    this.setImageData()
+    this.forceUpdate();
+  }
+
+  clamp(val, min, max) {
+    return Math.min(Math.max(val, min), max);
+  }
+
+  handleChangePageNumber(value) {
+    this.slice(parseInt(value))
+  }
+
   display() {
     this.loadTiff()
     return (
       <div>
         <Canvas
-          width="1000px"
-          height="1000px"
+          width="500px"
+          height="500px"
           margin="0px"
           id="tiff-canvas"
         >
         <Mesh channel="1" texture={this.texture}>
         </Mesh>
         </Canvas>
+        &nbsp;
+        <label>
+         Page #: &nbsp;
+         <input type="text" value={this.state.pagenumber} onChange={event => this.handleChangePageNumber(event.target.value) } />
+        </label>
+        <div> Slice: {this.state.sliceIdx} </div>
       </div>
     );
   }

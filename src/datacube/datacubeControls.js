@@ -20,9 +20,9 @@ export async function loadSlices(cntxt, volume, axes, axis, files, type) {
   }
 }
 
-export async function updateChannelSlice(cntxt, volume, slice, axes, axis) {
+export async function updateChannelSlice(cntxt, volume, slice, axes, axis, invertV) {
   if (cntxt && volume && axes) {
-    await volume.renderChannelSlice(cntxt, axes[axis], slice)
+    await volume.renderChannelSlice(cntxt, axes[axis], slice, invertV)
   }
 }
 
@@ -47,7 +47,7 @@ async function _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, file) {
     await _loadVolumes(volume, file.pages, file.image.width)
   }
 
-  updateChannelSlice(cntxt, volume, 0, axes, axis);
+  updateChannelSlice(cntxt, volume, 0, axes, axis, false);
 }
 
 async function _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files) {
@@ -59,7 +59,7 @@ async function _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files) {
         const page = pages[pIdx]
         await volume.load(page, file.image.width, fIdx)
       }
-      updateChannelSlice(cntxt, volume, 0, axes, axis);
+      updateChannelSlice(cntxt, volume, 0, axes, axis, false);
     }
   }
 }

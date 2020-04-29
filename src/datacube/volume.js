@@ -4,10 +4,10 @@ export class Volume {
     this.channel = args.channel;
   }
 
-  async renderChannelSlice (ctx, axis, slice) {
+  async renderChannelSlice (ctx, axis, slice, invertV) {
     let _this = this;
 
-    let pixels = await _this.channel.grayImageSlice(axis, slice, /*transparency=*/false, /*copy=*/false);
+    let pixels = await _this.channel.grayImageSlice(axis, slice, invertV, /*transparency=*/false, /*copy=*/false);
     // let pixels = _this.channel.imageSlice(axis, slice, /*copy=*/false);
     let slice32 = await new Uint32Array(pixels.data.buffer); // creates a view, not an array
 
