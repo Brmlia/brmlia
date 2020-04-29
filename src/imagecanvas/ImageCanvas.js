@@ -175,6 +175,7 @@ class ImageCanvas extends React.Component {
     // )
   }
 
+  // move to channel, causes issues here
   displayPageControls() {
     return (
       <div>
@@ -198,10 +199,7 @@ class ImageCanvas extends React.Component {
     });
 
     return (
-      <div>
-        { this.displayCanvas() }
-        { this.displayPageControls() }
-      </div>
+      this.displayCanvas()
     )
   }
 }
