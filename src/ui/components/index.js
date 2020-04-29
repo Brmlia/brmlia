@@ -6,6 +6,21 @@ import {
   uApi as uniApi,
 } from '../../utils/index.js';
 
+import {
+  saveVolume as saveVol,
+  getVolume  as getVol,
+} from '../../datacube/volumeControl.js';
+
+import {
+  filesNeedUpdate  as filesNeedUpd,
+  areFilesValid    as areFilesVal,
+  initializeVolume as initVol,
+  generateTexture  as genText,
+  getImageData     as getImgDt,
+  generateSampleData as genSmpDat,
+  shrinkTiff as shrTiff,
+} from '../../imagecanvas/canvasUtils.js';
+
 // import {
 //   annotApi as aApi,
 // } from '../../annotator/annotationStore.js';
@@ -89,6 +104,15 @@ import {
 
 export const fApi               = fileApi
 // export const annotApi           = aApi
+export const saveVolume         = saveVol
+export const getVolume          = getVol
+export const filesNeedUpdate    = filesNeedUpd
+export const areFilesValid      = areFilesVal
+export const generateTexture    = genText
+export const getImageData       = getImgDt
+export const initializeVolume   = initVol
+export const generateSampleData = genSmpDat
+export const shrinkTiff         = shrTiff
 export const buttonGroup        = btnGrp
 export const cardStyle          = cdStyle
 export const card               = cd

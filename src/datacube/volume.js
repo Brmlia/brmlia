@@ -24,4 +24,8 @@ export class Volume {
   async loadVolume (cube, buffer, width, slice) {
     await cube.insertImageData(buffer, width, 0, 0, slice)
   }
+
+  async getImageData() {
+    return await this.channel.getImageData()
+  }
 }

@@ -221,6 +221,11 @@ class DataCube {
 
     return ArrayType;
   }
+
+  async getImageData() {
+    let sizes = await this.faceDimensions('z');
+    return await this.cached_imgdata.getImageData(sizes[0], sizes[1]);
+  }
 }
 
 export default DataCube
