@@ -3,6 +3,7 @@ import UTIF from 'utif';
 import {
   saveJson,
   updateTiffPages,
+  exportFile,
 } from './index.js';
 
 export function importCsv(file) {
@@ -99,6 +100,8 @@ export function parseMultiTiff(name, buffer) {
     const value = tSpl[1]
     metadata[key] = value
   }
+
+  exportFile("pages.txt", pages)
 
   updateTiffPages(name, pages, image, metadata);
 }

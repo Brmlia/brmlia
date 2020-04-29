@@ -27,6 +27,10 @@ import {
   importTiff as impTiff,
 } from './fileImporter.js';
 
+import {
+  exportFile as expF,
+} from './fileExporter.js';
+
 // import {
 //   annotApi as aApi,
 // } from '../annotator/annotationStore.js';
@@ -52,6 +56,7 @@ export const addJson               = aJson
 export const isFirstFile           = isFstFl
 export const isValidFile           = isValFl
 export const saveJson              = svJson
+export const exportFile            = expF
 export const updateTiffPages       = updTP
 export const importCsv             = impCsv
 export const importJson            = impJson
