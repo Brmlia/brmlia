@@ -68,7 +68,7 @@ class ImageCanvas extends React.Component {
   }
 
   async setImageData() {
-    this.volume =  getVolume(7)
+    this.volume =  getVolume(parseInt(this.props.channel)+3)
     if (this.volume) {
       this.imgdata = await this.volume.getImageData()
     }
@@ -114,7 +114,7 @@ class ImageCanvas extends React.Component {
       ) {
         this.updateFileList(files)
         updateImage(files[state.selected], this.props.channel);
-        initializeVolume(4, this.state.cntxt, files, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
+        initializeVolume((parseInt(this.props.channel)+3), this.state.cntxt, files, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
       }
     }
     this.forceUpdate();
