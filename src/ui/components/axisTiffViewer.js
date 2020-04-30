@@ -29,12 +29,6 @@ class TiffViewer extends Component {
     // Case 3: (1 z planes, 3 channels, 60)
     // Case 4: (1 z planes, 1 channel, 180)
     this.type = 1;
-
-    this.cube = {
-      x: 256,
-      y: 256,
-      z: 256,
-    };
   }
 
   componentDidMount() {
@@ -54,10 +48,10 @@ class TiffViewer extends Component {
     )
   }
 
-  setSlider() {
-    if (this.props.axis === "0") this.length = this.cube.x
-    if (this.props.axis === "1") this.length = this.cube.y
-    if (this.props.axis === "2") this.length = this.cube.z
+  setSlider(width, height, length) {
+    if (this.props.axis === "0") this.length = width
+    if (this.props.axis === "1") this.length = height
+    if (this.props.axis === "2") this.length = length
   }
 
   async updateForFile(state) {
@@ -68,11 +62,10 @@ class TiffViewer extends Component {
       if (
         this.isValidFile(state.file, idx)
       ) {
-        // this.initializeVolume(state.file, file.image.width, file.image.height, file.pages.length)
         initializeVolume(0, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
+        this.setSlider(file.image.width, file.image.height, file.pages.length)
         this.volume = getVolume(0)
         this.slice(0)
-        this.setSlider()
       }
     }
     this.forceUpdate();
@@ -89,7 +82,7 @@ class TiffViewer extends Component {
       value,
       this.state.axes,
       this.state.axisIdx,
-      false
+      true
     );
     this.forceUpdate();
   }
