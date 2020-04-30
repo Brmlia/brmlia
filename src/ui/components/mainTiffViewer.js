@@ -8,7 +8,9 @@ import {
   Volume,
   loadSlices,
   updateChannelSlice,
-} from './index.js'
+  initializeVolume,
+  getVolume,
+} from './index.js';
 
 class mainTiffViewer extends Component {
   constructor(props) {
@@ -17,25 +19,19 @@ class mainTiffViewer extends Component {
     this.canvas = React.createRef();
     this.state = {
       axes: ['x', 'y', 'z'],
-      axisIdx: props.axis,
-      sliceIdx: 0,
-      channel: 1,
       cntxt: null,
     };
     this.fileLength = 0;
-    this.length = 0;
+    this.length     = 0;
+    this.sliceIdx   = 0;
+    this.axisIdx    = props.axis;
+    this.channel    = 1;
 
     // Case 1: (60 z planes, 3 channels, 1)
     // Case 2: (60 z planes, 1 channel, 3)
     // Case 3: (1 z planes, 3 channels, 60)
     // Case 4: (1 z planes, 1 channel, 180)
     this.type = 1;
-
-    this.cube = {
-      x: 256,
-      y: 256,
-      z: 256,
-    };
   }
 
   componentDidMount() {
@@ -59,17 +55,6 @@ class mainTiffViewer extends Component {
       // invalid type
     }
     console.log("determineType() - type, file, page, channel lengths: ", tType, fileLength, pageLength, channelLength)
-  }
-
-  isValidFile(file, idx) {
-
-    return (
-      (file.length > 0) &&
-      (file[idx]) &&
-      (file[idx].pages) &&
-      (file[idx].pages.length > 0) &&
-      (file.length !== this.fileLength)
-    )
   }
 
   parseMetadata(file, metadata) {
@@ -108,6 +93,17 @@ class mainTiffViewer extends Component {
     this.determineType(fileLength, pageLength, channelLength)
   }
 
+  isValidFile(file, idx) {
+
+    return (
+      (file.length > 0) &&
+      (file[idx]) &&
+      (file[idx].pages) &&
+      (file[idx].pages.length > 0) &&
+      (file.length !== this.fileLength)
+    )
+  }
+
   setTiffParams(file, pages) {
     if (this.type === 0) {
       this.fileLength = this.length = file.length;
@@ -117,59 +113,47 @@ class mainTiffViewer extends Component {
     }
   }
 
-  async initializeVolume(file, width, height, length) {
-    this.cube.x = width
-    this.cube.y = height
-    this.cube.z = length
-
-    this.volume = new Volume({
-      channel: new DataCube({
-        bytes: 1,
-        size: this.cube,
-        context: this.state.cntxt,
-      }),
-    });
-
-    await loadSlices(
-      this.state.cntxt,
-      this.volume,
-      this.state.axes,
-      2,
-      file,
-      this.type
-    );
+  setSlider(width, height, length) {
+    if (this.props.axis === "0") this.length = width
+    if (this.props.axis === "1") this.length = height
+    if (this.props.axis === "2") this.length = length
   }
 
-  updateForFile(state) {
+  async refreshImage(axisIdx) {
+    this.state.cntxt.clearRect(0, 0, this.canvas.current.width, this.canvas.current.height)
+    this.volume = getVolume(axisIdx)
+    this.slice(this.sliceIdx)
+  }
+
+  async updateForFile(state) {
     if (state && state.file) {
       const idx = Math.max((state.file.length - 1), 0);
       const file = state.file[idx]
+
       if (
         this.isValidFile(state.file, idx)
       ) {
         this.parseMetadata(state.file, file.metadata)
         this.setTiffParams(state.file, file.pages)
-        this.initializeVolume(state.file, file.image.width, file.image.height, file.pages.length)
+        initializeVolume(0, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
+        initializeVolume(1, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
+        initializeVolume(2, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
+        this.setSlider(file.image.width, file.image.height, file.pages.length)
+        this.volume = getVolume(this.axisIdx)
+        this.slice(0)
       }
     }
     this.forceUpdate();
   }
 
-  clamp(val, min, max) {
-    return Math.min(Math.max(val, min), max);
-  }
-
   slice(value) {
-    this.setState(prevState => ({
-      ...prevState,
-      sliceIdx: value,
-    }));
+    this.sliceIdx = value
     updateChannelSlice(
       this.state.cntxt,
       this.volume,
       value,
       this.state.axes,
-      this.state.axisIdx,
+      this.axisIdx,
       false
     );
     this.forceUpdate();
@@ -179,13 +163,13 @@ class mainTiffViewer extends Component {
     var slice;
     if (dec)
       slice = this.clamp(
-        this.state.sliceIdx - 1,
+        parseInt(this.sliceIdx) - 1,
         0,
         Math.max(0, this.length - 1)
       );
     else
       slice = this.clamp(
-        this.state.sliceIdx + 1,
+        parseInt(this.sliceIdx) + 1,
         0,
         Math.max(0, this.length - 1)
       );
@@ -193,21 +177,19 @@ class mainTiffViewer extends Component {
   }
 
   sliderValueSlice(value) {
-    this.slice(value);
+    this.slice(parseInt(value));
   }
 
   sliderValueAxis(value) {
-    this.setState(prevState => ({
-      ...prevState,
-      axisIdx: value
-    }))
+    this.axisIdx = value
+    this.refreshImage(value)
   }
 
-  sliderValueChannel(value) {
-    this.setState(prevState => ({
-      ...prevState,
-      channel: value
-    }))
+  sliderValueChannel(value) {    this.channel = value
+  }
+
+  clamp(val, min, max) {
+    return Math.min(Math.max(val, min), max);
   }
 
   render() {
@@ -239,7 +221,7 @@ class mainTiffViewer extends Component {
             sliderValue={this.sliderValueSlice.bind(this)}
           />
         </div>
-        <div> Slice: {this.state.sliceIdx} </div>
+        <div> Slice: {this.sliceIdx} </div>
         <div className="axis-slider-container">
           <Slider
             label=""
@@ -253,7 +235,7 @@ class mainTiffViewer extends Component {
             sliderValue={this.sliderValueAxis.bind(this)}
           />
         </div>
-        <div> Axis: {this.state.axisIdx} </div>
+        <div> Axis: {this.axisIdx} </div>
         <div className="channel-slider-container">
           <Slider
             label=""
@@ -267,7 +249,7 @@ class mainTiffViewer extends Component {
             sliderValue={this.sliderValueChannel.bind(this)}
           />
         </div>
-        <div> Channel: {this.state.channel} </div>
+        <div> Channel: {this.channel} </div>
       </div>
     );
   }
