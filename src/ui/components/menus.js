@@ -12,7 +12,7 @@ import {
 import { FileUpload } from '../../fileuploader/fileUploader.js';
 
 import {
-  buttonGroup,
+  buttonGroupStyle,
   exportJson,
   modes,
   setMode,
@@ -20,14 +20,13 @@ import {
   redo,
 } from './index.js';
 
-
 class Menus extends React.Component {
   render() {
     return (
       <ButtonGroup
-        size={buttonGroup.size}
-        vertical={buttonGroup.vertical}
-        style={buttonGroup}
+        size={buttonGroupStyle.size}
+        vertical={buttonGroupStyle.vertical}
+        style={buttonGroupStyle}
       >
 
         <Button outline color="primary" className="import-btn">

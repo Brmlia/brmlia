@@ -1,5 +1,4 @@
-
-import CachedImageData from './cachedImageData.js'
+import CachedImageData from './cachedImageData.js';
 
 class DataCube {
   constructor (args) {
@@ -68,7 +67,7 @@ class DataCube {
     let x = 0, y = 0;
 
     const sizex = _this.size.x | 0,
-        zadj = (offsetz * _this.size.x * _this.size.y) | 0;
+      zadj = (offsetz * _this.size.x * _this.size.y) | 0;
 
     for (y = width - 1; y >= 0; y--) {
       for (x = width - 1; x >= 0; x--) {
@@ -160,7 +159,7 @@ class DataCube {
         // possible to make this more efficient with an array memcpy
         // as 256 x are consecutive, but no memcpy in browser.
         const yoffset = xsize * index;
-        for (let z = zsize - 1; z >= 0 ; --z) {
+          for (let z = zsize - 1; z >= 0 ; --z) {
           for (let x = xsize - 1; x >= 0; --x) {
             square[i] = _this.cube[x + yoffset + xysize * z];
             --i;

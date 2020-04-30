@@ -1,4 +1,9 @@
-export const channelCard = {
+export const channelViewStyle = {
+  flex: 0.1,
+  position: 'relative',
+};
+
+export const channelCardStyle = {
   justify: 'center',
   alignContent: 'center',
   alignItems: 'center',
@@ -6,21 +11,22 @@ export const channelCard = {
   width: '100%',
   fluid: true,
   fontSize: '12px',
-  height: '400px'
+  height: '100%'
 };
 
-export const channelCardBody = {
+export const channelCardBodyStyle = {
   width: '95%',
   height: '100%',
 };
 
-export const channelCanvas = {
+export const channelCanvasStyle = {
   position: 'center',
-  height: '80%',
+  // height: '80%',
+  height: '100px',
   width: '100%',
   zIndex: '3',
 };
 
-export const channelImageCanvas = {
+export const channelImageCanvasStyle = {
 
 };

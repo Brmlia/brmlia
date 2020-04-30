@@ -2,6 +2,11 @@ import {
   fileApi,
 } from '../../fileuploader/fileStore.js';
 
+// import {
+//   annotApi as aApi,
+// } from '../../annotator/annotationStore.js';
+
+
 import {
   uApi as uniApi,
 } from '../../utils/index.js';
@@ -12,40 +17,54 @@ import {
 } from '../../datacube/volumeControl.js';
 
 import {
-  filesNeedUpdate  as filesNeedUpd,
-  areFilesValid    as areFilesVal,
-  initializeVolume as initVol,
-  generateTexture  as genText,
-  getImageData     as getImgDt,
+  filesNeedUpdate    as filesNeedUpd,
+  areFilesValid      as areFilesVal,
+  initializeVolume   as initVol,
+  generateTexture    as genText,
+  getImageData       as getImgDt,
   generateSampleData as genSmpDat,
-  shrinkTiff as shrTiff,
+  shrinkTiff         as shrTiff,
 } from '../../imagecanvas/canvasUtils.js';
 
-// import {
-//   annotApi as aApi,
-// } from '../../annotator/annotationStore.js';
-
 import {
-  buttonGroup       as btnGrp,
-  cardStyle         as cdStyle,
-  card              as cd,
-  cardBody          as cdBody,
-  canvasThumbnail   as cvsThb,
-  thumb             as thbStyle,
-  thumbInner        as thbInStyle,
-  mainImg           as mImg,
-  mainCanvasStyle   as mCvsStyle,
-  canvasStyle1      as cvsStyle1,
-  canvasStyle2      as cvsStyle2,
-  canvasStyle3      as cvsStyle3,
+  buttonGroupStyle as btnGrpStyle,
+  cardStyle        as cdStyle,
 } from '../styles/style.js';
 
 import {
-  channelCard        as chCard,
-  channelCardBody    as chCardBody,
-  channelCanvas      as chCanvas,
-  channelImageCanvas as chImgCanvas,
+  mainViewStyle     as mViewStyle,
+  mainCardBodyStyle as mCdBodyStyle,
+  mainCardStyle     as mCdStyle,
+  mainCanvasStyle0  as mCvsStyle0,
+  mainCanvasStyle1  as mCvsStyle1,
+  mainCanvasStyle2  as mCvsStyle2,
+  mainCanvasStyle3  as mCvsStyle3,
+  mainImgStyle      as mImgStyle,
+} from '../styles/mainStyle.js';
+
+import {
+  axisViewStyle     as axVwStyle,
+  axisCardStyle     as axCdStyle,
+  axisCardBodyStyle as axCdBodyStyle,
+} from '../styles/axisStyle.js';
+
+import {
+  channelViewStyle        as chVwStyle,
+  channelCardStyle        as chCardStyle,
+  channelCardBodyStyle    as chCardBodyStyle,
+  channelCanvasStyle      as chCanvasStyle,
+  channelImageCanvasStyle as chImgCanvasStyle,
 } from '../styles/channelStyle.js';
+
+import {
+  annotViewStyle as annotVwStyle,
+  annotCardStyle as annotCdStyle,
+} from '../styles/annotatorStyle.js';
+
+import {
+  thumbStyle      as thbStyle,
+  thumbInnerStyle as thbInStyle,
+} from '../styles/thumbnailStyle.js';
 
 // import {
 //   updateClasses     as updCls,
@@ -74,7 +93,7 @@ import {
 } from '../../datacube/volume.js';
 
 import {
-  loadSlices as ldSlices,
+  loadSlices         as ldSlices,
   updateChannelSlice as updSlice,
 } from '../../datacube/datacubeControls.js';
 
@@ -85,7 +104,7 @@ import {
 //   updateBlackpoint as updBlackpoint,
 //   updateColor      as updColor,
 //   updateOpacity    as updOpacity,
-  updateTexture as updText,
+  updateTexture    as updText,
 } from '../../imagecanvas/CanvasControl.js';
 // import {
 //   openMenu         as opMenu,
@@ -109,33 +128,40 @@ import {
 //   exportJson as expJson,
 // } from '../../fileuploader/exporter.js';
 
-export const fApi               = fileApi
-// export const annotApi           = aApi
-export const saveVolume         = saveVol
-export const getVolume          = getVol
-export const filesNeedUpdate    = filesNeedUpd
-export const areFilesValid      = areFilesVal
-export const generateTexture    = genText
-export const getImageData       = getImgDt
-export const initializeVolume   = initVol
-export const generateSampleData = genSmpDat
-export const shrinkTiff         = shrTiff
-export const buttonGroup        = btnGrp
-export const cardStyle          = cdStyle
-export const card               = cd
-export const cardBody           = cdBody
-export const canvasThumbnail    = cvsThb
-export const thumb              = thbStyle
-export const thumbInner         = thbInStyle
-export const mainImg            = mImg
-export const mainCanvasStyle    = mCvsStyle
-export const canvasStyle1       = cvsStyle1
-export const canvasStyle2       = cvsStyle2
-export const canvasStyle3       = cvsStyle3
-export const channelCard        = chCard
-export const channelCardBody    = chCardBody
-export const channelCanvas      = chCanvas
-export const channelImageCanvas = chImgCanvas
+export const fApi                    = fileApi
+// export const annotApi                = aApi
+export const saveVolume              = saveVol
+export const getVolume               = getVol
+export const filesNeedUpdate         = filesNeedUpd
+export const areFilesValid           = areFilesVal
+export const generateTexture         = genText
+export const getImageData            = getImgDt
+export const initializeVolume        = initVol
+export const generateSampleData      = genSmpDat
+export const shrinkTiff              = shrTiff
+export const buttonGroupStyle        = btnGrpStyle
+export const cardStyle               = cdStyle
+export const thumbStyle              = thbStyle
+export const thumbInnerStyle         = thbInStyle
+export const mainCanvasStyle0        = mCvsStyle0
+export const mainCanvasStyle1        = mCvsStyle1
+export const mainCanvasStyle2        = mCvsStyle2
+export const mainCanvasStyle3        = mCvsStyle3
+export const channelViewStyle        = chVwStyle
+export const channelCardStyle        = chCardStyle
+export const channelCardBodyStyle    = chCardBodyStyle
+export const channelCanvasStyle      = chCanvasStyle
+export const channelImageCanvasStyle = chImgCanvasStyle
+export const annotViewStyle          = annotVwStyle
+export const annotCardStyle          = annotCdStyle
+export const mainViewStyle           = mViewStyle
+export const mainCardBodyStyle       = mCdBodyStyle
+export const mainCardStyle           = mCdStyle
+export const mainImgStyle            = mImgStyle
+
+export const axisViewStyle      = axVwStyle
+export const axisCardStyle      = axCdStyle
+export const axisCardBodyStyle  = axCdBodyStyle
 // export const updateClasses      = updCls
 // export const getClasses         = getCls
 // export const toggleClassEnable  = toggleClsEn

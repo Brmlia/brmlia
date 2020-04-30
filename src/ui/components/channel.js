@@ -10,9 +10,6 @@ import {
 } from '../../mainSettings.js';
 
 import {
-  card,
-  cardBody,
-  canvasThumbnail,
   updateBrightness,
   updateContrast,
   updateWhitepoint,
@@ -21,10 +18,10 @@ import {
   updateOpacity,
   updateChannelSel,
   updateLastSel,
-  channelCard,
-  channelCardBody,
-  channelCanvas,
-  channelImageCanvas,
+  channelCardStyle,
+  channelCardBodyStyle,
+  channelCanvasStyle,
+  channelImageCanvasStyle,
 } from './index.js';
 
 class Channel extends React.Component {
@@ -57,7 +54,7 @@ class Channel extends React.Component {
         alt={alt}
         height="200px"
         channel={this.props.ch}
-        style={channelImageCanvas}
+        style={channelImageCanvasStyle}
       />
     );
     var sel = settingsApi.getState().channels[this.props.ch - 1].selected;
@@ -87,9 +84,9 @@ class Channel extends React.Component {
           View
         </Button>
         <UncontrolledCollapse toggler={`#view${this.props.ch}`}>
-          <Card style={channelCard}>
-            <CardBody style={channelCardBody}>
-              <div style={channelCanvas}>{canvas}</div>
+          <Card style={channelCardStyle}>
+            <CardBody style={channelCardBodyStyle}>
+              <div style={channelCanvasStyle}>{canvas}</div>
               <div className="brightness-slider-container">
                 <Slider
                   label="Brightness"

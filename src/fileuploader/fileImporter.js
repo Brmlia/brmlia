@@ -3,7 +3,6 @@ import UTIF from 'utif';
 import {
   saveJson,
   updateTiffPages,
-  exportFile,
 } from './index.js';
 
 export function importCsv(file) {
@@ -94,14 +93,14 @@ export function parseMultiTiff(name, buffer) {
   const tlines = String(ifds[0].t270).split(/\s+/)
 
   var metadata = {}
-  for (var i = 0; i < tlines.length; i++) {
-    const tSpl = tlines[i].split(/\=/)
+  for (var j = 0; j < tlines.length; j++) {
+    const tSpl = tlines[j].split(/=/)
     const key = tSpl[0]
     const value = tSpl[1]
     metadata[key] = value
   }
 
-  exportFile("pages.txt", pages)
+  // exportFile("pages.txt", pages)
 
   updateTiffPages(name, pages, image, metadata);
 }

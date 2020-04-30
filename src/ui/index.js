@@ -1,5 +1,5 @@
 import React from 'react';
-import { mainStyle, rowStyle, container } from './styles/style.js';
+import { mainStyle, rowStyle, containerStyle } from './styles/style.js';
 import MainViewer from './components/mainViewer.js';
 import AxesViewer from './components/axesViewer.js';
 import Thumbnails from './components/thumbnails.js';
@@ -13,12 +13,13 @@ class UI extends React.Component {
   render() {
     return (
       <div className="main" style={mainStyle}>
+        <h2 align="center"> BRMLIA </h2>
         <Menus />
         <br></br>
         <br></br>
         <br></br>
 
-        <Container style={container}>
+        <Container style={containerStyle}>
           <Row style={rowStyle}>
             <Col xs="4">
               <AxesViewer />

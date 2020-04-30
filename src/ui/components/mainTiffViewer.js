@@ -75,9 +75,9 @@ class mainTiffViewer extends Component {
   parseMetadata(file, metadata) {
 
     const {
-      images,
+      // images,
       channels,
-      slices,
+      // slices,
     } = metadata
 
     const fileLength = file.length
@@ -214,13 +214,16 @@ class mainTiffViewer extends Component {
     fApi.subscribe(state => {
       this.updateForFile(state);
     });
+
+    let width = window.innerWidth * 0.6;
+    let height = window.innerHeight * 0.6;
     return (
-      <div width="500px" height="500px">
+      <div>
         <canvas
           id="canvas-1"
           ref={this.canvas}
-          width="500px"
-          height="500px"
+          width={width}
+          height={height}
         ></canvas>
         <ProgressBar />
         <div className="slice-slider-container">

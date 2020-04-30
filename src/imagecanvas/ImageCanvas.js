@@ -1,5 +1,4 @@
 import React from 'react';
-import { Canvas } from 'react-three-fiber';
 import { fabric } from 'fabric';
 
 import {
@@ -7,7 +6,6 @@ import {
   uApi,
   updateImage,
   updateTexture,
-  createTextureFromTiff,
   getVolume,
   generateTexture,
   filesNeedUpdate,
@@ -19,7 +17,6 @@ import {
 import {
   canvasApi,
 } from './canvasStore.js';
-import Mesh from './Mesh.js'
 
 class ImageCanvas extends React.Component {
 
@@ -71,7 +68,7 @@ class ImageCanvas extends React.Component {
   }
 
   async setImageData() {
-    this.volume =  getVolume(7)
+    this.volume =  getVolume(parseInt(this.props.channel)+3)
     if (this.volume) {
       this.imgdata = await this.volume.getImageData()
     }
@@ -117,7 +114,7 @@ class ImageCanvas extends React.Component {
       ) {
         this.updateFileList(files)
         updateImage(files[state.selected], this.props.channel);
-        initializeVolume(4, this.state.cntxt, files, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
+        initializeVolume((parseInt(this.props.channel)+3), this.state.cntxt, files, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
       }
     }
     this.forceUpdate();
@@ -162,17 +159,6 @@ class ImageCanvas extends React.Component {
   displayCanvas() {
     this.loadTiff()
     return canvasApi.getState().canvas[this.props.channel - 1]
-    // return (
-    //   <Canvas
-    //     width="500px"
-    //     height="500px"
-    //     margin="0px"
-    //     id="tiff-canvas"
-    //   >
-    //     <Mesh channel="1" texture={this.texture}>
-    //     </Mesh>
-    //   </Canvas>
-    // )
   }
 
   // move to channel, causes issues here
@@ -194,7 +180,6 @@ class ImageCanvas extends React.Component {
       this.forceUpdate()
     });
     uApi.subscribe(state => {
-      console.log("uApi", state)
       this.updateForControls(state);
     });
 

@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 
 import ProgressBar from '../../datacube/datacubeControls.js';
-import DataCube from '../../datacube/datacube.js';
 import Slider from './slider.js';
 
 import {
   fApi,
-  Volume,
-  loadSlices,
   updateChannelSlice,
-  saveVolume,
   initializeVolume,
   getVolume,
 } from './index.js';
@@ -57,30 +53,6 @@ class TiffViewer extends Component {
       (file.length !== this.fileLength)
     )
   }
-
-  // async initializeVolume(file, width, height, length) {
-  //   this.cube.x = width
-  //   this.cube.y = height
-  //   this.cube.z = length
-
-  //   this.volume = new Volume({
-  //     channel: new DataCube({
-  //       bytes: 1,
-  //       size: this.cube,
-  //       context: this.state.cntxt,
-  //     }),
-  //   });
-
-  //   await loadSlices(
-  //     this.state.cntxt,
-  //     this.volume,
-  //     this.state.axes,
-  //     2,
-  //     file,
-  //     this.type
-  //   );
-  //   // saveVolume(this.props.channel, this.volume)
-  // }
 
   setSlider() {
     if (this.props.axis === "0") this.length = this.cube.x
