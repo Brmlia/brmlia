@@ -21,11 +21,12 @@ class mainTiffViewer extends Component {
       axes: ['x', 'y', 'z'],
       cntxt: null,
     };
-    this.fileLength = 0;
-    this.length     = 0;
-    this.sliceIdx   = 0;
-    this.axisIdx    = props.axis;
-    this.channel    = 1;
+    this.fileLength      = 0;
+    this.length          = 0;
+    this.sliceIdx        = 0;
+    this.axisIdx         = props.axis;
+    this.channel         = 1;
+    this.channelSliceIdx = 0;
 
     // Case 1: (60 z planes, 3 channels, 1)
     // Case 2: (60 z planes, 1 channel, 3)
@@ -114,15 +115,14 @@ class mainTiffViewer extends Component {
   }
 
   setSlider(width, height, length) {
-    if (this.props.axis === "0") this.length = width
-    if (this.props.axis === "1") this.length = height
-    if (this.props.axis === "2") this.length = length
+    // if (this.props.axis === "0") this.length = width
+    // if (this.props.axis === "1") this.length = height
+    if (this.props.axis === "2") this.length = length / 3
   }
 
-  async refreshImage(axisIdx) {
+  async refreshImage() {
     this.state.cntxt.clearRect(0, 0, this.canvas.current.width, this.canvas.current.height)
-    this.volume = getVolume(axisIdx)
-    this.slice(this.sliceIdx)
+    this.volume = getVolume(this.axisIdx)
   }
 
   async updateForFile(state) {
@@ -140,18 +140,22 @@ class mainTiffViewer extends Component {
         initializeVolume(2, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
         this.setSlider(file.image.width, file.image.height, file.pages.length)
         this.volume = getVolume(this.axisIdx)
-        this.slice(0)
+        this.updateSlice()
       }
     }
     this.forceUpdate();
   }
 
-  slice(value) {
-    this.sliceIdx = value
+  computeSlice(value) {
+    return ((value * 3) + (this.channel-1) )
+  }
+
+  updateSlice() {
+    this.refreshImage();
     updateChannelSlice(
       this.state.cntxt,
       this.volume,
-      value,
+      this.sliceIdx,
       this.state.axes,
       this.axisIdx,
       false
@@ -159,33 +163,21 @@ class mainTiffViewer extends Component {
     this.forceUpdate();
   }
 
-  nextSlice(dec) {
-    var slice;
-    if (dec)
-      slice = this.clamp(
-        parseInt(this.sliceIdx) - 1,
-        0,
-        Math.max(0, this.length - 1)
-      );
-    else
-      slice = this.clamp(
-        parseInt(this.sliceIdx) + 1,
-        0,
-        Math.max(0, this.length - 1)
-      );
-    this.slice(slice);
-  }
-
   sliderValueSlice(value) {
-    this.slice(parseInt(value));
+    this.channelSliceIdx = parseInt(value)
+    this.sliceIdx = this.computeSlice(this.channelSliceIdx)
+    this.updateSlice()
   }
 
   sliderValueAxis(value) {
     this.axisIdx = value
-    this.refreshImage(value)
+    this.updateSlice()
   }
 
-  sliderValueChannel(value) {    this.channel = value
+  sliderValueChannel(value) {
+    this.channel = parseInt(value)
+    this.sliceIdx = this.computeSlice(this.channelSliceIdx)
+    this.updateSlice()
   }
 
   clamp(val, min, max) {
@@ -221,21 +213,7 @@ class mainTiffViewer extends Component {
             sliderValue={this.sliderValueSlice.bind(this)}
           />
         </div>
-        <div> Slice: {this.sliceIdx} </div>
-        <div className="axis-slider-container">
-          <Slider
-            label=""
-            width="40%"
-            min="0"
-            max="2"
-            step="1"
-            initial="0"
-            multiplier="1"
-            raw="1"
-            sliderValue={this.sliderValueAxis.bind(this)}
-          />
-        </div>
-        <div> Axis: {this.axisIdx} </div>
+        <div> Slice: {this.channelSliceIdx} </div>
         <div className="channel-slider-container">
           <Slider
             label=""
