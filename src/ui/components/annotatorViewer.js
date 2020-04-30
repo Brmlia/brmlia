@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, CardTitle, CardBody } from 'reactstrap';
+import { Button, Row, Col, UncontrolledCollapse, Card, CardTitle, CardBody } from 'reactstrap';
 
 import {
   annotApi,
@@ -99,12 +99,41 @@ class AnnotatorViewer extends React.Component {
   }
 
   display() {
+    return (
+      <div>
+        <div className="annotations-class" style={annotViewStyle}>
+          <Card style={annotCardStyle}>
+            <CardBody>
+              <CardTitle> <h3> Annotated Class Selection </h3> </CardTitle>
+            </CardBody>
+            <Button
+              className="viewBtn"
+              outline
+              color="secondary"
+              id="annotator-class-list"
+            >
+              Class List
+            </Button>
+            <br />
+            <UncontrolledCollapse toggler={"annotator-class-list"}>
+              {this.displayClassList()}
+              <br />
+            </UncontrolledCollapse>
+          </Card>
+        </div>
+        <br></br>
+      </div>
+    )
+  }
+
+  displayClassList() {
     const classes = getClasses();
     var divs = [];
     for (var i = 0; i < classes.length; i++) {
       const sel = i;
       const enabled = classes[sel].enabled;
       divs.push(
+        <div>
         <Button
           outline
           color="primary"
@@ -116,20 +145,12 @@ class AnnotatorViewer extends React.Component {
         >
           {classes[sel].name}
         </Button>
+        </div>
       );
     }
     return (
       <div>
-        <div className="annotations-class" style={annotViewStyle}>
-          <Card style={annotCardStyle}>
-            <CardBody>
-              <CardTitle> Annotated Class Selection </CardTitle>
-            </CardBody>
-            {divs}
-          </Card>
-        </div>
-
-        <br></br>
+        {divs}
       </div>
     );
   }

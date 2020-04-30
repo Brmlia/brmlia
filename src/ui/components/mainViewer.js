@@ -24,7 +24,7 @@ class mainViewer extends React.Component {
     return (
       <Card style={mainCardStyle}>
         <CardBody style={mainCardBodyStyle}>
-          <CardTitle> Image View </CardTitle>
+          <CardTitle> <h3> Image View </h3> </CardTitle>
           <Viewer imageWidth={mainImgStyle.width} type="0" />
         </CardBody>
         <br></br>
@@ -100,7 +100,7 @@ class mainViewer extends React.Component {
       <div className="main-view" style={mainViewStyle}>
         <Card className="main-card" style={mainCardStyle}>
           <CardBody>
-            <CardTitle> Image View </CardTitle>
+            <CardTitle> <h3> Image View </h3> </CardTitle>
             <div id="main-canvas-container" style={{ width: width, height: height }}>
               {this.display()}
               <FabricLayer />

@@ -11,7 +11,7 @@ export const channelCardStyle = {
   width: '100%',
   fluid: true,
   fontSize: '12px',
-  height: '400px'
+  height: '100%'
 };
 
 export const channelCardBodyStyle = {
@@ -21,7 +21,8 @@ export const channelCardBodyStyle = {
 
 export const channelCanvasStyle = {
   position: 'center',
-  height: '80%',
+  // height: '80%',
+  height: '100px',
   width: '100%',
   zIndex: '3',
 };

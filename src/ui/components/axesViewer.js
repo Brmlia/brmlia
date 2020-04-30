@@ -20,7 +20,7 @@ class AxesViewer extends React.Component {
         <div className="card-axis-xy" style={axisViewStyle}>
           <Card style={axisCardStyle}>
             <CardBody style = {axisCardBodyStyle}>
-              <CardTitle> Axis XY </CardTitle>
+              <CardTitle> <h3> Axis XY </h3> </CardTitle>
               {this.view1}
             </CardBody>
           </Card>
@@ -30,7 +30,7 @@ class AxesViewer extends React.Component {
         <div className="card-axis-yz" style={axisViewStyle}>
           <Card style={axisCardStyle}>
             <CardBody style = {axisCardBodyStyle}>
-              <CardTitle> Axis YZ </CardTitle>
+              <CardTitle> <h3> Axis YZ </h3> </CardTitle>
               {this.view2}
             </CardBody>
           </Card>
@@ -40,7 +40,7 @@ class AxesViewer extends React.Component {
         <div className="card-axis-xz" style={axisViewStyle}>
           <Card style={axisCardStyle}>
             <CardBody style = {axisCardBodyStyle}>
-              <CardTitle> Axis XZ </CardTitle>
+              <CardTitle> <h3> Axis XZ </h3> </CardTitle>
               {this.view3}
             </CardBody>
           </Card>

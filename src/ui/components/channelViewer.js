@@ -18,7 +18,7 @@ class ChannelViewer extends React.Component {
           <Col sm="4">
             <Card style={channelCardStyle}>
               <CardBody style={channelCardBodyStyle}>
-                <CardTitle> Channel 1 </CardTitle>
+                <CardTitle> <h3> Channel 1 </h3> </CardTitle>
                 <Channel ch="1" />
               </CardBody>
             </Card>
@@ -26,7 +26,7 @@ class ChannelViewer extends React.Component {
           <Col sm="4">
             <Card style={channelCardStyle}>
               <CardBody style={channelCardBodyStyle}>
-                <CardTitle> Channel 2 </CardTitle>
+                <CardTitle> <h3> Channel 2 </h3> </CardTitle>
                 <Channel ch="2" />
               </CardBody>
             </Card>
@@ -34,7 +34,7 @@ class ChannelViewer extends React.Component {
           <Col sm="4">
             <Card style={channelCardStyle}>
               <CardBody style={channelCardBodyStyle}>
-                <CardTitle> Channel 3 </CardTitle>
+                <CardTitle> <h3> Channel 3 </h3> </CardTitle>
                 <Channel ch="3" />
               </CardBody>
             </Card>

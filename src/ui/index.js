@@ -27,8 +27,9 @@ class UI extends React.Component {
             </Col>
 
             <Col xs="8">
-              <MainViewer />
               <AnnotatorViewer />
+              <br />
+              <MainViewer />
               <ChannelViewer />
             </Col>
           </Row>
