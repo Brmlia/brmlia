@@ -101,7 +101,7 @@ function Mesh(props) {
     [props]
   );
 
-  useFrame(state => {
+  function setUniforms() {
     material.current.uniforms.brightness.value = uApi.getState().channels[
       props.channel - 1
     ].uniforms.brightness.value;
@@ -123,6 +123,10 @@ function Mesh(props) {
     material.current.uniforms.color.value = uApi.getState().channels[
       props.channel - 1
     ].uniforms.color.value;
+  }
+
+  useFrame(state => {
+    setUniforms()
   });
 
   return (

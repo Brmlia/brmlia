@@ -1,13 +1,10 @@
 import {
   fileApi,
-  annotApi,
-  addAnnotation,
   createTexture,
-  createTextureFromTiff,
   importCsv,
   importJson,
   importTiff,
-} from './index.js';
+} from './index.js'
 
 const img = {
   display: 'block',
@@ -90,54 +87,54 @@ export function initTiff(file) {
 }
 
 export function addTiff(file) {
-  fileApi.setState(prevState => ({
+  fileApi.setState( prevState => ({
     ...prevState,
-    file: [
-      ...prevState.file,
-      {
+    file: [...prevState.file, {
         name: file.name,
         image: file.preview,
         style: img,
-        type: file.type,
-      },
-    ],
-    size: prevState.size + 1,
-  }));
+      type: file.type
+    }],
+    size: prevState.size + 1
+  }))
   importTiff(file);
   idx = fileApi.getState().size - 1;
 }
 
-export function updateTiff(image, rgba) {
-  fileApi.setState(prevState => {
-    const file = prevState.file.map((file, j) => {
-      var newFile = file;
-      newFile.texture = createTextureFromTiff(image.src);
-      newFile.image = image;
-      newFile.rgba = rgba;
-      return newFile;
-    });
-    return {
-      file,
-    };
-  });
-}
+// export function updateTiff(image, rgba) {
+//   fileApi.setState(prevState => {
+//     const file = prevState.file.map((file, j) => {
+//       var newFile = file;
+//       newFile.texture = createTextureFromTiff(image.src);
+//       newFile.image = image;
+//       newFile.rgba = rgba;
+//       return newFile;
+//     });
+//     return {
+//       file,
+//     };
+//   });
+// }
 
-export function updateTiffPages(name, pages, image) {
+export function updateTiffPages(name, pages, image, metadata) {
   fileApi.setState(prevState => {
     const file = prevState.file.map((file, j) => {
       if (file.name === name) {
         var newFile = file;
-        newFile.pages = pages;
-        newFile.image = image;
+        newFile.pages = pages
+        newFile.image = image
+        newFile.metadata = metadata
         return newFile;
-      } else {
-        return file;
       }
-    });
+      else {
+        return file
+      }
+    })
     return {
-      file,
-    };
-  });
+      file
+    }
+  })
+
 }
 
 export function initCsv(file) {

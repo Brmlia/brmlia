@@ -1,5 +1,5 @@
 import React from 'react';
-import { mainStyle, rowStyle, container } from './style.js';
+import { mainStyle, rowStyle, containerStyle } from './styles/style.js';
 import MainViewer from './components/mainViewer.js';
 import AxesViewer from './components/axesViewer.js';
 import AnnotatorViewer from './components/annotatorViewer.js';
@@ -19,20 +19,17 @@ class UI extends React.Component {
         <br></br>
         <br></br>
 
-        <Container style={container}>
+        <Container style={containerStyle}>
           <Row style={rowStyle}>
-            <Col xs="2">
+            <Col xs="4">
               <AxesViewer />
+              <Thumbnails />
             </Col>
 
             <Col xs="8">
               <MainViewer />
-            </Col>
-
-            <Col xs="2">
               <AnnotatorViewer />
               <ChannelViewer />
-              <Thumbnails />
             </Col>
           </Row>
         </Container>

@@ -5,8 +5,13 @@ export const createTexture = image => {
   return new THREE.TextureLoader().load(image);
 };
 
-export const createTextureFromTiff = image => {
-  return new THREE.TextureLoader().load(image);
+export const createTextureFromTiff = (imagedata, width, height) => {
+  const data = new Uint8Array(imagedata)
+
+  var texture =  new THREE.DataTexture(data, width, height, THREE.RGBAFormat)
+  texture.needsUpdate = true;
+  // console.log("imageStore::createTextureFromTiff() - texture generated from imagedata with width and height: ", texture, imagedata, width, height)
+  return texture
 };
 
 const initState = {

@@ -3,13 +3,13 @@ import { Button, Card, CardTitle, CardBody } from 'reactstrap';
 
 import {
   annotApi,
-  cardStyle,
-  card,
   updateClasses,
   getClasses,
   toggleClassEnable,
   annotClassApi,
   filterClasses,
+  annotCardStyle,
+  annotViewStyle,
 } from './index.js';
 
 class AnnotatorViewer extends React.Component {
@@ -120,8 +120,8 @@ class AnnotatorViewer extends React.Component {
     }
     return (
       <div>
-        <div className="annotations-class" style={cardStyle}>
-          <Card style={card}>
+        <div className="annotations-class" style={annotViewStyle}>
+          <Card style={annotCardStyle}>
             <CardBody>
               <CardTitle> Annotated Class Selection </CardTitle>
             </CardBody>

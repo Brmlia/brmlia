@@ -9,22 +9,23 @@ import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 
 import {
-  cardStyle,
-  card,
-  mainImg,
-  mainCanvasStyle,
-  canvasStyle1,
-  canvasStyle2,
-  canvasStyle3,
+  mainImgStyle,
+  mainViewStyle,
+  mainCanvasStyle0,
+  mainCanvasStyle1,
+  mainCanvasStyle2,
+  mainCanvasStyle3,
+  mainCardStyle,
+  mainCardBodyStyle,
 } from './index.js';
 
 class mainViewer extends React.Component {
   altView() {
     return (
-      <Card style={card}>
-        <CardBody>
+      <Card style={mainCardStyle}>
+        <CardBody style={mainCardBodyStyle}>
           <CardTitle> Image View </CardTitle>
-          <Viewer imageWidth={mainImg.width} type="0" />
+          <Viewer imageWidth={mainImgStyle.width} type="0" />
         </CardBody>
         <br></br>
       </Card>
@@ -43,7 +44,7 @@ class mainViewer extends React.Component {
     );
 
     return (
-      <div id="main-canvas-view" style={mainCanvasStyle}>
+      <div id="main-canvas-view" style={mainCanvasStyle0}>
         {canvas}
       </div>
     );
@@ -68,9 +69,9 @@ class mainViewer extends React.Component {
     }
     return (
       <div>
-        <div style={canvasStyle1}>{view1}</div>
-        <div style={canvasStyle2}>{view2}</div>
-        <div style={canvasStyle3}>{view3} </div>
+        <div style={mainCanvasStyle1}>{view1}</div>
+        <div style={mainCanvasStyle2}>{view2}</div>
+        <div style={mainCanvasStyle3}>{view3} </div>
       </div>
     );
   }
@@ -96,11 +97,11 @@ class mainViewer extends React.Component {
     let height = window.innerHeight * 0.6;
 
     return (
-      <div className="main-view" style={cardStyle}>
-        <Card style={card}>
+      <div className="main-view" style={mainViewStyle}>
+        <Card className="main-card" style={mainCardStyle}>
           <CardBody>
             <CardTitle> Image View </CardTitle>
-            <div id="canvasContainer" style={{ width: width, height: height }}>
+            <div id="main-canvas-container" style={{ width: width, height: height }}>
               {this.display()}
               <FabricLayer />
             </div>

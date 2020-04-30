@@ -7,19 +7,59 @@ import {
 } from '../../annotator/annotationStore.js';
 
 import {
-  buttonGroup as btnGrp,
+  saveVolume as saveVol,
+  getVolume  as getVol,
+} from '../../datacube/volumeControl.js';
+
+import {
+  filesNeedUpdate  as filesNeedUpd,
+  areFilesValid    as areFilesVal,
+  initializeVolume as initVol,
+  generateTexture  as genText,
+  getImageData     as getImgDt,
+  generateSampleData as genSmpDat,
+  shrinkTiff as shrTiff,
+} from '../../imagecanvas/canvasUtils.js';
+
+import {
+  buttonGroupStyle as btnGrpStyle,
   cardStyle as cdStyle,
-  card as cd,
-  cardBody as cdBody,
-  canvasThumbnail as cvsThb,
-  thumb as thbStyle,
-  thumbInner as thbInStyle,
-  mainImg as mImg,
-  mainCanvasStyle as mCvsStyle,
-  canvasStyle1 as cvsStyle1,
-  canvasStyle2 as cvsStyle2,
-  canvasStyle3 as cvsStyle3,
-} from '../style.js';
+} from '../styles/style.js';
+
+import {
+  mainViewStyle as mViewStyle,
+  mainCardBodyStyle as mCdBodyStyle,
+  mainCardStyle as mCdStyle,
+  mainCanvasStyle0 as mCvsStyle0,
+  mainCanvasStyle1 as mCvsStyle1,
+  mainCanvasStyle2 as mCvsStyle2,
+  mainCanvasStyle3 as mCvsStyle3,
+  mainImgStyle as mImgStyle,
+} from '../styles/mainStyle.js';
+
+import {
+  axisViewStyle as axVwStyle,
+  axisCardStyle as axCdStyle,
+  axisCardBodyStyle as axCdBodyStyle,
+} from '../styles/axisStyle.js';
+
+import {
+  channelViewStyle        as chVwStyle,
+  channelCardStyle        as chCardStyle,
+  channelCardBodyStyle    as chCardBodyStyle,
+  channelCanvasStyle      as chCanvasStyle,
+  channelImageCanvasStyle as chImgCanvasStyle,
+} from '../styles/channelStyle.js';
+
+import {
+  annotViewStyle as annotVwStyle,
+  annotCardStyle as annotCdStyle,
+} from '../styles/annotatorStyle.js';
+
+import {
+  thumbStyle as thbStyle,
+  thumbInnerStyle as thbInStyle,
+} from '../styles/thumbnailStyle.js';
 
 import {
   updateClasses as updCls,
@@ -59,6 +99,7 @@ import {
   updateBlackpoint as updBlackpoint,
   updateColor as updColor,
   updateOpacity as updOpacity,
+  updateTexture as updText,
 } from '../../imagecanvas/CanvasControl.js';
 
 import {
@@ -81,22 +122,47 @@ import {
 
 import {
   exportJson as expJson,
-} from '../../fileuploader/exporter.js';
+} from '../../fileuploader/fileExporter.js';
 
 export const fApi               = fileApi
 export const annotApi           = aApi
-export const buttonGroup        = btnGrp
+export const saveVolume         = saveVol
+export const getVolume          = getVol
+export const filesNeedUpdate    = filesNeedUpd
+export const areFilesValid      = areFilesVal
+export const generateTexture    = genText
+export const getImageData       = getImgDt
+export const initializeVolume   = initVol
+export const generateSampleData = genSmpDat
+export const shrinkTiff         = shrTiff
+export const buttonGroupStyle        = btnGrpStyle
 export const cardStyle          = cdStyle
-export const card               = cd
-export const cardBody           = cdBody
-export const canvasThumbnail    = cvsThb
-export const thumb              = thbStyle
-export const thumbInner         = thbInStyle
-export const mainImg            = mImg
-export const mainCanvasStyle    = mCvsStyle
-export const canvasStyle1       = cvsStyle1
-export const canvasStyle2       = cvsStyle2
-export const canvasStyle3       = cvsStyle3
+// export const card               = cd
+// export const cardBody           = cdBody
+// export const canvasThumbnail    = cvsThb
+export const thumbStyle              = thbStyle
+export const thumbInnerStyle         = thbInStyle
+// export const mainImg            = mImg
+export const mainCanvasStyle0    = mCvsStyle0
+export const mainCanvasStyle1       = mCvsStyle1
+export const mainCanvasStyle2       = mCvsStyle2
+export const mainCanvasStyle3       = mCvsStyle3
+export const channelViewStyle        = chVwStyle
+export const channelCardStyle        = chCardStyle
+export const channelCardBodyStyle    = chCardBodyStyle
+export const channelCanvasStyle      = chCanvasStyle
+export const channelImageCanvasStyle = chImgCanvasStyle
+export const annotViewStyle = annotVwStyle
+export const annotCardStyle = annotCdStyle
+export const mainViewStyle = mViewStyle
+export const mainCardBodyStyle       = mCdBodyStyle
+export const mainCardStyle           = mCdStyle
+export const mainImgStyle            = mImgStyle
+
+export const axisViewStyle = axVwStyle
+export const axisCardStyle = axCdStyle
+export const axisCardBodyStyle = axCdBodyStyle
+
 export const updateClasses      = updCls
 export const getClasses         = getCls
 export const toggleClassEnable  = toggleClsEn
@@ -119,6 +185,7 @@ export const updateWhitepoint   = updWhitepoint
 export const updateBlackpoint   = updBlackpoint
 export const updateColor        = updColor
 export const updateOpacity      = updOpacity
+export const updateTexture      = updText
 export const openMenu           = opMenu
 export const startDrawing       = strDr
 export const startSelecting     = strSel

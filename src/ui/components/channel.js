@@ -11,9 +11,6 @@ import {
 } from '../../mainSettings.js';
 
 import {
-  card,
-  cardBody,
-  canvasThumbnail,
   updateBrightness,
   updateContrast,
   updateWhitepoint,
@@ -22,6 +19,10 @@ import {
   updateOpacity,
   updateChannelSel,
   updateLastSel,
+  channelCardStyle,
+  channelCardBodyStyle,
+  channelCanvasStyle,
+  channelImageCanvasStyle,
 } from './index.js';
 
 class Channel extends React.Component {
@@ -88,8 +89,9 @@ class Channel extends React.Component {
       <ImageCanvas
         className="annot-view"
         alt={alt}
-        height="100px"
+        height="200px"
         channel={this.props.ch}
+        style={channelImageCanvasStyle}
       />
     );
     var sel = settingsApi.getState().channels[this.props.ch - 1].selected;
@@ -109,6 +111,7 @@ class Channel extends React.Component {
         >
           Channel {`${this.props.ch}`}
         </Button>
+        &nbsp;
         <Button
           className="viewBtn"
           outline
@@ -118,9 +121,9 @@ class Channel extends React.Component {
           View
         </Button>
         <UncontrolledCollapse toggler={`#view${this.props.ch}`}>
-          <Card style={card}>
-            <CardBody style={cardBody}>
-              <div style={canvasThumbnail}>{canvas}</div>
+          <Card style={channelCardStyle}>
+            <CardBody style={channelCardBodyStyle}>
+              <div style={channelCanvasStyle}>{canvas}</div>
               <div>Channel Color</div>
               <ColorPicker
                 color={colorValue.bind(this)}

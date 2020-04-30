@@ -1,89 +1,95 @@
 import React, { Component } from 'react';
 import create from 'zustand';
-import { Progress } from 'reactstrap';
+import {
+  Progress
+} from 'reactstrap';
 
 const state = {
-  loaded: 0,
-};
-const [useState, stateApi] = create(set => ({
-  ...state,
-}));
+  loaded: 0
+}
+const [useState, stateApi] = create (set => ({
+  ...state
+}))
 
 export async function loadSlices(cntxt, volume, axes, axis, files, type) {
   if (type === 1) {
-    await _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, files[0]);
-  } else {
-    _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files);
+    await _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, files[0])
+  }
+  else {
+    await _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files)
   }
 }
 
-export async function updateChannelSlice(cntxt, volume, slice, axes, axis) {
+export async function updateChannelSlice(cntxt, volume, slice, axes, axis, invertV) {
   if (cntxt && volume && axes) {
-    await volume.renderChannelSlice(cntxt, axes[axis], slice);
+    await volume.renderChannelSlice(cntxt, axes[axis], slice, invertV)
   }
 }
 
 async function _loadVolumes(volume, pages, width) {
   for (var pIdx = 0; pIdx < pages.length; pIdx++) {
-    const page = pages[pIdx];
+    const page = pages[pIdx]
 
-    const pct = Math.round((pIdx / pages.length) * 100);
-    if (pct % 10 === 0) {
+    const pct = Math.round((pIdx/(pages.length-1))*100)
+    if ((pct % 10) === 0) {
       stateApi.setState({
-        loaded: pct,
-      });
+        loaded: pct
+      })
     }
 
-    console.log('loading ', pIdx, '/', pages.length);
-    await volume.load(page, width, pIdx);
+    // console.log("loading ", pIdx , "/", pages.length-1)
+    await volume.load(page, width, pIdx)
   }
 }
 
 async function _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, file) {
-  if (file && file.pages && file.pages.length > 0) {
-    await _loadVolumes(volume, file.pages, file.image.width);
+  if (file && (file.pages) && (file.pages.length > 0)) {
+    await _loadVolumes(volume, file.pages, file.image.width)
   }
 
-  updateChannelSlice(cntxt, volume, 0, axes, axis);
+  updateChannelSlice(cntxt, volume, 0, axes, axis, false);
 }
 
-function _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files) {
+async function _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files) {
   for (var fIdx = 0; fIdx < files.length; fIdx++) {
-    const file = files[fIdx];
-    if (file && file.pages && file.pages.length > 0) {
-      const pages = file.pages;
+    const file = files[fIdx]
+    if (file && (file.pages) && (file.pages.length > 0)) {
+      const pages = file.pages
       for (var pIdx = 0; pIdx < pages.length; pIdx++) {
-        const page = pages[pIdx];
-        volume.load(this.state.cntxt, page, file.image.width, fIdx);
+        const page = pages[pIdx]
+        await volume.load(page, file.image.width, fIdx)
       }
-      updateChannelSlice(cntxt, volume, 0, axes, axis);
+      updateChannelSlice(cntxt, volume, 0, axes, axis, false);
     }
   }
 }
 
 class ProgressBar extends Component {
-  state = {
-    loaded: 0,
-  };
 
-  display() {
+  state = {
+    loaded: 0
+  }
+
+  display = () => {
     if (this.state.loaded !== 100) {
       return (
-        <Progress striped bar value={this.state.loaded}>
-          {' '}
-          {this.state.loaded}%{' '}
-        </Progress>
-      );
-    } else {
-      return <div> </div>;
+        <Progress striped bar value={this.state.loaded}> {this.state.loaded}% </Progress>
+      )
+    }
+    else {
+      return (
+        <div> </div>
+      )
     }
   }
 
   render() {
     stateApi.subscribe(state => {
-      this.state.loaded = state.loaded;
-    });
-    return this.display();
+      this.state.loaded = state.loaded
+    })
+    return (
+      this.display()
+    )
   }
 }
 

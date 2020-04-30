@@ -12,7 +12,7 @@ import {
 import { FileUpload } from '../../fileuploader/fileUploader.js';
 
 import {
-  buttonGroup,
+  buttonGroupStyle,
   exportJson,
   modes,
   setMode,
@@ -24,9 +24,9 @@ class Menus extends React.Component {
   render() {
     return (
       <ButtonGroup
-        size={buttonGroup.size}
-        vertical={buttonGroup.vertical}
-        style={buttonGroup}
+        size={buttonGroupStyle.size}
+        vertical={buttonGroupStyle.vertical}
+        style={buttonGroupStyle}
       >
         <UncontrolledButtonDropdown>
           <DropdownToggle caret color="primary">
