@@ -15,6 +15,8 @@ import {
   initializeVolume,
   updateChannelSlice,
   updateSliceLength,
+  updateType,
+  parseMetadata,
 } from './index.js';
 
 class ImageCanvas extends React.Component {
@@ -36,7 +38,6 @@ class ImageCanvas extends React.Component {
       rgb: 0,
     }))
     this.fileLength = 0;
-    this.length = 0;
 
     // Case 1: (60 z planes, 3 channels, 1)
     // Case 2: (60 z planes, 1 channel, 3)
@@ -44,12 +45,6 @@ class ImageCanvas extends React.Component {
     // Case 4: (1 z planes, 1 channel, 180)
     this.type = 1;
     this.typeIsDefault = true;
-
-    this.cube = {
-      x: 256,
-      y: 256,
-      z: 256,
-    };
 
     this.sliceIdx       = 22;
     this.computedSlicedIdx = 0;
@@ -68,24 +63,6 @@ class ImageCanvas extends React.Component {
     this.setState(prevState => ({
       cntxt: cntxt
     }));
-  }
-
-  determineType(fileLength, pageLength, channelLength) {
-    var tType = 0
-
-    if      ( (fileLength === 1) && (channelLength === 3) && (pageLength >   1) ) { tType = 1; this.volType = 1 }
-    else if ( (fileLength === 3) && (channelLength === 1) && (pageLength >   1) ) { tType = 2; this.volType = 1 }
-    else if ( (fileLength >   1)                          && (pageLength === 3) ) { tType = 3; this.volType = 1 }
-    else if ( (fileLength >   1)                          && (pageLength === 1) ) { tType = 4; this.volType = 1 }
-
-    if (tType !== 0) {
-      this.type = tType
-      this.typeIsDefault = false
-    }
-    else {
-      // invalid type
-    }
-    console.log("determineType() - type, file, page, channel lengths: ", tType, fileLength, pageLength, channelLength)
   }
 
   updateFileList(files) {
@@ -108,42 +85,6 @@ class ImageCanvas extends React.Component {
     }
   }
 
-  parseMetadata(file, metadata) {
-
-    const {
-      // images,
-      channels,
-      // slices,
-    } = metadata
-
-    const fileLength = file.length
-    const pageLength = file[0].pages.length
-    const channelLength = parseInt(channels || 1)
-    // Case 1: (60 z planes, 3 channels, 1)
-    //   images = 180
-    //   channels = 3
-    //   slices = 60
-    //   hyperstack = true
-    //   pages = 180
-    // Case 2: (60 z planes, 1 channel, 3)
-    //   images = 60
-    //   channels = n/a
-    //   slices = 60
-    //   hyperstack = n/a
-    //   pages = 60
-    // Case 3: (1 z planes, 3 channels, 60)
-    //   images = 3
-    //   channels = n/a
-    //   slices = 3
-    //   hyperstack = n/a
-    //   pages = 3
-    // Case 4: (1 z planes, 1 channel, 180)
-    //   pages = 1
-    //   n/a
-
-    this.determineType(fileLength, pageLength, channelLength)
-  }
-
   updateLength(fileLength, pageLength) {
     if (this.type === 1) {
       this.length = pageLength/3
@@ -162,25 +103,44 @@ class ImageCanvas extends React.Component {
     }
   }
 
+  setVolume(files, width, height, length) {
+    initializeVolume(0, this.state.cntxt, files, 0, this.state.axes, this.type, width, height, length)
+    if (!this.volume) {
+      this.volume = getVolume(0)
+    }
+  }
+
+  setType(files, metadata) {
+    if (this.typeIsDefault) {
+      this.type = parseMetadata(files, metadata)
+      updateType(this.type)
+      this.typeIsDefault = false
+    }
+  }
+
   updateForFile(state) {
     if (filesNeedUpdate(state, this.files.length)) {
       var idx = this.getIdx(state.file.length)
       const files = state.file
-      const file = files[idx]
-      this.file = file
+
       if (
         areFilesValid(files, idx, this.fileLength)
       ) {
+        const file = files[idx]
+        const width = file.image.width
+        const height = file.image.height
+        const fileLength = files.length
+        const pageLength = file.pages.length
+
         this.updateFileList(files)
-        if (this.typeIsDefault) {
-          this.parseMetadata(state.file, file.metadata)
-        }
-        this.updateLength(files.length, file.pages.length)
-        updateImage(files[state.selected], this.props.channel);
-        idx = this.getIdx(state.file.length)
-        initializeVolume(0, this.state.cntxt, files, idx, this.state.axes, this.volType, file.image.width, file.image.height, file.pages.length)
-        updateSliceLength((parseInt(this.props.channel)+3), this.length)
+        this.setType(files, file.metadata)
+        this.updateLength(fileLength, pageLength)
+        this.setVolume(files, width, height, pageLength)
         this.fileLength = this.files.length
+        this.file = file
+
+        updateImage(files[state.selected], this.props.channel);
+        updateSliceLength((parseInt(this.props.channel)+3), this.length)
       }
     }
     this.forceUpdate();
@@ -204,7 +164,7 @@ class ImageCanvas extends React.Component {
       return ((value * 3) + (parseInt(this.props.channel)-1) )
     }
     else if (this.type === 2) {
-      return (value)
+      return ((value + ((parseInt(this.props.channel)-1) * this.length)))
     }
   }
 

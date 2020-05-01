@@ -25,12 +25,17 @@ import {
   saveVolume as saveVol,
   getVolume  as getVol,
   updateSliceLength  as updSliceLen,
+  updateType         as updType,
 } from '../datacube/volumeControl.js';
 
 import {
   loadSlices as ldSlices,
   updateChannelSlice as updSlice,
 } from '../datacube/datacubeControls.js';
+
+import {
+  parseMetadata as parseMd,
+} from '../fileuploader/fileParser.js';
 
 import {
   filesNeedUpdate  as filesNeedUpd,
@@ -51,6 +56,7 @@ export const createTextureFromTiff = createTFrTiff
 export const saveVolume            = saveVol
 export const getVolume             = getVol
 export const updateSliceLength     = updSliceLen
+export const updateType            = updType
 export const filesNeedUpdate       = filesNeedUpd
 export const areFilesValid         = areFilesVal
 export const generateTexture       = genText
@@ -58,3 +64,4 @@ export const getImageData          = getImgDt
 export const initializeVolume      = initVol
 export const loadSlices            = ldSlices
 export const updateChannelSlice    = updSlice
+export const parseMetadata         = parseMd
