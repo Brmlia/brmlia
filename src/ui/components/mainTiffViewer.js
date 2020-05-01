@@ -110,14 +110,22 @@ class mainTiffViewer extends Component {
       this.fileLength = this.length = file.length;
     } else if (this.type === 1) {
       this.fileLength = file.length;
-      this.length = pages.length;
+    } else if (this.type === 2) {
+      this.fileLength = file.length;
     }
   }
 
-  setSlider(width, height, length) {
+  setSlider(width, height, length, pageLength) {
     // if (this.props.axis === "0") this.length = width
     // if (this.props.axis === "1") this.length = height
-    if (this.props.axis === "2") this.length = length / 3
+    if (this.props.axis === "2") {
+      if (this.type === 1) {
+        this.length = pageLength / 3
+      }
+      else if (this.type === 2) {
+        this.length = pageLength
+      }
+    }
   }
 
   async refreshImage() {
@@ -135,10 +143,10 @@ class mainTiffViewer extends Component {
       ) {
         this.parseMetadata(state.file, file.metadata)
         this.setTiffParams(state.file, file.pages)
-        initializeVolume(0, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
-        initializeVolume(1, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
-        initializeVolume(2, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
-        this.setSlider(file.image.width, file.image.height, file.pages.length)
+        initializeVolume(0, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length * state.file.length)
+        initializeVolume(1, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length * state.file.length)
+        initializeVolume(2, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length * state.file.length)
+        this.setSlider(file.image.width, file.image.height, state.file.length, file.pages.length)
         this.volume = getVolume(this.axisIdx)
         this.updateSlice()
       }
@@ -147,7 +155,12 @@ class mainTiffViewer extends Component {
   }
 
   computeSlice(value) {
-    return ((value * 3) + (this.channel-1) )
+    if (this.type === 1) {
+      return ((value * 3) + (this.channel-1) )
+    }
+    else if (this.type === 2) {
+      return ((value + ((this.channel-1) * this.length)))
+    }
   }
 
   updateSlice() {
