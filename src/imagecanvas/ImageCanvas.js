@@ -43,6 +43,7 @@ class ImageCanvas extends React.Component {
     // Case 3: (1 z planes, 3 channels, 60)
     // Case 4: (1 z planes, 1 channel, 180)
     this.type = 1;
+    this.typeIsDefault = true;
 
     this.cube = {
       x: 256,
@@ -79,6 +80,7 @@ class ImageCanvas extends React.Component {
 
     if (tType !== 0) {
       this.type = tType
+      this.typeIsDefault = false
     }
     else {
       // invalid type
@@ -170,7 +172,9 @@ class ImageCanvas extends React.Component {
         areFilesValid(files, idx, this.fileLength)
       ) {
         this.updateFileList(files)
-        this.parseMetadata(state.file, file.metadata)
+        if (this.typeIsDefault) {
+          this.parseMetadata(state.file, file.metadata)
+        }
         this.updateLength(files.length, file.pages.length)
         updateImage(files[state.selected], this.props.channel);
         idx = this.getIdx(state.file.length)

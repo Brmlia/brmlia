@@ -33,6 +33,7 @@ class mainTiffViewer extends Component {
     // Case 3: (1 z planes, 3 channels, 60)
     // Case 4: (1 z planes, 1 channel, 180)
     this.type = 1;
+    this.typeIsDefault = true;
   }
 
   componentDidMount() {
@@ -51,6 +52,7 @@ class mainTiffViewer extends Component {
 
     if (tType !== 0) {
       this.type = tType
+      this.typeIsDefault = false
     }
     else {
       // invalid type
@@ -143,8 +145,10 @@ class mainTiffViewer extends Component {
       if (
         this.isValidFile(state.file, idx)
       ) {
-        this.parseMetadata(state.file, file.metadata)
-        this.setTiffParams(state.file, file.pages)
+        if (this.typeIsDefault) {
+          this.parseMetadata(state.file, file.metadata)
+          this.setTiffParams(state.file, file.pages)
+        }
         initializeVolume(0, this.state.cntxt, state.file, 0, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length * state.file.length)
         this.setSlider(file.image.width, file.image.height, state.file.length, file.pages.length)
         if (!this.volume) {
