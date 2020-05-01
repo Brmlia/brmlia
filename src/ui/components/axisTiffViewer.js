@@ -124,7 +124,7 @@ class TiffViewer extends Component {
         this.isValidFile(state.file, idx)
       ) {
         this.parseMetadata(state.file, file.metadata)
-        initializeVolume(0, this.state.cntxt, state.file, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length * state.file.length)
+        initializeVolume(0, this.state.cntxt, state.file, 0, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length * state.file.length)
         this.setSlider(file.image.width, file.image.height, state.file.length, file.pages.length)
         this.volume = getVolume(0)
         this.updateSlice()

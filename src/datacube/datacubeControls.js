@@ -11,9 +11,9 @@ const [useState, stateApi] = create (set => ({
   ...state
 }))
 
-export async function loadSlices(cntxt, volume, axes, axis, files, type) {
+export async function loadSlices(cntxt, volume, axes, axis, files, type, fileIdx) {
   if (type === 1) {
-    await _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, files[0])
+    await _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, files[fileIdx])
   }
   else {
     await _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files)

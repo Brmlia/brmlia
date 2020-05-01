@@ -32,7 +32,7 @@ export function areFilesValid(files, idx, length) {
   )
 }
 
-export async function initializeVolume(idx, cntxt, files, axes, type, width, height, length) {
+export async function initializeVolume(idx, cntxt, files, fileIdx, axes, type, width, height, length) {
 
   if (!getVolume(idx)) {
     var cube = {
@@ -59,7 +59,8 @@ export async function initializeVolume(idx, cntxt, files, axes, type, width, hei
       axes,
       2,
       files,
-      type
+      type,
+      fileIdx,
     );
   }
 }
