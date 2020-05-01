@@ -15,9 +15,11 @@ import {
 } from  '../../datacube/volumeStore.js';
 
 import {
-  saveVolume as saveVol,
-  getVolume  as getVol,
+  saveVolume         as saveVol,
+  getVolume          as getVol,
   updateSliceIndex   as updSliceIdx,
+  updateType         as updType,
+  getType            as getTyp,
 } from '../../datacube/volumeControl.js';
 
 import {
@@ -132,6 +134,10 @@ import {
 //   exportJson as expJson,
 // } from '../../fileuploader/exporter.js';
 
+import {
+  parseMetadata as parseMd,
+} from '../../fileuploader/fileParser.js';
+
 export const fApi                    = fileApi
 // export const annotApi                = aApi
 export const volApi                  = vApi
@@ -145,6 +151,8 @@ export const initializeVolume        = initVol
 export const generateSampleData      = genSmpDat
 export const shrinkTiff              = shrTiff
 export const updateSliceIndex        = updSliceIdx
+export const updateType              = updType
+export const getType                 = getTyp
 export const buttonGroupStyle        = btnGrpStyle
 export const cardStyle               = cdStyle
 export const thumbStyle              = thbStyle
@@ -206,5 +214,6 @@ export const updateTexture        = updText
 export const updateChannelSel   = updChannelSel
 export const updateLastSel      = updLastSel
 // export const exportJson         = expJson
+export const parseMetadata      = parseMd
 
 export const uApi = uniApi

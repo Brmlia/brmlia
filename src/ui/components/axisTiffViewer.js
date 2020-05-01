@@ -7,6 +7,8 @@ import {
   updateChannelSlice,
   initializeVolume,
   getVolume,
+  updateType,
+  parseMetadata,
 } from './index.js';
 
 class TiffViewer extends Component {
@@ -39,60 +41,6 @@ class TiffViewer extends Component {
     }));
   }
 
-  determineType(fileLength, pageLength, channelLength) {
-    var tType = 0
-
-    if      ( (fileLength === 1) && (channelLength === 3) && (pageLength >   1) ) tType = 1
-    else if ( (fileLength === 3) && (channelLength === 1) && (pageLength >   1) ) tType = 2
-    else if ( (fileLength >   1)                          && (pageLength === 3) ) tType = 3
-    else if ( (fileLength >   1)                          && (pageLength === 1) ) tType = 4
-
-    if (tType !== 0) {
-      this.type = tType
-      this.typeIsDefault = false
-    }
-    else {
-      // invalid type
-    }
-    console.log("determineType() - type, file, page, channel lengths: ", tType, fileLength, pageLength, channelLength)
-  }
-
-  parseMetadata(file, metadata) {
-
-    const {
-      // images,
-      channels,
-      // slices,
-    } = metadata
-
-    const fileLength = file.length
-    const pageLength = file[0].pages.length
-    const channelLength = parseInt(channels || 1)
-    // Case 1: (60 z planes, 3 channels, 1)
-    //   images = 180
-    //   channels = 3
-    //   slices = 60
-    //   hyperstack = true
-    //   pages = 180
-    // Case 2: (60 z planes, 1 channel, 3)
-    //   images = 60
-    //   channels = n/a
-    //   slices = 60
-    //   hyperstack = n/a
-    //   pages = 60
-    // Case 3: (1 z planes, 3 channels, 60)
-    //   images = 3
-    //   channels = n/a
-    //   slices = 3
-    //   hyperstack = n/a
-    //   pages = 3
-    // Case 4: (1 z planes, 1 channel, 180)
-    //   pages = 1
-    //   n/a
-
-    this.determineType(fileLength, pageLength, channelLength)
-  }
-
   isValidFile(file, idx) {
 
     return (
@@ -117,35 +65,40 @@ class TiffViewer extends Component {
     }
   }
 
-  async updateForFile(state) {
-    if (state && state.file) {
-      const idx = Math.max((state.file.length - 1), 0);
-      const file = state.file[idx]
+  setVolume(files, width, height, length) {
+    initializeVolume(0, this.state.cntxt, files, 0, this.state.axes, this.type, width, height, length)
+    if (!this.volume) {
+      this.volume = getVolume(0)
+    }
+  }
 
+  setType(files, metadata) {
+    if (this.typeIsDefault) {
+      this.type = parseMetadata(files, metadata)
+      updateType(this.type)
+      this.typeIsDefault = false
+    }
+  }
+
+  async updateForFile(state) {
+    const files = state.file
+    if (state && files) {
+      const idx = Math.max((files.length - 1), 0);
       if (
-        this.isValidFile(state.file, idx)
+        this.isValidFile(files, idx)
       ) {
-        if (this.typeIsDefault) {
-          this.parseMetadata(state.file, file.metadata)
-        }
-        initializeVolume(0, this.state.cntxt, state.file, 0, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length * state.file.length)
-        this.setSlider(file.image.width, file.image.height, state.file.length, file.pages.length)
-        if (!this.volume) {
-          this.volume = getVolume(0)
-        }
+        const file = files[idx]
+        const width = file.image.width
+        const height = file.image.height
+        const fileLength = files.length
+        const pageLength = file.pages.length
+        this.setType(files, file.metadata)
+        this.setSlider(width, height, fileLength, pageLength)
+        this.setVolume(files, width, height, pageLength * fileLength)
         this.updateSlice()
       }
     }
     this.forceUpdate();
-  }
-
-  computeSlice(value) {
-    if (this.type === 1) {
-      return ((value * 3) + (this.channel-1) )
-    }
-    else if (this.type === 2) {
-      return ((value + ((this.channel-1) * this.length)))
-    }
   }
 
   updateSlice() {
@@ -161,15 +114,14 @@ class TiffViewer extends Component {
   }
 
   nextSlice(dec) {
-    var slice;
     if (dec)
-      slice = this.clamp(
+      this.sliceIdx = this.clamp(
         parseInt(this.sliceIdx) - 1,
         0,
         Math.max(0, this.length - 1)
       );
     else
-      slice = this.clamp(
+      this.sliceIdx = this.clamp(
         parseInt(this.sliceIdx) + 1,
         0,
         Math.max(0, this.length - 1)
@@ -178,26 +130,12 @@ class TiffViewer extends Component {
   }
 
   sliderValueSlice(value) {
-    this.channelSliceIdx = parseInt(value)
-    // this.sliceIdx = this.computeSlice(this.channelSliceIdx)
-    this.sliceIdx = this.channelSliceIdx
-    this.updateSlice()
-  }
-
-  nextAxis(dec) {
-    var idx;
-    if (dec) idx = (this.axisIdx + 2) % this.state.axes.length;
-    else idx = (this.axisIdx + 1) % this.state.axes.length;
-    this.axisIdx = idx
+    this.sliceIdx = parseInt(value || 0)
     this.updateSlice()
   }
 
   clamp(val, min, max) {
     return Math.min(Math.max(val, min), max);
-  }
-
-  handleChangePageNumber(value) {
-    this.slice(parseInt(value))
   }
 
   render() {
@@ -252,7 +190,7 @@ class TiffViewer extends Component {
           &nbsp;
           <label>
            Page #: &nbsp;
-           <input type="text" value={this.sliceIdx} onChange={event => this.handleChangePageNumber(event.target.value) } />
+           <input type="text" value={this.sliceIdx} onChange={event => this.sliderValueSlice(event.target.value) } />
           </label>
           <div> Slice: {this.sliceIdx} </div>
         </div>

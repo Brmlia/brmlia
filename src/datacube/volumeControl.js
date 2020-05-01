@@ -64,4 +64,15 @@ export function updateSliceLength(channel, length) {
   });
 }
 
+export function updateType(type) {
+  volApi.setState(prevState => ({
+    ...prevState,
+    type: type
+  }))
+}
+
+export function getType() {
+  return volApi.getState().type
+}
+
 

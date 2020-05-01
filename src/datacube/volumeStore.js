@@ -35,6 +35,7 @@ const initState = {
     0,
     0,
   ],
+  type: 1
 }
 
 export const [useVolumeStore, volApi] = create(set => ({
