@@ -14,6 +14,7 @@ import {
   areFilesValid,
   initializeVolume,
   updateChannelSlice,
+  updateSliceLength,
 } from './index.js';
 
 class ImageCanvas extends React.Component {
@@ -50,6 +51,7 @@ class ImageCanvas extends React.Component {
     };
 
     this.sliceIdx       = 22;
+    this.computedSlicedIdx = 0;
     this.axisIdx        = 2;
     this.length         = 0;
 
@@ -98,6 +100,7 @@ class ImageCanvas extends React.Component {
         this.updateFileList(files)
         updateImage(files[state.selected], this.props.channel);
         initializeVolume((parseInt(this.props.channel)+3), this.state.cntxt, files, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
+        updateSliceLength((parseInt(this.props.channel)+3), file.pages.length/3)
       }
     }
     this.forceUpdate();
@@ -108,6 +111,7 @@ class ImageCanvas extends React.Component {
   updateForSlice(state) {
     const sliceIdx = state.sliceIndices[parseInt(this.props.channel)+3]
     if (this.sliceIdx !== sliceIdx) {
+      this.computedSlicedIdx = this.computeSlice(parseInt(sliceIdx))
       this.updateSlice();
       this.loadTiff();
       this.forceUpdate();
@@ -116,17 +120,17 @@ class ImageCanvas extends React.Component {
   }
 
   computeSlice(value) {
-    return ((value * 3) + (this.channel-1) )
+    return ((value * 3) + (parseInt(this.props.channel)-1) )
   }
 
   updateSlice() {
     updateChannelSlice(
       this.state.cntxt,
       this.volume,
-      this.sliceIdx,
+      this.computedSlicedIdx,
       this.state.axes,
       this.axisIdx,
-      false
+      true
     );
     this.updatedtexture = false;
     this.forceUpdate();

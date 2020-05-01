@@ -32,3 +32,35 @@ export function updateVolume(index, volume) {
 export function saveVolume(index, volume) {
   updateVolume(index, volume)
 }
+
+export function updateSliceIndex(channel, idx) {
+  volApi.setState(prevState => {
+    const sliceIndices = prevState.sliceIndices.map((sliceIdx, j) => {
+      if (j === channel) {
+        return idx;
+      } else {
+        return sliceIdx;
+      }
+    });
+    return {
+      sliceIndices,
+    };
+  });
+}
+
+export function updateSliceLength(channel, length) {
+  volApi.setState(prevState => {
+    const lengths = prevState.lengths.map((len, j) => {
+      if (j === channel) {
+        return length;
+      } else {
+        return len;
+      }
+    });
+    return {
+      lengths,
+    };
+  });
+}
+
+

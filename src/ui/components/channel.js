@@ -10,6 +10,7 @@ import {
 } from '../../mainSettings.js';
 
 import {
+  volApi,
   updateBrightness,
   updateContrast,
   updateWhitepoint,
@@ -29,6 +30,7 @@ class Channel extends React.Component {
 
   componentDidMount() {
     this.channelSliceIdx = 0;
+    this.channelSliceLen = 0;
   }
 
   updateSelection = () => {
@@ -38,7 +40,6 @@ class Channel extends React.Component {
   };
 
   sliderValueSlice(value) {
-    console.log("sliderValueSlice, ch, value", this.props.ch, (parseInt(this.props.ch) + 3), value)
     updateSliceIndex((parseInt(this.props.ch) + 3), value)
   }
 
@@ -50,7 +51,19 @@ class Channel extends React.Component {
     updateBrightness(value, this.props.ch);
   }
 
+  updateForSliceLen(state) {
+    const len = state.lengths[parseInt(this.props.ch)+3]
+    if (this.channelSliceLen !== len) {
+      this.channelSliceLen = len
+      this.forceUpdate()
+    }
+  }
+
   render() {
+    volApi.subscribe(state => {
+      this.updateForSliceLen(state);
+    });
+
     var sliderValueBr = this.sliderValueBr;
     var sliderValueCt = this.sliderValueCt;
     var sliderValueWp = this.sliderValueWp;
@@ -103,7 +116,7 @@ class Channel extends React.Component {
                   label=""
                   width="40%"
                   min="0"
-                  max={Math.max(this.length - 1, 0)}
+                  max={Math.max(this.channelSliceLen - 1, 0)}
                   step="1"
                   initial="0"
                   multiplier="1"

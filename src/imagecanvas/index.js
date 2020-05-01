@@ -24,6 +24,7 @@ import {
 import {
   saveVolume as saveVol,
   getVolume  as getVol,
+  updateSliceLength  as updSliceLen,
 } from '../datacube/volumeControl.js';
 
 import {
@@ -49,6 +50,7 @@ export const createTexture         = createT
 export const createTextureFromTiff = createTFrTiff
 export const saveVolume            = saveVol
 export const getVolume             = getVol
+export const updateSliceLength     = updSliceLen
 export const filesNeedUpdate       = filesNeedUpd
 export const areFilesValid         = areFilesVal
 export const generateTexture       = genText

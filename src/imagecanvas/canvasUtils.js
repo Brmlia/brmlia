@@ -107,19 +107,3 @@ export function shrinkTiff(context, imageData, idx) {
   var y = 0
   context.drawImage(newC, x, y, cw, ch)
 }
-
-export function updateSliceIndex(channel, idx) {
-  volApi.setState(prevState => {
-    const sliceIndices = prevState.sliceIndices.map((sliceIdx, j) => {
-      if (j === channel) {
-        return idx;
-      } else {
-        return sliceIdx;
-      }
-    });
-    return {
-      sliceIndices,
-    };
-  });
-}
-

@@ -6,14 +6,18 @@ import {
 //   annotApi as aApi,
 // } from '../../annotator/annotationStore.js';
 
-
 import {
   uApi as uniApi,
 } from '../../utils/index.js';
 
 import {
+  volApi as vApi,
+} from  '../../datacube/volumeStore.js';
+
+import {
   saveVolume as saveVol,
   getVolume  as getVol,
+  updateSliceIndex   as updSliceIdx,
 } from '../../datacube/volumeControl.js';
 
 import {
@@ -24,7 +28,6 @@ import {
   getImageData       as getImgDt,
   generateSampleData as genSmpDat,
   shrinkTiff         as shrTiff,
-  updateSliceIndex   as updSliceIdx,
 } from '../../imagecanvas/canvasUtils.js';
 
 import {
@@ -131,6 +134,7 @@ import {
 
 export const fApi                    = fileApi
 // export const annotApi                = aApi
+export const volApi                  = vApi
 export const saveVolume              = saveVol
 export const getVolume               = getVol
 export const filesNeedUpdate         = filesNeedUpd

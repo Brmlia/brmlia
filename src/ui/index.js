@@ -27,7 +27,6 @@ class UI extends React.Component {
             </Col>
 
             <Col xs="8">
-              <SampleMesh />
               <MainViewer />
               <ChannelViewer />
             </Col>
