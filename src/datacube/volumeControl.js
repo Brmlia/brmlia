@@ -1,6 +1,7 @@
 import {volApi} from './volumeStore.js'
 
 export function getVolume(index) {
+  console.debug("getVolume - index: %d, all volumes: {", index, volApi.getState().volumes, "}")
   return volApi.getState().volumes[index]
 }
 

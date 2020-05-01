@@ -1,6 +1,7 @@
 
 export class Volume {
   constructor (args) {
+    console.debug("Volume() - args:", args)
     this.channel = args.channel;
   }
 

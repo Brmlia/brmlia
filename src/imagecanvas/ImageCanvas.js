@@ -174,7 +174,7 @@ class ImageCanvas extends React.Component {
         this.updateLength(files.length, file.pages.length)
         updateImage(files[state.selected], this.props.channel);
         idx = this.getIdx(state.file.length)
-        initializeVolume((parseInt(this.props.channel)+3), this.state.cntxt, files, idx, this.state.axes, this.volType, file.image.width, file.image.height, file.pages.length)
+        initializeVolume(0, this.state.cntxt, files, idx, this.state.axes, this.volType, file.image.width, file.image.height, file.pages.length)
         updateSliceLength((parseInt(this.props.channel)+3), this.length)
         this.fileLength = this.files.length
       }
@@ -218,7 +218,7 @@ class ImageCanvas extends React.Component {
   }
 
   async setImageData() {
-    this.volume =  getVolume(parseInt(this.props.channel)+3)
+    this.volume =  getVolume(0)
     if (this.volume) {
       this.imgdata = await this.volume.getImageData()
     }
