@@ -3,6 +3,7 @@ import { Card, CardTitle, CardBody } from 'reactstrap';
 
 import MainTiffViewer from './mainTiffViewer.js';
 
+import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 
 import {
@@ -17,10 +18,6 @@ import {
 } from './index.js';
 
 class mainViewer extends React.Component {
-
-  componentDidMount() {
-  }
-
   canvasView() {
     var canvas = (
       <MainTiffViewer
@@ -41,10 +38,41 @@ class mainViewer extends React.Component {
   }
 
   channelViews() {
+    var view1;
+    var view2;
+    var view3;
+
+    if (settingsApi.getState().channels[0].selected) {
+      console.log('displaying 1');
+      view1 = canvasApi.getState().canvas[0];
+    }
+    if (settingsApi.getState().channels[1].selected) {
+      console.log('displaying 2');
+      view2 = canvasApi.getState().canvas[1];
+    }
+    if (settingsApi.getState().channels[2].selected) {
+      console.log('displaying 3');
+      view3 = canvasApi.getState().canvas[2];
+    }
+    return (
+      <div>
+        <div style={mainCanvasStyle1}>{view1}</div>
+        <div style={mainCanvasStyle2}>{view2}</div>
+        <div style={mainCanvasStyle3}>{view3} </div>
+      </div>
+    );
   }
 
   display() {
+    if (
+      !settingsApi.getState().channels[0].selected &&
+      !settingsApi.getState().channels[1].selected &&
+      !settingsApi.getState().channels[2].selected
+    ) {
     return this.canvasView();
+    } else {
+      return this.channelViews();
+    }
   }
 
   render() {

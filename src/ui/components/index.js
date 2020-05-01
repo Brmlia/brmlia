@@ -103,11 +103,11 @@ import {
 
 import {
   updateBrightness as updBrightness,
-//   updateContrast   as updContrast,
-//   updateWhitepoint as updWhitepoint,
-//   updateBlackpoint as updBlackpoint,
-//   updateColor      as updColor,
-//   updateOpacity    as updOpacity,
+  updateContrast   as updContrast,
+  updateWhitepoint as updWhitepoint,
+  updateBlackpoint as updBlackpoint,
+  updateColor      as updColor,
+  updateOpacity    as updOpacity,
   updateTexture    as updText,
 } from '../../imagecanvas/CanvasControl.js';
 // import {
@@ -187,11 +187,11 @@ export const Volume             = Vol
 export const loadSlices         = ldSlices
 export const updateChannelSlice = updSlice
 export const updateBrightness   = updBrightness
-// export const updateContrast     = updContrast
-// export const updateWhitepoint   = updWhitepoint
-// export const updateBlackpoint   = updBlackpoint
-// export const updateColor        = updColor
-// export const updateOpacity      = updOpacity
+export const updateContrast     = updContrast
+export const updateWhitepoint   = updWhitepoint
+export const updateBlackpoint   = updBlackpoint
+export const updateColor        = updColor
+export const updateOpacity      = updOpacity
 export const updateTexture        = updText
 // export const openMenu           = opMenu
 // export const startDrawing       = strDr
