@@ -218,7 +218,9 @@ class ImageCanvas extends React.Component {
   }
 
   async setImageData() {
-    this.volume =  getVolume(0)
+    if (!this.volume) {
+      this.volume = getVolume(0)
+    }
     if (this.volume) {
       this.imgdata = await this.volume.getImageData()
     }
@@ -230,10 +232,12 @@ class ImageCanvas extends React.Component {
   }
 
   async loadTiff() {
-    this.setImageData()
-    if (this.imgdata && (this.imgdata.data.length > 0) && !this.updatedtexture) {
-      this.setTexture()
-      this.updatedtexture = true
+    if (!this.updatedtexture) {
+      this.setImageData()
+      if (this.imgdata && (this.imgdata.data.length > 0)) {
+        this.setTexture()
+        this.updatedtexture = true
+      }
     }
   }
 
