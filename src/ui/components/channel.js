@@ -22,14 +22,25 @@ import {
   channelCardBodyStyle,
   channelCanvasStyle,
   channelImageCanvasStyle,
+  updateSliceIndex,
 } from './index.js';
 
 class Channel extends React.Component {
+
+  componentDidMount() {
+    this.channelSliceIdx = 0;
+  }
+
   updateSelection = () => {
     updateChannelSel(this.props.ch);
     updateLastSel(this.props.ch);
     this.forceUpdate();
   };
+
+  sliderValueSlice(value) {
+    console.log("sliderValueSlice, ch, value", this.props.ch, (parseInt(this.props.ch) + 3), value)
+    updateSliceIndex((parseInt(this.props.ch) + 3), value)
+  }
 
   resetBrightness() {
     updateBrightness('0.0', this.props.ch);
@@ -87,6 +98,20 @@ class Channel extends React.Component {
           <Card style={channelCardStyle}>
             <CardBody style={channelCardBodyStyle}>
               <div style={channelCanvasStyle}>{canvas}</div>
+              <div className="slice-slider-container">
+                <Slider
+                  label=""
+                  width="40%"
+                  min="0"
+                  max={Math.max(this.length - 1, 0)}
+                  step="1"
+                  initial="0"
+                  multiplier="1"
+                  raw="1"
+                  sliderValue={this.sliderValueSlice.bind(this)}
+                />
+              </div>
+              <div> Slice: {this.channelSliceIdx} </div>
               <div className="brightness-slider-container">
                 <Slider
                   label="Brightness"

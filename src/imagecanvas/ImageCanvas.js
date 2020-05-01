@@ -4,6 +4,8 @@ import { fabric } from 'fabric';
 import {
   fApi,
   uApi,
+  canvasApi,
+  volApi,
   updateImage,
   updateTexture,
   getVolume,
@@ -12,14 +14,9 @@ import {
   areFilesValid,
   initializeVolume,
   updateChannelSlice,
-} from './index.js'
-
-import {
-  canvasApi,
-} from './canvasStore.js';
+} from './index.js';
 
 class ImageCanvas extends React.Component {
-
   constructor (props) {
     super(props)
     this.files = [];
@@ -33,8 +30,6 @@ class ImageCanvas extends React.Component {
   init() {
     this.setState(prevState => ({
       ...prevState,
-      axisIdx: 0,
-      sliceIdx: 23,
       cntxt: null,
       // rgb: 0 (red), 1 (green), 2 (blue)
       rgb: 0,
@@ -54,7 +49,11 @@ class ImageCanvas extends React.Component {
       z: 256,
     };
 
-    this.imgdata = null;
+    this.sliceIdx       = 22;
+    this.axisIdx        = 2;
+    this.length         = 0;
+
+    this.imgdata        = null;
     this.updatedtexture = false;
   }
 
@@ -65,22 +64,6 @@ class ImageCanvas extends React.Component {
     this.setState(prevState => ({
       cntxt: cntxt
     }));
-  }
-
-  async setImageData() {
-    this.volume =  getVolume(parseInt(this.props.channel)+3)
-    if (this.volume) {
-      this.imgdata = await this.volume.getImageData()
-    }
-  }
-
-  async loadTiff() {
-    this.setImageData()
-    if (this.imgdata && (this.imgdata.data.length > 0) && !this.updatedtexture) {
-      this.texture = generateTexture(this.imgdata.data, this.imgdata.width, this.imgdata.height)
-      updateTexture(this.file, this.texture, this.props.channel)
-      this.updatedtexture = true
-    }
   }
 
   updateFileList(files) {
@@ -122,56 +105,56 @@ class ImageCanvas extends React.Component {
   updateForControls(state) {
     this.forceUpdate();
   }
+  updateForSlice(state) {
+    const sliceIdx = state.sliceIndices[parseInt(this.props.channel)+3]
+    if (this.sliceIdx !== sliceIdx) {
+      this.updateSlice();
+      this.loadTiff();
+      this.forceUpdate();
+      this.sliceIdx = sliceIdx
+    }
+  }
 
-  slice(value) {
-    const slice = this.clamp(
-      parseInt(value),
-      0,
-      Math.max(0, this.files[0].length -1)
-    )
+  computeSlice(value) {
+    return ((value * 3) + (this.channel-1) )
+  }
 
-    const axisIdx = 2;
-    this.setState(prevState => ({
-      ...prevState,
-      sliceIdx: slice,
-    }));
+  updateSlice() {
     updateChannelSlice(
       this.state.cntxt,
       this.volume,
-      slice,
+      this.sliceIdx,
       this.state.axes,
-      axisIdx,
-      true
+      this.axisIdx,
+      false
     );
-    this.setImageData()
     this.updatedtexture = false;
     this.forceUpdate();
   }
 
-  clamp(val, min, max) {
-    return Math.min(Math.max(val, min), max);
+  async setImageData() {
+    this.volume =  getVolume(parseInt(this.props.channel)+3)
+    if (this.volume) {
+      this.imgdata = await this.volume.getImageData()
+    }
   }
 
-  handleChangePageNumber(value) {
-    this.slice(parseInt(value))
+  async setTexture() {
+    this.texture = generateTexture(this.imgdata.data, this.imgdata.width, this.imgdata.height)
+    updateTexture(this.file, this.texture, this.props.channel)
+  }
+
+  async loadTiff() {
+    this.setImageData()
+    if (this.imgdata && (this.imgdata.data.length > 0) && !this.updatedtexture) {
+      this.setTexture()
+      this.updatedtexture = true
+    }
   }
 
   displayCanvas() {
     this.loadTiff()
     return canvasApi.getState().canvas[this.props.channel - 1]
-  }
-
-  // move to channel, causes issues here
-  displayPageControls() {
-    return (
-      <div>
-        <label>
-         Page #: &nbsp;
-         <input type="text" value={this.state.pagenumber} onChange={event => this.handleChangePageNumber(event.target.value) } />
-        </label>
-        <div> Slice: {this.state.sliceIdx} </div>
-      </div>
-    )
   }
 
   render() {
@@ -181,6 +164,9 @@ class ImageCanvas extends React.Component {
     });
     uApi.subscribe(state => {
       this.updateForControls(state);
+    });
+    volApi.subscribe(state => {
+      this.updateForSlice(state);
     });
 
     return (

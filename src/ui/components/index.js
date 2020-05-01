@@ -24,6 +24,7 @@ import {
   getImageData       as getImgDt,
   generateSampleData as genSmpDat,
   shrinkTiff         as shrTiff,
+  updateSliceIndex   as updSliceIdx,
 } from '../../imagecanvas/canvasUtils.js';
 
 import {
@@ -139,6 +140,7 @@ export const getImageData            = getImgDt
 export const initializeVolume        = initVol
 export const generateSampleData      = genSmpDat
 export const shrinkTiff              = shrTiff
+export const updateSliceIndex        = updSliceIdx
 export const buttonGroupStyle        = btnGrpStyle
 export const cardStyle               = cdStyle
 export const thumbStyle              = thbStyle

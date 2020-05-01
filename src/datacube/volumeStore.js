@@ -4,7 +4,9 @@ import create from 'zustand';
 // 3: main
 // 4, 5, 6: channels
 // 7: test
+// possible to share the same volumea cross views?
 const initState = {
+
   volumes: [
     null,
     null,
@@ -14,7 +16,25 @@ const initState = {
     null,
     null,
     null,
-  ]
+  ],
+  sliceIndices: [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ],
+  lengths: [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ],
 }
 
 export const [useVolumeStore, volApi] = create(set => ({
