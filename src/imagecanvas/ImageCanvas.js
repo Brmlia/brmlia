@@ -93,6 +93,9 @@ class ImageCanvas extends React.Component {
     else if (this.type === 2 ) {
       this.length = pageLength
     }
+    else if (this.type === 3) {
+      this.length = fileLength
+    }
   }
 
   getIdx(fileLength) {
@@ -101,6 +104,9 @@ class ImageCanvas extends React.Component {
     }
     else if (this.type === 2) {
       return (parseInt(this.props.channel)-1)
+    }
+    if (this.type === 3) {
+      return Math.max((fileLength - 1), 0);
     }
   }
 
@@ -170,6 +176,9 @@ class ImageCanvas extends React.Component {
     }
     else if (this.type === 2) {
       return ((value + ((parseInt(this.props.channel)-1) * this.length)))
+    }
+    if (this.type === 3) {
+      return ((value * 3) + (parseInt(this.props.channel)-1) )
     }
   }
 

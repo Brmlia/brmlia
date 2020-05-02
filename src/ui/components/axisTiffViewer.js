@@ -63,6 +63,9 @@ class TiffViewer extends Component {
       else if (this.type === 2) {
         this.length = pageLength * length
       }
+      else if (this.type === 3) {
+        this.length = pageLength * length
+      }
     }
   }
 

@@ -60,6 +60,8 @@ class mainTiffViewer extends Component {
       this.fileLength = file.length;
     } else if (this.type === 2) {
       this.fileLength = file.length;
+    } else if (this.type === 3) {
+      this.fileLength = file.length;
     }
   }
 
@@ -72,6 +74,9 @@ class mainTiffViewer extends Component {
       }
       else if (this.type === 2) {
         this.length = pageLength
+      }
+      else if (this.type === 3) {
+        this.length = length
       }
     }
   }
@@ -128,6 +133,9 @@ class mainTiffViewer extends Component {
     }
     else if (this.type === 2) {
       return ((value + ((this.channel-1) * this.length)))
+    }
+    else if (this.type === 3) {
+      return ((value * 3) + (this.channel-1) )
     }
   }
 
