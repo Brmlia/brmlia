@@ -12,9 +12,11 @@
 - [x] Supports Large Number of Pages (256+)
 - [x] Supports Case 1: (60 z planes, 3 channels, 1)
 - [x] Supports Case 2: (60 z planes, 1 channel, 3)
-- [ ] Supports Case 3: (1 z planes, 3 channels, 60)
-- [ ] Supports Case 4: (1 z planes, 1 channel, 180)
+- [x] Supports Case 3: (1 z planes, 3 channels, 60)
+- [x] Supports Case 4: (1 z planes, 1 channel, 180)
 - [ ] Fix Channel Expandable Disappearing Image Bug
+- [ ] Supports Medium Number of Files (60+)
+- [ ] Supports Large Number of Files (180+)
 
 #### Thumbnails
 - [x] Supports Tiffs in Thumbnails

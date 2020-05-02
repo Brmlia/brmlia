@@ -53,18 +53,6 @@ class mainTiffViewer extends Component {
     )
   }
 
-  setTiffParams(file, pages) {
-    if (this.type === 0) {
-      this.fileLength = this.length = file.length;
-    } else if (this.type === 1) {
-      this.fileLength = file.length;
-    } else if (this.type === 2) {
-      this.fileLength = file.length;
-    } else if (this.type === 3) {
-      this.fileLength = file.length;
-    }
-  }
-
   setSlider(width, height, length, pageLength) {
     // if (this.props.axis === "0") this.length = width
     // if (this.props.axis === "1") this.length = height
@@ -77,6 +65,9 @@ class mainTiffViewer extends Component {
       }
       else if (this.type === 3) {
         this.length = length
+      }
+      else if (this.type === 4) {
+        this.length = length / 3
       }
     }
   }
@@ -128,13 +119,20 @@ class mainTiffViewer extends Component {
   }
 
   computeSlice(value) {
+    // select every third
     if (this.type === 1) {
       return ((value * 3) + (this.channel-1) )
     }
+    // select slice in [0-length) for channel 1, [length-2*length) for channel 2, [2*length-3*length) for channel 3
     else if (this.type === 2) {
       return ((value + ((this.channel-1) * this.length)))
     }
+    // select every third
     else if (this.type === 3) {
+      return ((value * 3) + (this.channel-1) )
+    }
+    // select every third
+    else if (this.type === 4) {
       return ((value * 3) + (this.channel-1) )
     }
   }
