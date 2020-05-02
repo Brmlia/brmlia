@@ -44,3 +44,22 @@ export function parseMetadata(file, metadata) {
 
   return determineType(fileLength, pageLength, channelLength)
 }
+
+export function filesNeedUpdate(state, length) {
+  return (
+    state
+    && (state.file.length > 0)
+    && (state.file.length !== length)
+    && (state.total === state.size)
+  )
+}
+
+export function areFilesValid(files, idx, length) {
+  return (
+    (files.length > 0) &&
+    (files[idx]) &&
+    (files[idx].pages) &&
+    (files[idx].pages.length > 0) &&
+    (files.length !== length)
+  )
+}

@@ -9,6 +9,7 @@ import {
   getVolume,
   updateType,
   parseMetadata,
+  filesNeedUpdate,
 } from './index.js';
 
 class TiffViewer extends Component {
@@ -81,24 +82,26 @@ class TiffViewer extends Component {
   }
 
   async updateForFile(state) {
-    const files = state.file
-    if (state && files) {
-      const idx = Math.max((files.length - 1), 0);
-      if (
-        this.isValidFile(files, idx)
-      ) {
-        const file = files[idx]
-        const width = file.image.width
-        const height = file.image.height
-        const fileLength = files.length
-        const pageLength = file.pages.length
-        this.setType(files, file.metadata)
-        this.setSlider(width, height, fileLength, pageLength)
-        this.setVolume(files, width, height, pageLength * fileLength)
-        this.updateSlice()
+    if (filesNeedUpdate(state, this.fileLength)) {
+      const files = state.file
+      if (state && files) {
+        const idx = Math.max((files.length - 1), 0);
+        if (
+          this.isValidFile(files, idx)
+        ) {
+          const file = files[idx]
+          const width = file.image.width
+          const height = file.image.height
+          const fileLength = files.length
+          const pageLength = file.pages.length
+          this.setType(files, file.metadata)
+          this.setSlider(width, height, fileLength, pageLength)
+          this.setVolume(files, width, height, pageLength * fileLength)
+          this.updateSlice()
+          this.forceUpdate();
+        }
       }
     }
-    this.forceUpdate();
   }
 
   updateSlice() {

@@ -19,6 +19,7 @@ import {
   isValidFile     as isValFl,
   saveJson        as svJson,
   updateTiffPages as updTP,
+  saveTotalNumOfFiles as saveTotal,
 } from './fileControl.js';
 
 import {
@@ -58,6 +59,7 @@ export const isValidFile           = isValFl
 export const saveJson              = svJson
 export const exportFile            = expF
 export const updateTiffPages       = updTP
+export const saveTotalNumOfFiles   = saveTotal
 export const importCsv             = impCsv
 export const importJson            = impJson
 export const importTiff            = impTiff

@@ -101,6 +101,5 @@ export function parseMultiTiff(name, buffer) {
   }
 
   // exportFile("pages.txt", pages)
-
   updateTiffPages(name, pages, image, metadata);
 }

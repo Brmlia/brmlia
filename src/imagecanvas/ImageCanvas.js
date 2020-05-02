@@ -54,6 +54,7 @@ class ImageCanvas extends React.Component {
     this.imgdata        = null;
     this.updatedtexture = false;
     this.volType = 0;
+    this.texture = null;
   }
 
   componentDidMount() {
@@ -146,7 +147,11 @@ class ImageCanvas extends React.Component {
     this.forceUpdate();
   }
   updateForControls(state) {
-    this.forceUpdate();
+    const texture = state.channels[this.props.channel-1].uniforms.image.value
+    if (texture && (this.texture !== texture)) {
+      this.texture = texture;
+      this.forceUpdate();
+    }
   }
   updateForSlice(state) {
     const sliceIdx = state.sliceIndices[parseInt(this.props.channel)+3]

@@ -14,24 +14,6 @@ import {
   volApi,
 } from './index.js'
 
-export function filesNeedUpdate(state, length) {
-  return (
-    state
-    && (state.file.length > 0)
-    && (state.file.length !== length)
-  )
-}
-
-export function areFilesValid(files, idx, length) {
-  return (
-    (files.length > 0) &&
-    (files[idx]) &&
-    (files[idx].pages) &&
-    (files[idx].pages.length > 0) &&
-    (files.length !== length)
-  )
-}
-
 export async function initializeVolume(idx, cntxt, files, fileIdx, axes, type, width, height, length) {
 
   if (!getVolume(idx)) {

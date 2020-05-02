@@ -102,24 +102,17 @@ export function addTiff(file) {
 }
 
 export function updateTiffPages(name, pages, image, metadata) {
-  fileApi.setState(prevState => {
-    const file = prevState.file.map((file, j) => {
-      if (file.name === name) {
-        var newFile = file;
-        newFile.pages = pages
-        newFile.image = image
-        newFile.metadata = metadata
-        return newFile;
-      }
-      else {
-        return file
-      }
-    })
-    return {
-      file
-    }
-  })
-
+  const index = fileApi.getState().file.findIndex(file => file.name === name)
+  var files = [...fileApi.getState().file]
+  const newFile = files[index]
+  newFile.pages = pages
+  newFile.image = image
+  newFile.metadata = metadata
+  files[index] = newFile
+  fileApi.setState(prevState => ({
+    ...prevState,
+    file: files
+  }))
 }
 
 export function initCsv(file) {
@@ -197,4 +190,11 @@ export function saveJson(result) {
     });
     return file;
   });
+}
+
+export function saveTotalNumOfFiles(total) {
+  fileApi.setState(prevState => ({
+    ...prevState,
+    total: total
+  }));
 }

@@ -22,8 +22,6 @@ import {
 } from '../../datacube/volumeControl.js';
 
 import {
-  filesNeedUpdate    as filesNeedUpd,
-  areFilesValid      as areFilesVal,
   initializeVolume   as initVol,
   generateTexture    as genText,
   getImageData       as getImgDt,
@@ -135,6 +133,8 @@ import {
 
 import {
   parseMetadata as parseMd,
+  filesNeedUpdate  as filesNeedUpd,
+  areFilesValid    as areFilesVal,
 } from '../../fileuploader/fileParser.js';
 
 export const fApi                    = fileApi
@@ -142,8 +142,6 @@ export const fApi                    = fileApi
 export const volApi                  = vApi
 export const saveVolume              = saveVol
 export const getVolume               = getVol
-export const filesNeedUpdate         = filesNeedUpd
-export const areFilesValid           = areFilesVal
 export const generateTexture         = genText
 export const getImageData            = getImgDt
 export const initializeVolume        = initVol
@@ -213,5 +211,7 @@ export const updateChannelSel   = updChannelSel
 export const updateLastSel      = updLastSel
 // export const exportJson         = expJson
 export const parseMetadata      = parseMd
+export const filesNeedUpdate       = filesNeedUpd
+export const areFilesValid         = areFilesVal
 
 export const uApi = uniApi

@@ -35,11 +35,11 @@ import {
 
 import {
   parseMetadata as parseMd,
+  filesNeedUpdate  as filesNeedUpd,
+  areFilesValid    as areFilesVal,
 } from '../fileuploader/fileParser.js';
 
 import {
-  filesNeedUpdate  as filesNeedUpd,
-  areFilesValid    as areFilesVal,
   initializeVolume as initVol,
   generateTexture  as genText,
   getImageData     as getImgDt,
@@ -57,11 +57,11 @@ export const saveVolume            = saveVol
 export const getVolume             = getVol
 export const updateSliceLength     = updSliceLen
 export const updateType            = updType
-export const filesNeedUpdate       = filesNeedUpd
-export const areFilesValid         = areFilesVal
 export const generateTexture       = genText
 export const getImageData          = getImgDt
 export const initializeVolume      = initVol
 export const loadSlices            = ldSlices
 export const updateChannelSlice    = updSlice
 export const parseMetadata         = parseMd
+export const filesNeedUpdate       = filesNeedUpd
+export const areFilesValid         = areFilesVal
