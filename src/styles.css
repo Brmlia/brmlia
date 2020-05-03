@@ -5,10 +5,13 @@
 
 #root {
   position: fixed;
-  width: 100%;
   height: 100%;
+  width: 1300px;
   top: 0;
   left: 0;
+  overflow-x: scroll;
+  overflow-y: scroll;
+  white-space: nowrap;
 }
 
 a {
