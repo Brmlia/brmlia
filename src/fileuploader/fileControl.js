@@ -22,14 +22,13 @@ export function isValidFile(name) {
   // check if file is already uploaded
   var validFile = false;
 
-  fileApi.setState(prevState => {
-    if (prevState.file) {
-      const x = prevState.file.filter(file => file.name === name);
-      if (x.length === 0) {
-        validFile = true;
-      }
+  const files = fileApi.getState().file
+  if (files) {
+    const x = files.filter(file => file.name === name);
+    if (x.length === 0) {
+      validFile = true;
     }
-  });
+  }
   return validFile;
 }
 
@@ -109,10 +108,6 @@ export function updateTiffPages(name, pages, image, metadata) {
   newFile.image = image
   newFile.metadata = metadata
   files[index] = newFile
-  fileApi.setState(prevState => ({
-    ...prevState,
-    file: files
-  }))
 }
 
 export function initCsv(file) {

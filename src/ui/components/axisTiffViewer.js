@@ -111,8 +111,8 @@ class TiffViewer extends Component {
     }
   }
 
-  updateSlice() {
-    updateChannelSlice(
+  async updateSlice() {
+    await updateChannelSlice(
       this.state.cntxt,
       this.volume,
       this.sliceIdx,
