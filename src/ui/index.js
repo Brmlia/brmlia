@@ -6,6 +6,8 @@ import Thumbnails from './components/thumbnails.js';
 import Menus from './components/menus.js';
 import ChannelViewer from './components/channelViewer.js';
 import SampleMesh from './components/sampleMesh.js';
+import SwTest from './../cache/swTest.js';
+import CacheTest from './../cache/cacheTest.js';
 
 import { Container, Row, Col } from 'reactstrap';
 
@@ -13,6 +15,8 @@ class UI extends React.Component {
   render() {
     return (
       <div className="main" style={mainStyle}>
+        <SwTest />
+        <CacheTest />
         <h2 align="center"> BRMLIA </h2>
         <Menus />
         <br></br>
