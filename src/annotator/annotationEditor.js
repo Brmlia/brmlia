@@ -312,6 +312,8 @@ export function undo() {
           left: lastUndoAnno.rect.left,
           width: lastUndoAnno.rect.width,
           height: lastUndoAnno.rect.height,
+          scaleX: lastUndoAnno.rect.scaleX,
+          scaleY: lastUndoAnno.rect.scaleY,
         });
         annotations[i].group.setCoords();
         canvas.requestRenderAll();
@@ -339,6 +341,8 @@ export function redo() {
         left: redoAnnot.rect.left,
         width: redoAnnot.rect.width,
         height: redoAnnot.rect.height,
+        scaleX: redoAnnot.rect.scaleX,
+        scaleY: redoAnnot.rect.scaleY,
       });
       canvas.add(redoAnnot.group);
       canvas.requestRenderAll();

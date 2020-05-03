@@ -16,10 +16,11 @@ export function createAnnotation(group, label, classLabel, rect, id) {
     class: classLabel || default_class,
     rect: {
       top: rect.top,
-      left: rect.eft,
       left: rect.left,
       width: rect.width,
       height: rect.height,
+      scaleX: group.scaleX,
+      scaleY: group.scaleY,
     },
   };
 }
@@ -136,24 +137,24 @@ export function getLastRedoAnnotIdx() {
   return redoApi.getState().redoAnnotations.length - 1;
 }
 
-export function updateAnnotationCoords(annotation) {
+export function updateAnnotationCoords(annotationGroup) {
   const annotations = annotApi.getState().annotations;
   for (let i = 0; i < annotations.length; i++) {
     let a = annotations[i];
-    if (annotation === annotations[i].group) {
+    if (annotationGroup === annotations[i].group) {
       addAnnotationToUndoState(annotations[i]);
       const rect = {
-        width: annotation.width,
-        height: annotation.height,
-        top: annotation.top,
-        left: annotation.left,
+        width: annotationGroup.width,
+        height: annotationGroup.height,
+        top: annotationGroup.top,
+        left: annotationGroup.left,
       };
 
       addAnnotation(
         createAnnotation(
-          annotation,
-          annotation._objects[1].text,
-          annotation._objects[2].text,
+          annotationGroup,
+          annotationGroup._objects[1].text,
+          annotationGroup._objects[2].text,
           rect,
           annotations[i].id
         )

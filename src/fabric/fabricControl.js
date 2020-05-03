@@ -82,10 +82,15 @@ export function finishMoving(selection) {
     if (subObjs) {
       finishMoving(objs[i]);
     } else {
+      selection.setCoords();
       updateAnnotationCoords(selection);
       break;
     }
   }
+
+  redoApi.setState({
+    redoAnnotations: [],
+  });
 }
 
 export function startSelecting() {
@@ -157,6 +162,10 @@ export function finishDrawingRect(x, y) {
         nextId: nextId + 1,
       }));
     }
+
+    redoApi.setState({
+      redoAnnotations: [],
+    });
 
     setSelectedObjects(fabricApi.getState().canvas.getActiveObjects()[0]);
   }
