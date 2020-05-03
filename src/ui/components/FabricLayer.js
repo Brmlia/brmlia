@@ -22,6 +22,8 @@ import {
   modes,
 } from './index.js';
 
+import { startMoving, finishMoving } from '../../fabric/fabricControl.js';
+
 var canvas;
 
 class FabricLayer extends React.Component {
@@ -36,7 +38,7 @@ class FabricLayer extends React.Component {
     this.selectClass1 = this.selectClass1.bind(this);
     this.showAll = this.showAllClasses.bind(this);
     this.handleMoveAnnotation = this.handleMoveAnnotation.bind(this);
-    // this.handleResize = this.handleResize.bind(this);
+    this.handleModifyAnnotation = this.handleModifyAnnotation.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +49,7 @@ class FabricLayer extends React.Component {
       'mouse:down': this.handleMouseDown,
       'mouse:up': this.handleMouseUp,
       'mouse:dblclick': this.handleMouseDoubleClick,
+      'object:modified': this.handleModifyAnnotation,
       'object:moving': this.handleMoveAnnotation,
       'object:rotating': this.handleDrag,
       'object:scaling': this.handleDrag,
@@ -63,12 +66,16 @@ class FabricLayer extends React.Component {
     setMode(modes.SELECT);
   }
 
+  handleModifyAnnotation(options) {
+    finishMoving(options.target);
+  }
+
   handleLeftMouseDown(options) {
     const mode = fabricApi.getState().drawMode;
     if (mode === modes.RECT) {
       startDrawing(options.e.clientX, options.e.clientY);
     } else if (mode === modes.FREE) {
-      drawFreeStyle(canvas, colors[this.props.channel]);
+      drawFreeStyle(canvas);
     }
   }
 
@@ -77,7 +84,7 @@ class FabricLayer extends React.Component {
   }
 
   handleLeftMouseUp(options) {
-    finish(options.e.clientX, options.e.clientY, colors[this.props.channel]);
+    finish(options.e.clientX, options.e.clientY);
   }
 
   handleRightMouseUp(options) {}

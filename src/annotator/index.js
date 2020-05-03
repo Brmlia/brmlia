@@ -2,7 +2,8 @@ import { fileApi as fApi } from '../fileuploader/fileStore.js';
 
 import {
   annotApi as aApi,
-  cachedAnnotApi as caApi,
+  undoApi as unApi,
+  redoApi as reApi,
 } from './annotationStore.js';
 
 import {
@@ -10,9 +11,9 @@ import {
   addAnnotationFromJson as addAnnotJson,
   undoAnnotation as undoAnnot,
   getLastAnnotIdx as getLstAntIdx,
-  getLastCachedAnnot as getLstCdAnt,
-  getLastCachedAnnotIdx as getLstCdAntIdx,
-  deleteCachedAnnotation as delCdAnt,
+  getLastUndoAnnot as getLstCdAnt,
+  getLastUndoAnnotIdx as getLstCdAntIdx,
+  deleteUndoAnnotation as delCdAnt,
   updateAnnotationLabel as updAntLbl,
   updateAnnotClassLabel as updAntClsLbl,
   getAnnotationClasses as getAnnotCls,
@@ -43,16 +44,19 @@ import {
   editAnnotationClass as editAnnotCls,
 } from './annotationMenuOptions.js';
 
+import { fabricApi as fabApi } from '../fabric/fabricControl.js';
+
 export const fileApi = fApi;
 export const annotApi = aApi;
-export const cachedAnnotApi = caApi;
+export const undoApi = unApi;
+export const redoApi = reApi;
 export const addAnnotation = addAnnot;
 export const addAnnotationFromJson = addAnnotJson;
 export const undoAnnotation = undoAnnot;
 export const getLastAnnotIdx = getLstAntIdx;
-export const getLastCachedAnnot = getLstCdAnt;
-export const getLastCachedAnnotIdx = getLstCdAntIdx;
-export const deleteCachedAnnotation = delCdAnt;
+export const getLastUndoAnnot = getLstCdAnt;
+export const getLastUndoAnnotIdx = getLstCdAntIdx;
+export const deleteUndoAnnotation = delCdAnt;
 export const updateAnnotationLabel = updAntLbl;
 export const updateAnnotClassLabel = updAntClsLbl;
 export const getAnnotationClasses = getAnnotCls;
@@ -69,6 +73,7 @@ export const updateClassLabel = updClsLbl;
 export const drawRect = drawR;
 export const editAnnotationLabel = editAnnotLbl;
 export const editAnnotationClass = editAnnotCls;
+export const fabricApi = fabApi;
 
 export function editAnnotationOption() {
   editAnnotOpt();

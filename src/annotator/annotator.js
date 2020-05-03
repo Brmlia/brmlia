@@ -15,16 +15,12 @@ class Annotator extends React.Component {
             addAnnotationFromJson(json);
             this.file_size = state.size;
           }
-
-          console.log('fileApi - files: ', state.file);
         }
       }
     });
     annotApi.subscribe(state => {
       if (this.annotations !== state.annotations) {
         this.annotations = state.annotations;
-
-        console.log('annotApi - annotations: ', state.annotations);
       }
     });
     return <div id="annotator-div"></div>;
