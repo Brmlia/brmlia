@@ -160,46 +160,6 @@ export function updateAnnotationCoords(annotation) {
       );
 
       deleteAnnotation(i);
-      // printStuff('updateCoords');
-      console.log('anno: ');
-      console.log(annotApi.getState().annotations);
-      console.log('undo: ');
-      console.log(undoApi.getState().undoAnnotations);
-      console.log('redo: ');
-      console.log(redoApi.getState().redoAnnotations);
-    }
-  }
-}
-
-export function printStuff(callingMethod) {
-  console.log(callingMethod);
-  let annotations = annotApi.getState().annotations;
-  console.log('annotations: ');
-  for (let i = 0; i < annotations.length; i++) {
-    console.log('id ' + i + ': ' + annotations[i].id);
-    if (annotations[i].group) {
-      console.log('top ' + i + ': ' + annotations[i].rect.top);
-      console.log('left ' + i + ': ' + annotations[i].rect.left);
-    }
-  }
-
-  let cached = undoApi.getState().undoAnnotations;
-  console.log('cached: ');
-  for (let i = 0; i < cached.length; i++) {
-    console.log('id ' + i + ': ' + cached[i].id);
-    if (cached[i].group) {
-      console.log('top ' + i + ': ' + cached[i].rect.top);
-      console.log('left ' + i + ': ' + cached[i].rect.left);
-    }
-  }
-
-  let redo = redoApi.getState().redoAnnotations;
-  console.log('redo: ');
-  for (let i = 0; i < redo.length; i++) {
-    console.log('id ' + i + ': ' + redo[i].id);
-    if (redo[i].group) {
-      console.log('top ' + i + ': ' + redo[i].rect.top);
-      console.log('left ' + i + ': ' + redo[i].rect.left);
     }
   }
 }

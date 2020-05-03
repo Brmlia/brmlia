@@ -307,14 +307,12 @@ export function undo() {
     let a = annotations[i];
     if (lastUndoAnno && annotations[i].id === lastUndoAnno.id) {
       if (annotations[i].group && lastUndoAnno.group) {
-        console.log(lastUndoAnno.group.left);
         annotations[i].group.set({
           top: lastUndoAnno.rect.top,
           left: lastUndoAnno.rect.left,
           width: lastUndoAnno.rect.width,
           height: lastUndoAnno.rect.height,
         });
-        console.log(annotations[i].group.left);
         annotations[i].group.setCoords();
         canvas.requestRenderAll();
       } else {
@@ -336,6 +334,12 @@ export function redo() {
     const redoAnnot = getLastRedoAnnot();
 
     if (redoAnnot.group) {
+      redoAnnot.group.set({
+        top: redoAnnot.rect.top,
+        left: redoAnnot.rect.left,
+        width: redoAnnot.rect.width,
+        height: redoAnnot.rect.height,
+      });
       canvas.add(redoAnnot.group);
       canvas.requestRenderAll();
     }
