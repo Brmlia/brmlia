@@ -10,8 +10,6 @@ import {
   saveVolume,
   getVolume,
   loadSlices,
-  canvasApi,
-  volApi,
 } from './index.js'
 
 export async function initializeVolume(idx, cntxt, files, fileIdx, axes, type, width, height, length) {

@@ -1,11 +1,7 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import { registerWorker, saveFiles, getText, getJson, getArrayBuffer, getBlob } from './cache.js'
 
 class CacheTest extends Component {
-
-  constructor(props) {
-    super(props)
-  }
 
   componentDidMount() {
     this.sw = registerWorker()

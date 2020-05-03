@@ -21,7 +21,6 @@ export function registerWorker() {
 async function getFiles(filename) {
   let cacheObj;
   let resp;
-  let content;
   await caches.open('file-cache').then((cache) => {
     cacheObj = cache;
   })
