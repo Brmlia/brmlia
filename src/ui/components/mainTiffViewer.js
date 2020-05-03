@@ -112,6 +112,7 @@ class mainTiffViewer extends Component {
           this.setSlider(width, height, fileLength, pageLength)
           this.setVolume(files, width, height, pageLength * fileLength)
           this.updateSlice()
+          this.fileLength = fileLength
           this.forceUpdate();
         }
       }

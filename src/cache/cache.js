@@ -18,7 +18,7 @@ export function registerWorker() {
   return sw
 }
 
-export async function getFiles(filename) {
+async function getFiles(filename) {
   let cacheObj;
   let resp;
   let content;
@@ -32,25 +32,59 @@ export async function getFiles(filename) {
         resp = response
       })
   }
+  return resp
+}
 
+export async function getText(filename) {
+  let content
+  const resp = await getFiles(filename)
   if (resp) {
-    // await resp.text().then((text) => {
-    //   content = text
-    // })
-    // await resp.json().then((json) => {
-    //   content = json
-    // })
-    // await resp.arrayBuffer()
-    //   .then((arrayBuffer) => {
-    //     content = arrayBuffer
-    // })
+    await resp.text().then((text) => {
+      content = text
+    })
+  }
+  console.log("[Cache] text: ", content)
+
+  return content
+}
+
+export async function getJson(filename) {
+  let content
+  const resp = await getFiles(filename)
+  if (resp) {
+    await resp.json().then((json) => {
+      content = json
+    })
+  }
+  console.log("[Cache] json: ", content)
+
+  return content
+}
+
+export async function getArrayBuffer(filename) {
+  let content
+  const resp = await getFiles(filename)
+  if (resp) {
+    await resp.arrayBuffer()
+      .then((arrayBuffer) => {
+        content = arrayBuffer
+    })
+  }
+  console.log("[Cache] array buffer: ", content)
+
+  return content
+}
+
+export async function getBlob(filename) {
+  let content
+  const resp = await getFiles(filename)
+  if (resp) {
     await resp.blob()
       .then((blob) => {
         content = blob
     })
   }
-  console.log("[Cache] content: ", content)
-
+  console.log("[Cache] blob: ", content)
   return content
 }
 

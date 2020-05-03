@@ -44,6 +44,8 @@ export async function initializeVolume(idx, cntxt, files, fileIdx, axes, type, w
       type,
       fileIdx,
     );
+
+    await volume.channel.cacheCube()
     console.debug("initializeVolume: volume initialized with params: idx: %d fileIdx: %d type: %d width: %d height: %d length: %d", idx, fileIdx, type, width, height, length)
   }
 }

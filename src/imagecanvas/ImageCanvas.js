@@ -46,13 +46,13 @@ class ImageCanvas extends React.Component {
     this.type = 1;
     this.typeIsDefault = true;
 
-    this.sliceIdx       = 22;
+    this.sliceIdx       = 0;
     this.computedSlicedIdx = 0;
     this.axisIdx        = 2;
     this.length         = 0;
 
     this.imgdata        = null;
-    this.updatedtexture = false;
+    this.updatedtexture = true;
     this.volType = 0;
     this.texture = null;
   }

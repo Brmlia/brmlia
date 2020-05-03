@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from 'react';
-import { registerWorker, saveFiles, getFiles } from './cache.js'
+import { registerWorker, saveFiles, getText, getJson, getArrayBuffer, getBlob } from './cache.js'
 
 class CacheTest extends Component {
 
@@ -10,7 +10,6 @@ class CacheTest extends Component {
   componentDidMount() {
     this.sw = registerWorker()
     this.counter = 0
-    this.cache = null
   }
 
   sampleJson() {
@@ -42,25 +41,72 @@ class CacheTest extends Component {
     return new Blob([JSON.stringify(obj, null, 2)], {type : 'application/json'});
   }
 
-  cacheFiles() {
+  cacheText() {
     const filename = "samplefile-" + this.counter + ".txt"
-    // const json = this.sampleJson()
-    // const content = JSON.stringify(json)
+    const content = this.sampleTxt()
+    saveFiles(this.sw, filename, content)
+  }
 
-    // const content = this.sampleTxt()
+  cacheJson() {
+    const filename = "samplefile-" + this.counter + ".json"
+    const json = this.sampleJson()
+    const content = JSON.stringify(json)
+    saveFiles(this.sw, filename, content)
+  }
 
-    // const content = this.sampleArrayBuffer()
+  cacheArrayBuffer() {
+    const filename = "samplefile-" + this.counter + ".buf"
+    const content = this.sampleArrayBuffer()
+    saveFiles(this.sw, filename, content)
+  }
 
+  cacheBlob() {
+    const filename = "samplefile-" + this.counter + ".blob"
     const content = this.sampleBlob()
+    saveFiles(this.sw, filename, content)
+  }
 
-    this.cache = saveFiles(this.sw, filename, content)
+  cacheFiles() {
+    this.cacheText()
+    this.cacheJson()
+    this.cacheArrayBuffer()
+    this.cacheBlob()
     this.counter += 1
   }
 
-  async retrieveFiles() {
-    await getFiles("samplefile-0.txt").then((content) => {
-      console.log("[CacheTest] content", content)
+  async getCachedText() {
+    const filename = "samplefile-0.txt"
+    await getText(filename).then((content) => {
+      console.log("[CacheTest] txt", content)
     })
+  }
+
+  async getCachedJson() {
+    const filename = "samplefile-0.json"
+    await getJson(filename).then((content) => {
+      console.log("[CacheTest] json", content)
+    })
+  }
+
+  async getCachedArrayBuffer() {
+    const filename = "samplefile-0.buf"
+    await getArrayBuffer(filename).then((content) => {
+      console.log("[CacheTest] buf", content)
+    })
+  }
+
+  async getCachedBlob() {
+    const filename = "samplefile-0.blob"
+    await getBlob(filename).then((content) => {
+      console.log("[CacheTest] blob", content)
+    })
+  }
+
+  async getFiles() {
+    this.getCachedText()
+    this.getCachedJson()
+    this.getCachedArrayBuffer()
+    this.getCachedBlob()
   }
   render() {
     return (
@@ -68,7 +114,7 @@ class CacheTest extends Component {
         <button className="cacheFile" onClick={() => {this.cacheFiles();}}>
           Cache Test File
         </button>
-        <button className="getFiles" onClick={() => {this.retrieveFiles();}}>
+        <button className="getFiles" onClick={() => {this.getFiles();}}>
           Get Test Files
         </button>
       </div>
