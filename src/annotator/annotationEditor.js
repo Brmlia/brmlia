@@ -11,6 +11,7 @@ import {
   getCanvas,
   getDisabledClasses,
 } from './index.js';
+import { fabricApi } from '../ui/components/index.js';
 
 export const colors = [
   'rgb(200, 140, 140, 0.85)', //channel 1

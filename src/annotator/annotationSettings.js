@@ -5,6 +5,8 @@ import {
   editClassOption,
 } from './index.js'
 
+import { deleteAnnotation } from './annotationMenuOptions';
+
 export const initState = {
   menu: {
     displayon: false,

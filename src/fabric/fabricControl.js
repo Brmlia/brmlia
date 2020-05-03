@@ -11,6 +11,8 @@ import {
   setSelectedObjects,
   addAnnotation,
 } from './index.js';
+import {
+} from '../annotator/annotationControl';
 
 export const modes = {
   RECT: 'rectangle',

@@ -6,6 +6,8 @@ import {
   updateClassLabel,
 } from './index.js';
 
+import { deleteAnnotations } from '../fabric/fabricControl.js';
+
 export function editAnnotationOption() {
   setDisplay(false);
   updateSelect(1);
