@@ -19,8 +19,8 @@ class AnnotatorViewer extends React.Component {
     this.state = {
       classes: [],
       annotClasses: [],
-      enables: [],
     };
+    this.enables = []
   }
 
   futureClass = [];
@@ -32,7 +32,7 @@ class AnnotatorViewer extends React.Component {
       if (
         cls &&
         this.state.classes[i] !== cls.name &&
-        this.state.enables[i] !== cls.enabled
+        this.enables[i] !== cls.enabled
       ) {
         return true;
       }
@@ -69,7 +69,6 @@ class AnnotatorViewer extends React.Component {
   }
 
   updateClasses(classes) {
-    console.log('updateClasses, ' + classes.length);
     for (var i = 0; i < classes.length; i++) {
       const idx = i;
       const cls = classes[idx];
@@ -83,19 +82,25 @@ class AnnotatorViewer extends React.Component {
           classes: [...prevState.classes, cls.name],
         }));
       }
+    }
+  }
 
-      this.setState(prevState => {
-        const enables = prevState.enables.map((en, j) => {
-          if (j === idx) {
-            return cls.enabled;
-          } else {
-            return en;
-          }
-        });
-        return {
-          enables,
-        };
-      });
+  updateEnables(classes) {
+    for (var i = 0; i < classes.length; i++) {
+      const idx = i;
+      const cls = classes[idx];
+      if (
+        this.enables.length !== classes.length
+      ) {
+        this.enables[i] = cls.enabled
+      }
+      else if (
+        cls &&
+        this.enables[i] !== cls.enabled
+      ) {
+        this.enables[i] = cls.enabled
+        this.forceUpdate()
+      }
     }
   }
 
@@ -143,8 +148,11 @@ class AnnotatorViewer extends React.Component {
       }
     });
     annotClassApi.subscribe(state => {
-      if (state && (this.state.classes.length !== state.classes.length)) {
+      if (state && ((this.state.classes.length !== state.classes.length))) {
         this.updateClasses(state.classes);
+      }
+      if (state && state.classes) {
+        this.updateEnables(state.classes)
       }
     });
     return <div>{this.display()}</div>;
