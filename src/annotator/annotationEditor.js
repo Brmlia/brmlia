@@ -233,10 +233,11 @@ export function filterAnnotations(classLabel, enabled) {
       var group_elements = group._objects;
       if (group_elements) {
         var class_element = group._objects[2];
+        var label_element = group._objects[1];
         if (class_element && class_element.text) {
           if (class_element.text === classLabel) {
             if (enabled) {
-              markGroupVisible(group, classLabel);
+              markGroupVisible(group, label_element.text);
             } else {
               markGroupInvisible(group);
               canvas.discardActiveObject();
@@ -268,7 +269,7 @@ export function showAll() {
   }
 }
 
-export function markGroupVisible(group, classLabel) {
+export function markGroupVisible(group, label) {
   ungroup(group);
 
   var objs = group._objects;
@@ -278,7 +279,7 @@ export function markGroupVisible(group, classLabel) {
   }
 
   const newGroup = regroup(group);
-  updateGroup(newGroup, classLabel)
+  updateGroup(newGroup, label)
 }
 
 export function markGroupInvisible(group) {
@@ -293,10 +294,10 @@ export function markGroupInvisible(group) {
   regroup(group);
 }
 
-function updateGroup(group, classLabel) {
+function updateGroup(group, label) {
   var annotations = annotApi.getState().annotations;
   for (let i = 0; i < annotations.length; i++) {
-    if (annotations[i].class === classLabel) {
+    if (annotations[i].label === label) {
       annotations[i].group = group
     }
   }
