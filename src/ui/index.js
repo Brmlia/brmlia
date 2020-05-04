@@ -7,6 +7,7 @@ import Thumbnails from './components/thumbnails.js';
 import Menus from './components/menus.js';
 import Annotator from './../annotator/annotator.js';
 import ChannelViewer from './components/channelViewer.js';
+import SideBars from './components/sidebar/sideBars.js';
 
 import { Container, Row, Col } from 'reactstrap';
 
@@ -21,9 +22,9 @@ class UI extends React.Component {
         <br></br>
 
         <Container style={containerStyle}>
+          <SideBars />
           <Row style={rowStyle}>
             <Col xs="4">
-              <AxesViewer />
               <Thumbnails />
             </Col>
 

@@ -14,9 +14,9 @@ class AxesViewer extends React.Component {
   view2 = (<AxisTiffViewer axis="0" />);
   view3 = (<AxisTiffViewer axis="1" />);
 
-  render() {
+  display() {
     return (
-      <div>
+      <div class="axes-viewer">
         <div className="card-axis-xy" style={axisViewStyle}>
           <Card style={axisCardStyle}>
             <CardBody style = {axisCardBodyStyle}>
@@ -47,6 +47,13 @@ class AxesViewer extends React.Component {
         </div>
       </div>
     );
+  }
+
+
+  render() {
+    return (
+      this.display()
+    )
   }
 }
 
