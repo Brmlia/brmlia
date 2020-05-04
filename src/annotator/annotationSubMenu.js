@@ -3,6 +3,7 @@ import React from 'react';
 import {
   editAnnotationLabel,
   editAnnotationClass,
+  deleteAnnotation,
 } from './index.js'
 
 class AnnotationSubMenu extends React.Component {
@@ -91,6 +92,10 @@ class AnnotationSubMenu extends React.Component {
     editAnnotationClass(this.state.label.text);
   }
 
+  deleteAnnot(event) {
+    deleteAnnotation(this.state.label.text);
+  }
+
   display() {
     if (this.props.select === 1) {
       return (
@@ -133,6 +138,8 @@ class AnnotationSubMenu extends React.Component {
           </button>
         </div>
       );
+    } else if (this.props.select === 3) {
+      this.deleteAnnot()
     }
   }
 

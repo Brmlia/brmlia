@@ -1,8 +1,6 @@
 import create from 'zustand';
 
-import { editAnnotationOption, editClassOption } from './index.js';
-
-import { deleteSelectedAnnotations } from './annotationMenuOptions.js';
+import { editAnnotationOption, editClassOption, deleteAnnotationOption } from './index.js';
 
 export const initState = {
   menu: {
@@ -22,7 +20,7 @@ export const initState = {
       },
       {
         label: 'Delete',
-        callback: deleteSelectedAnnotations,
+        callback: deleteAnnotationOption,
       },
     ],
     objects: [],
