@@ -143,7 +143,7 @@ class AnnotatorViewer extends React.Component {
       }
     });
     annotClassApi.subscribe(state => {
-      if (state) {
+      if (state && (this.state.classes.length !== state.classes.length)) {
         this.updateClasses(state.classes);
       }
     });
