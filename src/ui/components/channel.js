@@ -11,6 +11,7 @@ import {
 } from '../../mainSettings.js';
 
 import {
+  volApi,
   updateBrightness,
   updateContrast,
   updateWhitepoint,
@@ -23,14 +24,33 @@ import {
   channelCardBodyStyle,
   channelCanvasStyle,
   channelImageCanvasStyle,
+  updateSliceIndex,
 } from './index.js';
 
 class Channel extends React.Component {
+
+  componentDidMount() {
+    this.channelSliceIdx = 0;
+    this.channelSliceLen = 0;
+  }
+
   updateSelection = () => {
     updateChannelSel(this.props.ch);
     updateLastSel(this.props.ch);
     this.forceUpdate();
   };
+
+  sliderValueSlice(value) {
+    updateSliceIndex((parseInt(this.props.ch) + 3), value)
+  }
+
+  updateForSliceLen(state) {
+    const len = state.lengths[parseInt(this.props.ch)+3]
+    if (this.channelSliceLen !== len) {
+      this.channelSliceLen = len
+      this.forceUpdate()
+    }
+  }
 
   sliderValueBr(value) {
     updateBrightness(value, this.props.ch);
@@ -77,6 +97,10 @@ class Channel extends React.Component {
   }
 
   render() {
+    volApi.subscribe(state => {
+      this.updateForSliceLen(state);
+    });
+
     var sliderValueBr = this.sliderValueBr;
     var sliderValueCt = this.sliderValueCt;
     var sliderValueWp = this.sliderValueWp;
@@ -124,6 +148,20 @@ class Channel extends React.Component {
           <Card style={channelCardStyle}>
             <CardBody style={channelCardBodyStyle}>
               <div style={channelCanvasStyle}>{canvas}</div>
+              <div className="slice-slider-container">
+                <Slider
+                  label=""
+                  width="40%"
+                  min="0"
+                  max={Math.max(this.channelSliceLen - 1, 0)}
+                  step="1"
+                  initial="0"
+                  multiplier="1"
+                  raw="1"
+                  sliderValue={this.sliderValueSlice.bind(this)}
+                />
+              </div>
+              <div> Slice: {this.channelSliceIdx} </div>
               <div>Channel Color</div>
               <ColorPicker
                 color={colorValue.bind(this)}
@@ -191,8 +229,8 @@ class Channel extends React.Component {
                   onClick={() => {
                     this.resetContrast();
                   }}
-                >
                   Reset Contrast
+                >
                 </button>
               </div>
               <div className="whitepoint-slider-container">

@@ -4,6 +4,8 @@ import { fabric } from 'fabric';
 import {
   fApi,
   uApi,
+  canvasApi,
+  volApi,
   updateImage,
   updateTexture,
   getVolume,
@@ -12,14 +14,12 @@ import {
   areFilesValid,
   initializeVolume,
   updateChannelSlice,
-} from './index.js'
-
-import {
-  canvasApi,
-} from './canvasStore.js';
+  updateSliceLength,
+  updateType,
+  parseMetadata,
+} from './index.js';
 
 class ImageCanvas extends React.Component {
-
   constructor (props) {
     super(props)
     this.files = [];
@@ -33,29 +33,28 @@ class ImageCanvas extends React.Component {
   init() {
     this.setState(prevState => ({
       ...prevState,
-      axisIdx: 0,
-      sliceIdx: 23,
       cntxt: null,
       // rgb: 0 (red), 1 (green), 2 (blue)
       rgb: 0,
     }))
     this.fileLength = 0;
-    this.length = 0;
 
     // Case 1: (60 z planes, 3 channels, 1)
     // Case 2: (60 z planes, 1 channel, 3)
     // Case 3: (1 z planes, 3 channels, 60)
     // Case 4: (1 z planes, 1 channel, 180)
     this.type = 1;
+    this.typeIsDefault = true;
 
-    this.cube = {
-      x: 256,
-      y: 256,
-      z: 256,
-    };
+    this.sliceIdx       = 0;
+    this.computedSlicedIdx = 0;
+    this.axisIdx        = 2;
+    this.length         = 0;
 
-    this.imgdata = null;
-    this.updatedtexture = false;
+    this.imgdata        = null;
+    this.updatedtexture = true;
+    this.volType = 0;
+    this.texture = null;
   }
 
   componentDidMount() {
@@ -65,22 +64,6 @@ class ImageCanvas extends React.Component {
     this.setState(prevState => ({
       cntxt: cntxt
     }));
-  }
-
-  async setImageData() {
-    this.volume =  getVolume(parseInt(this.props.channel)+3)
-    if (this.volume) {
-      this.imgdata = await this.volume.getImageData()
-    }
-  }
-
-  async loadTiff() {
-    this.setImageData()
-    if (this.imgdata && (this.imgdata.data.length > 0) && !this.updatedtexture) {
-      this.texture = generateTexture(this.imgdata.data, this.imgdata.width, this.imgdata.height)
-      updateTexture(this.file, this.texture, this.props.channel)
-      this.updatedtexture = true
-    }
   }
 
   updateFileList(files) {
@@ -103,75 +86,151 @@ class ImageCanvas extends React.Component {
     }
   }
 
+  updateLength(fileLength, pageLength) {
+    if (this.type === 1) {
+      this.length = pageLength/3
+    }
+    else if (this.type === 2 ) {
+      this.length = pageLength
+    }
+    else if (this.type === 3) {
+      this.length = fileLength
+    }
+    else if (this.type === 4) {
+      this.length = fileLength / 3
+    }
+  }
+
+  getIdx(fileLength) {
+    if (this.type === 1) {
+      return Math.max((fileLength - 1), 0);
+    }
+    else if (this.type === 2) {
+      return (parseInt(this.props.channel)-1)
+    }
+    else if (this.type === 3) {
+      return Math.max((fileLength - 1), 0);
+    }
+    else if (this.type === 4) {
+      return Math.max((fileLength - 1), 0);
+    }
+  }
+
+  setVolume(files, width, height, length) {
+    initializeVolume(0, this.state.cntxt, files, 0, this.state.axes, this.type, width, height, length)
+    if (!this.volume) {
+      this.volume = getVolume(0)
+    }
+  }
+
+  setType(files, metadata) {
+    if (this.typeIsDefault) {
+      this.type = parseMetadata(files, metadata)
+      updateType(this.type)
+      this.typeIsDefault = false
+    }
+  }
+
   updateForFile(state) {
     if (filesNeedUpdate(state, this.files.length)) {
-      const idx = Math.max((state.file.length - 1), 0);
+      var idx = this.getIdx(state.file.length)
       const files = state.file
-      const file = files[idx]
-      this.file = file
+
       if (
         areFilesValid(files, idx, this.fileLength)
       ) {
+        const file = files[idx]
+        const width = file.image.width
+        const height = file.image.height
+        const fileLength = files.length
+        const pageLength = file.pages.length
+
         this.updateFileList(files)
+        this.setType(files, file.metadata)
+        this.updateLength(fileLength, pageLength)
+        this.setVolume(files, width, height, pageLength)
+        this.fileLength = this.files.length
+        this.file = file
+
         updateImage(files[state.selected], this.props.channel);
-        initializeVolume((parseInt(this.props.channel)+3), this.state.cntxt, files, this.state.axes, this.type, file.image.width, file.image.height, file.pages.length)
+        updateSliceLength((parseInt(this.props.channel)+3), this.length)
       }
     }
     this.forceUpdate();
   }
   updateForControls(state) {
-    this.forceUpdate();
+    const texture = state.channels[this.props.channel-1].uniforms.image.value
+    if (texture && (this.texture !== texture)) {
+      this.texture = texture;
+      this.forceUpdate();
+    }
+  }
+  updateForSlice(state) {
+    const sliceIdx = state.sliceIndices[parseInt(this.props.channel)+3]
+    if (this.sliceIdx !== sliceIdx) {
+      this.computedSlicedIdx = this.computeSlice(parseInt(sliceIdx))
+      this.updateSlice();
+      this.loadTiff();
+      this.forceUpdate();
+      this.sliceIdx = sliceIdx
+    }
   }
 
-  slice(value) {
-    const slice = this.clamp(
-      parseInt(value),
-      0,
-      Math.max(0, this.files[0].length -1)
-    )
+  computeSlice(value) {
+    if (this.type === 1) {
+      return ((value * 3) + (parseInt(this.props.channel)-1) )
+    }
+    else if (this.type === 2) {
+      return ((value + ((parseInt(this.props.channel)-1) * this.length)))
+    }
+    else if (this.type === 3) {
+      return ((value * 3) + (parseInt(this.props.channel)-1) )
+    }
+    else if (this.type === 4) {
+      return ((value * 3) + (parseInt(this.props.channel)-1) )
+    }
+  }
 
-    const axisIdx = 2;
-    this.setState(prevState => ({
-      ...prevState,
-      sliceIdx: slice,
-    }));
+  updateSlice() {
     updateChannelSlice(
       this.state.cntxt,
       this.volume,
-      slice,
+      this.computedSlicedIdx,
       this.state.axes,
-      axisIdx,
+      this.axisIdx,
       true
     );
-    this.setImageData()
     this.updatedtexture = false;
     this.forceUpdate();
   }
 
-  clamp(val, min, max) {
-    return Math.min(Math.max(val, min), max);
+  async setImageData() {
+    if (!this.volume) {
+      this.volume = getVolume(0)
+    }
+    if (this.volume) {
+      this.imgdata = await this.volume.getImageData()
+    }
   }
 
-  handleChangePageNumber(value) {
-    this.slice(parseInt(value))
+  async setTexture() {
+    this.texture = generateTexture(this.imgdata.data, this.imgdata.width, this.imgdata.height)
+    updateTexture(this.file, this.texture, this.props.channel)
+  }
+
+  async loadTiff() {
+    if (!this.updatedtexture) {
+      this.setImageData()
+      if (this.imgdata && (this.imgdata.data.length > 0)) {
+        this.setTexture()
+        this.updatedtexture = true
+      }
+    }
   }
 
   displayCanvas() {
     this.loadTiff()
     return canvasApi.getState().canvas[this.props.channel - 1]
-  }
-
-  // move to channel, causes issues here
-  displayPageControls() {
-    return (
-      <div>
-        <label>
-         Page #: &nbsp;
-         <input type="text" value={this.state.pagenumber} onChange={event => this.handleChangePageNumber(event.target.value) } />
-        </label>
-        <div> Slice: {this.state.sliceIdx} </div>
-      </div>
-    )
   }
 
   render() {
@@ -181,6 +240,9 @@ class ImageCanvas extends React.Component {
     });
     uApi.subscribe(state => {
       this.updateForControls(state);
+    });
+    volApi.subscribe(state => {
+      this.updateForSlice(state);
     });
 
     return (

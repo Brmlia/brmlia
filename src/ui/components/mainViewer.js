@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, CardTitle, CardBody } from 'reactstrap';
 
-import Viewer from '../../viewer/index.js';
 import FabricLayer from './FabricLayer.js';
 import MainTiffViewer from './mainTiffViewer.js';
 
@@ -20,17 +19,6 @@ import {
 } from './index.js';
 
 class mainViewer extends React.Component {
-  altView() {
-    return (
-      <Card style={mainCardStyle}>
-        <CardBody style={mainCardBodyStyle}>
-          <CardTitle> <h3> Image View </h3> </CardTitle>
-          <Viewer imageWidth={mainImgStyle.width} type="0" />
-        </CardBody>
-        <br></br>
-      </Card>
-    );
-  }
   canvasView() {
     var canvas = (
       <MainTiffViewer
@@ -82,7 +70,7 @@ class mainViewer extends React.Component {
       !settingsApi.getState().channels[1].selected &&
       !settingsApi.getState().channels[2].selected
     ) {
-      return this.canvasView();
+    return this.canvasView();
     } else {
       return this.channelViews();
     }

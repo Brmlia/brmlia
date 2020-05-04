@@ -1,4 +1,5 @@
 import CachedImageData from './cachedImageData.js';
+import { registerWorker, saveFiles, getArrayBuffer } from '../cache/cache.js'
 
 class DataCube {
   constructor (args) {
@@ -7,7 +8,6 @@ class DataCube {
     this.canvas_context = args.context;
     this.cube = this.materialize();
 
-    // this.canvas_context = this.createImageContext();
     this.cached_imgdata = new CachedImageData(this.canvas_context);
     this.clean = true;
     this.loaded = false;
@@ -17,6 +17,7 @@ class DataCube {
       y: [ 'x', 'z' ],
       z: [ 'x', 'y' ],
     };
+    this.sw = registerWorker()
   }
 
   faceDimensions (axis) {
@@ -35,10 +36,10 @@ class DataCube {
     return new ArrayType(size.x * size.y * size.z);
   }
 
-  insertImageData (imgdata, width, offsetx, offsety, offsetz) {
+  async insertImageData (imgdata, width, offsetx, offsety, offsetz) {
+
     let _this = this;
 
-    // let pixels = imgdata.data; // Uint8ClampedArray
     let pixels = imgdata;
 
     // This viewing of the Uint8 as a Uint32 allows for
@@ -83,9 +84,17 @@ class DataCube {
     return this;
   }
 
-  slice (axis, index, invertV, copy = true) {
+  async slice (axis, index, invertV, copy = true) {
     let _this = this;
 
+    let _cube
+    if (this.cube) {
+      _cube = this.cube
+    }
+    else {
+      let _cached_cube = await this.getCube()
+      _cube = new Uint8ClampedArray(_cached_cube)
+    }
     if (index < 0 || index >= this.size[axis]) {
       throw new Error(index + ' is out of bounds.');
     }
@@ -109,7 +118,7 @@ class DataCube {
     if (invertV) {
       if (axis === 'z') {
         if (copy) {
-          let buf = _this.cube.buffer.slice(byteoffset, byteoffset + xysize * this.bytes);
+          let buf = _cube.buffer.slice(byteoffset, byteoffset + xysize * this.bytes);
           return new ArrayType(buf);
         }
         else {
@@ -117,7 +126,7 @@ class DataCube {
           const zoffset = xysize * index;
           for (let y = 0; y < ysize - 1; y++) {
             for (let x = xsize - 1; x >= 0; --x) {
-              square[i] = _this.cube[x + xsize * y + zoffset];
+              square[i] = _cube[x + xsize * y + zoffset];
               --i;
             }
           }
@@ -126,7 +135,7 @@ class DataCube {
       if (axis === 'x') {
         for (let z = 0; z < zsize - 1; z++) {
           for (let y = ysize - 1; y >= 0; --y) {
-            square[i] = _this.cube[index + xsize * y + xysize * z];
+            square[i] = _cube[index + xsize * y + xysize * z];
             --i;
           }
         }
@@ -137,7 +146,7 @@ class DataCube {
         const yoffset = xsize * index;
         for (let z = 0; z < zsize - 1; z++) {
           for (let x = xsize - 1; x >= 0; --x) {
-            square[i] = _this.cube[x + yoffset + xysize * z];
+            square[i] = _cube[x + yoffset + xysize * z];
             --i;
           }
         }
@@ -145,12 +154,12 @@ class DataCube {
     }
     else {
       if (axis === 'z') {
-        return new ArrayType(_this.cube.buffer, byteoffset, xysize);
+        return new ArrayType(_cube.buffer, byteoffset, xysize);
       }
       if (axis === 'x') {
         for (let z = zsize - 1; z >= 0 ; --z) {
           for (let y = ysize - 1; y >= 0; --y) {
-            square[i] = _this.cube[index + xsize * y + xysize * z];
+            square[i] = _cube[index + xsize * y + xysize * z];
             --i;
           }
         }
@@ -161,7 +170,7 @@ class DataCube {
         const yoffset = xsize * index;
           for (let z = zsize - 1; z >= 0 ; --z) {
           for (let x = xsize - 1; x >= 0; --x) {
-            square[i] = _this.cube[x + yoffset + xysize * z];
+            square[i] = _cube[x + yoffset + xysize * z];
             --i;
           }
         }
@@ -254,6 +263,26 @@ class DataCube {
   async getImageData() {
     let sizes = await this.faceDimensions('z');
     return await this.cached_imgdata.getImageData(sizes[0], sizes[1]);
+  }
+
+  async cacheCube() {
+    let buf
+    if (this.cube.buffer) {
+      buf = this.cube.buffer
+    }
+    else {
+      buf = this.cube
+    }
+    await saveFiles(this.sw, "samplecube-1.buf", buf)
+    this.cube = null
+  }
+
+  async getCube() {
+    let content
+    await getArrayBuffer("samplecube-1.buf").then((ctnt) => {
+      content = ctnt
+    })
+    return content
   }
 }
 

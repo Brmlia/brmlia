@@ -11,6 +11,7 @@ import {
   addJson,
   isFirstFile,
   isValidFile,
+  saveTotalNumOfFiles,
 } from './index.js';
 
 function addFile(file) {
@@ -76,6 +77,7 @@ export function FileUpload(props) {
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
         <p> {props.name} </p>
+        {saveTotalNumOfFiles(files.length)}
         {update}
       </div>
     </section>

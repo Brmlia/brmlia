@@ -11,9 +11,9 @@ const [useState, stateApi] = create (set => ({
   ...state
 }))
 
-export async function loadSlices(cntxt, volume, axes, axis, files, type) {
+export async function loadSlices(cntxt, volume, axes, axis, files, type, fileIdx) {
   if (type === 1) {
-    await _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, files[0])
+    await _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, files[fileIdx])
   }
   else {
     await _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files)
@@ -57,7 +57,8 @@ async function _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files) {
       const pages = file.pages
       for (var pIdx = 0; pIdx < pages.length; pIdx++) {
         const page = pages[pIdx]
-        await volume.load(page, file.image.width, fIdx)
+        const zoffset =  fIdx * (pages.length) + pIdx;
+        await volume.load(page, file.image.width, zoffset)
       }
       updateChannelSlice(cntxt, volume, 0, axes, axis, false);
     }

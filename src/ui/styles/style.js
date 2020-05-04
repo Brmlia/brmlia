@@ -1,10 +1,6 @@
 export const mainStyle = {
-  overflowY: 'scroll',
-  overflowX: 'scroll',
   height: '100%',
   width: '100%',
-  // height: '500px',
-  // width: '900px',
   position: 'relative',
 };
 export const rowStyle = {

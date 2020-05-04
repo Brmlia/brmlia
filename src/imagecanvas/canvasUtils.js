@@ -12,25 +12,7 @@ import {
   loadSlices,
 } from './index.js'
 
-export function filesNeedUpdate(state, length) {
-  return (
-    state
-    && (state.file.length > 0)
-    && (state.file.length !== length)
-  )
-}
-
-export function areFilesValid(files, idx, length) {
-  return (
-    (files.length > 0) &&
-    (files[idx]) &&
-    (files[idx].pages) &&
-    (files[idx].pages.length > 0) &&
-    (files.length !== length)
-  )
-}
-
-export async function initializeVolume(idx, cntxt, files, axes, type, width, height, length) {
+export async function initializeVolume(idx, cntxt, files, fileIdx, axes, type, width, height, length) {
 
   if (!getVolume(idx)) {
     var cube = {
@@ -57,8 +39,12 @@ export async function initializeVolume(idx, cntxt, files, axes, type, width, hei
       axes,
       2,
       files,
-      type
+      type,
+      fileIdx,
     );
+
+    await volume.channel.cacheCube()
+    console.debug("initializeVolume: volume initialized with params: idx: %d fileIdx: %d type: %d width: %d height: %d length: %d", idx, fileIdx, type, width, height, length)
   }
 }
 

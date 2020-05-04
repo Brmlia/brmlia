@@ -1,6 +1,7 @@
 
 export class Volume {
   constructor (args) {
+    console.debug("Volume() - args:", args)
     this.channel = args.channel;
   }
 
@@ -8,7 +9,6 @@ export class Volume {
     let _this = this;
 
     let pixels = await _this.channel.grayImageSlice(axis, slice, invertV, /*transparency=*/false, /*copy=*/false);
-    // let pixels = _this.channel.imageSlice(axis, slice, /*copy=*/false);
     let slice32 = await new Uint32Array(pixels.data.buffer); // creates a view, not an array
 
     for (let i = slice32.length - 1; i >= 0; i--) {

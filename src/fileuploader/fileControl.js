@@ -22,14 +22,13 @@ export function isValidFile(name) {
   // check if file is already uploaded
   var validFile = false;
 
-  fileApi.setState(prevState => {
-    if (prevState.file) {
-      const x = prevState.file.filter(file => file.name === name);
-      if (x.length === 0) {
-        validFile = true;
-      }
+  const files = fileApi.getState().file
+  if (files) {
+    const x = files.filter(file => file.name === name);
+    if (x.length === 0) {
+      validFile = true;
     }
-  });
+  }
   return validFile;
 }
 
@@ -101,40 +100,14 @@ export function addTiff(file) {
   idx = fileApi.getState().size - 1;
 }
 
-// export function updateTiff(image, rgba) {
-//   fileApi.setState(prevState => {
-//     const file = prevState.file.map((file, j) => {
-//       var newFile = file;
-//       newFile.texture = createTextureFromTiff(image.src);
-//       newFile.image = image;
-//       newFile.rgba = rgba;
-//       return newFile;
-//     });
-//     return {
-//       file,
-//     };
-//   });
-// }
-
 export function updateTiffPages(name, pages, image, metadata) {
-  fileApi.setState(prevState => {
-    const file = prevState.file.map((file, j) => {
-      if (file.name === name) {
-        var newFile = file;
-        newFile.pages = pages
-        newFile.image = image
-        newFile.metadata = metadata
-        return newFile;
-      }
-      else {
-        return file
-      }
-    })
-    return {
-      file
-    }
-  })
-
+  const index = fileApi.getState().file.findIndex(file => file.name === name)
+  var files = [...fileApi.getState().file]
+  const newFile = files[index]
+  newFile.pages = pages
+  newFile.image = image
+  newFile.metadata = metadata
+  files[index] = newFile
 }
 
 export function initCsv(file) {
@@ -212,4 +185,11 @@ export function saveJson(result) {
     });
     return file;
   });
+}
+
+export function saveTotalNumOfFiles(total) {
+  fileApi.setState(prevState => ({
+    ...prevState,
+    total: total
+  }));
 }
