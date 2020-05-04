@@ -12,6 +12,9 @@ import {
   addAnnotation as addAnnot,
   getLastAnnotIdx as getLastAnnot,
 } from '../annotator/annotationControl.js';
+import {
+  getLastSelectedClass as getLstSelCls
+} from '../annotator/annotationClass.js';
 
 export const drawRect = dRect;
 export const drawFreeStyle = dFreeSty;
@@ -21,3 +24,4 @@ export const setMenuCoords = setMenuCrds;
 export const setSelectedObjects = setSelObjs;
 export const addAnnotation = addAnnot;
 export const getLastAnnotIdx = getLastAnnot;
+export const getLastSelectedClass = getLstSelCls;
