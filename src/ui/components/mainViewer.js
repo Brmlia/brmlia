@@ -87,7 +87,7 @@ class mainViewer extends React.Component {
     return (
       <div className="main-view" style={mainViewStyle}>
         <Card className="main-card" style={mainCardStyle}>
-          <CardBody>
+          <CardBody className="main-card-body" style={mainCardBodyStyle}>
             <CardTitle> <h3> Image View </h3> </CardTitle>
             <div id="main-canvas-container" style={{ width: width, height: height }}>
               {this.display()}
