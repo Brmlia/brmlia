@@ -216,6 +216,7 @@ export function regroup(object) {
       canvas.remove(rect);
       canvas.setActiveObject(group);
     }
+    return group
   }
 }
 
@@ -235,7 +236,7 @@ export function filterAnnotations(classLabel, enabled) {
         if (class_element && class_element.text) {
           if (class_element.text === classLabel) {
             if (enabled) {
-              markGroupVisible(group);
+              markGroupVisible(group, classLabel);
             } else {
               markGroupInvisible(group);
               canvas.discardActiveObject();
@@ -267,7 +268,7 @@ export function showAll() {
   }
 }
 
-export function markGroupVisible(group) {
+export function markGroupVisible(group, classLabel) {
   ungroup(group);
 
   var objs = group._objects;
@@ -276,7 +277,8 @@ export function markGroupVisible(group) {
     markVisible(obj, true);
   }
 
-  regroup(group);
+  const newGroup = regroup(group);
+  updateGroup(newGroup, classLabel)
 }
 
 export function markGroupInvisible(group) {
@@ -289,6 +291,15 @@ export function markGroupInvisible(group) {
   }
 
   regroup(group);
+}
+
+function updateGroup(group, classLabel) {
+  var annotations = annotApi.getState().annotations;
+  for (let i = 0; i < annotations.length; i++) {
+    if (annotations[i].class === classLabel) {
+      annotations[i].group = group
+    }
+  }
 }
 
 function markVisible(obj, visible) {
@@ -318,7 +329,6 @@ export function undo() {
       } else {
         canvas.remove(annotations[i].group);
       }
-
       undoAnnotation(i);
     }
   }
