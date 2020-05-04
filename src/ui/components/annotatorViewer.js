@@ -69,6 +69,7 @@ class AnnotatorViewer extends React.Component {
   }
 
   updateClasses(classes) {
+    console.log('updateClasses, ' + classes.length);
     for (var i = 0; i < classes.length; i++) {
       const idx = i;
       const cls = classes[idx];

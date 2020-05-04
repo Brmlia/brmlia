@@ -15,7 +15,6 @@ import {
 
 import { getLastRedoAnnot, getLastRedoAnnotIdx } from './annotationControl.js';
 
-import { fabricApi } from '../ui/components/index.js';
 import { annotApi, undoApi, redoApi } from './annotationStore.js';
 
 export const colors = [
@@ -304,7 +303,6 @@ export function undo() {
 
   let lastUndoAnno = getLastUndoAnnot();
   for (let i = 0; i < annotations.length; i++) {
-    let a = annotations[i];
     if (lastUndoAnno && annotations[i].id === lastUndoAnno.id) {
       if (annotations[i].group && lastUndoAnno.group) {
         annotations[i].group.set({

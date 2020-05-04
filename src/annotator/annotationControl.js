@@ -45,11 +45,25 @@ export function addAnnotationFromJson(json) {
         json[i].label,
         json[i].class
       );
+      let nextId = fabricApi.getState().nextId;
+      addDummyUndoAnnotation(createDummyAnnotation(nextId));
       addAnnotation(
-        createAnnotation(rect, json[i].label, json[i].class, json[i].rect)
+        createAnnotation(
+          rect,
+          json[i].label,
+          json[i].class,
+          json[i].rect,
+          nextId
+        )
       );
+
+      fabricApi.setState(prevState => ({
+        ...prevState,
+        nextId: nextId + 1,
+      }));
     }
   }
+  console.log(annotApi.getState().annotations);
 }
 
 export function addDummyUndoAnnotation(annotation) {
