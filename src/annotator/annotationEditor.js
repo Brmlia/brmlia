@@ -41,10 +41,10 @@ export function drawRect(canvas, rect, label, classLabel) {
   }
 
   var fRect = new fabric.Rect({
-    left: rect.left,
-    top: rect.top,
-    width: rect.width,
-    height: rect.height,
+    left: parseInt(rect.left),
+    top: parseInt(rect.top),
+    width: parseInt(rect.width),
+    height: parseInt(rect.height),
     fill: colors[4],
     stroke: colors[0],
     strokeLineJoin: 'round',
