@@ -222,6 +222,15 @@ export function getAnnotationClasses() {
   return classes;
 }
 
+export function getAnnotationByLabel(label) {
+  const annotations = annotApi.getState().annotations;
+  for (var i = 0; i < annotations.length; i++) {
+    if (annotations[i].label === label) {
+      return annotations[i]
+    }
+  }
+}
+
 function _isAnnotValid(annotation) {
   return (
     annotation &&

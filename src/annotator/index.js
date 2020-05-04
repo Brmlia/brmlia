@@ -18,6 +18,7 @@ import {
   updateAnnotClassLabel as updAntClsLbl,
   getAnnotationClasses as getAnnotCls,
   redoAnnotation as redoAnno,
+  getAnnotationByLabel as getAnnotByLbl,
 } from './annotationControl.js';
 
 import { getDisabledClasses as getDisCls } from './annotationClass.js';
@@ -35,6 +36,7 @@ import {
   updateLabel as updLbl,
   updateClassLabel as updClsLbl,
   drawRect as drawR,
+  delAnnot as dlAnnot,
 } from './annotationEditor.js';
 
 import {
@@ -63,6 +65,7 @@ export const updateAnnotationLabel = updAntLbl;
 export const updateAnnotClassLabel = updAntClsLbl;
 export const getAnnotationClasses = getAnnotCls;
 export const redoAnnotation = redoAnno;
+export const getAnnotationByLabel = getAnnotByLbl;
 export const getDisabledClasses = getDisCls;
 export const getItems = getIts;
 export const AnnotationMenuApi = aMenuApi;
@@ -73,6 +76,7 @@ export const getCanvas = getCvs;
 export const updateLabel = updLbl;
 export const updateClassLabel = updClsLbl;
 export const drawRect = drawR;
+export const delAnnot = dlAnnot;
 export const editAnnotationLabel = editAnnotLbl;
 export const editAnnotationClass = editAnnotCls;
 export const deleteAnnotation = deleteAnnot;
@@ -85,6 +89,5 @@ export function editClassOption() {
   editClsOpt();
 }
 export function deleteAnnotationOption() {
-  console.log("deleteAnnotationOption")
   delAnnotOpt();
 }
