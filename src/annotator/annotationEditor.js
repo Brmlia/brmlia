@@ -314,16 +314,23 @@ export function undo() {
   const annotations = annotApi.getState().annotations;
 
   let lastUndoAnno = getLastUndoAnnot();
+  delAnnot(lastUndoAnno)
+  return null;
+}
+
+export function delAnnot(annot) {
+  var canvas = getCanvas();
+  const annotations = annotApi.getState().annotations;
   for (let i = 0; i < annotations.length; i++) {
-    if (lastUndoAnno && annotations[i].id === lastUndoAnno.id) {
-      if (annotations[i].group && lastUndoAnno.group) {
+    if (annotations[i].id === annot.id) {
+      if (annotations[i].group && annot.group) {
         annotations[i].group.set({
-          top: lastUndoAnno.rect.top,
-          left: lastUndoAnno.rect.left,
-          width: lastUndoAnno.rect.width,
-          height: lastUndoAnno.rect.height,
-          scaleX: lastUndoAnno.rect.scaleX,
-          scaleY: lastUndoAnno.rect.scaleY,
+          top: annot.rect.top,
+          left: annot.rect.left,
+          width: annot.rect.width,
+          height: annot.rect.height,
+          scaleX: annot.rect.scaleX,
+          scaleY: annot.rect.scaleY,
         });
         annotations[i].group.setCoords();
         canvas.requestRenderAll();
