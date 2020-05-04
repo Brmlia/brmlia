@@ -11,14 +11,14 @@ export function exportJson() {
     type: 'text/plain',
   });
   element.href = URL.createObjectURL(file);
-  element.download = 'annotations.txt';
+  element.download = 'annotations.json';
   document.body.appendChild(element); // Required for this to work in FireFox
   element.click();
 }
 
 function convertToExportableJson() {
   const annots = annotApi.getState().annotations
-  var newAnnots = []
+  var newAnnots = {"annotations": [] }
 
   for (var i = 0; i < annots.length; i++) {
     const annot = annots[i]
@@ -28,10 +28,10 @@ function convertToExportableJson() {
       "label": annot.label,
       "rect": annot.rect,
     }
-    newAnnots[i] = newAnnot
+    newAnnots.annotations[i] = newAnnot
   }
 
-  return JSON.stringify(newAnnots)
+  return JSON.stringify(newAnnots, null, 2)
 }
 
 export function exportFile(filename, json) {
