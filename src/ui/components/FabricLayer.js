@@ -20,6 +20,7 @@ import {
   setMode,
   fabricApi,
   modes,
+  annotLayerStyle,
 } from './index.js';
 
 import { startMoving, finishMoving } from '../../fabric/fabricControl.js';
@@ -148,7 +149,7 @@ class FabricLayer extends React.Component {
     });
 
     return (
-      <div className="annotationLayer" onContextMenu={e => e.preventDefault()}>
+      <div className="annotationLayer" style={annotLayerStyle} onContextMenu={e => e.preventDefault()}>
         <canvas
           ref={this.canvasRef}
           width={window.innerWidth * 0.6}

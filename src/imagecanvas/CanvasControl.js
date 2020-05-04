@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import {
   uApi,
   createTexture,
-  createTextureFromTiff
 } from './index.js'
 
 function isValidChannel(channel) {
@@ -108,7 +107,6 @@ function updateUniformColor(value, channel) {
     const channels = prevState.channels.map((ch, j) => {
       if (j === channel - 1) {
         var newChannel = ch;
-        console.log('updateColorUniform: ', value);
         newChannel.uniforms.color.value = value;
         return newChannel;
       } else {
@@ -128,11 +126,26 @@ export function updateImage(file, channel) {
 
   if (texture === '') {
     if (file.type === 'image/tiff') {
-      texture = createTextureFromTiff(blob);
+      //
     } else {
       texture = createTexture(blob);
     }
   }
+  const prevStateCh = uApi.getState().channels[channel - 1];
+
+  if (
+    prevStateCh.name !== name ||
+    prevStateCh.imagepath !== blob ||
+    prevStateCh.uniforms.image.value !== texture
+  ) {
+    updateUniformImage(texture, name, blob, channel);
+  }
+}
+
+export function updateTexture(file, texture, channel) {
+  let name = file.name;
+  let blob = file.image;
+
   const prevStateCh = uApi.getState().channels[channel - 1];
 
   if (
@@ -274,7 +287,6 @@ export function updateColor(value, channel) {
 
   if (isValidChannel(channel)) {
     if (value !== uApi.getState().channels[channel - 1].uniforms.color.value) {
-      console.log('CanvasControl::updateColor() - value', value, color);
       updateUniformColor(color, channel);
     }
     return true;

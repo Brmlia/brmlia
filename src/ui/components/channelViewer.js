@@ -1,25 +1,45 @@
 import React from 'react';
-import { Card, CardTitle, CardBody } from 'reactstrap';
+import { Row, Col, Card, CardTitle, CardBody } from 'reactstrap';
 
 import Channel from './channel.js';
 
 import {
-  cardStyle,
-  card,
+  channelViewStyle,
+  channelCardStyle,
+  channelCardBodyStyle,
 } from './index.js';
 
 class ChannelViewer extends React.Component {
   render() {
     return (
-      <div className="annotations-channel" style={cardStyle}>
-        <Card style={card}>
-          <CardBody>
-            <CardTitle> Channel Selection </CardTitle>
-            <Channel ch="1" />
-            <Channel ch="2" />
-            <Channel ch="3" />
-          </CardBody>
-        </Card>
+      <div className="annotations-channel" style={channelViewStyle}>
+        <br />
+        <Row>
+          <Col sm="4">
+            <Card style={channelCardStyle}>
+              <CardBody style={channelCardBodyStyle}>
+                <CardTitle> <h3> Channel 1 </h3> </CardTitle>
+                <Channel ch="1" />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col sm="4">
+            <Card style={channelCardStyle}>
+              <CardBody style={channelCardBodyStyle}>
+                <CardTitle> <h3> Channel 2 </h3> </CardTitle>
+                <Channel ch="2" />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col sm="4">
+            <Card style={channelCardStyle}>
+              <CardBody style={channelCardBodyStyle}>
+                <CardTitle> <h3> Channel 3 </h3> </CardTitle>
+                <Channel ch="3" />
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
       </div>
     );
   }

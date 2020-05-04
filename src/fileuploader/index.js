@@ -7,25 +7,30 @@ import {
 } from '../mainSettings.js';
 
 import {
-  initPng as iPng,
-  addPng as aPng,
-  initTiff as iTiff,
-  addTiff as aTiff,
-  initCsv as iCsv,
-  addCsv as aCsv,
-  initJson as iJson,
-  addJson as aJson,
-  isFirstFile as isFstFl,
-  isValidFile as isValFl,
-  saveJson as svJson,
+  initPng         as iPng,
+  addPng          as aPng,
+  initTiff        as iTiff,
+  addTiff         as aTiff,
+  initCsv         as iCsv,
+  addCsv          as aCsv,
+  initJson        as iJson,
+  addJson         as aJson,
+  isFirstFile     as isFstFl,
+  isValidFile     as isValFl,
+  saveJson        as svJson,
   updateTiffPages as updTP,
+  saveTotalNumOfFiles as saveTotal,
 } from './fileControl.js';
 
 import {
-  importCsv as impCsv,
+  importCsv  as impCsv,
   importJson as impJson,
   importTiff as impTiff,
 } from './fileImporter.js';
+
+import {
+  exportFile as expF,
+} from './fileExporter.js';
 
 import {
   annotApi as aApi,
@@ -52,7 +57,9 @@ export const addJson               = aJson
 export const isFirstFile           = isFstFl
 export const isValidFile           = isValFl
 export const saveJson              = svJson
+export const exportFile            = expF
 export const updateTiffPages       = updTP
+export const saveTotalNumOfFiles   = saveTotal
 export const importCsv             = impCsv
 export const importJson            = impJson
 export const importTiff            = impTiff

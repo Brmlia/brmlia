@@ -73,7 +73,7 @@ explicitly, add a commented eslint directive above the location.
 - [ ] Histogram
 - [ ] Color Adjustment
 - [ ] UI Adjustments
-- [ ] Tiff Support
+- [x] Tiff Support
 
 ### Main View
 
@@ -92,9 +92,9 @@ explicitly, add a commented eslint directive above the location.
 ### Tiffs
 
 - [x] Case 1: (60 z planes, 3 channels, 1)
-- [ ] Case 2: (60 z planes, 1 channel, 3)
-- [ ] Case 3: (1 z plane, 3 channels, 60)
-- [ ] Case 4: (1 z plane, 1 channel, 180)
+- [x] Case 2: (60 z planes, 1 channel, 3)
+- [x] Case 3: (1 z plane, 3 channels, 60)
+- [x] Case 4: (1 z plane, 1 channel, 180)
 
 ### TESTS
 
