@@ -102,7 +102,7 @@ class AnnotationMenu extends React.Component {
       );
     }
 
-    if (this.state.select === 1 || this.state.select === 2) {
+    if (this.state.select === 1 || this.state.select === 2 || this.state.select === 3) {
       return (
         <AnnotationSubMenu
           style={this.state.style}

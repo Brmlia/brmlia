@@ -6,7 +6,7 @@ import {
   updateClassLabel,
 } from './index.js';
 
-// import { deleteAnnotations } from '../fabric/fabricControl.js';
+import { deleteAnnotations } from '../fabric/fabricControl.js';
 
 export function editAnnotationOption() {
   setDisplay(false);
@@ -15,6 +15,11 @@ export function editAnnotationOption() {
 export function editClassOption() {
   setDisplay(false);
   updateSelect(2);
+}
+
+export function deleteAnnotationOption() {
+  setDisplay(false);
+  updateSelect(3);
 }
 
 export function editAnnotationLabel(label) {
@@ -33,9 +38,10 @@ export function editAnnotationClass(className) {
   }
 }
 
-export function deleteSelectedAnnotations() {
+export function deleteAnnotation(label) {
   const obj = getSelectedObjects();
   if (obj && obj._objects.length > 0) {
-    // deleteAnnotations('hi');
+    deleteAnnotations('hi');
+    updateSelect(0);
   }
 }

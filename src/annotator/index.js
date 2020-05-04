@@ -40,8 +40,10 @@ import {
 import {
   editAnnotationOption as editAnnotOpt,
   editClassOption as editClsOpt,
+  deleteAnnotationOption as delAnnotOpt,
   editAnnotationLabel as editAnnotLbl,
   editAnnotationClass as editAnnotCls,
+  deleteAnnotation as deleteAnnot,
 } from './annotationMenuOptions.js';
 
 import { fabricApi as fabApi } from '../fabric/fabricControl.js';
@@ -73,6 +75,7 @@ export const updateClassLabel = updClsLbl;
 export const drawRect = drawR;
 export const editAnnotationLabel = editAnnotLbl;
 export const editAnnotationClass = editAnnotCls;
+export const deleteAnnotation = deleteAnnot;
 export const fabricApi = fabApi;
 
 export function editAnnotationOption() {
@@ -80,4 +83,8 @@ export function editAnnotationOption() {
 }
 export function editClassOption() {
   editClsOpt();
+}
+export function deleteAnnotationOption() {
+  console.log("deleteAnnotationOption")
+  delAnnotOpt();
 }
