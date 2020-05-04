@@ -3,8 +3,8 @@ import { fabric } from 'fabric';
 
 import {
   fApi,
-  thumb,
-  thumbInner
+  thumbStyle,
+  thumbInnerStyle
 } from './index.js';
 
 class Thumbnails extends React.Component {
@@ -58,8 +58,8 @@ class Thumbnails extends React.Component {
 
   classicImage = (file, idx) => {
     return (
-      <div style={thumb} key={file.name}>
-        <div style={thumbInner}>
+      <div style={thumbStyle} key={file.name}>
+        <div style={thumbInnerStyle}>
           <img
             src={file.image}
             style={file.style}
@@ -127,8 +127,8 @@ class Thumbnails extends React.Component {
       <div>
         <canvas
           ref={this.canvasRef}
-          width="1000px"
-          height="1000px"
+          width="500px"
+          height="500px"
           margin="0px"
           id="tiff-canvas"
         />

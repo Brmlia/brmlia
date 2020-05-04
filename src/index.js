@@ -7,9 +7,9 @@ import UI from './ui';
 
 function Application() {
   return (
-    <>
+    <div >
       <UI />
-    </>
+    </div>
   );
 }
 

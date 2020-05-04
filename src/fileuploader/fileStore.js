@@ -12,13 +12,14 @@ export const prodState = {
   file: [],
   size: 0,
   selected: 0,
+  total: 0,
 };
 
 export const devState = {
   file: [
     {
       name: 'brom.jpeg',
-      image: require('./../ui/assets/images/brom.jpeg'),
+      // image: require('./../ui/assets/images/brom.jpeg'),
       style: {
         display: 'block',
         width: 'auto',
@@ -29,6 +30,7 @@ export const devState = {
   ],
   size: 1,
   selected: 0,
+  total: 0,
 };
 
 export const [useFileStore, fileApi] = create(set => ({

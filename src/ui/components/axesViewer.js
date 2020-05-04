@@ -4,8 +4,9 @@ import { Card, CardTitle, CardBody } from 'reactstrap';
 import AxisTiffViewer from './axisTiffViewer.js';
 
 import {
-  cardStyle,
-  card,
+  axisViewStyle,
+  axisCardStyle,
+  axisCardBodyStyle,
 } from './index.js';
 
 class AxesViewer extends React.Component {
@@ -16,30 +17,30 @@ class AxesViewer extends React.Component {
   render() {
     return (
       <div>
-        <div className="card-axis-xy" style={cardStyle}>
-          <Card style={card}>
-            <CardBody>
-              <CardTitle> Axis XY </CardTitle>
+        <div className="card-axis-xy" style={axisViewStyle}>
+          <Card style={axisCardStyle}>
+            <CardBody style = {axisCardBodyStyle}>
+              <CardTitle> <h3> Axis XY </h3> </CardTitle>
               {this.view1}
             </CardBody>
           </Card>
         </div>
 
         <br></br>
-        <div className="card-axis-yz" style={cardStyle}>
-          <Card style={card}>
-            <CardBody>
-              <CardTitle> Axis YZ </CardTitle>
+        <div className="card-axis-yz" style={axisViewStyle}>
+          <Card style={axisCardStyle}>
+            <CardBody style = {axisCardBodyStyle}>
+              <CardTitle> <h3> Axis YZ </h3> </CardTitle>
               {this.view2}
             </CardBody>
           </Card>
         </div>
 
         <br></br>
-        <div className="card-axis-xz" style={cardStyle}>
-          <Card style={card}>
-            <CardBody>
-              <CardTitle> Axis XZ </CardTitle>
+        <div className="card-axis-xz" style={axisViewStyle}>
+          <Card style={axisCardStyle}>
+            <CardBody style = {axisCardBodyStyle}>
+              <CardTitle> <h3> Axis XZ </h3> </CardTitle>
               {this.view3}
             </CardBody>
           </Card>
