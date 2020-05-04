@@ -47,7 +47,7 @@ export function updateClasses() {
   const classes = getAnnotationClasses();
   for (var i = 0; i < classes.length; i++) {
     const cls = classes[i];
-    if (!isDuplicateClass(cls)) {
+    if (cls && !isDuplicateClass(cls)) {
       addClass(cls);
       enableClass(cls);
     }
