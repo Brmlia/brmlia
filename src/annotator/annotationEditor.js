@@ -31,7 +31,7 @@ export function drawFreeStyle(canvas, color) {
   canvas.isMouseDown = false;
 
   canvas.isDrawingMode = true;
-  canvas.freeDrawingBrush.color = color;
+  canvas.freeDrawingBrush.color = colors[0];
   canvas.freeDrawingBrush.width = 10;
 }
 

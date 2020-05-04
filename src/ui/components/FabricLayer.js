@@ -149,7 +149,11 @@ class FabricLayer extends React.Component {
     });
 
     return (
-      <div className="annotationLayer" style={annotLayerStyle} onContextMenu={e => e.preventDefault()}>
+      <div
+        id="annotationLayer"
+        style={annotLayerStyle}
+        onContextMenu={e => e.preventDefault()}
+      >
         <canvas
           ref={this.canvasRef}
           width={window.innerWidth * 0.6}
