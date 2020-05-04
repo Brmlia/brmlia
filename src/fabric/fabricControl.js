@@ -137,12 +137,14 @@ export function finishDrawingRect(x, y) {
   const state = fabricApi.getState();
   if (state.origin.x && state.origin.y && x && y) {
     const width = state.mouse.x - state.origin.x;
+    const height = state.mouse.y - state.origin.y;
+
     if (Math.abs(width) >= 10) {
       const rect = {
-        width: width,
-        height: state.mouse.y - state.origin.y,
-        top: state.origin.y,
-        left: state.origin.x,
+        width: width >= 0 ? width : -width,
+        height: height >= 0 ? height : -height,
+        top: height >= 0 ? state.origin.y : state.mouse.y,
+        left: width >= 0 ? state.origin.x : state.mouse.x,
       };
       const label = 'label' + (getLastAnnotIdx() + 1);
       const classLabel = 'class1';

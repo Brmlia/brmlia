@@ -216,7 +216,7 @@ export function regroup(object) {
       canvas.remove(rect);
       canvas.setActiveObject(group);
     }
-    return group
+    return group;
   }
 }
 
@@ -279,7 +279,7 @@ export function markGroupVisible(group, label) {
   }
 
   const newGroup = regroup(group);
-  updateGroup(newGroup, label)
+  updateGroup(newGroup, label);
 }
 
 export function markGroupInvisible(group) {
@@ -298,7 +298,7 @@ function updateGroup(group, label) {
   var annotations = annotApi.getState().annotations;
   for (let i = 0; i < annotations.length; i++) {
     if (annotations[i].label === label) {
-      annotations[i].group = group
+      annotations[i].group = group;
     }
   }
 }
@@ -327,6 +327,7 @@ export function undo() {
         });
         annotations[i].group.setCoords();
         canvas.requestRenderAll();
+        canvas.setActiveObject(annotations[i].group);
       } else {
         canvas.remove(annotations[i].group);
       }
@@ -355,6 +356,7 @@ export function redo() {
       });
       canvas.add(redoAnnot.group);
       canvas.requestRenderAll();
+      canvas.setActiveObject(redoAnnot.group);
     }
 
     // remove from cache
