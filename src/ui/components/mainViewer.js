@@ -31,8 +31,11 @@ class mainViewer extends React.Component {
       />
     );
 
+    let width = window.innerWidth * 0.6;
+    let height = window.innerHeight * 0.6;
+
     return (
-      <div id="main-canvas-view" style={mainCanvasStyle0}>
+      <div id="main-canvas-view" style={{ width: width, height: height }}>
         {canvas}
       </div>
     );
@@ -70,7 +73,7 @@ class mainViewer extends React.Component {
       !settingsApi.getState().channels[1].selected &&
       !settingsApi.getState().channels[2].selected
     ) {
-    return this.canvasView();
+      return this.canvasView();
     } else {
       return this.channelViews();
     }
@@ -82,14 +85,20 @@ class mainViewer extends React.Component {
     });
 
     let width = window.innerWidth * 0.6;
-    let height = window.innerHeight * 0.6;
+    let height = window.innerHeight * 0.75;
 
     return (
       <div className="main-view" style={mainViewStyle}>
         <Card className="main-card" style={mainCardStyle}>
-          <CardBody className="main-card-body" style={mainCardBodyStyle}>
-            <CardTitle> <h3> Image View </h3> </CardTitle>
-            <div id="main-canvas-container" style={{ width: width, height: height }}>
+          <CardBody className="main-card-body">
+            <CardTitle>
+              {' '}
+              <h3> Image View </h3>{' '}
+            </CardTitle>
+            <div
+              id="main-canvas-container"
+              style={{ width: width, height: height, position: 'relative' }}
+            >
               {this.display()}
               <FabricLayer />
             </div>

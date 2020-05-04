@@ -24,34 +24,6 @@ export const containerStyle = {
   maxWidth: '100%',
 };
 
-export const fabricCanvas1 = {
-  position: 'absolute',
-  height: '100%',
-  width: '100%',
-  borderWidth: 2,
-  borderStyle: 'solid',
-  zIndex: '3',
-  opacity: '0.5',
-};
-export const fabricCanvas2 = {
-  position: 'absolute',
-  height: '100%',
-  width: '100%',
-  borderWidth: 2,
-  borderStyle: 'solid',
-  zIndex: '5',
-  opacity: '0.5',
-};
-export const fabricCanvas3 = {
-  position: 'absolute',
-  height: '100%',
-  width: '100%',
-  borderWidth: 2,
-  borderStyle: 'solid',
-  zIndex: '7',
-  opacity: '0.5',
-};
-
 export const canvasThumbnail = {
   position: 'center',
   height: '100px',

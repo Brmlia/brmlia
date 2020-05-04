@@ -13,6 +13,4 @@ export const annotCardStyle = {
   fontSize: '12px',
 };
 
-export const annotLayerStyle = {
-  height: '70%'
-}
+export const annotLayerStyle = {};
