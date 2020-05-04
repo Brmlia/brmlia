@@ -11,6 +11,7 @@ import {
   setSelectedObjects,
   addAnnotation,
   getLastAnnotIdx,
+  getLastSelectedClass,
 } from './index.js';
 import {
   updateAnnotClassLabel,
@@ -147,7 +148,7 @@ export function finishDrawingRect(x, y) {
         left: width >= 0 ? state.origin.x : state.mouse.x,
       };
       const label = 'label' + (getLastAnnotIdx() + 1);
-      const classLabel = 'class1';
+      const classLabel = getLastSelectedClass() || 'class1';
       const fRect = drawRect(
         fabricApi.getState().canvas,
         rect,
