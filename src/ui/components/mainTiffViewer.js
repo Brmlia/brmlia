@@ -172,8 +172,10 @@ class mainTiffViewer extends Component {
       this.updateForFile(state);
     });
 
-    let width = window.innerWidth * 0.6;
-    let height = window.innerHeight * 0.6;
+    // let width = window.innerWidth * 0.6;
+    // let height = window.innerHeight * 0.6;
+    let width = "100%";
+    let height = "100%";
     return (
       <div>
         <canvas
