@@ -12,3 +12,7 @@ export const annotCardStyle = {
   fluid: true,
   fontSize: '12px',
 };
+
+export const annotLayerStyle = {
+  height: '70%'
+}

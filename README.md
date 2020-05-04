@@ -14,9 +14,11 @@
 - [x] Supports Case 2: (60 z planes, 1 channel, 3)
 - [x] Supports Case 3: (1 z planes, 3 channels, 60)
 - [x] Supports Case 4: (1 z planes, 1 channel, 180)
-- [ ] Fix Channel Expandable Disappearing Image Bug
-- [ ] Supports Medium Number of Files (60+)
-- [ ] Supports Large Number of Files (180+)
+- [x] Fix Channel Expandable Disappearing Image Bug
+- [x] Supports Medium Number of Files (60+)
+- [x] Supports Large Number of Files (180+)
+- [ ] AutoLoad Images After File Upload
+- [ ] Supports PNG in Views
 
 #### Thumbnails
 - [x] Supports Tiffs in Thumbnails

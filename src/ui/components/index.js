@@ -62,6 +62,7 @@ import {
 import {
   annotViewStyle as annotVwStyle,
   annotCardStyle as annotCdStyle,
+  annotLayerStyle as annotLrStyle,
 } from '../styles/annotatorStyle.js';
 
 import {
@@ -164,6 +165,7 @@ export const channelCanvasStyle      = chCanvasStyle
 export const channelImageCanvasStyle = chImgCanvasStyle
 export const annotViewStyle          = annotVwStyle
 export const annotCardStyle          = annotCdStyle
+export const annotLayerStyle         = annotLrStyle
 export const mainViewStyle           = mViewStyle
 export const mainCardBodyStyle       = mCdBodyStyle
 export const mainCardStyle           = mCdStyle
