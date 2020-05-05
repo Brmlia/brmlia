@@ -35,14 +35,14 @@ class Menus extends React.Component {
           Draw Rectangle
         </Button>{' '}
         &nbsp;
-        <Button
+        {/* <Button
           color="primary"
           className="draw-rectangle-btn"
           onClick={e => setMode(modes.FREE)}
         >
           Draw Freehand
         </Button>{' '}
-        &nbsp;
+        &nbsp; */}
       </div>
     );
   }
