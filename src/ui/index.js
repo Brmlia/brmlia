@@ -9,13 +9,10 @@ class UI extends React.Component {
   render() {
     return (
       <div className="main" style={mainStyle}>
+        <br/>
         <h2 align="center"> BRMLIA </h2>
-        <Menus />
-        <br></br>
-        <br></br>
-        <br></br>
-
         <Container style={containerStyle}>
+        <Menus />
           <SideBars />
         </Container>
       </div>
