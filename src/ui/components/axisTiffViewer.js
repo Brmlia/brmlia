@@ -23,9 +23,9 @@ class TiffViewer extends Component {
     };
     this.fileLength = 0;
     this.length = 0;
-    this.sliceIdx        = 0;
-    this.axisIdx         = props.axis;
-    this.channel         = 1;
+    this.sliceIdx = 0;
+    this.axisIdx = props.axis;
+    this.channel = 1;
     this.channelSliceIdx = 0;
 
     // Case 1: (60 z planes, 3 channels, 1)
@@ -43,68 +43,72 @@ class TiffViewer extends Component {
   }
 
   isValidFile(file, idx) {
-
     return (
-      (file.length > 0) &&
-      (file[idx]) &&
-      (file[idx].pages) &&
-      (file[idx].pages.length > 0) &&
-      (file.length !== this.fileLength)
-    )
+      file.length > 0 &&
+      file[idx] &&
+      file[idx].pages &&
+      file[idx].pages.length > 0 &&
+      file.length !== this.fileLength
+    );
   }
 
   setSlider(width, height, length, pageLength) {
-    if (this.props.axis === "0") this.length = width
-    if (this.props.axis === "1") this.length = height
-    if (this.props.axis === "2") {
+    if (this.props.axis === '0') this.length = width;
+    if (this.props.axis === '1') this.length = height;
+    if (this.props.axis === '2') {
       if (this.type === 1) {
-        this.length = pageLength
-      }
-      else if (this.type === 2) {
-        this.length = pageLength * length
-      }
-      else if (this.type === 3) {
-        this.length = pageLength * length
-      }
-      else if (this.type === 4) {
-        this.length = pageLength * length
+        this.length = pageLength;
+      } else if (this.type === 2) {
+        this.length = pageLength * length;
+      } else if (this.type === 3) {
+        this.length = pageLength * length;
+      } else if (this.type === 4) {
+        this.length = pageLength * length;
       }
     }
   }
 
   setVolume(files, width, height, length) {
-    initializeVolume(0, this.state.cntxt, files, 0, this.state.axes, this.type, width, height, length)
+    initializeVolume(
+      0,
+      this.state.cntxt,
+      files,
+      0,
+      this.state.axes,
+      this.type,
+      width,
+      height,
+      length
+    );
     if (!this.volume) {
-      this.volume = getVolume(0)
+      this.volume = getVolume(0);
     }
   }
 
   setType(files, metadata) {
     if (this.typeIsDefault) {
-      this.type = parseMetadata(files, metadata)
-      updateType(this.type)
-      this.typeIsDefault = false
+      this.type = parseMetadata(files, metadata);
+      updateType(this.type);
+      this.typeIsDefault = false;
     }
   }
 
   async updateForFile(state) {
     if (filesNeedUpdate(state, this.fileLength)) {
-      const files = state.file
+      const files = state.file;
       if (state && files) {
-        const idx = Math.max((files.length - 1), 0);
-        if (
-          this.isValidFile(files, idx)
-        ) {
-          const file = files[idx]
-          const width = file.image.width
-          const height = file.image.height
-          const fileLength = files.length
-          const pageLength = file.pages.length
-          this.setType(files, file.metadata)
-          this.setSlider(width, height, fileLength, pageLength)
-          this.setVolume(files, width, height, pageLength * fileLength)
-          this.updateSlice()
-          this.fileLength = fileLength
+        const idx = Math.max(files.length - 1, 0);
+        if (this.isValidFile(files, idx)) {
+          const file = files[idx];
+          const width = file.image.width;
+          const height = file.image.height;
+          const fileLength = files.length;
+          const pageLength = file.pages.length;
+          this.setType(files, file.metadata);
+          this.setSlider(width, height, fileLength, pageLength);
+          this.setVolume(files, width, height, pageLength * fileLength);
+          this.updateSlice();
+          this.fileLength = fileLength;
           this.forceUpdate();
         }
       }
@@ -140,8 +144,8 @@ class TiffViewer extends Component {
   }
 
   sliderValueSlice(value) {
-    this.sliceIdx = parseInt(value || 0)
-    this.updateSlice()
+    this.sliceIdx = parseInt(value || 0);
+    this.updateSlice();
   }
 
   clamp(val, min, max) {
@@ -161,7 +165,7 @@ class TiffViewer extends Component {
           height="280"
         ></canvas>
         <ProgressBar />
-        <div className="slice-slider-container">
+        <div className="axis-slice-slider-container">
           <Slider
             label=""
             width="40%"
@@ -199,8 +203,13 @@ class TiffViewer extends Component {
           </button>
           &nbsp;
           <label>
-           Page #: &nbsp;
-           <input type="text" value={this.sliceIdx} onChange={event => this.sliderValueSlice(event.target.value) } />
+            Page #: &nbsp;
+            <input
+              type="text"
+              style={{ width: '30px' }}
+              value={this.sliceIdx}
+              onChange={event => this.sliderValueSlice(event.target.value)}
+            />
           </label>
           <div> Slice: {this.sliceIdx} </div>
         </div>
