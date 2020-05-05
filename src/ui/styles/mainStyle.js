@@ -1,6 +1,7 @@
 export const mainViewStyle = {
   flex: 0.1,
   position: 'relative',
+  height: '100%',
 };
 
 export const mainCardBodyStyle = {
