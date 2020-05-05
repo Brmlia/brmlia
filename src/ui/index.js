@@ -16,9 +16,6 @@ class UI extends React.Component {
       <div className="main" style={mainStyle}>
         <h2 align="center"> BRMLIA </h2>
         <Menus />
-        <br></br>
-        <br></br>
-        <br></br>
 
         <Container style={containerStyle}>
           <Row style={rowStyle}>
@@ -29,7 +26,6 @@ class UI extends React.Component {
 
             <Col xs="8">
               <AnnotatorViewer />
-              <br />
               <MainViewer />
               <ChannelViewer />
             </Col>

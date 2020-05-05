@@ -13,7 +13,13 @@ import {
   getDisabledClasses,
 } from './index.js';
 
-import { getLastRedoAnnot, getLastRedoAnnotIdx } from './annotationControl.js';
+import {
+  getLastRedoAnnot,
+  getLastRedoAnnotIdx,
+  deleteAnnotation,
+  addAnnotationToUndoState,
+  deleteUndoAnnotation,
+} from './annotationControl.js';
 
 import { annotApi, undoApi, redoApi } from './annotationStore.js';
 
@@ -290,7 +296,6 @@ export function markGroupInvisible(group) {
     var obj = objs[i];
     markVisible(obj, false);
   }
-
   regroup(group);
 }
 
@@ -309,48 +314,89 @@ function markVisible(obj, visible) {
   getCanvas().renderAll();
 }
 
-export function undo() {
-  var canvas = getCanvas();
+export function delAnnot(annot) {
   const annotations = annotApi.getState().annotations;
+  const undoAnnotations = undoApi.getState().undoAnnotations;
+  let idxToRemoveFromUndo = null;
+  let idxToRemoveFromAnnotations = null;
 
-  let lastUndoAnno = getLastUndoAnnot();
-  delAnnot(lastUndoAnno)
+  for (let i = 0; i < annotations.length; i++) {
+    if (annotations[i].id === annot.id) {
+      removeFromCanvas(annotations[i]);
+      idxToRemoveFromUndo = i;
+    }
+  }
+
+  for (let i = 0; i < annotations.length; i++) {
+    if (undoAnnotations[i].id === annot.id) {
+      idxToRemoveFromAnnotations = i;
+    }
+  }
+
+  addAnnotationToUndoState(annotations[idxToRemoveFromUndo]);
+  addAnnotation(undoAnnotations[idxToRemoveFromAnnotations]);
+  deleteAnnotation(idxToRemoveFromUndo);
+  deleteUndoAnnotation(idxToRemoveFromAnnotations);
   return null;
 }
 
-export function delAnnot(annot) {
+function moveAnnotation(annotationTo, annotationFrom) {
+  var canvas = getCanvas();
+
+  annotationTo.group.set({
+    top: annotationFrom.rect.top,
+    left: annotationFrom.rect.left,
+    width: annotationFrom.rect.width,
+    height: annotationFrom.rect.height,
+    scaleX: annotationFrom.rect.scaleX,
+    scaleY: annotationFrom.rect.scaleY,
+  });
+  annotationTo.group.setCoords();
+  canvas.requestRenderAll();
+  canvas.setActiveObject(annotationTo.group);
+}
+
+function removeFromCanvas(annotation) {
+  var canvas = getCanvas();
+  canvas.remove(annotation.group);
+  canvas.requestRenderAll();
+}
+
+export function undo() {
   var canvas = getCanvas();
   const annotations = annotApi.getState().annotations;
+  let lastUndoAnno = getLastUndoAnnot();
+
+  if (!lastUndoAnno) {
+    return null;
+  }
+
   for (let i = 0; i < annotations.length; i++) {
-    if (annotations[i].id === annot.id) {
-      if (annotations[i].group && annot.group) {
-        annotations[i].group.set({
-          top: annot.rect.top,
-          left: annot.rect.left,
-          width: annot.rect.width,
-          height: annot.rect.height,
-          scaleX: annot.rect.scaleX,
-          scaleY: annot.rect.scaleY,
-        });
-        annotations[i].group.setCoords();
-        canvas.requestRenderAll();
-        canvas.setActiveObject(annotations[i].group);
+    if (lastUndoAnno && annotations[i].id === lastUndoAnno.id) {
+      if (annotations[i].group && lastUndoAnno.group) {
+        moveAnnotation(annotations[i], lastUndoAnno);
+      } else if (lastUndoAnno.group && !annotations[i].group) {
+        canvas.add(lastUndoAnno.group);
       } else {
-        canvas.remove(annotations[i].group);
+        removeFromCanvas(annotations[i]);
       }
       undoAnnotation(i);
     }
   }
-  return null;
 }
 
 export function redo() {
   var canvas = getCanvas();
   const idx = getLastRedoAnnotIdx();
+  const annotations = annotApi.getState().annotations;
 
   if (idx >= 0) {
     // get last from cache
     const redoAnnot = getLastRedoAnnot();
+
+    if (!redoAnnot) {
+      return null;
+    }
 
     if (redoAnnot.group) {
       redoAnnot.group.set({
@@ -364,6 +410,13 @@ export function redo() {
       canvas.add(redoAnnot.group);
       canvas.requestRenderAll();
       canvas.setActiveObject(redoAnnot.group);
+    } else {
+      for (let i = 0; i < annotations.length; i++) {
+        if (annotations[i].id === redoAnnot.id) {
+          canvas.add(annotations[i].group);
+          canvas.requestRenderAll();
+        }
+      }
     }
 
     // remove from cache
