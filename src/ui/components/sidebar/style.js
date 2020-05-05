@@ -68,7 +68,7 @@ export const mainSideBarOpenStyle = {
   transition: '0.5s',
   position: 'relative',
   padding: '15px',
-  height: '900px',
+  height: '1200px',
 }
 
 export const contentStyle = {

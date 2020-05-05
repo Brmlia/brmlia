@@ -15,5 +15,5 @@ export const annotCardStyle = {
 };
 
 export const annotLayerStyle = {
-  height: '70%'
+  height: '50%'
 }
