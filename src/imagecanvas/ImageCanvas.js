@@ -43,6 +43,7 @@ class ImageCanvas extends React.Component {
     // Case 2: (60 z planes, 1 channel, 3)
     // Case 3: (1 z planes, 3 channels, 60)
     // Case 4: (1 z planes, 1 channel, 180)
+    // Case 5: (1 z planes, 3 channels, 180) (PNG)
     this.type = 1;
     this.typeIsDefault = true;
 
@@ -84,6 +85,11 @@ class ImageCanvas extends React.Component {
 
       this.files.push(newFile)
     }
+    const pngFiles = files.filter(file => file.type === "image/png")
+    for (var i = this.files.length; i < pngFiles.length; i++) {
+      const idx = pngFiles.length - 1
+      this.files.push(pngFiles[i])
+    }
   }
 
   updateLength(fileLength, pageLength) {
@@ -99,6 +105,9 @@ class ImageCanvas extends React.Component {
     else if (this.type === 4) {
       this.length = fileLength / 3
     }
+    else if (this.type === 5) {
+      this.length = fileLength
+    }
   }
 
   getIdx(fileLength) {
@@ -112,6 +121,9 @@ class ImageCanvas extends React.Component {
       return Math.max((fileLength - 1), 0);
     }
     else if (this.type === 4) {
+      return Math.max((fileLength - 1), 0);
+    }
+    else if (this.type === 5) {
       return Math.max((fileLength - 1), 0);
     }
   }
@@ -164,9 +176,14 @@ class ImageCanvas extends React.Component {
         updateSliceLength((parseInt(this.props.channel)+3), this.length)
       }
       else if (
-        this.isValidPNGFile(state.file, idx)
+        this.isValidPNGFile(files, idx)
       ) {
-        updateImage(files[state.selected], this.props.channel);
+        this.updateFileList(files)
+        this.type = 5
+        this.updateLength(files.length, 0)
+
+        updateImage(this.files[this.sliceIdx], this.props.channel);
+        updateSliceLength((parseInt(this.props.channel)+3), this.length)
       }
     }
     this.forceUpdate();
@@ -179,13 +196,21 @@ class ImageCanvas extends React.Component {
     }
   }
   updateForSlice(state) {
-    const sliceIdx = state.sliceIndices[parseInt(this.props.channel)+3]
-    if (this.sliceIdx !== sliceIdx) {
-      this.computedSlicedIdx = this.computeSlice(parseInt(sliceIdx))
-      this.updateSlice();
-      this.loadTiff();
-      this.forceUpdate();
-      this.sliceIdx = sliceIdx
+    if (state) {
+      const sliceIdx = state.sliceIndices[parseInt(this.props.channel)+3]
+      if (this.sliceIdx !== sliceIdx) {
+        this.computedSlicedIdx = this.computeSlice(parseInt(sliceIdx))
+
+        if (this.type < 5) {
+          this.updateSlice();
+          this.loadTiff();
+        }
+        else if (this.type === 5) {
+          updateImage(this.files[parseInt(sliceIdx)], this.props.channel);
+        }
+        this.forceUpdate();
+        this.sliceIdx = sliceIdx
+      }
     }
   }
 
@@ -201,6 +226,9 @@ class ImageCanvas extends React.Component {
     }
     else if (this.type === 4) {
       return ((value * 3) + (parseInt(this.props.channel)-1) )
+    }
+    else if (this.type === 5) {
+      return value
     }
   }
 
