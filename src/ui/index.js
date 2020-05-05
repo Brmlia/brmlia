@@ -29,7 +29,7 @@ class UI extends React.Component {
                 style={{
                   color: '#fff',
                   verticalAlign: 'center',
-                  paddingRight: '15px',
+                  padding: '15px 7px',
                 }}
               >
                 BRMLIA

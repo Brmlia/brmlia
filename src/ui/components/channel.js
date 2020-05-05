@@ -6,9 +6,7 @@ import ImageCanvas from '../../imagecanvas/ImageCanvas.js';
 import Slider from './slider.js';
 import ColorPicker from './colorPicker.js';
 
-import {
-  settingsApi,
-} from '../../mainSettings.js';
+import { settingsApi } from '../../mainSettings.js';
 
 import {
   volApi,
@@ -28,7 +26,6 @@ import {
 } from './index.js';
 
 class Channel extends React.Component {
-
   componentDidMount() {
     this.channelSliceIdx = 0;
     this.channelSliceLen = 0;
@@ -41,14 +38,14 @@ class Channel extends React.Component {
   };
 
   sliderValueSlice(value) {
-    updateSliceIndex((parseInt(this.props.ch) + 3), value)
+    updateSliceIndex(parseInt(this.props.ch) + 3, value);
   }
 
   updateForSliceLen(state) {
-    const len = state.lengths[parseInt(this.props.ch)+3]
+    const len = state.lengths[parseInt(this.props.ch) + 3];
     if (this.channelSliceLen !== len) {
-      this.channelSliceLen = len
-      this.forceUpdate()
+      this.channelSliceLen = len;
+      this.forceUpdate();
     }
   }
 
@@ -147,7 +144,6 @@ class Channel extends React.Component {
         <UncontrolledCollapse toggler={`#view${this.props.ch}`}>
           <Card style={channelCardStyle}>
             <CardBody style={channelCardBodyStyle}>
-              <div style={channelCanvasStyle}>{canvas}</div>
               <div className="channel-slice-slider-container">
                 <Slider
                   label=""
@@ -275,6 +271,7 @@ class Channel extends React.Component {
                   Reset Blackpoint
                 </button>
               </div>
+              <div style={channelCanvasStyle}>{canvas}</div>
             </CardBody>
           </Card>
         </UncontrolledCollapse>
