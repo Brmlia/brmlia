@@ -10,7 +10,6 @@ export const annotCardStyle = {
   textAlign: 'center',
   width: '100%',
   fluid: true,
-  fontSize: '12px',
 };
 
 export const annotLayerStyle = {};

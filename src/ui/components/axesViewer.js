@@ -3,11 +3,7 @@ import { Card, CardTitle, CardBody } from 'reactstrap';
 
 import AxisTiffViewer from './axisTiffViewer.js';
 
-import {
-  axisViewStyle,
-  axisCardStyle,
-  axisCardBodyStyle,
-} from './index.js';
+import { axisViewStyle, axisCardStyle, axisCardBodyStyle } from './index.js';
 
 class AxesViewer extends React.Component {
   view1 = (<AxisTiffViewer axis="2" />);
@@ -19,8 +15,11 @@ class AxesViewer extends React.Component {
       <div>
         <div className="card-axis-xy" style={axisViewStyle}>
           <Card style={axisCardStyle}>
-            <CardBody style = {axisCardBodyStyle}>
-              <CardTitle> <h3> Axis XY </h3> </CardTitle>
+            <CardBody style={axisCardBodyStyle}>
+              <CardTitle>
+                {' '}
+                <h5> Axis XY </h5>{' '}
+              </CardTitle>
               {this.view1}
             </CardBody>
           </Card>
@@ -29,8 +28,11 @@ class AxesViewer extends React.Component {
         <br></br>
         <div className="card-axis-yz" style={axisViewStyle}>
           <Card style={axisCardStyle}>
-            <CardBody style = {axisCardBodyStyle}>
-              <CardTitle> <h3> Axis YZ </h3> </CardTitle>
+            <CardBody style={axisCardBodyStyle}>
+              <CardTitle>
+                {' '}
+                <h5> Axis YZ </h5>{' '}
+              </CardTitle>
               {this.view2}
             </CardBody>
           </Card>
@@ -39,8 +41,11 @@ class AxesViewer extends React.Component {
         <br></br>
         <div className="card-axis-xz" style={axisViewStyle}>
           <Card style={axisCardStyle}>
-            <CardBody style = {axisCardBodyStyle}>
-              <CardTitle> <h3> Axis XZ </h3> </CardTitle>
+            <CardBody style={axisCardBodyStyle}>
+              <CardTitle>
+                {' '}
+                <h5> Axis XZ </h5>{' '}
+              </CardTitle>
               {this.view3}
             </CardBody>
           </Card>

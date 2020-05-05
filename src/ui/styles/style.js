@@ -16,7 +16,15 @@ export const buttonGroupStyle = {
   size: 'sm',
   vertical: false,
   flex: 1.0,
-  padding: 15,
+  padding: '0px 15px 15px 15px',
+};
+
+export const mainMenuStyle = {
+  width: '100%',
+  flex: 0.1,
+  justifyContent: 'space-between',
+  padding: 0,
+  position: 'relative',
 };
 
 export const containerStyle = {

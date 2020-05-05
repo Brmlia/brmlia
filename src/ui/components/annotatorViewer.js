@@ -1,5 +1,13 @@
 import React from 'react';
-import { Button, Row, Col, UncontrolledCollapse, Card, CardTitle, CardBody } from 'reactstrap';
+import {
+  Button,
+  Row,
+  Col,
+  UncontrolledCollapse,
+  Card,
+  CardTitle,
+  CardBody,
+} from 'reactstrap';
 
 import {
   annotApi,
@@ -20,7 +28,7 @@ class AnnotatorViewer extends React.Component {
       classes: [],
       annotClasses: [],
     };
-    this.enables = []
+    this.enables = [];
   }
 
   futureClass = [];
@@ -89,17 +97,11 @@ class AnnotatorViewer extends React.Component {
     for (var i = 0; i < classes.length; i++) {
       const idx = i;
       const cls = classes[idx];
-      if (
-        this.enables.length !== classes.length
-      ) {
-        this.enables[i] = cls.enabled
-      }
-      else if (
-        cls &&
-        this.enables[i] !== cls.enabled
-      ) {
-        this.enables[i] = cls.enabled
-        this.forceUpdate()
+      if (this.enables.length !== classes.length) {
+        this.enables[i] = cls.enabled;
+      } else if (cls && this.enables[i] !== cls.enabled) {
+        this.enables[i] = cls.enabled;
+        this.forceUpdate();
       }
     }
   }
@@ -110,7 +112,10 @@ class AnnotatorViewer extends React.Component {
         <div className="annotations-class" style={annotViewStyle}>
           <Card style={annotCardStyle}>
             <CardBody>
-              <CardTitle> <h3> Annotated Class Selection </h3> </CardTitle>
+              <CardTitle>
+                {' '}
+                <h5> Annotated Class Selection </h5>{' '}
+              </CardTitle>
             </CardBody>
             <Button
               className="viewBtn"
@@ -121,7 +126,7 @@ class AnnotatorViewer extends React.Component {
               Class List
             </Button>
             <br />
-            <UncontrolledCollapse toggler={"annotator-class-list"}>
+            <UncontrolledCollapse toggler={'annotator-class-list'}>
               {this.displayClassList()}
               <br />
             </UncontrolledCollapse>
@@ -129,7 +134,7 @@ class AnnotatorViewer extends React.Component {
         </div>
         <br></br>
       </div>
-    )
+    );
   }
 
   displayClassList() {
@@ -139,7 +144,6 @@ class AnnotatorViewer extends React.Component {
       const sel = i;
       const enabled = classes[sel].enabled;
       divs.push(
-        <div>
         <Button
           outline
           color="primary"
@@ -151,14 +155,9 @@ class AnnotatorViewer extends React.Component {
         >
           {classes[sel].name}
         </Button>
-        </div>
       );
     }
-    return (
-      <div>
-        {divs}
-      </div>
-    );
+    return <div>{divs}</div>;
   }
 
   render() {
@@ -169,11 +168,11 @@ class AnnotatorViewer extends React.Component {
       }
     });
     annotClassApi.subscribe(state => {
-      if (state && ((this.state.classes.length !== state.classes.length))) {
+      if (state && this.state.classes.length !== state.classes.length) {
         this.updateClasses(state.classes);
       }
       if (state && state.classes) {
-        this.updateEnables(state.classes)
+        this.updateEnables(state.classes);
       }
     });
     return <div>{this.display()}</div>;

@@ -21,7 +21,6 @@ import {
 } from './index.js';
 
 class Menus extends React.Component {
-
   displayFileMenu() {
     return (
       <UncontrolledButtonDropdown>
@@ -42,7 +41,7 @@ class Menus extends React.Component {
           </DropdownItem>
         </DropdownMenu>
       </UncontrolledButtonDropdown>
-    )
+    );
   }
 
   displayDrawMenu() {
@@ -70,7 +69,7 @@ class Menus extends React.Component {
           </Button>
         </DropdownMenu>
       </UncontrolledButtonDropdown>
-    )
+    );
   }
 
   displayEditMenu() {
@@ -98,16 +97,16 @@ class Menus extends React.Component {
           </Button>
         </DropdownMenu>
       </UncontrolledButtonDropdown>
-    )
+    );
   }
 
   displayMiscMenu() {
     return (
-      <Button outline color="primary" className="import-btn">
+      <Button outline color="secondary" className="import-btn">
         {' '}
         <FileUpload name="Import File" />{' '}
       </Button>
-    )
+    );
   }
 
   render() {

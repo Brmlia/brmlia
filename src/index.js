@@ -1,5 +1,5 @@
-import './styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -7,7 +7,7 @@ import UI from './ui';
 
 function Application() {
   return (
-    <div >
+    <div>
       <UI />
     </div>
   );

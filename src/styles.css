@@ -12,6 +12,7 @@
   overflow-x: scroll;
   overflow-y: scroll;
   white-space: nowrap;
+  background-color: #203050;
 }
 
 a {
@@ -36,14 +37,6 @@ a {
   z-index: 5;
 }
 
-.channelBtn {
-  font-size: 12px;
-  max-width: 60%;
-}
-.viewBtn {
-  font-size: 10px;
-  max-width: 40%;
-}
 .annotChnlVeiw {
   max-width: 95%;
 }
@@ -103,4 +96,12 @@ a {
 }
 .custom-context-item-last {
   padding: 5px 25px;
+}
+
+.col-4 {
+  padding: 7px;
+}
+
+.col-8 {
+  padding: 7px;
 }

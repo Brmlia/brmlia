@@ -93,7 +93,7 @@ class mainViewer extends React.Component {
           <CardBody className="main-card-body">
             <CardTitle>
               {' '}
-              <h3> Image View </h3>{' '}
+              <h5> Image View </h5>{' '}
             </CardTitle>
             <div
               id="main-canvas-container"

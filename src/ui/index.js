@@ -1,5 +1,10 @@
 import React from 'react';
-import { mainStyle, rowStyle, containerStyle } from './styles/style.js';
+import {
+  mainStyle,
+  mainMenuStyle,
+  rowStyle,
+  containerStyle,
+} from './styles/style.js';
 import MainViewer from './components/mainViewer.js';
 import AxesViewer from './components/axesViewer.js';
 import AnnotatorViewer from './components/annotatorViewer.js';
@@ -14,11 +19,24 @@ class UI extends React.Component {
   render() {
     return (
       <div className="main" style={mainStyle}>
-        <h2 align="center"> BRMLIA </h2>
-        <Menus />
-        <br></br>
-        <br></br>
-        <br></br>
+        <Container fluid style={mainMenuStyle}>
+          <Row style={{ justifyContent: 'space-between' }}>
+            <Col xs="10">
+              <Menus />
+            </Col>
+            <Col xs="auto">
+              <h3
+                style={{
+                  color: '#fff',
+                  verticalAlign: 'center',
+                  paddingRight: '15px',
+                }}
+              >
+                BRMLIA
+              </h3>
+            </Col>
+          </Row>
+        </Container>
 
         <Container style={containerStyle}>
           <Row style={rowStyle}>
@@ -29,7 +47,6 @@ class UI extends React.Component {
 
             <Col xs="8">
               <AnnotatorViewer />
-              <br />
               <MainViewer />
               <ChannelViewer />
             </Col>
