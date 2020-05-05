@@ -227,8 +227,8 @@ class mainTiffViewer extends Component {
               raw="1"
               sliderValue={this.sliderValueChannel.bind(this)}
             />
+            <div> Channel: {this.channel} </div>
           </div>
-          <div> Channel: {this.channel} </div>
         </div>
       )
     }
@@ -250,7 +250,7 @@ class mainTiffViewer extends Component {
     let width = "100%";
     let height = "100%";
     return (
-      <div style={{"color": "black"}}>
+      <div style={{"color": "black", "height": "100%"}}>
         <canvas
           id="canvas-1"
           ref={this.canvas}

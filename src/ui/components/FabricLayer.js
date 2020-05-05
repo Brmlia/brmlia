@@ -157,7 +157,7 @@ class FabricLayer extends React.Component {
         <canvas
           ref={this.canvasRef}
           width={window.innerWidth * 0.6}
-          height={window.innerHeight * 0.6}
+          height={window.innerHeight * 0.48}
         />
         {this.displayMenu()}
       </div>

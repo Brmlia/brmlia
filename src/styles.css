@@ -114,3 +114,15 @@ h5 {
   background-color: #203050;
   border-color: #203050;
 }
+
+.slice-slider-container {
+  bottom: 50px;
+  position: absolute;
+  width: 100%;
+}
+
+.channel-slider-container {
+  bottom: 10px;
+  position: absolute;
+  width: 100%;
+}
