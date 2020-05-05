@@ -3,7 +3,6 @@ import {
   chSideBarOpenStyle,
   chSideBarClosedStyle,
 } from './index.js';
-import { Nav } from 'reactstrap';
 import { sideBarApi } from './sideBarStore.js';
 import { sideBarViewerApi } from './sideBarViewerStore.js';
 
@@ -45,12 +44,7 @@ class ChannelSideBar extends React.Component {
         <div className="sidebar-header" style={{background: '#6d7fcc'}} >
           <h3 style={{padding: '0.5em'}}>Channels</h3>
         </div>
-        <div className="side-menu">
-          <Nav vertical className="list-unstyled pb-3">
-            <p style={{padding: '0.5em'}}></p>
-             {this.channelViewer}
-          </Nav>
-        </div>
+        {this.channelViewer}
       </div>
     );
   }

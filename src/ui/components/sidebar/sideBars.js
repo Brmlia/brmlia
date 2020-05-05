@@ -63,9 +63,9 @@ class SideBars extends React.Component {
             toggleChannelSidebar={this.toggleChannelSidebar.bind(this)}
           />
           <Row >
+            <MainSideBar />
             <AxisSideBar />
             <ChannelSideBar />
-            <MainSideBar />
           </Row>
         </div>
       </Router>

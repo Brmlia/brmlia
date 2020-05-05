@@ -1,6 +1,7 @@
 export const channelViewStyle = {
   flex: 0.1,
   position: 'relative',
+  color: 'black',
 };
 
 export const channelViewStyleCollapsed = {
