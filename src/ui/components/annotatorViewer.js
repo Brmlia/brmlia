@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, UncontrolledCollapse, Card, CardTitle, CardBody } from 'reactstrap';
+import { Button, Row, Col, UncontrolledCollapse, Card, CardTitle, CardBody } from 'reactstrap';
 
 import {
   annotApi,

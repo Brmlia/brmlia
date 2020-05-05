@@ -32,17 +32,17 @@ class mainTiffViewer extends Component {
     // Case 2: (60 z planes, 1 channel, 3)
     // Case 3: (1 z planes, 3 channels, 60)
     // Case 4: (1 z planes, 1 channel, 180)
-    // Case 5: (1 z planes, 3 channels, 180) (PNG)
     this.type = 1;
     this.typeIsDefault = true;
-    this.files = [];
   }
 
   componentDidMount() {
-    this.cntxt = this.canvas.current.getContext('2d')
+    this.setState(prevState => ({
+      cntxt: this.canvas.current.getContext('2d'),
+    }));
   }
 
-  isValidTiffFile(file, idx) {
+  isValidFile(file, idx) {
 
     return (
       (file.length > 0) &&
@@ -51,21 +51,6 @@ class mainTiffViewer extends Component {
       (file[idx].pages.length > 0) &&
       (file.length !== this.fileLength)
     )
-  }
-
-  isValidPNGFile(file, idx) {
-    return (
-      (file.length > 0) &&
-      (file[idx]) &&
-      (file.length !== this.fileLength) &&
-      (file[idx].type === 'image/png')
-    )
-  }
-
-  drawPNG(src) {
-    var image = new Image()
-    image.src = src
-    this.cntxt.drawImage(image, 0, 0)
   }
 
   setSlider(width, height, length, pageLength) {
@@ -84,14 +69,11 @@ class mainTiffViewer extends Component {
       else if (this.type === 4) {
         this.length = length / 3
       }
-      else if (this.type === 5) {
-        this.length = length
-      }
     }
   }
 
   setVolume(files, width, height, length) {
-    initializeVolume(0, this.cntxt, files, 0, this.state.axes, this.type, width, height, length)
+    initializeVolume(0, this.state.cntxt, files, 0, this.state.axes, this.type, width, height, length)
     if (!this.volume) {
       this.volume = getVolume(0)
     }
@@ -106,16 +88,9 @@ class mainTiffViewer extends Component {
   }
 
   async refreshImage() {
-    this.cntxt.clearRect(0, 0, this.canvas.current.width, this.canvas.current.height)
+    this.state.cntxt.clearRect(0, 0, this.canvas.current.width, this.canvas.current.height)
     if (!this.volume) {
       this.volume = getVolume(0)
-    }
-  }
-
-  updateFileList(files) {
-    const pngFiles = files.filter(file => file.type === "image/png")
-    for (var i = this.files.length; i < pngFiles.length; i++) {
-      this.files.push(pngFiles[i])
     }
   }
 
@@ -125,7 +100,7 @@ class mainTiffViewer extends Component {
       if (state && files) {
         const idx = Math.max((files.length - 1), 0);
         if (
-          this.isValidTiffFile(state.file, idx)
+          this.isValidFile(state.file, idx)
         ) {
           const file = files[idx]
           const width = file.image.width
@@ -139,16 +114,6 @@ class mainTiffViewer extends Component {
           this.updateSlice()
           this.fileLength = fileLength
           this.forceUpdate();
-        }
-        else if (
-          this.isValidPNGFile(state.file, idx)
-        ) {
-          this.updateFileList(state.file)
-          this.drawPNG(state.file[idx].image)
-          this.type = 5
-          this.setSlider(0, 0, files.length, 0)
-          // this.fileLength = files.length
-          this.forceUpdate()
         }
       }
     }
@@ -171,26 +136,18 @@ class mainTiffViewer extends Component {
     else if (this.type === 4) {
       return ((value * 3) + (this.channel-1) )
     }
-    else if (this.type === 5) {
-      return value
-    }
   }
 
   updateSlice() {
-    if (this.type < 5 ) {
-      this.refreshImage();
-      updateChannelSlice(
-        this.cntxt,
-        this.volume,
-        this.sliceIdx,
-        this.state.axes,
-        this.axisIdx,
-        false
-      );
-    }
-    else if (this.type === 5) {
-      this.drawPNG(this.files[this.sliceIdx].image)
-    }
+    this.refreshImage();
+    updateChannelSlice(
+      this.state.cntxt,
+      this.volume,
+      this.sliceIdx,
+      this.state.axes,
+      this.axisIdx,
+      false
+    );
     this.forceUpdate();
   }
 
@@ -210,35 +167,6 @@ class mainTiffViewer extends Component {
     return Math.min(Math.max(val, min), max);
   }
 
-  drawChannelSlider() {
-    if (this.type < 5 ) {
-      return (
-        <div>
-          <div className="channel-slider-container">
-            <Slider
-              label=""
-              width="40%"
-              min="1"
-              max="3"
-              step="1"
-              initial="0"
-              multiplier="1"
-              raw="1"
-              sliderValue={this.sliderValueChannel.bind(this)}
-            />
-          </div>
-          <div> Channel: {this.channel} </div>
-        </div>
-      )
-    }
-    else if (this.type === 5) {
-      return (
-        <div>
-        </div>
-      )
-    }
-  }
-
   render() {
     fApi.subscribe(state => {
       this.updateForFile(state);
@@ -247,7 +175,7 @@ class mainTiffViewer extends Component {
     let width = window.innerWidth * 0.6;
     let height = window.innerHeight * 0.6;
     return (
-      <div style={{"color": "black"}}>
+      <div>
         <canvas
           id="canvas-1"
           ref={this.canvas}
@@ -267,9 +195,22 @@ class mainTiffViewer extends Component {
             raw="1"
             sliderValue={this.sliderValueSlice.bind(this)}
           />
-          <div> Slice: {this.channelSliceIdx} </div>
         </div>
-        {this.drawChannelSlider()}
+        <div> Slice: {this.channelSliceIdx} </div>
+        <div className="channel-slider-container">
+          <Slider
+            label=""
+            width="40%"
+            min="1"
+            max="3"
+            step="1"
+            initial="0"
+            multiplier="1"
+            raw="1"
+            sliderValue={this.sliderValueChannel.bind(this)}
+          />
+        </div>
+        <div> Channel: {this.channel} </div>
       </div>
     );
   }

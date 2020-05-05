@@ -76,7 +76,7 @@ export function FileUpload(props) {
     <section className="container">
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
-        {props.name}
+        <p> {props.name} </p>
         {saveTotalNumOfFiles(files.length)}
         {update}
       </div>

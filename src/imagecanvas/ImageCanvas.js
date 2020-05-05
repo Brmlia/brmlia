@@ -131,19 +131,11 @@ class ImageCanvas extends React.Component {
     }
   }
 
-  isValidPNGFile(file, idx) {
-    return (
-      (file.length > 0) &&
-      (file[idx]) &&
-      (file.length !== this.fileLength) &&
-      (file[idx].type === 'image/png')
-    )
-  }
-
   updateForFile(state) {
     if (filesNeedUpdate(state, this.files.length)) {
       var idx = this.getIdx(state.file.length)
       const files = state.file
+
       if (
         areFilesValid(files, idx, this.fileLength)
       ) {
@@ -162,11 +154,6 @@ class ImageCanvas extends React.Component {
 
         updateImage(files[state.selected], this.props.channel);
         updateSliceLength((parseInt(this.props.channel)+3), this.length)
-      }
-      else if (
-        this.isValidPNGFile(state.file, idx)
-      ) {
-        updateImage(files[state.selected], this.props.channel);
       }
     }
     this.forceUpdate();
