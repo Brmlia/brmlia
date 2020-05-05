@@ -35,11 +35,41 @@ class mainTiffViewer extends Component {
     // Case 5: (1 z planes, 3 channels, 180) (PNG)
     this.type = 1;
     this.typeIsDefault = true;
-    this.files = [];
+    this.files = props.files;
   }
 
   componentDidMount() {
     this.cntxt = this.canvas.current.getContext('2d')
+
+    if (this.files) {
+      const idx = Math.max((this.files.length - 1), 0);
+      if (
+        this.isValidTiffFile(this.files, idx)
+      ) {
+        const file = this.files[idx]
+        const width = file.image.width
+        const height = file.image.height
+        const fileLength = this.files.length
+        const pageLength = file.pages.length
+
+        this.setType(this.files, file.metadata)
+        this.setSlider(width, height, fileLength, pageLength)
+        this.setVolume(this.files, width, height, pageLength * fileLength)
+        this.updateSlice()
+        this.fileLength = fileLength
+        this.forceUpdate();
+      }
+      else if (
+        this.isValidPNGFile(this.files, idx)
+      ) {
+        this.updateFileList(this.files)
+        this.drawPNG(this.files[idx].image)
+        this.type = 5
+        this.setSlider(0, 0, this.files.length, 0)
+        // this.fileLength = files.length
+        this.forceUpdate()
+      }
+    }
   }
 
   isValidTiffFile(file, idx) {

@@ -8,6 +8,7 @@ import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 
 import {
+  fApi,
   mainImgStyle,
   mainViewStyle,
   mainCanvasStyle0,
@@ -28,6 +29,7 @@ class mainViewer extends React.Component {
         width={window.innerWidth * 0.6}
         height="100%"
         channel="4"
+        files={this.files}
       />
     );
 
@@ -67,6 +69,10 @@ class mainViewer extends React.Component {
     );
   }
 
+  updateForFile(state) {
+    this.files = state.file
+  }
+
   display() {
     if (
       !settingsApi.getState().channels[0].selected &&
@@ -82,6 +88,9 @@ class mainViewer extends React.Component {
   render() {
     settingsApi.subscribe(state => {
       this.forceUpdate();
+    });
+    fApi.subscribe(state => {
+      this.updateForFile(state);
     });
 
     let width = window.innerWidth * 0.6;
