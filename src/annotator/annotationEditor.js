@@ -407,6 +407,13 @@ export function redo() {
         scaleX: redoAnnot.rect.scaleX,
         scaleY: redoAnnot.rect.scaleY,
       });
+      // remove previous annotation before adding back (if any)
+      const objs = getCanvas()._objects
+      for (var j = 0; j < objs.length; j++) {
+        if (objs[j] && objs[j]._objects && objs[j]._objects[1].text && (objs[j]._objects[1].text === redoAnnot.label)) {
+          canvas.remove(objs[j])
+        }
+      }
       canvas.add(redoAnnot.group);
       canvas.requestRenderAll();
       canvas.setActiveObject(redoAnnot.group);
