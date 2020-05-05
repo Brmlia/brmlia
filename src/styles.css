@@ -109,3 +109,8 @@ h5 {
 .col-8 {
   padding: 7px;
 }
+
+.btn-primary {
+  background-color: #203050;
+  border-color: #203050;
+}
