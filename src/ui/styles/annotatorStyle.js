@@ -11,6 +11,7 @@ export const annotCardStyle = {
   width: '100%',
   fluid: true,
   marginBottom: '15px',
+  overflowX: 'scroll',
 };
 
 export const annotLayerStyle = {};

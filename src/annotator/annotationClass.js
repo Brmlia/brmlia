@@ -1,25 +1,11 @@
 import create from 'zustand';
 
-import {
-  getAnnotationClasses,
-} from './index.js';
+import { getAnnotationClasses } from './index.js';
 
 const initState = {
   classes: [
     {
       name: 'Annotation Class 1',
-      enabled: false,
-    },
-    {
-      name: 'Annotation Class 2',
-      enabled: false,
-    },
-    {
-      name: 'Annotation Class 3',
-      enabled: false,
-    },
-    {
-      name: 'Annotation Class 4',
       enabled: false,
     },
   ],
@@ -87,12 +73,12 @@ export function toggleClassEnable(num) {
       classes,
     };
   });
-  const cls = annotClassApi.getState().classes[num]
+  const cls = annotClassApi.getState().classes[num];
   if (cls.enabled) {
-    annotClassApi.setState(prevState=> ({
+    annotClassApi.setState(prevState => ({
       ...prevState,
-      lastSel: cls.name
-    }))
+      lastSel: cls.name,
+    }));
   }
 }
 
