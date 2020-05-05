@@ -25,7 +25,6 @@ class AxesViewer extends React.Component {
           </Card>
         </div>
 
-        <br></br>
         <div className="card-axis-yz" style={axisViewStyle}>
           <Card style={axisCardStyle}>
             <CardBody style={axisCardBodyStyle}>
@@ -38,7 +37,6 @@ class AxesViewer extends React.Component {
           </Card>
         </div>
 
-        <br></br>
         <div className="card-axis-xz" style={axisViewStyle}>
           <Card style={axisCardStyle}>
             <CardBody style={axisCardBodyStyle}>

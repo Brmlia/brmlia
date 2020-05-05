@@ -13,7 +13,6 @@ class ChannelViewer extends React.Component {
   render() {
     return (
       <div className="annotations-channel" style={channelViewStyle}>
-        <br />
         <Row>
           <Col sm="4">
             <Card style={channelCardStyle}>

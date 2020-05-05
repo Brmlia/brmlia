@@ -21,7 +21,7 @@ class UI extends React.Component {
       <div className="main" style={mainStyle}>
         <Container fluid style={mainMenuStyle}>
           <Row style={{ justifyContent: 'space-between' }}>
-            <Col xs="10">
+            <Col xs="auto">
               <Menus />
             </Col>
             <Col xs="auto">

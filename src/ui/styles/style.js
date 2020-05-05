@@ -16,7 +16,7 @@ export const buttonGroupStyle = {
   size: 'sm',
   vertical: false,
   flex: 1.0,
-  padding: '0px 15px 15px 15px',
+  padding: '0px 7px 7px 7px',
 };
 
 export const mainMenuStyle = {

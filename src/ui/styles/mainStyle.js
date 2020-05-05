@@ -16,6 +16,7 @@ export const mainCardStyle = {
   width: '100%',
   fluid: true,
   fontSize: '12px',
+  marginBottom: '15px',
 };
 
 export const mainImgStyle = {

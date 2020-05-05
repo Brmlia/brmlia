@@ -11,6 +11,8 @@ export const axisCardStyle = {
   width: '100%',
   fluid: true,
   fontSize: '12px',
+  flexWrap: 'wrap',
+  marginBottom: '15px',
 };
 
 export const axisCardBodyStyle = {

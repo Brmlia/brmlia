@@ -114,7 +114,7 @@ class AnnotatorViewer extends React.Component {
             <CardBody>
               <CardTitle>
                 {' '}
-                <h5> Annotated Class Selection </h5>{' '}
+                <h5> Annotation Classes </h5>{' '}
               </CardTitle>
             </CardBody>
             <Button
@@ -128,11 +128,9 @@ class AnnotatorViewer extends React.Component {
             <br />
             <UncontrolledCollapse toggler={'annotator-class-list'}>
               {this.displayClassList()}
-              <br />
             </UncontrolledCollapse>
           </Card>
         </div>
-        <br></br>
       </div>
     );
   }

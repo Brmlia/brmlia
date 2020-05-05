@@ -26,7 +26,7 @@ class mainViewer extends React.Component {
         className="annot-view"
         alt="main-canvas"
         width={window.innerWidth * 0.6}
-        height={window.innerHeight * 0.6}
+        height="100%"
         channel="4"
       />
     );
@@ -85,7 +85,7 @@ class mainViewer extends React.Component {
     });
 
     let width = window.innerWidth * 0.6;
-    let height = window.innerHeight * 0.75;
+    let height = window.innerHeight * 0.6;
 
     return (
       <div className="main-view" style={mainViewStyle}>
@@ -103,7 +103,6 @@ class mainViewer extends React.Component {
               <FabricLayer />
             </div>
           </CardBody>
-          <br></br>
         </Card>
       </div>
     );
