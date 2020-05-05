@@ -1,127 +1,89 @@
 import React from 'react';
 
-import {
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  ButtonGroup,
-  Button,
-} from 'reactstrap';
+import { Button, Navbar } from 'reactstrap';
 
 import { FileUpload } from '../../fileuploader/fileUploader.js';
 
-import {
-  buttonGroupStyle,
-  exportJson,
-  modes,
-  setMode,
-  undo,
-  redo,
-} from './index.js';
+import { exportJson, modes, setMode, undo, redo } from './index.js';
 
 class Menus extends React.Component {
-
   displayFileMenu() {
     return (
-      <UncontrolledButtonDropdown>
-        <DropdownToggle caret color="primary">
-          File
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem>
-            <Button
-              outline
-              color="primary"
-              className="export-btn"
-              onClick={exportJson}
-            >
-              {' '}
-              Export Annotations{' '}
-            </Button>
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledButtonDropdown>
-    )
+      <div>
+        <Button color="primary" className="import-btn">
+          {' '}
+          <FileUpload name="Import File" />{' '}
+        </Button>{' '}
+        &nbsp;
+        <Button color="primary" className="export-btn" onClick={exportJson}>
+          {' '}
+          Export Annotations{' '}
+        </Button>{' '}
+        &nbsp;
+      </div>
+    );
   }
 
   displayDrawMenu() {
     return (
-      <UncontrolledButtonDropdown>
-        <DropdownToggle caret color="primary">
-          Draw
-        </DropdownToggle>
-        <DropdownMenu>
-          <Button
-            outline
-            color="primary"
-            className="draw-rectangle-btn"
-            onClick={e => setMode(modes.RECT)}
-          >
-            Rectangle
-          </Button>
-          <Button
-            outline
-            color="primary"
-            className="draw-rectangle-btn"
-            onClick={e => setMode(modes.FREE)}
-          >
-            Freehand
-          </Button>
-        </DropdownMenu>
-      </UncontrolledButtonDropdown>
-    )
+      <div>
+        <Button
+          color="primary"
+          className="draw-rectangle-btn"
+          onClick={e => setMode(modes.RECT)}
+        >
+          Draw Rectangle
+        </Button>{' '}
+        &nbsp;
+        <Button
+          color="primary"
+          className="draw-rectangle-btn"
+          onClick={e => setMode(modes.FREE)}
+        >
+          Draw Freehand
+        </Button>{' '}
+        &nbsp;
+      </div>
+    );
   }
 
   displayEditMenu() {
     return (
-      <UncontrolledButtonDropdown>
-        <DropdownToggle caret color="primary">
-          Edit
-        </DropdownToggle>
-        <DropdownMenu>
-          <Button
-            outline
-            color="primary"
-            className="draw-rectangle-btn"
-            onClick={e => undo()}
-          >
-            Undo
-          </Button>
-          <Button
-            outline
-            color="primary"
-            className="draw-rectangle-btn"
-            onClick={e => redo()}
-          >
-            Redo
-          </Button>
-        </DropdownMenu>
-      </UncontrolledButtonDropdown>
-    )
-  }
-
-  displayMiscMenu() {
-    return (
-      <Button outline color="primary" className="import-btn">
-        {' '}
-        <FileUpload name="Import File" />{' '}
-      </Button>
-    )
+      <div>
+        <Button
+          color="primary"
+          className="draw-rectangle-btn"
+          onClick={e => undo()}
+        >
+          Undo
+        </Button>{' '}
+        &nbsp;
+        <Button
+          color="primary"
+          className="draw-rectangle-btn"
+          onClick={e => redo()}
+        >
+          Redo
+        </Button>{' '}
+        &nbsp;
+      </div>
+    );
   }
 
   render() {
     return (
-      <ButtonGroup
-        size={buttonGroupStyle.size}
-        vertical={buttonGroupStyle.vertical}
-        style={buttonGroupStyle}
-      >
-        {this.displayFileMenu()}
-        {this.displayDrawMenu()}
-        {this.displayEditMenu()}
-        {this.displayMiscMenu()}
-      </ButtonGroup>
+      <div style={{ padding: '15px' }}>
+        <Navbar
+          color="light"
+          light
+          className="navbar shadow-sm p-3 mb-0 bg-white rounded"
+          expand="md"
+        >
+          {this.displayFileMenu()}
+          {this.displayDrawMenu()}
+          {this.displayEditMenu()}
+        </Navbar>
+      </div>
     );
   }
 }

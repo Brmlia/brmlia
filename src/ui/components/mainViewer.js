@@ -8,7 +8,6 @@ import { canvasApi } from '../../imagecanvas/canvasStore.js';
 import { settingsApi } from '../../mainSettings.js';
 
 import {
-  mainImgStyle,
   mainViewStyle,
   mainCanvasStyle0,
   mainCanvasStyle1,

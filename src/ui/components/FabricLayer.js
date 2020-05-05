@@ -18,12 +18,15 @@ import {
   addToFabric,
   setFabricCanvas,
   setMode,
-  fabricApi,
-  modes,
   annotLayerStyle,
 } from './index.js';
 
-import { startMoving, finishMoving } from '../../fabric/fabricControl.js';
+import {
+  startMoving,
+  finishMoving,
+  fabricApi,
+  modes,
+} from '../../fabric/fabricControl.js';
 
 var canvas;
 
