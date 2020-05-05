@@ -21,7 +21,7 @@ export const channelCardBodyStyle = {
 
 export const channelCanvasStyle = {
   position: 'center',
-  // height: '100%',
+  height: '100px',
   width: '100%',
   zIndex: '3',
 };

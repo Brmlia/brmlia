@@ -148,7 +148,7 @@ class Channel extends React.Component {
           <Card style={channelCardStyle}>
             <CardBody style={channelCardBodyStyle}>
               <div style={channelCanvasStyle}>{canvas}</div>
-              <div className="slice-slider-container">
+              <div className="channel-slice-slider-container">
                 <Slider
                   label=""
                   width="40%"
@@ -229,8 +229,8 @@ class Channel extends React.Component {
                   onClick={() => {
                     this.resetContrast();
                   }}
-                  Reset Contrast
                 >
+                  Reset Contrast
                 </button>
               </div>
               <div className="whitepoint-slider-container">
