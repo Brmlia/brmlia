@@ -53,6 +53,7 @@ import {
 
 import {
   channelViewStyle        as chVwStyle,
+  channelViewStyleCollapsed        as chVwColStyle,
   channelCardStyle        as chCardStyle,
   channelCardBodyStyle    as chCardBodyStyle,
   channelCanvasStyle      as chCanvasStyle,
@@ -159,6 +160,7 @@ export const mainCanvasStyle1        = mCvsStyle1
 export const mainCanvasStyle2        = mCvsStyle2
 export const mainCanvasStyle3        = mCvsStyle3
 export const channelViewStyle        = chVwStyle
+export const channelViewStyleCollapsed        = chVwColStyle
 export const channelCardStyle        = chCardStyle
 export const channelCardBodyStyle    = chCardBodyStyle
 export const channelCanvasStyle      = chCanvasStyle

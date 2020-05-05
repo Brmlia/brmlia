@@ -3,6 +3,12 @@ export const channelViewStyle = {
   position: 'relative',
 };
 
+export const channelViewStyleCollapsed = {
+  flex: 0.1,
+  position: 'absolute',
+  visibility: 'hidden',
+};
+
 export const channelCardStyle = {
   justify: 'center',
   alignContent: 'center',

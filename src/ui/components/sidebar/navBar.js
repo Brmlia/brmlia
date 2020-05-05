@@ -15,6 +15,10 @@ class NavBar extends React.Component {
     this.props.toggleChannelSidebar()
   }
 
+  handleMainSbClick () {
+    this.props.toggleMainSidebar()
+  }
+
   render() {
     return (
       <Container fluid style={contentStyle}>
@@ -23,6 +27,13 @@ class NavBar extends React.Component {
             Axes
           </Button>
           <NavbarToggler onClick={() => this.handleAxisSbClick()} />
+          <Collapse isOpen={true} navbar>
+          </Collapse>
+
+          <Button color="info" onClick={() => this.handleMainSbClick()}>
+            Main View
+          </Button>
+          <NavbarToggler onClick={() => this.handleMainSbClick()} />
           <Collapse isOpen={true} navbar>
           </Collapse>
 

@@ -31,11 +31,11 @@ class UI extends React.Component {
             <Col xs="8">
               {/*<AnnotatorViewer />*/}
               <br />
-              {/*<MainViewer />*/}
+            {/*<MainViewer />*/}
             </Col>
           </Row>
         </Container>
-        <Annotator />
+        {/*<Annotator />*/}
       </div>
     );
   }

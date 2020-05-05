@@ -5,6 +5,7 @@ import {
 } from './index.js';
 import { Nav } from 'reactstrap';
 import { sideBarApi } from './sideBarStore.js';
+import { sideBarViewerApi } from './sideBarViewerStore.js';
 
 class ChannelSideBar extends React.Component {
 
@@ -33,7 +34,7 @@ class ChannelSideBar extends React.Component {
   render() {
 
     if (!this.initialized) {
-      this.channelViewer = sideBarApi.getState().sidebar[1]
+      this.channelViewer = sideBarViewerApi.getState().sidebar[1]
       this.initialized = true
     }
     sideBarApi.subscribe(state => {
@@ -42,11 +43,11 @@ class ChannelSideBar extends React.Component {
     return (
       <div className="channel-sidebar" style={this.style()}>
         <div className="sidebar-header" style={{background: '#6d7fcc'}} >
-          <h3 style={{padding: '0.5em'}}>Bootstrap Sidebar</h3>
+          <h3 style={{padding: '0.5em'}}>Channels</h3>
         </div>
         <div className="side-menu">
           <Nav vertical className="list-unstyled pb-3">
-            <p style={{padding: '0.5em'}}>Dummy Heading</p>
+            <p style={{padding: '0.5em'}}></p>
              {this.channelViewer}
           </Nav>
         </div>
