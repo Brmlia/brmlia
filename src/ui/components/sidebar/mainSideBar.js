@@ -1,8 +1,20 @@
 import React from 'react';
 import {
+  Button,
+  Navbar,
+  Card,
+  Row,
+} from 'reactstrap';
+import {
   mainSideBarOpenStyle,
   mainSideBarClosedStyle,
 } from './index.js';
+import {
+  modes,
+  setMode,
+  undo,
+  redo,
+} from './../index.js';
 import { sideBarApi } from './sideBarStore.js';
 import { sideBarViewerApi } from './sideBarViewerStore.js';
 import AnnotatorViewer from './../annotatorViewer.js';
@@ -33,6 +45,62 @@ class MainSideBar extends React.Component {
     }
     return mainSideBarClosedStyle
   }
+
+  displayDrawMenu() {
+    return (
+      <div style={{padding: '20px'}}>
+          <Button
+            color="primary"
+            className="draw-rectangle-btn"
+            onClick={e => setMode(modes.RECT)}
+          >
+            Draw Rectangle
+          </Button> &nbsp;
+          <Button
+            color="primary"
+            className="draw-rectangle-btn"
+            onClick={e => setMode(modes.FREE)}
+          >
+            Draw Freehand
+          </Button> &nbsp;
+          <Button
+            color="primary"
+            className="draw-rectangle-btn"
+            onClick={e => undo()}
+          >
+            Undo
+          </Button> &nbsp;
+          <Button
+            color="primary"
+            className="draw-rectangle-btn"
+            onClick={e => redo()}
+          >
+            Redo
+          </Button> &nbsp;
+      </div>
+    )
+  }
+
+  displayEditMenu() {
+    return (
+      <div>
+      </div>
+    )
+  }
+
+  displayMenus() {
+    return (
+      <div style={{padding: "0px", width: "100%"}}>
+        <Card>
+          <Row>
+          {this.displayEditMenu()}
+          {this.displayDrawMenu()}
+          </Row>
+        </Card>
+      </div>
+    );
+  }
+
   render() {
 
     if (!this.initialized) {
@@ -51,6 +119,7 @@ class MainSideBar extends React.Component {
           <h3 style={{padding: '0.5em'}}>Main View</h3>
         </div>
         {this.annotatorViewer}
+        {this.displayMenus()}
         {this.mainViewer}
         {this.annotator}
         {this.thumbnails}
