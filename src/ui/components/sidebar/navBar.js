@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Navbar, Button, NavbarToggler, Collapse } from 'reactstrap';
 import {
   contentStyle,
@@ -7,20 +7,33 @@ import {
 
 class NavBar extends React.Component {
 
-  handleClick () {
-    this.props.toggle()
+  handleAxisSbClick () {
+    this.props.toggleAxisSidebar()
+  }
+
+  handleChSbClick () {
+    this.props.toggleChannelSidebar()
   }
 
   render() {
     return (
       <Container fluid style={contentStyle}>
         <Navbar color="light" light className="navbar shadow-sm p-3 mb-5 bg-white rounded" expand="md">
-          <Button color="info" onClick={() => this.handleClick()}>
+          <Button color="info" onClick={() => this.handleAxisSbClick()}>
             Axes
           </Button>
-          <NavbarToggler onClick={() => this.handleClick()} />
+          <NavbarToggler onClick={() => this.handleAxisSbClick()} />
           <Collapse isOpen={true} navbar>
           </Collapse>
+
+          <div align="right">
+            <Button color="info" onClick={() => this.handleChSbClick()}>
+              Channels
+            </Button>
+            <NavbarToggler onClick={() => this.handleChSbClick()} />
+            <Collapse isOpen={true} navbar>
+            </Collapse>
+          </div>
         </Navbar>
       </Container>
     );

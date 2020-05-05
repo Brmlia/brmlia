@@ -25,14 +25,13 @@ class UI extends React.Component {
           <SideBars />
           <Row style={rowStyle}>
             <Col xs="4">
-              <Thumbnails />
+              {/*<Thumbnails /> */}
             </Col>
 
             <Col xs="8">
-              <AnnotatorViewer />
+              {/*<AnnotatorViewer />*/}
               <br />
-              <MainViewer />
-              <ChannelViewer />
+              {/*<MainViewer />*/}
             </Col>
           </Row>
         </Container>

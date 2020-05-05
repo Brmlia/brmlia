@@ -1,9 +1,12 @@
 import { BrowserRouter as Router } from "react-router-dom";
-import React, { useState } from 'react';
+import React from 'react';
 
 import AxisSideBar from './axisSideBar.js';
+import ChannelSideBar from './channelSideBar.js';
 import NavBar from './navBar.js';
 import { sideBarApi } from './sideBarStore.js';
+import { Row } from 'reactstrap';
+import MainViewer from '../mainViewer.js';
 
 class SideBars extends React.Component {
 
@@ -19,7 +22,7 @@ class SideBars extends React.Component {
     this.axesSideBarOpen = sideBarApi.getState().axisSideBarOpen;
   }
 
-  toggle () {
+  toggleAxisSidebar () {
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
     }))
@@ -29,12 +32,25 @@ class SideBars extends React.Component {
     }))
   }
 
+  toggleChannelSidebar () {
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen
+    }))
+    sideBarApi.setState(prevState => ({
+      ...prevState,
+      channelSideBarOpen: !prevState.channelSideBarOpen
+    }))
+  }
+
   render() {
     return (
       <Router>
         <div class="sidebars">
-          <NavBar toggle={this.toggle.bind(this)}/>
-          <AxisSideBar toggle={this.toggle.bind(this)} isOpen={this.state.isOpen}/>
+          <NavBar toggleAxisSidebar={this.toggleAxisSidebar.bind(this)} toggleChannelSidebar={this.toggleChannelSidebar.bind(this)}/>
+          <Row >
+            <AxisSideBar />
+            <ChannelSideBar />
+          </Row>
         </div>
       </Router>
     )

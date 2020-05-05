@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  axSideBarClosedStyle,
-  axSideBarOpenStyle,
+  chSideBarOpenStyle,
+  chSideBarClosedStyle,
 } from './index.js';
 import { Nav } from 'reactstrap';
 import { sideBarApi } from './sideBarStore.js';
 
-class AxisSideBar extends React.Component {
+class ChannelSideBar extends React.Component {
 
   constructor(props) {
     super(props)
@@ -26,28 +26,28 @@ class AxisSideBar extends React.Component {
 
   style = () => {
     if (this.state.isOpen) {
-      return axSideBarOpenStyle
+      return chSideBarOpenStyle
     }
-    return axSideBarClosedStyle
+    return chSideBarClosedStyle
   }
   render() {
 
     if (!this.initialized) {
-      this.axesViewer = sideBarApi.getState().sidebar[0]
+      this.channelViewer = sideBarApi.getState().sidebar[1]
       this.initialized = true
     }
     sideBarApi.subscribe(state => {
-      this.updateOpen(state.axisSideBarOpen)
+      this.updateOpen(state.channelSideBarOpen)
     })
     return (
-      <div className="axis-sidebar" style={this.style()}>
+      <div className="channel-sidebar" style={this.style()}>
         <div className="sidebar-header" style={{background: '#6d7fcc'}} >
           <h3 style={{padding: '0.5em'}}>Bootstrap Sidebar</h3>
         </div>
         <div className="side-menu">
           <Nav vertical className="list-unstyled pb-3">
             <p style={{padding: '0.5em'}}>Dummy Heading</p>
-             {this.axesViewer}
+             {this.channelViewer}
           </Nav>
         </div>
       </div>
@@ -55,4 +55,4 @@ class AxisSideBar extends React.Component {
   }
 }
 
-export default AxisSideBar
+export default ChannelSideBar
