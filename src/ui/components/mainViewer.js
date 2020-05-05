@@ -26,13 +26,16 @@ class mainViewer extends React.Component {
         className="annot-view"
         alt="main-canvas"
         width={window.innerWidth * 0.6}
-        height={window.innerHeight * 0.6}
+        height="100%"
         channel="4"
       />
     );
 
+    let width = window.innerWidth * 0.6;
+    let height = window.innerHeight * 0.6;
+
     return (
-      <div id="main-canvas-view" style={mainCanvasStyle0}>
+      <div id="main-canvas-view" style={{ width: width, height: height }}>
         {canvas}
       </div>
     );
@@ -70,7 +73,7 @@ class mainViewer extends React.Component {
       !settingsApi.getState().channels[1].selected &&
       !settingsApi.getState().channels[2].selected
     ) {
-    return this.canvasView();
+      return this.canvasView();
     } else {
       return this.channelViews();
     }
@@ -87,14 +90,19 @@ class mainViewer extends React.Component {
     return (
       <div className="main-view" style={mainViewStyle}>
         <Card className="main-card" style={mainCardStyle}>
-          <CardBody className="main-card-body" style={mainCardBodyStyle}>
-            <CardTitle> <h3> Image View </h3> </CardTitle>
-            <div id="main-canvas-container" style={{ width: width, height: height }}>
+          <CardBody className="main-card-body">
+            <CardTitle>
+              {' '}
+              <h5> Image View </h5>{' '}
+            </CardTitle>
+            <div
+              id="main-canvas-container"
+              style={{ width: width, height: height, position: 'relative' }}
+            >
               {this.display()}
               <FabricLayer />
             </div>
           </CardBody>
-          <br></br>
         </Card>
       </div>
     );

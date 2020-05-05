@@ -23,6 +23,7 @@ const initState = {
       enabled: false,
     },
   ],
+  lastSel: 'class1',
 };
 
 function addClass(classLabel) {
@@ -47,7 +48,7 @@ export function updateClasses() {
   const classes = getAnnotationClasses();
   for (var i = 0; i < classes.length; i++) {
     const cls = classes[i];
-    if (!isDuplicateClass(cls)) {
+    if (cls && !isDuplicateClass(cls)) {
       addClass(cls);
       enableClass(cls);
     }
@@ -86,6 +87,13 @@ export function toggleClassEnable(num) {
       classes,
     };
   });
+  const cls = annotClassApi.getState().classes[num]
+  if (cls.enabled) {
+    annotClassApi.setState(prevState=> ({
+      ...prevState,
+      lastSel: cls.name
+    }))
+  }
 }
 
 export function isDuplicateClass(name) {
@@ -115,4 +123,8 @@ export function getDisabledClasses() {
     }
   }
   return enabledClasses;
+}
+
+export function getLastSelectedClass() {
+  return annotClassApi.getState().lastSel;
 }

@@ -3,14 +3,25 @@ import { fabric } from 'fabric';
 import {
   redoAnnotation,
   undoAnnotation,
+  addAnnotation,
   getLastAnnotIdx,
-  getLastCachedAnnot,
-  getLastCachedAnnotIdx,
+  getLastUndoAnnot,
+  getLastUndoAnnotIdx,
   updateAnnotationLabel,
   updateAnnotClassLabel,
   getCanvas,
   getDisabledClasses,
 } from './index.js';
+
+import {
+  getLastRedoAnnot,
+  getLastRedoAnnotIdx,
+  deleteAnnotation,
+  addAnnotationToUndoState,
+  deleteUndoAnnotation,
+} from './annotationControl.js';
+
+import { annotApi, undoApi, redoApi } from './annotationStore.js';
 
 export const colors = [
   'rgb(200, 140, 140, 0.85)', //channel 1
@@ -26,7 +37,7 @@ export function drawFreeStyle(canvas, color) {
   canvas.isMouseDown = false;
 
   canvas.isDrawingMode = true;
-  canvas.freeDrawingBrush.color = color;
+  canvas.freeDrawingBrush.color = colors[0];
   canvas.freeDrawingBrush.width = 10;
 }
 
@@ -36,10 +47,10 @@ export function drawRect(canvas, rect, label, classLabel) {
   }
 
   var fRect = new fabric.Rect({
-    left: rect.left,
-    top: rect.top,
-    width: rect.width,
-    height: rect.height,
+    left: parseInt(rect.left),
+    top: parseInt(rect.top),
+    width: parseInt(rect.width),
+    height: parseInt(rect.height),
     fill: colors[4],
     stroke: colors[0],
     strokeLineJoin: 'round',
@@ -56,14 +67,13 @@ export function drawRect(canvas, rect, label, classLabel) {
     stroke: colors[5],
     strokeWidth: 1,
   });
+
   var group = new fabric.Group([outerRect]);
   group.on('moving', function(e) {
     constrain(e, canvas);
   });
 
-  var newLabel = label === 'label' ? (label += getLastAnnotIdx() + 1) : label;
-
-  var text = new fabric.IText(newLabel, {
+  var text = new fabric.IText(label, {
     fontSize: 14,
     originX: 'left',
     originY: 'top',
@@ -212,6 +222,7 @@ export function regroup(object) {
       canvas.remove(rect);
       canvas.setActiveObject(group);
     }
+    return group;
   }
 }
 
@@ -228,10 +239,11 @@ export function filterAnnotations(classLabel, enabled) {
       var group_elements = group._objects;
       if (group_elements) {
         var class_element = group._objects[2];
+        var label_element = group._objects[1];
         if (class_element && class_element.text) {
           if (class_element.text === classLabel) {
             if (enabled) {
-              markGroupVisible(group);
+              markGroupVisible(group, label_element.text);
             } else {
               markGroupInvisible(group);
               canvas.discardActiveObject();
@@ -263,7 +275,7 @@ export function showAll() {
   }
 }
 
-export function markGroupVisible(group) {
+export function markGroupVisible(group, label) {
   ungroup(group);
 
   var objs = group._objects;
@@ -272,7 +284,8 @@ export function markGroupVisible(group) {
     markVisible(obj, true);
   }
 
-  regroup(group);
+  const newGroup = regroup(group);
+  updateGroup(newGroup, label);
 }
 
 export function markGroupInvisible(group) {
@@ -283,8 +296,16 @@ export function markGroupInvisible(group) {
     var obj = objs[i];
     markVisible(obj, false);
   }
-
   regroup(group);
+}
+
+function updateGroup(group, label) {
+  var annotations = annotApi.getState().annotations;
+  for (let i = 0; i < annotations.length; i++) {
+    if (annotations[i].label === label) {
+      annotations[i].group = group;
+    }
+  }
 }
 
 function markVisible(obj, visible) {
@@ -293,37 +314,112 @@ function markVisible(obj, visible) {
   getCanvas().renderAll();
 }
 
+export function delAnnot(annot) {
+  const annotations = annotApi.getState().annotations;
+  const undoAnnotations = undoApi.getState().undoAnnotations;
+  let idxToRemoveFromUndo = null;
+  let idxToRemoveFromAnnotations = null;
+
+  for (let i = 0; i < annotations.length; i++) {
+    if (annotations[i].id === annot.id) {
+      removeFromCanvas(annotations[i]);
+      idxToRemoveFromUndo = i;
+    }
+  }
+
+  for (let i = 0; i < annotations.length; i++) {
+    if (undoAnnotations[i].id === annot.id) {
+      idxToRemoveFromAnnotations = i;
+    }
+  }
+
+  addAnnotationToUndoState(annotations[idxToRemoveFromUndo]);
+  addAnnotation(undoAnnotations[idxToRemoveFromAnnotations]);
+  deleteAnnotation(idxToRemoveFromUndo);
+  deleteUndoAnnotation(idxToRemoveFromAnnotations);
+  return null;
+}
+
+function moveAnnotation(annotationTo, annotationFrom) {
+  var canvas = getCanvas();
+
+  annotationTo.group.set({
+    top: annotationFrom.rect.top,
+    left: annotationFrom.rect.left,
+    width: annotationFrom.rect.width,
+    height: annotationFrom.rect.height,
+    scaleX: annotationFrom.rect.scaleX,
+    scaleY: annotationFrom.rect.scaleY,
+  });
+  annotationTo.group.setCoords();
+  canvas.requestRenderAll();
+  canvas.setActiveObject(annotationTo.group);
+}
+
+function removeFromCanvas(annotation) {
+  var canvas = getCanvas();
+  canvas.remove(annotation.group);
+  canvas.requestRenderAll();
+}
+
 export function undo() {
   var canvas = getCanvas();
-  const idx = getLastAnnotIdx();
+  const annotations = annotApi.getState().annotations;
+  let lastUndoAnno = getLastUndoAnnot();
 
-  if (idx >= 0) {
-    // remove from canvas
-    canvas.getObjects().map(function(o, i) {
-      if (i === idx) {
-        canvas.remove(o);
-      }
-      return null;
-    });
-
-    // remove from annotations
-    undoAnnotation();
+  if (!lastUndoAnno) {
+    return null;
   }
-  return null;
+
+  for (let i = 0; i < annotations.length; i++) {
+    if (lastUndoAnno && annotations[i].id === lastUndoAnno.id) {
+      if (annotations[i].group && lastUndoAnno.group) {
+        moveAnnotation(annotations[i], lastUndoAnno);
+      } else if (lastUndoAnno.group && !annotations[i].group) {
+        canvas.add(lastUndoAnno.group);
+      } else {
+        removeFromCanvas(annotations[i]);
+      }
+      undoAnnotation(i);
+    }
+  }
 }
 
 export function redo() {
   var canvas = getCanvas();
-  const idx = getLastCachedAnnotIdx();
+  const idx = getLastRedoAnnotIdx();
+  const annotations = annotApi.getState().annotations;
 
   if (idx >= 0) {
     // get last from cache
-    const cachedAnnot = getLastCachedAnnot();
-    // redraw on canvas
-    drawRect(canvas, cachedAnnot.group, cachedAnnot.label, cachedAnnot.class);
+    const redoAnnot = getLastRedoAnnot();
+
+    if (!redoAnnot) {
+      return null;
+    }
+
+    if (redoAnnot.group) {
+      redoAnnot.group.set({
+        top: redoAnnot.rect.top,
+        left: redoAnnot.rect.left,
+        width: redoAnnot.rect.width,
+        height: redoAnnot.rect.height,
+        scaleX: redoAnnot.rect.scaleX,
+        scaleY: redoAnnot.rect.scaleY,
+      });
+      canvas.add(redoAnnot.group);
+      canvas.requestRenderAll();
+      canvas.setActiveObject(redoAnnot.group);
+    } else {
+      for (let i = 0; i < annotations.length; i++) {
+        if (annotations[i].id === redoAnnot.id) {
+          canvas.add(annotations[i].group);
+          canvas.requestRenderAll();
+        }
+      }
+    }
+
     // remove from cache
-    // redoAnnotation(idx);
-    // deleteCachedAnnotation(idx);
     redoAnnotation(idx);
   }
 }

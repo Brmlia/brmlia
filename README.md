@@ -32,10 +32,10 @@ explicitly, add a commented eslint directive above the location.
 - [x] Undo Remove Annotation
 - [x] Redo Add Annotation
 - [x] Redo Remove Annotation
-- [ ] Undo Resized Annotation
-- [ ] Redo Resized Annotation
-- [ ] Undo Moved Annotation
-- [ ] Redo Moved Annotation
+- [x] Undo Resized Annotation
+- [x] Redo Resized Annotation
+- [x] Undo Moved Annotation
+- [x] Redo Moved Annotation
 
 ### AXES
 
@@ -49,12 +49,12 @@ explicitly, add a commented eslint directive above the location.
 - [x] Filter by Class
 - [x] Edit Label
 - [x] Auto-load upon import
-- [ ] Undo/Redo changes
+- [x] Undo/Redo changes
 - [ ] Toggle Label On/Off
 - [ ] Resize box without affecting label
 - [ ] Define individual annotations in freehand mode
 - [ ] Add toolbar
-- [ ] Set Default Class: Last Selected Class
+- [x] Set Default Class: Last Selected Class
 - [ ] Replace freehand with Oval
 - [ ] UI Adjustments
 

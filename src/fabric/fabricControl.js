@@ -10,7 +10,17 @@ import {
   setMenuCoords,
   setSelectedObjects,
   addAnnotation,
+  getLastAnnotIdx,
+  getLastSelectedClass,
 } from './index.js';
+import {
+  updateAnnotClassLabel,
+  createDummyAnnotation,
+  updateAnnotationCoords,
+  createAnnotation,
+  addDummyUndoAnnotation,
+} from '../annotator/annotationControl';
+import { annotApi, undoApi, redoApi } from '../annotator/annotationStore';
 
 export const modes = {
   RECT: 'rectangle',
@@ -20,12 +30,7 @@ export const modes = {
 };
 
 const initState = {
-  layers: [
-    // <FabricLayer zIndex={8} channel={0} />,
-    // <FabricLayer zIndex={9} channel={1} />,
-    // <FabricLayer zIndex={10} channel={2} />,
-    // <FabricLayer zIndex={11} channel={3} />,
-  ],
+  layers: [],
   mouse: {
     x: 0,
     y: 0,
@@ -36,6 +41,7 @@ const initState = {
     y: 0,
   },
   drawMode: modes.RECT,
+  nextId: 1,
   canvas: null,
 };
 
@@ -70,6 +76,24 @@ export function setMode(newMode) {
   }
 }
 
+export function finishMoving(selection) {
+  const objs = selection._objects;
+  for (let i = 0; i < objs.length; i++) {
+    let subObjs = objs[i]._objects;
+    if (subObjs) {
+      finishMoving(objs[i]);
+    } else {
+      selection.setCoords();
+      updateAnnotationCoords(selection);
+      break;
+    }
+  }
+
+  redoApi.setState({
+    redoAnnotations: [],
+  });
+}
+
 export function startSelecting() {
   setMode(modes.SELECT);
 }
@@ -90,11 +114,11 @@ export function startDrawingFree(x, y) {
   drawFreeStyle(fabricApi.getState().canvas);
 }
 
-export function finish(x, y, color) {
+export function finish(x, y) {
   if (fabricApi.getState().drawMode === modes.SELECT) {
     finishSelecting();
   } else if (fabricApi.getState().drawMode === modes.RECT) {
-    finishDrawingRect(x, y, color);
+    finishDrawingRect(x, y);
   }
 }
 
@@ -109,40 +133,49 @@ export function finishDrawing(x, y) {
   setFabricCoords(x, y);
 }
 
-export function finishDrawingRect(x, y, color) {
+export function finishDrawingRect(x, y) {
   setFabricCoords(x, y);
   const state = fabricApi.getState();
   if (state.origin.x && state.origin.y && x && y) {
     const width = state.mouse.x - state.origin.x;
+    const height = state.mouse.y - state.origin.y;
+
     if (Math.abs(width) >= 10) {
       const rect = {
-        width: width,
-        height: state.mouse.y - state.origin.y,
-        top: state.origin.y,
-        left: state.origin.x,
-        color: color,
+        width: width >= 0 ? width : -width,
+        height: height >= 0 ? height : -height,
+        top: height >= 0 ? state.origin.y : state.mouse.y,
+        left: width >= 0 ? state.origin.x : state.mouse.x,
       };
-      const label = 'label';
-      const classLabel = 'class1';
+      const label = 'label' + (getLastAnnotIdx() + 1);
+      const classLabel = getLastSelectedClass() || 'class1';
       const fRect = drawRect(
         fabricApi.getState().canvas,
         rect,
         label,
         classLabel
       );
-      addAnnotation(
-        fRect,
-        label,
-        classLabel,
-        fRect.top,
-        fRect.left,
-        fRect.width,
-        fRect.height
-      );
+
+      let nextId = fabricApi.getState().nextId;
+      addDummyUndoAnnotation(createDummyAnnotation(nextId));
+      addAnnotation(createAnnotation(fRect, label, classLabel, rect, nextId));
+
+      fabricApi.setState(prevState => ({
+        ...prevState,
+        nextId: nextId + 1,
+      }));
     }
+
+    redoApi.setState({
+      redoAnnotations: [],
+    });
 
     setSelectedObjects(fabricApi.getState().canvas.getActiveObjects()[0]);
   }
+}
+
+export function deleteAnnotations(rects) {
+  console.log(rects);
 }
 
 export function setOrigin(x, y) {

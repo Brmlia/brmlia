@@ -1,9 +1,6 @@
 import create from 'zustand';
 
-import {
-  editAnnotationOption,
-  editClassOption,
-} from './index.js'
+import { editAnnotationOption, editClassOption, deleteAnnotationOption } from './index.js';
 
 export const initState = {
   menu: {
@@ -20,6 +17,10 @@ export const initState = {
       {
         label: 'Edit Class',
         callback: editClassOption,
+      },
+      {
+        label: 'Delete',
+        callback: deleteAnnotationOption,
       },
     ],
     objects: [],

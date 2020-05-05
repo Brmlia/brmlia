@@ -1,11 +1,10 @@
 export const mainViewStyle = {
   flex: 0.1,
   position: 'relative',
-  height: '60%'
 };
 
 export const mainCardBodyStyle = {
-  width: '95%',
+  width: '100%',
   height: '100%',
 };
 
@@ -15,9 +14,9 @@ export const mainCardStyle = {
   alignItems: 'center',
   textAlign: 'center',
   width: '100%',
-  height: '100%',
   fluid: true,
   fontSize: '12px',
+  marginBottom: '15px',
 };
 
 export const mainImgStyle = {
@@ -26,8 +25,6 @@ export const mainImgStyle = {
 
 export const mainCanvasStyle0 = {
   position: 'absolute',
-  height: '100%',
-  width: '100%',
   zIndex: '3',
   marginLeft: '0px',
   opacity: '1.0',
@@ -54,5 +51,3 @@ export const mainCanvasStyle3 = {
   zIndex: '7',
   opacity: '0.5',
 };
-
-
