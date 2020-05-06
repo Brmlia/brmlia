@@ -199,7 +199,7 @@ export function updateAnnotationLabel(oldLabel, label) {
 export function updateAnnotClassLabel(oldLabel, label) {
   annotApi.setState(prevState => {
     const annotations = prevState.annotations.map((annot, j) => {
-      if (annot.class === oldLabel) {
+      if (annot && (annot.class === oldLabel)) {
         var newAnnot = annot;
         newAnnot.class = label;
         return newAnnot;
@@ -225,7 +225,7 @@ export function getAnnotationClasses() {
 export function getAnnotationByLabel(label) {
   const annotations = annotApi.getState().annotations;
   for (var i = 0; i < annotations.length; i++) {
-    if (annotations[i].label === label) {
+    if (annotations[i] && (annotations[i].label === label)) {
       return annotations[i]
     }
   }

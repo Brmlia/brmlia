@@ -334,7 +334,10 @@ export function delAnnot(annotation) {
     const obj = getSelectedObjects();
     if (obj && obj._objects.length > 0) {
       const label = obj._objects[1].text
-      annot = {"id": getAnnotationByLabel(label).id}
+      const tAnnot = getAnnotationByLabel(label)
+      if (tAnnot) {
+        annot = {"id": tAnnot.id}
+      }
     }
   }
 
@@ -344,11 +347,11 @@ export function delAnnot(annotation) {
   let idxToRemoveFromAnnotations = null;
 
   for (let i = 0; i < annotations.length; i++) {
-    if (annotations[i].id === annot.id) {
+    if (annot && annotations[i] && (annotations[i].id === annot.id)) {
       removeFromCanvas(annotations[i]);
       idxToRemoveFromUndo = i;
     }
-    if (undoAnnotations[i].id === annot.id) {
+    if (annot && undoAnnotations[i] && (undoAnnotations[i].id === annot.id)) {
       idxToRemoveFromAnnotations = i;
     }
   }
@@ -392,7 +395,7 @@ export function undo() {
   }
 
   for (let i = 0; i < annotations.length; i++) {
-    if (lastUndoAnno && annotations[i].id === lastUndoAnno.id) {
+    if (annotations[i] && lastUndoAnno && annotations[i].id === lastUndoAnno.id) {
       if (annotations[i].group && lastUndoAnno.group) {
         moveAnnotation(annotations[i], lastUndoAnno);
       } else if (lastUndoAnno.group && !annotations[i].group) {
