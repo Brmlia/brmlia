@@ -56,6 +56,7 @@
     "url": "git+https://github.com/Brmlia/brmlia.git"
   },
   "author": "",
+  "homepage":"https://github.com/Brmlia/brmlia.git",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Brmlia/brmlia/issues"
