@@ -14,13 +14,12 @@ import {
   getLastSelectedClass,
 } from './index.js';
 import {
-  updateAnnotClassLabel,
   createDummyAnnotation,
   updateAnnotationCoords,
   createAnnotation,
   addDummyUndoAnnotation,
 } from '../annotator/annotationControl';
-import { annotApi, undoApi, redoApi } from '../annotator/annotationStore';
+import { redoApi } from '../annotator/annotationStore';
 
 export const modes = {
   RECT: 'rectangle',

@@ -154,7 +154,6 @@ export function getLastRedoAnnotIdx() {
 export function updateAnnotationCoords(annotationGroup) {
   const annotations = annotApi.getState().annotations;
   for (let i = 0; i < annotations.length; i++) {
-    let a = annotations[i];
     if (annotationGroup === annotations[i].group) {
       addAnnotationToUndoState(annotations[i]);
       const rect = {

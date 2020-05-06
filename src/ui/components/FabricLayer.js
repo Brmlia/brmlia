@@ -1,16 +1,12 @@
 import React from 'react';
 import { fabric } from 'fabric';
 
-import AnnotationMenu from '../../annotator/annotationMenu.js';
-
 import {
   filterAnnotations,
   showAll,
   drawFreeStyle,
-  colors,
   annotApi,
   setCanvas,
-  AnnotationMenuApi,
   openMenu,
   startDrawing,
   startSelecting,
@@ -23,7 +19,7 @@ import {
   annotLayerStyle,
 } from './index.js';
 
-import { startMoving, finishMoving } from '../../fabric/fabricControl.js';
+import { finishMoving } from '../../fabric/fabricControl.js';
 
 var canvas;
 

@@ -145,7 +145,6 @@ class mainTiffViewer extends Component {
   updateFileList(files) {
     const pngFiles = files.filter(file => file.type === "image/png")
     for (var i = this.files.length; i < pngFiles.length; i++) {
-      const idx = pngFiles.length - 1
       this.files.push(pngFiles[i])
     }
   }

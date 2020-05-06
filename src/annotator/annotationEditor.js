@@ -4,9 +4,7 @@ import {
   redoAnnotation,
   undoAnnotation,
   addAnnotation,
-  getLastAnnotIdx,
   getLastUndoAnnot,
-  getLastUndoAnnotIdx,
   updateAnnotationLabel,
   updateAnnotClassLabel,
   getCanvas,
@@ -23,7 +21,7 @@ import {
   deleteUndoAnnotation,
 } from './annotationControl.js';
 
-import { annotApi, undoApi, redoApi } from './annotationStore.js';
+import { annotApi, undoApi } from './annotationStore.js';
 
 export const colors = [
   'rgb(200, 140, 140, 0.85)', //channel 1

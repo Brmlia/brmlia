@@ -9,14 +9,11 @@ import { settingsApi } from '../../mainSettings.js';
 
 import {
   fApi,
-  mainImgStyle,
   mainViewStyle,
-  mainCanvasStyle0,
   mainCanvasStyle1,
   mainCanvasStyle2,
   mainCanvasStyle3,
   mainCardStyle,
-  mainCardBodyStyle,
 } from './index.js';
 
 class mainViewer extends React.Component {

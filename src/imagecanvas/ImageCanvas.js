@@ -86,9 +86,8 @@ class ImageCanvas extends React.Component {
       this.files.push(newFile)
     }
     const pngFiles = files.filter(file => file.type === "image/png")
-    for (var i = this.files.length; i < pngFiles.length; i++) {
-      const idx = pngFiles.length - 1
-      this.files.push(pngFiles[i])
+    for (var j = this.files.length; j < pngFiles.length; j++) {
+      this.files.push(pngFiles[j])
     }
   }
 
