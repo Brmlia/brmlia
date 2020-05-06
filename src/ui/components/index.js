@@ -85,6 +85,9 @@ import {
   colors            as clrs,
   undo              as undoAnnot,
   redo              as redoAnnot,
+  delAnnot          as del,
+  updateLabel       as updLbl,
+  updateClassLabel  as updClsLbl,
 } from '../../annotator/annotationEditor.js'
 
 import {
@@ -185,6 +188,9 @@ export const drawFreeStyle      = drawFr
 export const colors             = clrs
 export const undo               = undoAnnot
 export const redo               = redoAnnot
+export const delAnnot           = del
+export const updateLabel        = updLbl
+export const updateClassLabel   = updClsLbl
 export const setCanvas          = setCvs
 export const AnnotationMenuApi  = aMenuApi
 export const Volume             = Vol

@@ -125,9 +125,9 @@ class FabricLayer extends React.Component {
   }
 
   displayMenu() {
-    if (canvas && canvas.getActiveObjects().length > 0) {
-      return <AnnotationMenu />;
-    }
+    // if (canvas && canvas.getActiveObjects().length > 0) {
+    //   return <AnnotationMenu />;
+    // }
   }
   selectClass1() {
     filterAnnotations('class1');
@@ -144,9 +144,9 @@ class FabricLayer extends React.Component {
         addToFabric(state.annotations, canvas);
       }
     });
-    AnnotationMenuApi.subscribe(state => {
-      this.forceUpdate();
-    });
+    // AnnotationMenuApi.subscribe(state => {
+    //   this.forceUpdate();
+    // });
 
     return (
       <div

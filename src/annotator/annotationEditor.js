@@ -11,6 +11,8 @@ import {
   updateAnnotClassLabel,
   getCanvas,
   getDisabledClasses,
+  getSelectedObjects,
+  getAnnotationByLabel,
 } from './index.js';
 
 import {
@@ -131,7 +133,12 @@ function constrain(o, canvas) {
   }
 }
 
-export function updateLabel(object, label) {
+export function updateLabel(obj, label) {
+  var object = obj
+  if (!object) {
+    object = getSelectedObjects();
+  }
+
   var oldLabel = '';
   if (object && label) {
     ungroup(object);
@@ -147,7 +154,8 @@ export function updateLabel(object, label) {
                 objs[i].text = label;
                 updateAnnotationLabel(oldLabel, label);
                 getCanvas().renderAll();
-                regroup(object);
+                const newGroup = regroup(object);
+                updateGroup(newGroup, label);
                 return;
               }
             }
@@ -160,7 +168,12 @@ export function updateLabel(object, label) {
   }
 }
 
-export function updateClassLabel(object, label) {
+export function updateClassLabel(obj, label) {
+  var object = obj
+  if (!object) {
+    object = getSelectedObjects();
+  }
+
   var oldLabel = '';
   if (object && label) {
     ungroup(object);
@@ -176,7 +189,8 @@ export function updateClassLabel(object, label) {
                 objs[i].text = label;
                 updateAnnotClassLabel(oldLabel, label);
                 getCanvas().renderAll();
-                regroup(object);
+                const newGroup = regroup(object);
+                updateGroup(newGroup, objs[1].text);
                 return;
               }
             }
@@ -314,7 +328,16 @@ function markVisible(obj, visible) {
   getCanvas().renderAll();
 }
 
-export function delAnnot(annot) {
+export function delAnnot(annotation) {
+  var annot = annotation
+  if (!annotation) {
+    const obj = getSelectedObjects();
+    if (obj && obj._objects.length > 0) {
+      const label = obj._objects[1].text
+      annot = {"id": getAnnotationByLabel(label).id}
+    }
+  }
+
   const annotations = annotApi.getState().annotations;
   const undoAnnotations = undoApi.getState().undoAnnotations;
   let idxToRemoveFromUndo = null;
@@ -325,9 +348,6 @@ export function delAnnot(annot) {
       removeFromCanvas(annotations[i]);
       idxToRemoveFromUndo = i;
     }
-  }
-
-  for (let i = 0; i < annotations.length; i++) {
     if (undoAnnotations[i].id === annot.id) {
       idxToRemoveFromAnnotations = i;
     }
