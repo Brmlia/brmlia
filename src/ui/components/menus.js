@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Navbar, Modal, ModalBody } from 'reactstrap';
+import { Input, Dropdown, DropdownMenu, Button, Navbar, Modal, ModalBody } from 'reactstrap';
 
 import { FileUpload } from '../../fileuploader/fileUploader.js';
 
@@ -13,8 +13,13 @@ class Menus extends React.Component {
     this.state = {
       labelModalOpen: false,
       classModalOpen: false,
+      imagePropModalOpen: false,
       labelText: '',
       classText: '',
+      imPropZText: '',
+      imPropChText: '',
+      imPropOrder: '1',
+      dropDownOpen: false,
     }
   }
 
@@ -66,7 +71,7 @@ class Menus extends React.Component {
   }
 
   handleChangeLabel(event) {
-    if (event && event.target && event.target.value) {
+    if (event && event.target && (event.target.value || (event.target.value === ''))) {
       var newStr = event.target.value;
       this.setState(prevState => ({
         ...prevState,
@@ -77,6 +82,10 @@ class Menus extends React.Component {
 
   changeLabel() {
     updateLabel(null, this.state.labelText)
+    this.setState(prevState => ({
+      ...prevState,
+      labelText: ''
+    }))
     this.toggleLabel()
   }
 
@@ -88,7 +97,7 @@ class Menus extends React.Component {
   }
 
   handleChangeClassLabel(event) {
-    if (event && event.target && event.target.value) {
+    if (event && event.target && (event.target.value || (event.target.value === ''))) {
       var newStr = event.target.value;
       this.setState(prevState => ({
         ...prevState,
@@ -100,6 +109,57 @@ class Menus extends React.Component {
   changeClassLabel() {
     updateClassLabel(null, this.state.classText)
     this.toggleClassLabel()
+    this.setState(prevState => ({
+      ...prevState,
+      classText: ''
+    }))
+  }
+
+  toggleImageProp() {
+    this.setState(prevState => ({
+      ...prevState,
+      imagePropModalOpen: !prevState.imagePropModalOpen
+    }))
+  }
+
+  handleChangeImagePropZ(event) {
+    if (event && event.target && (event.target.value || (event.target.value === ''))) {
+      var newStr = event.target.value;
+      this.setState(prevState => ({
+        ...prevState,
+        imPropZText: newStr
+      }))
+    }
+  }
+
+  handleChangeImagePropCh(event) {
+    if (event && event.target && (event.target.value || (event.target.value === ''))) {
+      var newStr = event.target.value;
+      this.setState(prevState => ({
+        ...prevState,
+        imPropChText: newStr
+      }))
+    }
+  }
+
+  changeImageProp() {
+    console.log("changeImageProp()", this.state.imPropOrder, this.state.imPropChText, this.state.imPropZText)
+    this.toggleImageProp()
+    this.setState(prevState => ({
+      ...prevState,
+      imPropChText: '',
+      imPropZText: '',
+    }))
+  }
+
+  handleChangeImageOption(event) {
+    if (event && event.target && (event.target.value || (event.target.value === ''))) {
+      const value = event.target.value
+        this.setState(prevState => ({
+          ...prevState,
+          imPropOrder: value
+        }))
+      }
   }
 
   displayEditAnnotationLabel () {
@@ -134,6 +194,61 @@ class Menus extends React.Component {
           >
             {' '}
             Change Class Label{' '}
+          </Button>
+        </ModalBody>
+      </Modal>
+    )
+
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      ...prevState,
+      dropDownOpen: !prevState.dropDownOpen
+    }))
+  }
+
+  displayEditImageProperties () {
+    return (
+      <Modal isOpen={this.state.imagePropModalOpen} toggle={() => this.toggleImageProp()} className="edit-image-properties-modal">
+        <ModalBody>
+          Order:
+          <select
+            name="im-prop-select-menu"
+            value={this.state.imPropOrder}
+            onChange={(e) => this.handleChangeImageOption(e)}
+          >
+            <option value="1"> xycz (default) </option>
+            <option value="2"> xyzc </option>
+          </select>
+          <br />
+          <br />
+          <label for="im-prop-ch-text"> Channels (c): </label>
+          <br />
+          <input
+            id="im-prop-ch-text"
+            style={{height: "20px"}}
+            type="text"
+            value={this.state.imPropChText}
+            onChange={(e) => this.handleChangeImagePropCh(e)}
+          />
+          <br/>
+          <br/>
+          <label for="im-prop-z-text"> Slices (z): </label>
+          <br/>
+          <input
+            id="im-prop-z-text"
+            style={{height: "20px"}}
+            type="text"
+            value={this.state.imPropZText}
+            onChange={(e) => this.handleChangeImagePropZ(e)}
+          />
+          <br/>
+          <br/>
+          <Button onClick={() => this.changeImageProp()}
+          >
+            {' '}
+            OK {' '}
           </Button>
         </ModalBody>
       </Modal>
@@ -184,8 +299,17 @@ class Menus extends React.Component {
           Edit Class
         </Button>{' '}
         &nbsp;
+        <Button
+          color="primary"
+          className="edit-image-properties-btn"
+          onClick={e => this.toggleImageProp()}
+        >
+          Edit Image Properties
+        </Button>{' '}
+        &nbsp;
         {this.displayEditAnnotationLabel()}
         {this.displayEditAnnotationClass()}
+        {this.displayEditImageProperties()}
       </div>
     );
   }
