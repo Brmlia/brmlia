@@ -275,7 +275,7 @@ class mainTiffViewer extends Component {
     });
 
     let width = window.innerWidth * 1.0;
-    let height = window.innerHeight * 1.0;
+    let height = window.innerHeight * 0.5;
     // let width = "100%";
     // let height = "100%";
     return (
