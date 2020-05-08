@@ -19,6 +19,8 @@ import {
   getVolume          as getVol,
   updateSliceIndex   as updSliceIdx,
   updateType         as updType,
+  updateImageProps   as updImProps,
+  getImageProps      as getImProps,
 } from '../../datacube/volumeControl.js';
 
 import {
@@ -153,6 +155,8 @@ export const generateSampleData      = genSmpDat
 export const shrinkTiff              = shrTiff
 export const updateSliceIndex        = updSliceIdx
 export const updateType              = updType
+export const updateImageProps        = updImProps
+export const getImageProps           = getImProps
 export const buttonGroupStyle        = btnGrpStyle
 export const cardStyle               = cdStyle
 export const thumbStyle              = thbStyle

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Input, Dropdown, DropdownMenu, Button, Navbar, Modal, ModalBody } from 'reactstrap';
+import { Alert, Button, Navbar, Modal, ModalBody } from 'reactstrap';
 
 import { FileUpload } from '../../fileuploader/fileUploader.js';
 
-import { exportJson, modes, setMode, undo, redo, delAnnot, updateLabel, updateClassLabel } from './index.js';
+import { exportJson, modes, setMode, undo, redo, delAnnot, updateLabel, updateClassLabel, updateImageProps } from './index.js';
 
 class Menus extends React.Component {
 
@@ -19,7 +19,7 @@ class Menus extends React.Component {
       imPropZText: '',
       imPropChText: '',
       imPropOrder: '1',
-      dropDownOpen: false,
+      alert: false,
     }
   }
 
@@ -143,13 +143,22 @@ class Menus extends React.Component {
   }
 
   changeImageProp() {
-    console.log("changeImageProp()", this.state.imPropOrder, this.state.imPropChText, this.state.imPropZText)
-    this.toggleImageProp()
-    this.setState(prevState => ({
-      ...prevState,
-      imPropChText: '',
-      imPropZText: '',
-    }))
+    const rc = updateImageProps(this.state.imPropOrder, this.state.imPropChText, this.state.imPropZText)
+    if (rc === 0) {
+      this.toggleImageProp()
+      this.setState(prevState => ({
+        ...prevState,
+        imPropChText: '',
+        imPropZText: '',
+        alert: false,
+      }))
+    }
+    else {
+      this.setState(prevState => ({
+        ...prevState,
+        alert: true,
+      }))
+    }
   }
 
   handleChangeImageOption(event) {
@@ -160,6 +169,14 @@ class Menus extends React.Component {
           imPropOrder: value
         }))
       }
+  }
+
+  displayAlert() {
+    return (
+      <Alert color="danger" isOpen={this.state.alert}>
+        There are no images opened
+      </Alert>
+    )
   }
 
   displayEditAnnotationLabel () {
@@ -201,17 +218,11 @@ class Menus extends React.Component {
 
   }
 
-  toggle() {
-    this.setState(prevState => ({
-      ...prevState,
-      dropDownOpen: !prevState.dropDownOpen
-    }))
-  }
-
   displayEditImageProperties () {
     return (
       <Modal isOpen={this.state.imagePropModalOpen} toggle={() => this.toggleImageProp()} className="edit-image-properties-modal">
         <ModalBody>
+          {this.state.alert && this.displayAlert()}
           Order:
           <select
             name="im-prop-select-menu"
@@ -227,7 +238,7 @@ class Menus extends React.Component {
           <br />
           <input
             id="im-prop-ch-text"
-            style={{height: "20px"}}
+            style={{boxSizing:"unset"}}
             type="text"
             value={this.state.imPropChText}
             onChange={(e) => this.handleChangeImagePropCh(e)}
@@ -238,7 +249,7 @@ class Menus extends React.Component {
           <br/>
           <input
             id="im-prop-z-text"
-            style={{height: "20px"}}
+            style={{boxSizing:"unset"}}
             type="text"
             value={this.state.imPropZText}
             onChange={(e) => this.handleChangeImagePropZ(e)}

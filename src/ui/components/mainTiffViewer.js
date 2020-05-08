@@ -4,12 +4,14 @@ import Slider from './slider.js';
 
 import {
   fApi,
+  volApi,
   updateChannelSlice,
   initializeVolume,
   getVolume,
   updateType,
   parseMetadata,
   filesNeedUpdate,
+  getImageProps,
 } from './index.js';
 
 class mainTiffViewer extends Component {
@@ -21,6 +23,11 @@ class mainTiffViewer extends Component {
       axes: ['x', 'y', 'z'],
       cntxt: null,
     };
+    this.customSettings = {
+      order: "",
+      channels: 0,
+      slices: 0,
+    }
     this.fileLength      = 0;
     this.length          = 0;
     this.sliceIdx        = 0;
@@ -224,6 +231,11 @@ class mainTiffViewer extends Component {
     this.forceUpdate();
   }
 
+  updateCustomSettings() {
+    this.customSettings = getImageProps()
+    console.log("state: ", this.customSettings)
+  }
+
   sliderValueSlice(value) {
     this.channelSliceIdx = parseInt(value)
     this.sliceIdx = this.computeSlice(this.channelSliceIdx)
@@ -273,6 +285,9 @@ class mainTiffViewer extends Component {
     fApi.subscribe(state => {
       this.updateForFile(state);
     });
+    volApi.subscribe(state => {
+      this.updateCustomSettings();
+    })
 
     let width = window.innerWidth * 1.0;
     let height = window.innerHeight * 0.5;

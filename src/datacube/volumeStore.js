@@ -35,7 +35,10 @@ const initState = {
     0,
     0,
   ],
-  type: 1
+  type: 1,
+  order: 0,
+  channels: 0,
+  slices: 0,
 }
 
 export const [useVolumeStore, volApi] = create(set => ({

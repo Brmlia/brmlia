@@ -1,4 +1,5 @@
 import {volApi} from './volumeStore.js'
+import {fileApi} from '../fileuploader/fileStore.js'
 
 export function getVolume(index) {
   console.debug("getVolume - index: %d, all volumes: {", index, volApi.getState().volumes, "}")
@@ -75,4 +76,30 @@ export function getType() {
   return volApi.getState().type
 }
 
+export function updateImageProps(order, channels, slices) {
+  const valid = validateProps(channels, slices)
 
+  if (valid === 0) {
+    console.log("updateImageProps: ", order, channels, slices)
+    volApi.setState(prevState => ({
+      ...prevState,
+      order: order,
+      channels: channels,
+      slices: slices
+    }))
+    getImageProps()
+  }
+  return valid
+}
+
+function validateProps(channels, slices) {
+  if (fileApi.getState().file.length === 0) {
+    return 1
+  }
+  return 0
+}
+
+export function getImageProps() {
+  const {order, channels, slices} = volApi.getState()
+  return {order, channels, slices}
+}
