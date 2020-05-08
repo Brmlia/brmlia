@@ -139,27 +139,24 @@ export function updateLabel(obj, label) {
 
   var oldLabel = '';
   if (object && label) {
-    ungroup(object);
-
-    if (object) {
-      var objs = object._objects;
-      if (objs && objs.length > 0) {
-        for (var i = 0; objs.length; i++) {
-          if (objs[i]) {
-            if (i === 1) {
-              if (objs[i].text) {
-                oldLabel = objs[i].text;
-                objs[i].text = label;
-                updateAnnotationLabel(oldLabel, label);
-                getCanvas().renderAll();
-                const newGroup = regroup(object);
-                updateGroup(newGroup, label);
-                return;
-              }
+    var objs = object._objects;
+    if (objs && objs.length > 0) {
+      ungroup(object);
+      for (var i = 0; objs.length; i++) {
+        if (objs[i]) {
+          if (i === 1) {
+            if (objs[i].text) {
+              oldLabel = objs[i].text;
+              objs[i].text = label;
+              updateAnnotationLabel(oldLabel, label);
+              getCanvas().renderAll();
+              const newGroup = regroup(object);
+              updateGroup(newGroup, label);
+              return;
             }
-          } else {
-            return;
           }
+        } else {
+          return;
         }
       }
     }
@@ -174,27 +171,24 @@ export function updateClassLabel(obj, label) {
 
   var oldLabel = '';
   if (object && label) {
-    ungroup(object);
-
-    if (object) {
-      var objs = object._objects;
-      if (objs && objs.length > 0) {
-        for (var i = 0; objs.length; i++) {
-          if (objs[i]) {
-            if (i === 2) {
-              if (objs[i].text) {
-                oldLabel = objs[i].text;
-                objs[i].text = label;
-                updateAnnotClassLabel(oldLabel, label);
-                getCanvas().renderAll();
-                const newGroup = regroup(object);
-                updateGroup(newGroup, objs[1].text);
-                return;
-              }
+    var objs = object._objects;
+    if (objs && objs.length > 0) {
+      ungroup(object);
+      for (var i = 0; objs.length; i++) {
+        if (objs[i]) {
+          if (i === 2) {
+            if (objs[i].text) {
+              oldLabel = objs[i].text;
+              objs[i].text = label;
+              updateAnnotClassLabel(oldLabel, label);
+              getCanvas().renderAll();
+              const newGroup = regroup(object);
+              updateGroup(newGroup, objs[1].text);
+              return;
             }
-          } else {
-            return;
           }
+        } else {
+          return;
         }
       }
     }
