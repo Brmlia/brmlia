@@ -103,8 +103,9 @@ function validateProps(channels, slices) {
 }
 
 export function getImageProps() {
-  const {order, channels, slices} = volApi.getState()
-  return {order, channels, slices}
+  const {order, channels, slices, stackSize} = volApi.getState()
+  console.log("this.length getImageProps", order, channels, slices, stackSize)
+  return {order, channels, slices, stackSize}
 }
 
 export function setStackSize(stackSize) {

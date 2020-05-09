@@ -24,7 +24,7 @@ class mainTiffViewer extends Component {
       cntxt: null,
     };
     this.customSettings = {
-      order: "",
+      order: "0",
       channels: 0,
       slices: 0,
     }
@@ -43,6 +43,7 @@ class mainTiffViewer extends Component {
     this.type = 1;
     this.typeIsDefault = true;
     this.files = props.files;
+    this.order = "0";
   }
 
   componentDidMount() {
@@ -105,7 +106,7 @@ class mainTiffViewer extends Component {
     this.cntxt.drawImage(image, 0, 0)
   }
 
-  setSlider(width, height, length, pageLength) {
+  setSlider(length, pageLength) {
     // if (this.props.axis === "0") this.length = width
     // if (this.props.axis === "1") this.length = height
     if (this.props.axis === "2") {
@@ -170,12 +171,14 @@ class mainTiffViewer extends Component {
           const fileLength = files.length
           const pageLength = file.pages.length
 
-          this.setType(files, file.metadata)
-          this.setSlider(width, height, fileLength, pageLength)
-          this.setVolume(files, width, height, pageLength * fileLength)
-          this.updateSlice()
-          this.fileLength = fileLength
-          this.forceUpdate();
+          if (file && width && height && fileLength && pageLength) {
+            this.setType(files, file.metadata)
+            this.setSlider(fileLength, pageLength)
+            this.setVolume(files, width, height, pageLength * fileLength)
+            this.updateSlice()
+            this.fileLength = fileLength
+            this.forceUpdate();
+          }
         }
         else if (
           this.isValidPNGFile(state.file, idx)
@@ -183,7 +186,7 @@ class mainTiffViewer extends Component {
           this.updateFileList(state.file)
           this.drawPNG(state.file[idx].image)
           this.type = 5
-          this.setSlider(0, 0, files.length, 0)
+          this.setSlider(files.length, 0)
           // this.fileLength = files.length
           this.forceUpdate()
         }
@@ -192,24 +195,34 @@ class mainTiffViewer extends Component {
   }
 
   computeSlice(value) {
-    // select every third
-    if (this.type === 1) {
+    // xycz
+    if (this.order === "1") {
       return ((value * 3) + (this.channel-1) )
     }
-    // select slice in [0-length) for channel 1, [length-2*length) for channel 2, [2*length-3*length) for channel 3
-    else if (this.type === 2) {
+    // xyzc
+    else if (this.order === "2") {
       return ((value + ((this.channel-1) * this.length)))
     }
-    // select every third
-    else if (this.type === 3) {
-      return ((value * 3) + (this.channel-1) )
-    }
-    // select every third
-    else if (this.type === 4) {
-      return ((value * 3) + (this.channel-1) )
-    }
-    else if (this.type === 5) {
-      return value
+    else {
+      // select every third
+      if (this.type === 1) {
+        return ((value * 3) + (this.channel-1) )
+      }
+      // select slice in [0-length) for channel 1, [length-2*length) for channel 2, [2*length-3*length) for channel 3
+      else if (this.type === 2) {
+        return ((value + ((this.channel-1) * this.length)))
+      }
+      // select every third
+      else if (this.type === 3) {
+        return ((value * 3) + (this.channel-1) )
+      }
+      // select every third
+      else if (this.type === 4) {
+        return ((value * 3) + (this.channel-1) )
+      }
+      else if (this.type === 5) {
+        return value
+      }
     }
   }
 
@@ -233,7 +246,13 @@ class mainTiffViewer extends Component {
 
   updateCustomSettings() {
     this.customSettings = getImageProps()
-    console.log("state: ", this.customSettings)
+
+    if (this.customSettings.order !== 0) {
+      this.channel = this.customSettings.channels
+      this.order = this.customSettings.order
+      this.length = this.customSettings.slices
+      this.forceUpdate()
+    }
   }
 
   sliderValueSlice(value) {
@@ -261,7 +280,7 @@ class mainTiffViewer extends Component {
               label=""
               width="40%"
               min="1"
-              max="3"
+              max={this.customSettings.channels}
               step="1"
               initial="0"
               multiplier="1"

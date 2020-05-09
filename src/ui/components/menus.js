@@ -145,7 +145,7 @@ class Menus extends React.Component {
   }
 
   changeImageProp() {
-    const rc = updateImageProps(this.state.imPropOrder, this.state.imPropChText, this.state.imPropZText)
+    const rc = updateImageProps(this.state.imPropOrder, parseInt(this.state.imPropChText), parseInt(this.state.imPropZText))
     if (rc === 0) {
       this.toggleImageProp()
       this.setState(prevState => ({
