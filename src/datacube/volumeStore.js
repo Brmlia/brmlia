@@ -2,9 +2,8 @@ import create from 'zustand';
 
 // 0, 1, 2: axes
 // 3: main
-// 4, 5, 6: channels
-// 7: test
-// possible to share the same volumea cross views?
+// 4 - 13: channels
+// 14: test
 const initState = {
 
   volumes: [
@@ -18,6 +17,14 @@ const initState = {
     null,
   ],
   sliceIndices: [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
     0,
     0,
     0,

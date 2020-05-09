@@ -71,6 +71,7 @@ class ImageCanvas extends React.Component {
     this.setState(prevState => ({
       cntxt: cntxt
     }));
+    this.updateForFile(fApi.getState());
   }
 
   updateFileList(files) {
@@ -227,6 +228,7 @@ class ImageCanvas extends React.Component {
       this.order = this.customSettings.order
       this.channelLength = this.customSettings.channels
       this.sliceLength = this.customSettings.slices
+      this.length = this.sliceLength
       this.channel = 1
       this.slice = 0
       this.forceUpdate()
@@ -234,20 +236,30 @@ class ImageCanvas extends React.Component {
   }
 
   computeSlice(value) {
-    if (this.type === 1) {
-      return ((value * 3) + (parseInt(this.props.channel)-1) )
+    // xycz
+    if (this.order === "1") {
+      return ((value * this.channelLength) + (this.props.channel-1) )
     }
-    else if (this.type === 2) {
-      return ((value + ((parseInt(this.props.channel)-1) * this.length)))
+    // xyzc
+    else if (this.order === "2") {
+      return ((value + ((this.props.channel-1) * this.sliceLength)))
     }
-    else if (this.type === 3) {
-      return ((value * 3) + (parseInt(this.props.channel)-1) )
-    }
-    else if (this.type === 4) {
-      return ((value * 3) + (parseInt(this.props.channel)-1) )
-    }
-    else if (this.type === 5) {
-      return value
+    else {
+      if (this.type === 1) {
+        return ((value * 3) + (parseInt(this.props.channel)-1) )
+      }
+      else if (this.type === 2) {
+        return ((value + ((parseInt(this.props.channel)-1) * this.length)))
+      }
+      else if (this.type === 3) {
+        return ((value * 3) + (parseInt(this.props.channel)-1) )
+      }
+      else if (this.type === 4) {
+        return ((value * 3) + (parseInt(this.props.channel)-1) )
+      }
+      else if (this.type === 5) {
+        return value
+      }
     }
   }
 

@@ -128,6 +128,174 @@ const initState = {
       name: '',
       type: '',
     },
+    {
+      uniforms: {
+        brightness: {
+          value: '0.0',
+        },
+        contrast: {
+          value: '0.0',
+        },
+        whitepoint: {
+          value: '255.0',
+        },
+        blackpoint: {
+          value: '0.0',
+        },
+        opacity: {
+          value: '0.0',
+        },
+        color: {
+          value: '',
+        },
+        image: {
+          value: '',
+        },
+      },
+      texture: null,
+      name: '',
+      type: '',
+    },
+    {
+      uniforms: {
+        brightness: {
+          value: '0.0',
+        },
+        contrast: {
+          value: '0.0',
+        },
+        whitepoint: {
+          value: '255.0',
+        },
+        blackpoint: {
+          value: '0.0',
+        },
+        opacity: {
+          value: '0.0',
+        },
+        color: {
+          value: '',
+        },
+        image: {
+          value: '',
+        },
+      },
+      texture: null,
+      name: '',
+      type: '',
+    },
+    {
+      uniforms: {
+        brightness: {
+          value: '0.0',
+        },
+        contrast: {
+          value: '0.0',
+        },
+        whitepoint: {
+          value: '235.0',
+        },
+        blackpoint: {
+          value: '16.0',
+        },
+        opacity: {
+          value: '0.0',
+        },
+        color: {
+          value: '',
+        },
+        image: {
+          value: '',
+        },
+      },
+      texture: null,
+      name: '',
+      type: '',
+    },
+    {
+      uniforms: {
+        brightness: {
+          value: '0.0',
+        },
+        contrast: {
+          value: '0.0',
+        },
+        whitepoint: {
+          value: '235.0',
+        },
+        blackpoint: {
+          value: '16.0',
+        },
+        opacity: {
+          value: '0.0',
+        },
+        color: {
+          value: '',
+        },
+        image: {
+          value: '',
+        },
+      },
+      texture: null,
+      name: '',
+      type: '',
+    },
+    {
+      uniforms: {
+        brightness: {
+          value: '0.0',
+        },
+        contrast: {
+          value: '0.0',
+        },
+        whitepoint: {
+          value: '235.0',
+        },
+        blackpoint: {
+          value: '16.0',
+        },
+        opacity: {
+          value: '0.0',
+        },
+        color: {
+          value: '',
+        },
+        image: {
+          value: '',
+        },
+      },
+      texture: null,
+      name: '',
+      type: '',
+    },
+    {
+      uniforms: {
+        brightness: {
+          value: '0.0',
+        },
+        contrast: {
+          value: '0.0',
+        },
+        whitepoint: {
+          value: '255.0',
+        },
+        blackpoint: {
+          value: '0.0',
+        },
+        opacity: {
+          value: '0.0',
+        },
+        color: {
+          value: '',
+        },
+        image: {
+          value: '',
+        },
+      },
+      texture: null,
+      name: '',
+      type: '',
+    },
   ],
 };
 

@@ -38,11 +38,13 @@ class Channel extends React.Component {
   };
 
   sliderValueSlice(value) {
+    this.channelSliceIdx = value
     updateSliceIndex(parseInt(this.props.ch) + 3, value);
   }
 
   updateForSliceLen(state) {
-    const len = state.lengths[parseInt(this.props.ch) + 3];
+    // const len = state.lengths[parseInt(this.props.ch) + 3];
+    const len = state.slices
     if (this.channelSliceLen !== len) {
       this.channelSliceLen = len;
       this.forceUpdate();
