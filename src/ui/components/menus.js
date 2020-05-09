@@ -189,6 +189,20 @@ class Menus extends React.Component {
         </Alert>
       )
     }
+    else if (this.state.alertType === 3) {
+      return (
+        <Alert color="danger" isOpen={this.state.alert}>
+          channels must be between 1 and 10
+        </Alert>
+      )
+    }
+    else if (this.state.alertType === 4) {
+      return (
+        <Alert color="danger" isOpen={this.state.alert}>
+          slices must be greater than 0
+        </Alert>
+      )
+    }
   }
 
   displayEditAnnotationLabel () {
@@ -246,7 +260,7 @@ class Menus extends React.Component {
           </select>
           <br />
           <br />
-          <label for="im-prop-ch-text"> Channels (c): </label>
+          <label for="im-prop-ch-text"> Channels (c): 1-10</label>
           <br />
           <input
             id="im-prop-ch-text"

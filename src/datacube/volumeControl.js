@@ -99,6 +99,12 @@ function validateProps(channels, slices) {
   else if (volApi.getState().stackSize !== (channels * slices)) {
     return 2
   }
+  else if ((channels <= 0) || (channels > 10)) {
+    return 3
+  }
+  else if ((slices <= 0)) {
+    return 4
+  }
   return 0
 }
 

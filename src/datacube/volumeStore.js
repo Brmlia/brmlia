@@ -37,7 +37,7 @@ const initState = {
   ],
   type: 1,
   order: 0,
-  channels: 0,
+  channels: 3,
   slices: 0,
   stackSize: 0,
 }

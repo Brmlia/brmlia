@@ -7,6 +7,7 @@ import {
   channelViewStyle,
   channelCardStyle,
   channelCardBodyStyle,
+  volApi,
 } from './index.js';
 
 class ChannelViewer extends React.Component {
@@ -63,7 +64,17 @@ class ChannelViewer extends React.Component {
     return contents
   }
 
+  updateCustomSettings(channels) {
+    this.setState(prevState => ({
+      ...prevState,
+      channels: channels,
+    }))
+  }
+
   render() {
+    volApi.subscribe(state => {
+      this.updateCustomSettings(state.channels);
+    })
     return (
       <div className="annotations-channel">
         <Nav tabs style={{color: "white"}}>

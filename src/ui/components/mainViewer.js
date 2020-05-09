@@ -25,7 +25,7 @@ class mainViewer extends React.Component {
         alt="main-canvas"
         width={window.innerWidth * 0.6}
         height="100%"
-        channel="4"
+        channel="0"
         files={this.files}
       />
     );

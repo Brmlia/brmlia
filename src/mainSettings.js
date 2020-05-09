@@ -11,6 +11,27 @@ export const initState = {
     {
       selected: false,
     },
+    {
+      selected: false,
+    },
+    {
+      selected: false,
+    },
+    {
+      selected: false,
+    },
+    {
+      selected: false,
+    },
+    {
+      selected: false,
+    },
+    {
+      selected: false,
+    },
+    {
+      selected: false,
+    },
   ],
   lastSelected: 1,
   dev: 0,

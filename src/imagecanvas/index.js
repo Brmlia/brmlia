@@ -26,6 +26,7 @@ import {
   getVolume  as getVol,
   updateSliceLength  as updSliceLen,
   updateType         as updType,
+  getImageProps      as getImProps,
 } from '../datacube/volumeControl.js';
 
 import {
@@ -57,6 +58,7 @@ export const saveVolume            = saveVol
 export const getVolume             = getVol
 export const updateSliceLength     = updSliceLen
 export const updateType            = updType
+export const getImageProps         = getImProps
 export const generateTexture       = genText
 export const getImageData          = getImgDt
 export const initializeVolume      = initVol

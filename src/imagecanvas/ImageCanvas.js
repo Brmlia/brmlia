@@ -17,6 +17,7 @@ import {
   updateSliceLength,
   updateType,
   parseMetadata,
+  getImageProps,
 } from './index.js';
 
 class ImageCanvas extends React.Component {
@@ -26,6 +27,11 @@ class ImageCanvas extends React.Component {
     this.canvasRef = React.createRef();
     this.state = {
       axes: ['x', 'y', 'z'],
+    }
+    this.customSettings = {
+      order: "0",
+      channels: 0,
+      slices: 0,
     }
     this.init()
   }
@@ -196,6 +202,7 @@ class ImageCanvas extends React.Component {
   }
   updateForSlice(state) {
     if (state) {
+      this.updateCustomSettings()
       const sliceIdx = state.sliceIndices[parseInt(this.props.channel)+3]
       if (this.sliceIdx !== sliceIdx) {
         this.computedSlicedIdx = this.computeSlice(parseInt(sliceIdx))
@@ -210,6 +217,19 @@ class ImageCanvas extends React.Component {
         this.forceUpdate();
         this.sliceIdx = sliceIdx
       }
+    }
+  }
+
+  updateCustomSettings() {
+    this.customSettings = getImageProps()
+
+    if (this.customSettings.order !== 0) {
+      this.order = this.customSettings.order
+      this.channelLength = this.customSettings.channels
+      this.sliceLength = this.customSettings.slices
+      this.channel = 1
+      this.slice = 0
+      this.forceUpdate()
     }
   }
 
