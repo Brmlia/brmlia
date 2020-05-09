@@ -29,11 +29,12 @@ class mainTiffViewer extends Component {
       slices: 0,
     }
     this.fileLength      = 0;
-    this.length          = 0;
+    this.sliceLength     = 0;
+    this.channelLength   = 0;
     this.sliceIdx        = 0;
+    this.slice           = 0;
     this.axisIdx         = props.axis;
     this.channel         = 1;
-    this.channelSliceIdx = 0;
 
     // Case 1: (60 z planes, 3 channels, 1)
     // Case 2: (60 z planes, 1 channel, 3)
@@ -61,7 +62,7 @@ class mainTiffViewer extends Component {
         const pageLength = file.pages.length
 
         this.setType(this.files, file.metadata)
-        this.setSlider(width, height, fileLength, pageLength)
+        this.setSlider(fileLength, pageLength)
         this.setVolume(this.files, width, height, pageLength * fileLength)
         this.updateSlice()
         this.fileLength = fileLength
@@ -73,7 +74,7 @@ class mainTiffViewer extends Component {
         this.updateFileList(this.files)
         this.drawPNG(this.files[idx].image)
         this.type = 5
-        this.setSlider(0, 0, this.files.length, 0)
+        this.setSlider(this.files.length, 0)
         // this.fileLength = files.length
         this.forceUpdate()
       }
@@ -111,19 +112,24 @@ class mainTiffViewer extends Component {
     // if (this.props.axis === "1") this.length = height
     if (this.props.axis === "2") {
       if (this.type === 1) {
-        this.length = pageLength / 3
+        this.sliceLength = pageLength / 3
+        this.channelLength = 3
       }
       else if (this.type === 2) {
-        this.length = pageLength
+        this.sliceLength = pageLength
+        this.channelLength = 1
       }
       else if (this.type === 3) {
-        this.length = length
+        this.sliceLength = length
+        this.channelLength = 3
       }
       else if (this.type === 4) {
-        this.length = length / 3
+        this.sliceLength = length / 3
+        this.channelLength = 1
       }
       else if (this.type === 5) {
-        this.length = length
+        this.sliceLength = length
+        this.channelLength = 1
       }
     }
   }
@@ -197,11 +203,11 @@ class mainTiffViewer extends Component {
   computeSlice(value) {
     // xycz
     if (this.order === "1") {
-      return ((value * 3) + (this.channel-1) )
+      return ((value * this.channelLength) + (this.channel-1) )
     }
     // xyzc
     else if (this.order === "2") {
-      return ((value + ((this.channel-1) * this.length)))
+      return ((value + ((this.channel-1) * this.sliceLength)))
     }
     else {
       // select every third
@@ -210,7 +216,7 @@ class mainTiffViewer extends Component {
       }
       // select slice in [0-length) for channel 1, [length-2*length) for channel 2, [2*length-3*length) for channel 3
       else if (this.type === 2) {
-        return ((value + ((this.channel-1) * this.length)))
+        return ((value + ((this.channel-1) * this.sliceLength)))
       }
       // select every third
       else if (this.type === 3) {
@@ -248,27 +254,48 @@ class mainTiffViewer extends Component {
     this.customSettings = getImageProps()
 
     if (this.customSettings.order !== 0) {
-      this.channel = this.customSettings.channels
       this.order = this.customSettings.order
-      this.length = this.customSettings.slices
+      this.channelLength = this.customSettings.channels
+      this.sliceLength = this.customSettings.slices
+      this.channel = 1
+      this.slice = 0
       this.forceUpdate()
     }
   }
 
   sliderValueSlice(value) {
-    this.channelSliceIdx = parseInt(value)
-    this.sliceIdx = this.computeSlice(this.channelSliceIdx)
+    this.slice = parseInt(value)
+    this.sliceIdx = this.computeSlice(this.slice)
     this.updateSlice()
   }
 
   sliderValueChannel(value) {
     this.channel = parseInt(value)
-    this.sliceIdx = this.computeSlice(this.channelSliceIdx)
+    this.sliceIdx = this.computeSlice(this.slice)
     this.updateSlice()
   }
 
   clamp(val, min, max) {
     return Math.min(Math.max(val, min), max);
+  }
+
+  drawSliceSlider() {
+    return (
+      <div className="slice-slider-container">
+        <Slider
+          label=""
+          width="40%"
+          min="0"
+          max={Math.max(this.sliceLength - 1, 0)}
+          step="1"
+          initial="0"
+          multiplier="1"
+          raw="1"
+          sliderValue={this.sliderValueSlice.bind(this)}
+        />
+        <div> Slice: {this.slice} </div>
+      </div>
+    )
   }
 
   drawChannelSlider() {
@@ -280,9 +307,9 @@ class mainTiffViewer extends Component {
               label=""
               width="40%"
               min="1"
-              max={this.customSettings.channels}
+              max={this.channelLength}
               step="1"
-              initial="0"
+              initial="1"
               multiplier="1"
               raw="1"
               sliderValue={this.sliderValueChannel.bind(this)}
@@ -321,20 +348,7 @@ class mainTiffViewer extends Component {
           height={height}
         ></canvas>
         <ProgressBar />
-        <div className="slice-slider-container">
-          <Slider
-            label=""
-            width="40%"
-            min="0"
-            max={Math.max(this.length - 1, 0)}
-            step="1"
-            initial="0"
-            multiplier="1"
-            raw="1"
-            sliderValue={this.sliderValueSlice.bind(this)}
-          />
-          <div> Slice: {this.channelSliceIdx} </div>
-        </div>
+        {this.drawSliceSlider()}
         {this.drawChannelSlider()}
       </div>
     );
