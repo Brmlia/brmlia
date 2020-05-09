@@ -45,6 +45,10 @@ import {
   createTextureFromTiff as createTFrTiff,
 } from '../imagecanvas/ImageStore.js';
 
+import {
+  setStackSize as setStckSz,
+} from '../datacube/volumeControl.js';
+
 export const fileApi               = fApi
 export const initPng               = iPng
 export const addPng                = aPng
@@ -68,3 +72,4 @@ export const annotApi              = aApi
 export const addAnnotation         = addAnnot
 export const createTexture         = createT
 export const createTextureFromTiff = createTFrTiff
+export const setStackSize          = setStckSz

@@ -1,3 +1,5 @@
+import { setStackSize } from './index.js'
+
 function determineType(fileLength, pageLength, channelLength) {
   var tType = 0
 
@@ -41,6 +43,7 @@ export function parseMetadata(file, metadata) {
   // Case 4: (1 z planes, 1 channel, 180)
   //   pages = 1
   //   n/a
+  setStackSize(fileLength * pageLength)
 
   return determineType(fileLength, pageLength, channelLength)
 }

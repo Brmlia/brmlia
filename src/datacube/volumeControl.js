@@ -96,10 +96,21 @@ function validateProps(channels, slices) {
   if (fileApi.getState().file.length === 0) {
     return 1
   }
+  else if (volApi.getState().stackSize !== (channels * slices)) {
+    return 2
+  }
   return 0
 }
 
 export function getImageProps() {
   const {order, channels, slices} = volApi.getState()
   return {order, channels, slices}
+}
+
+export function setStackSize(stackSize) {
+  volApi.setState(prevState => ({
+    ...prevState,
+    stackSize: stackSize
+  }))
+  console.log("stacksize: ", stackSize)
 }

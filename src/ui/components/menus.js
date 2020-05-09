@@ -20,6 +20,7 @@ class Menus extends React.Component {
       imPropChText: '',
       imPropOrder: '1',
       alert: false,
+      alertType: 0,
     }
   }
 
@@ -118,7 +119,8 @@ class Menus extends React.Component {
   toggleImageProp() {
     this.setState(prevState => ({
       ...prevState,
-      imagePropModalOpen: !prevState.imagePropModalOpen
+      imagePropModalOpen: !prevState.imagePropModalOpen,
+      alert: false,
     }))
   }
 
@@ -157,6 +159,7 @@ class Menus extends React.Component {
       this.setState(prevState => ({
         ...prevState,
         alert: true,
+        alertType: rc,
       }))
     }
   }
@@ -172,11 +175,20 @@ class Menus extends React.Component {
   }
 
   displayAlert() {
-    return (
-      <Alert color="danger" isOpen={this.state.alert}>
-        There are no images opened
-      </Alert>
-    )
+    if (this.state.alertType === 1) {
+      return (
+        <Alert color="danger" isOpen={this.state.alert}>
+          There are no images opened
+        </Alert>
+      )
+    }
+    else if (this.state.alertType === 2) {
+      return (
+        <Alert color="danger" isOpen={this.state.alert}>
+          channels x slices != stack size
+        </Alert>
+      )
+    }
   }
 
   displayEditAnnotationLabel () {
