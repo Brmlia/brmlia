@@ -44,7 +44,7 @@ class Channel extends React.Component {
 
   updateForSliceLen(state) {
     // const len = state.lengths[parseInt(this.props.ch) + 3];
-    const len = state.slices
+    const len = state.slices === 0 ? state.lengths[parseInt(this.props.ch) + 3] : state.slices
     if (this.channelSliceLen !== len) {
       this.channelSliceLen = len;
       this.forceUpdate();
