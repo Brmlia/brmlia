@@ -42,20 +42,22 @@ export const [useMainSettings, settingsApi] = create(set => ({
 }));
 
 export function updateChannelSel(channel) {
-  settingsApi.setState(prevState => {
-    const channels = prevState.channels.map((ch, j) => {
-      if (j === channel - 1) {
-        var newChannel = ch;
-        newChannel.selected = !prevState.channels[j].selected;
-        return newChannel;
-      } else {
-        return ch;
-      }
+  if (getSelectedCount() < 3) {
+    settingsApi.setState(prevState => {
+      const channels = prevState.channels.map((ch, j) => {
+        if (j === channel - 1) {
+          var newChannel = ch;
+          newChannel.selected = !prevState.channels[j].selected;
+          return newChannel;
+        } else {
+          return ch;
+        }
+      });
+      return {
+        channels,
+      };
     });
-    return {
-      channels,
-    };
-  });
+  }
 }
 
 export function updateLastSel(channel) {
@@ -64,3 +66,9 @@ export function updateLastSel(channel) {
     lastSelected: channel,
   }));
 }
+
+function getSelectedCount() {
+  const x = settingsApi.getState().channels.filter(channel => channel.selected === true);
+  return x.length
+}
+

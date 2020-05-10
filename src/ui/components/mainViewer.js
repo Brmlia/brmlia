@@ -22,6 +22,7 @@ class mainViewer extends React.Component {
     super(props)
 
     this.views = []
+    this.activeChannels = []
   }
 
   canvasView() {
@@ -49,15 +50,19 @@ class mainViewer extends React.Component {
 
   updateViews() {
     var views = []
+    var channels = []
     for (var i = 0; i < settingsApi.getState().channels.length; i++) {
       const channelSel = settingsApi.getState().channels[i].selected
       if (channelSel) {
         views.push(
           canvasApi.getState().canvas[i]
         )
+        channels.push(i+1)
+        channels.push(" ")
       }
     }
     this.views = views
+    this.activeChannels = channels
   }
 
   channelViews() {
@@ -104,6 +109,7 @@ class mainViewer extends React.Component {
               {' '}
               <h5> Image View </h5>{' '}
             </CardTitle>
+              Active Channels: {this.activeChannels}
             <div
               id="main-canvas-container"
               style={{ width: width, height: height, position: 'relative' }}
