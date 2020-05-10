@@ -17,6 +17,13 @@ import {
 } from './index.js';
 
 class mainViewer extends React.Component {
+
+  constructor(props) {
+    super(props)
+
+    this.views = []
+  }
+
   canvasView() {
     var canvas = (
       <MainTiffViewer
@@ -40,28 +47,25 @@ class mainViewer extends React.Component {
     );
   }
 
-  channelViews() {
-    var view1;
-    var view2;
-    var view3;
+  updateViews() {
+    var views = []
+    for (var i = 0; i < settingsApi.getState().channels.length; i++) {
+      const channelSel = settingsApi.getState().channels[i].selected
+      if (channelSel) {
+        views.push(
+          canvasApi.getState().canvas[i]
+        )
+      }
+    }
+    this.views = views
+  }
 
-    if (settingsApi.getState().channels[0].selected) {
-      console.log('displaying 1');
-      view1 = canvasApi.getState().canvas[0];
-    }
-    if (settingsApi.getState().channels[1].selected) {
-      console.log('displaying 2');
-      view2 = canvasApi.getState().canvas[1];
-    }
-    if (settingsApi.getState().channels[2].selected) {
-      console.log('displaying 3');
-      view3 = canvasApi.getState().canvas[2];
-    }
+  channelViews() {
     return (
       <div>
-        <div style={mainCanvasStyle1}>{view1}</div>
-        <div style={mainCanvasStyle2}>{view2}</div>
-        <div style={mainCanvasStyle3}>{view3} </div>
+        <div style={mainCanvasStyle1}>{this.views[0]}</div>
+        <div style={mainCanvasStyle2}>{this.views[1]}</div>
+        <div style={mainCanvasStyle3}>{this.views[2]} </div>
       </div>
     );
   }
@@ -72,9 +76,7 @@ class mainViewer extends React.Component {
 
   display() {
     if (
-      !settingsApi.getState().channels[0].selected &&
-      !settingsApi.getState().channels[1].selected &&
-      !settingsApi.getState().channels[2].selected
+      this.views.length === 0
     ) {
       return this.canvasView();
     } else {
@@ -84,6 +86,7 @@ class mainViewer extends React.Component {
 
   render() {
     settingsApi.subscribe(state => {
+      this.updateViews();
       this.forceUpdate();
     });
     fApi.subscribe(state => {
