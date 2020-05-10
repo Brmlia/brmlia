@@ -46,8 +46,6 @@ async function _loadSlicesFromMultipageFile(cntxt, volume, axes, axis, file) {
   if (file && (file.pages) && (file.pages.length > 0)) {
     await _loadVolumes(volume, file.pages, file.image.width)
   }
-
-  // updateChannelSlice(cntxt, volume, 0, axes, axis, false);
 }
 
 async function _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files) {
@@ -60,7 +58,6 @@ async function _loadSlicesFromMultipleFiles(cntxt, volume, axes, axis, files) {
         const zoffset =  fIdx * (pages.length) + pIdx;
         await volume.load(page, file.image.width, zoffset)
       }
-      // updateChannelSlice(cntxt, volume, 0, axes, axis, false);
     }
   }
 }

@@ -300,7 +300,6 @@ class TiffViewer extends Component {
         <canvas
           id="canvas-1"
           ref={this.canvas}
-          // width={window.innerWidth}
           height="280"
         ></canvas>
         <ProgressBar />

@@ -1,10 +1,9 @@
 import React from 'react';
-import { Row, Col, Card, CardTitle, CardBody, Tab, Nav, NavLink, NavItem, TabPane, TabContent } from 'reactstrap';
+import { Card, CardTitle, CardBody, Nav, NavLink, NavItem, TabPane, TabContent } from 'reactstrap';
 
 import Channel from './channel.js';
 
 import {
-  channelViewStyle,
   channelCardStyle,
   channelCardBodyStyle,
   volApi,
