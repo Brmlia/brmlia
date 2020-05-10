@@ -4,12 +4,14 @@ import Slider from './slider.js';
 
 import {
   fApi,
+  volApi,
   updateChannelSlice,
   initializeVolume,
   getVolume,
   updateType,
   parseMetadata,
   filesNeedUpdate,
+  getImageProps,
 } from './index.js';
 
 class TiffViewer extends Component {
@@ -26,7 +28,6 @@ class TiffViewer extends Component {
     this.sliceIdx = 0;
     this.axisIdx = props.axis;
     this.channel = 1;
-    this.channelSliceIdx = 0;
 
     // Case 1: (60 z planes, 3 channels, 1)
     // Case 2: (60 z planes, 1 channel, 3)
@@ -53,17 +54,21 @@ class TiffViewer extends Component {
   }
 
   setSlider(width, height, length, pageLength) {
-    if (this.props.axis === '0') this.length = width;
-    if (this.props.axis === '1') this.length = height;
+    if (this.props.axis === '0') this.sliceLength = width;
+    if (this.props.axis === '1') this.sliceLength = height;
     if (this.props.axis === '2') {
       if (this.type === 1) {
-        this.length = pageLength;
+        this.sliceLength = pageLength / 3
+        this.channelLength = 3
       } else if (this.type === 2) {
-        this.length = pageLength * length;
+        this.sliceLength = pageLength
+        this.channelLength = 1
       } else if (this.type === 3) {
-        this.length = pageLength * length;
+        this.sliceLength = length
+        this.channelLength = 3
       } else if (this.type === 4) {
-        this.length = pageLength * length;
+        this.sliceLength = length / 3
+        this.channelLength = 1
       }
     }
   }
@@ -115,6 +120,43 @@ class TiffViewer extends Component {
     }
   }
 
+  computeSlice(value) {
+    if (this.props.axis === '2') {
+      // xycz
+      if (this.order === "1") {
+        return ((value * this.channelLength) + (this.channel-1) )
+      }
+      // xyzc
+      else if (this.order === "2") {
+        return ((value + ((this.channel-1) * this.sliceLength)))
+      }
+      else {
+        // select every third
+        if (this.type === 1) {
+          return ((value * 3) + (this.channel-1) )
+        }
+        // select slice in [0-length) for channel 1, [length-2*length) for channel 2, [2*length-3*length) for channel 3
+        else if (this.type === 2) {
+          return ((value + ((this.channel-1) * this.sliceLength)))
+        }
+        // select every third
+        else if (this.type === 3) {
+          return ((value * 3) + (this.channel-1) )
+        }
+        // select every third
+        else if (this.type === 4) {
+          return ((value * 3) + (this.channel-1) )
+        }
+        else if (this.type === 5) {
+          return value
+        }
+      }
+    }
+    else {
+      return value
+    }
+  }
+
   async updateSlice() {
     await updateChannelSlice(
       this.state.cntxt,
@@ -143,19 +185,109 @@ class TiffViewer extends Component {
     this.updateSlice();
   }
 
+  updateCustomSettings() {
+    this.customSettings = getImageProps()
+
+    if (this.customSettings.order !== 0) {
+      this.order = this.customSettings.order
+      this.channelLength = this.customSettings.channels
+      this.sliceLength = this.customSettings.slices
+      this.channel = 1
+      this.slice = 0
+      this.forceUpdate()
+    }
+  }
+
   sliderValueSlice(value) {
-    this.sliceIdx = parseInt(value || 0);
+    this.slice = parseInt(value || 0);
+    this.sliceIdx = this.computeSlice(this.slice)
     this.updateSlice();
+  }
+
+  sliderValueChannel(value) {
+    this.channel = parseInt(value)
+    this.sliceIdx = this.computeSlice(this.slice)
+    this.updateSlice()
   }
 
   clamp(val, min, max) {
     return Math.min(Math.max(val, min), max);
   }
 
+  drawSliceSlider() {
+    return (
+      <div className="axis-slice-slider-container">
+        <Slider
+          label=""
+          width="40%"
+          min="0"
+          max={Math.max(this.sliceLength - 1, 0)}
+          step="1"
+          initial="0"
+          multiplier="1"
+          raw="1"
+          sliderValue={this.sliderValueSlice.bind(this)}
+        />
+        <button
+          id="prevSliceBtn"
+          onClick={() => {
+            this.nextSlice(true);
+          }}
+        >
+          {'<<'}
+        </button>
+        <button
+          id="resetSliceBtn"
+          onClick={() => {
+            this.slice(0);
+          }}
+        >
+          Go to Slice 0
+        </button>
+        <button
+          id="nextSliceBtn"
+          onClick={() => {
+            this.nextSlice(false);
+          }}
+        >
+          {'>>'}
+        </button>
+        &nbsp;
+        <label>
+          Slice #: &nbsp;
+          <input
+            type="text"
+            style={{ width: '30px' }}
+            value={this.slice}
+            onChange={event => this.sliderValueSlice(event.target.value)}
+          />
+        </label>
+      </div>
+    )
+  }
+
+  drawChannelInput() {
+    return (
+      <label>
+        Channel #: &nbsp;
+        <input
+          type="text"
+          style={{ width: '30px' }}
+          value={this.channel}
+          onChange={event => this.sliderValueChannel(event.target.value)}
+        />
+      </label>
+    )
+  }
+
   render() {
     fApi.subscribe(state => {
       this.updateForFile(state);
     });
+    volApi.subscribe(state => {
+      this.updateCustomSettings();
+    })
+
     return (
       <div>
         <canvas
@@ -165,54 +297,8 @@ class TiffViewer extends Component {
           height="280"
         ></canvas>
         <ProgressBar />
-        <div className="axis-slice-slider-container">
-          <Slider
-            label=""
-            width="40%"
-            min="0"
-            max={Math.max(this.length - 1, 0)}
-            step="1"
-            initial="0"
-            multiplier="1"
-            raw="1"
-            sliderValue={this.sliderValueSlice.bind(this)}
-          />
-          <button
-            id="prevSliceBtn"
-            onClick={() => {
-              this.nextSlice(true);
-            }}
-          >
-            {'<<'}
-          </button>
-          <button
-            id="resetSliceBtn"
-            onClick={() => {
-              this.slice(0);
-            }}
-          >
-            Go to Slice 0
-          </button>
-          <button
-            id="nextSliceBtn"
-            onClick={() => {
-              this.nextSlice(false);
-            }}
-          >
-            {'>>'}
-          </button>
-          &nbsp;
-          <label>
-            Page #: &nbsp;
-            <input
-              type="text"
-              style={{ width: '30px' }}
-              value={this.sliceIdx}
-              onChange={event => this.sliderValueSlice(event.target.value)}
-            />
-          </label>
-          <div> Slice: {this.sliceIdx} </div>
-        </div>
+        {this.drawSliceSlider()}
+        {this.props.axis === '2' && this.drawChannelInput()}
       </div>
     );
   }
