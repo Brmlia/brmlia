@@ -45,6 +45,9 @@ class mainTiffViewer extends Component {
     this.typeIsDefault = true;
     this.files = props.files;
     this.order = "0";
+
+    this.width = window.innerWidth * 0.6;
+    this.height = window.innerHeight * 0.5;
   }
 
   componentDidMount() {
@@ -232,6 +235,24 @@ class mainTiffViewer extends Component {
     }
   }
 
+  async scaleImage() {
+    const imageData = await this.volume.getImageData()
+
+    if (imageData) {
+      const cw = this.width;
+      const ch = this.height;
+      const imgW = imageData.width;
+      const imgH = imageData.height;
+
+      var newC = document.createElement('canvas');
+      newC.width = imgW;
+      newC.height = imgH;
+      newC.getContext('2d').putImageData(imageData, 0, 0);
+
+      this.cntxt.drawImage(newC, 0, 0, cw, ch);
+    }
+  }
+
   updateSlice() {
     if (this.type < 5 ) {
       this.refreshImage();
@@ -247,6 +268,7 @@ class mainTiffViewer extends Component {
     else if (this.type === 5) {
       this.drawPNG(this.files[this.sliceIdx].image)
     }
+    this.scaleImage()
     this.forceUpdate();
   }
 
@@ -334,9 +356,6 @@ class mainTiffViewer extends Component {
     volApi.subscribe(state => {
       this.updateCustomSettings();
     })
-
-    let width = window.innerWidth * 1.0;
-    let height = window.innerHeight * 0.5;
     // let width = "100%";
     // let height = "100%";
     return (
@@ -344,8 +363,8 @@ class mainTiffViewer extends Component {
         <canvas
           id="canvas-1"
           ref={this.canvas}
-          width={width}
-          height={height}
+          width={this.width}
+          height={this.height}
         ></canvas>
         <ProgressBar />
         {this.drawSliceSlider()}

@@ -166,7 +166,14 @@ class TiffViewer extends Component {
       this.axisIdx,
       false
     );
-    this.forceUpdate();
+    if (this.volume) {
+      const pixels = await this.volume.getImageData()
+      if (pixels) {
+        this.volume.drawImage(this.state.cntxt, pixels)
+        this.updatedtexture = false;
+        this.forceUpdate();
+      }
+    }
   }
 
   nextSlice(dec) {

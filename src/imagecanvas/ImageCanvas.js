@@ -263,8 +263,8 @@ class ImageCanvas extends React.Component {
     }
   }
 
-  updateSlice() {
-    updateChannelSlice(
+  async updateSlice() {
+    await updateChannelSlice(
       this.state.cntxt,
       this.volume,
       this.computedSlicedIdx,
@@ -272,8 +272,14 @@ class ImageCanvas extends React.Component {
       this.axisIdx,
       true
     );
-    this.updatedtexture = false;
-    this.forceUpdate();
+    if (this.volume) {
+      const pixels = await this.volume.getImageData()
+      if (pixels) {
+        this.volume.drawImage(this.state.cntxt, pixels)
+        this.updatedtexture = false;
+        this.forceUpdate();
+      }
+    }
   }
 
   async setImageData() {
