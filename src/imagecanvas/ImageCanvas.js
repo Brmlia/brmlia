@@ -114,6 +114,9 @@ class ImageCanvas extends React.Component {
     else if (this.type === 5) {
       this.length = fileLength
     }
+    else {
+      this.length = pageLength
+    }
   }
 
   getIdx(fileLength) {
@@ -260,20 +263,22 @@ class ImageCanvas extends React.Component {
       else if (this.type === 5) {
         return value
       }
+      else {
+        return value
+      }
     }
   }
 
   async updateSlice() {
-    await updateChannelSlice(
-      this.state.cntxt,
-      this.volume,
-      this.computedSlicedIdx,
-      this.state.axes,
-      this.axisIdx,
-      true
-    );
-    if (this.volume) {
-      const pixels = await this.volume.getImageData()
+    if ((this.sliceIdx) < this.length) {
+      const pixels = await updateChannelSlice(
+        this.state.cntxt,
+        this.volume,
+        this.computedSlicedIdx,
+        this.state.axes,
+        this.axisIdx,
+        true
+      );
       if (pixels) {
         this.volume.drawImage(this.state.cntxt, pixels)
         this.updatedtexture = false;

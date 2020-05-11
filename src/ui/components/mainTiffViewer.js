@@ -134,6 +134,10 @@ class mainTiffViewer extends Component {
         this.sliceLength = length
         this.channelLength = 1
       }
+      else {
+        this.sliceLength = pageLength
+        this.channelLength = 1
+      }
     }
   }
 
@@ -232,6 +236,9 @@ class mainTiffViewer extends Component {
       else if (this.type === 5) {
         return value
       }
+      else {
+        return value
+      }
     }
   }
 
@@ -254,7 +261,7 @@ class mainTiffViewer extends Component {
   }
 
   updateSlice() {
-    if (this.type < 5 ) {
+    if (this.type < 5 && (this.sliceIdx < this.sliceLength)) {
       this.refreshImage();
       updateChannelSlice(
         this.cntxt,

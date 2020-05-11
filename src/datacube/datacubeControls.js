@@ -22,7 +22,7 @@ export async function loadSlices(cntxt, volume, axes, axis, files, type, fileIdx
 
 export async function updateChannelSlice(cntxt, volume, slice, axes, axis, invertV) {
   if (cntxt && volume && axes) {
-    await volume.renderChannelSlice(cntxt, axes[axis], slice, invertV)
+    return await volume.renderChannelSlice(cntxt, axes[axis], slice, invertV)
   }
 }
 

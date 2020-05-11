@@ -6,10 +6,8 @@ export class Volume {
   }
 
   async renderChannelSlice (ctx, axis, slice, invertV) {
-    let _this = this;
-
-    await _this.channel.grayImageSlice(axis, slice, invertV, /*transparency=*/false, /*copy=*/false);
-    return this;
+    let pixels = await this.channel.grayImageSlice(axis, slice, invertV, /*transparency=*/false, /*copy=*/false);
+    return pixels;
   }
 
   async drawImage(ctx, pixels) {

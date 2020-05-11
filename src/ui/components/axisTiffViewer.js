@@ -70,6 +70,10 @@ class TiffViewer extends Component {
         this.sliceLength = length / 3
         this.channelLength = 1
       }
+      else {
+        this.sliceLength = pageLength
+        this.channelLength = 1
+      }
     }
   }
 
@@ -150,6 +154,9 @@ class TiffViewer extends Component {
         else if (this.type === 5) {
           return value
         }
+        else {
+          return value
+        }
       }
     }
     else {
@@ -158,16 +165,15 @@ class TiffViewer extends Component {
   }
 
   async updateSlice() {
-    await updateChannelSlice(
-      this.state.cntxt,
-      this.volume,
-      this.sliceIdx,
-      this.state.axes,
-      this.axisIdx,
-      false
-    );
-    if (this.volume) {
-      const pixels = await this.volume.getImageData()
+    if (this.sliceIdx < this.sliceLength) {
+      const pixels = await updateChannelSlice(
+        this.state.cntxt,
+        this.volume,
+        this.sliceIdx,
+        this.state.axes,
+        this.axisIdx,
+        false
+      );
       if (pixels) {
         this.volume.drawImage(this.state.cntxt, pixels)
         this.updatedtexture = false;
@@ -246,7 +252,7 @@ class TiffViewer extends Component {
         <button
           id="resetSliceBtn"
           onClick={() => {
-            this.slice(0);
+            this.sliderValueSlice(0);
           }}
         >
           Go to Slice 0
