@@ -116,28 +116,23 @@ class mainTiffViewer extends Component {
     if (this.props.axis === "2") {
       if (this.type === 1) {
         this.sliceLength = pageLength / 3
-        this.channelLength = 3
       }
       else if (this.type === 2) {
         this.sliceLength = pageLength
-        this.channelLength = 1
       }
       else if (this.type === 3) {
         this.sliceLength = length
-        this.channelLength = 3
       }
       else if (this.type === 4) {
         this.sliceLength = length / 3
-        this.channelLength = 1
       }
       else if (this.type === 5) {
         this.sliceLength = length
-        this.channelLength = 1
       }
       else {
         this.sliceLength = pageLength
-        this.channelLength = 1
       }
+      this.channelLength = 3
     }
   }
 
@@ -261,7 +256,7 @@ class mainTiffViewer extends Component {
   }
 
   updateSlice() {
-    if (this.type < 5 && (this.sliceIdx < this.sliceLength)) {
+    if (this.type < 5 && (this.slice < this.sliceLength)) {
       this.refreshImage();
       updateChannelSlice(
         this.cntxt,

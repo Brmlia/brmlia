@@ -165,7 +165,7 @@ class TiffViewer extends Component {
   }
 
   async updateSlice() {
-    if (this.sliceIdx < this.sliceLength) {
+    if (this.slice < this.sliceLength) {
       const pixels = await updateChannelSlice(
         this.state.cntxt,
         this.volume,
