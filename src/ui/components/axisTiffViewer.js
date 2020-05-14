@@ -165,6 +165,7 @@ class TiffViewer extends Component {
   }
 
   async updateSlice() {
+    const invertV = (this.axisIdx === '2') ? false : true
     if (this.slice < this.sliceLength) {
       const pixels = await updateChannelSlice(
         this.state.cntxt,
@@ -172,7 +173,7 @@ class TiffViewer extends Component {
         this.sliceIdx,
         this.state.axes,
         this.axisIdx,
-        false
+        invertV
       );
       if (pixels) {
         this.volume.drawImage(this.state.cntxt, pixels)
@@ -270,7 +271,7 @@ class TiffViewer extends Component {
           Slice #: &nbsp;
           <input
             type="text"
-            style={{ width: '30px' }}
+            style={{ width: '50px' }}
             value={this.slice}
             onChange={event => this.sliderValueSlice(event.target.value)}
           />
@@ -285,7 +286,7 @@ class TiffViewer extends Component {
         Channel #: &nbsp;
         <input
           type="text"
-          style={{ width: '30px' }}
+          style={{ width: '50px' }}
           value={this.channel}
           onChange={event => this.sliderValueChannel(event.target.value)}
         />
