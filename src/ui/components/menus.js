@@ -213,7 +213,9 @@ class Menus extends React.Component {
             type="text"
             value={this.state.labelText}
             onChange={(e) => this.handleChangeLabel(e)}
-          /> &nbsp;
+          />
+          <br/>
+          <br/>
           <Button onClick={() => this.changeLabel()}
           >
             {' '}
@@ -232,11 +234,13 @@ class Menus extends React.Component {
             type="text"
             value={this.state.classText}
             onChange={(e) => this.handleChangeClassLabel(e)}
-          /> &nbsp;
+          />
+          <br/>
+          <br/>
           <Button onClick={() => this.changeClassLabel()}
           >
             {' '}
-            Change Class Label{' '}
+            Change Class{' '}
           </Button>
         </ModalBody>
       </Modal>

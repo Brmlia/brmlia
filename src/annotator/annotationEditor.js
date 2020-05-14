@@ -74,7 +74,7 @@ export function drawRect(canvas, rect, label, classLabel) {
   });
 
   var text = new fabric.IText(label, {
-    fontSize: 14,
+    fontSize: 30,
     originX: 'left',
     originY: 'top',
     fontFamily: 'Arial',
@@ -87,7 +87,7 @@ export function drawRect(canvas, rect, label, classLabel) {
 
   const default_class = 'class1';
   var classText = new fabric.IText(classLabel || default_class, {
-    fontSize: 16,
+    fontSize: 30,
     originX: 'left',
     originY: 'bottom',
     fontFamily: 'Arial',
