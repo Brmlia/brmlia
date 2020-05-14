@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "28e8b11ff6650656c79f21b061de1939",
+    "revision": "a791ac7565f71b2e9c3787a617067fce",
     "url": "/brmlia/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/brmlia/static/css/2.c5dc106f.chunk.css"
   },
   {
-    "revision": "012584b0e82b227c86cb",
-    "url": "/brmlia/static/css/main.fc6e2b95.chunk.css"
+    "revision": "38c35b7f7155b1bf5c1e",
+    "url": "/brmlia/static/css/main.91cec85c.chunk.css"
   },
   {
     "revision": "7c53562e3676f164d746",
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/brmlia/static/js/2.f5db0b72.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "012584b0e82b227c86cb",
-    "url": "/brmlia/static/js/main.4b74702b.chunk.js"
+    "revision": "38c35b7f7155b1bf5c1e",
+    "url": "/brmlia/static/js/main.6095bd4c.chunk.js"
   },
   {
     "revision": "02fabd264502307ed963",
