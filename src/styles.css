@@ -82,7 +82,6 @@ h5 {
 
 #annotationLayer {
   position: absolute;
-  border: 1px solid rgba(0, 0, 0, 0.125);
   top: 0px;
   left: 0px;
   z-index: 10;
