@@ -15,7 +15,7 @@ export const mainCardStyle = {
   textAlign: 'center',
   width: '100%',
   fluid: true,
-  fontSize: '12px',
+  fontSize: '20px',
   marginBottom: '15px',
 };
 

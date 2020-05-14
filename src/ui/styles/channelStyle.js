@@ -17,6 +17,7 @@ export const channelCardStyle = {
 export const channelCardBodyStyle = {
   width: '95%',
   height: '100%',
+  fontSize: '20px',
 };
 
 export const channelCanvasStyle = {

@@ -120,7 +120,7 @@ h5 {
 }
 
 .slice-slider-container {
-  bottom: 50px;
+  bottom: 60px;
   position: absolute;
   width: 100%;
 }
@@ -129,4 +129,40 @@ h5 {
   bottom: 10px;
   position: absolute;
   width: 100%;
+}
+
+label {
+  font-size: 20px;
+}
+
+button {
+  font-size: 20px;
+}
+
+.slider-settings {
+  font-size: 20px;
+}
+
+h5 {
+  font-size: 30px;
+}
+
+.viewBtn {
+  font-size: 25px;
+}
+
+.nav-link {
+  font-size: 30px;
+}
+
+.channelBtn {
+  font-size: 25px;
+}
+
+.btn-outline-primary {
+  font-size: 20px;
+}
+
+.btn-primary {
+  font-size: 25px;
 }
