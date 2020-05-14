@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/brmlia/static/css/main.0d42c701.chunk.css",
+    "main.css": "/brmlia/static/css/main.3e93ac37.chunk.css",
     "main.js": "/brmlia/static/js/main.4b74702b.chunk.js",
     "main.js.map": "/brmlia/static/js/main.4b74702b.chunk.js.map",
     "runtime-main.js": "/brmlia/static/js/runtime-main.272aed2f.js",
@@ -9,17 +9,17 @@
     "static/js/2.f5db0b72.chunk.js": "/brmlia/static/js/2.f5db0b72.chunk.js",
     "static/js/2.f5db0b72.chunk.js.map": "/brmlia/static/js/2.f5db0b72.chunk.js.map",
     "index.html": "/brmlia/index.html",
-    "precache-manifest.78e468a187e5e1c74e9db2645d9c9d53.js": "/brmlia/precache-manifest.78e468a187e5e1c74e9db2645d9c9d53.js",
+    "precache-manifest.b95c4646c26f950d43c25ae52b76735d.js": "/brmlia/precache-manifest.b95c4646c26f950d43c25ae52b76735d.js",
     "service-worker.js": "/brmlia/service-worker.js",
     "static/css/2.c5dc106f.chunk.css.map": "/brmlia/static/css/2.c5dc106f.chunk.css.map",
-    "static/css/main.0d42c701.chunk.css.map": "/brmlia/static/css/main.0d42c701.chunk.css.map",
+    "static/css/main.3e93ac37.chunk.css.map": "/brmlia/static/css/main.3e93ac37.chunk.css.map",
     "static/js/2.f5db0b72.chunk.js.LICENSE.txt": "/brmlia/static/js/2.f5db0b72.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.272aed2f.js",
     "static/css/2.c5dc106f.chunk.css",
     "static/js/2.f5db0b72.chunk.js",
-    "static/css/main.0d42c701.chunk.css",
+    "static/css/main.3e93ac37.chunk.css",
     "static/js/main.4b74702b.chunk.js"
   ]
 }
